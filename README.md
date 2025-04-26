@@ -5,7 +5,7 @@ CSE 187 Group Project!
 - [TABLE OF CONTENTS](#table_of_contents)
 ### Features
 - Parking Permit
-- purchasing parking permit
+- purchasing permit
 
 ### Table_Of_Contents
 - [AWS Guide]( /wiki-docs/deployment/187_AWS_Guide.md)
