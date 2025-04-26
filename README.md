@@ -5,4 +5,4 @@ CSE 187 Group Project!
 - Parking Permit
 - purchasing permit
 
-### [WIKI] (https://github.com/CSE187-W25-Group08/virtual-park/wiki)
+### [WIKI](https://github.com/CSE187-W25-Group08/virtual-park/wiki)
