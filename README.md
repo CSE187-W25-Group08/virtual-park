@@ -1,4 +1,4 @@
-# campus-parking
+# Virtual-Park
 CSE 187 Group Project!
 
 - [FEATURES](#features)
