@@ -1,0 +1,8 @@
+# Dependencies
+node_modules
+
+# Productions
+build
+
+# Testing
+coverage
