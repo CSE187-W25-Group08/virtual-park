@@ -10,6 +10,7 @@ export default function Home() {
         <li>Jackson Zheng</li>
         <li>Matthew Solomon</li>
         <li>Hamza Bassal</li>
+        <li>Bodie Feinberg</li>
       </ul>
     </div>
   );
