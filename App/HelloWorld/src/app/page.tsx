@@ -9,6 +9,7 @@ export default function Home() {
         <li>𝓙𝓲𝓷 𝓛𝓮</li>
         <li>Jackson Zheng</li>
         <li>Matthew Solomon</li>
+        <li>Hamza Bassal</li>
       </ul>
     </div>
   );
