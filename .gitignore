@@ -26,3 +26,7 @@ sketch
 
 #env
 .env
+
+# Files generated for Next.js
+.next
+next-env.d.ts
