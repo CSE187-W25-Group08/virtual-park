@@ -8,6 +8,7 @@ export default function Home() {
         <li>Jennifer Chen</li>
         <li>𝓙𝓲𝓷 𝓛𝓮</li>
         <li>Jackson Zheng</li>
+        <li>Matthew Solomon</li>
       </ul>
     </div>
   );
