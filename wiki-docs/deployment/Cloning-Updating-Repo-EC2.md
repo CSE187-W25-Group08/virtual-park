@@ -12,9 +12,9 @@ Clone the repository:
 ```bash
 git clone [REPO_URL]
 ```
- 
 ### Authentication Required
 
+*❗(I saved my username and PAT in EC2, so I don't think we need another member authenticating)*
 
 **Username**: Your GitHub username
 
@@ -23,6 +23,8 @@ git clone [REPO_URL]
 
 
 ## How to Generate a Personal Access Token (PAT)
+*❗(I saved my username and PAT in EC2, so I don't think we need another member generating PAT)*
+
 1. Go to GitHub → Settings → Developer Settings → Personal Access Tokens → Tokens (classic).
 
 2. Click "Generate new token (classic)".
