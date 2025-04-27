@@ -7,6 +7,7 @@ export default function Home() {
       <ul>
         <li>Jennifer Chen</li>
         <li>𝓙𝓲𝓷 𝓛𝓮</li>
+        <li>Jackson Zheng</li>
       </ul>
     </div>
   );
