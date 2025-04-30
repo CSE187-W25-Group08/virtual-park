@@ -1,7 +1,7 @@
 import { test, beforeAll, afterAll, expect } from "vitest";
 import * as http from "http";
 import supertest from "supertest";
-// import * as db from './db'
+import * as db from './db'
 import { app, bootstrap } from "../src/app";
 
 let server: http.Server<
@@ -12,12 +12,12 @@ let server: http.Server<
 beforeAll(async () => {
   server = http.createServer(app);
   server.listen();
-  // await db.reset()
+  await db.reset()
   await bootstrap();
 });
 
 afterAll(() => {
-  // db.shutdown()
+  db.shutdown()
   server.close();
 });
 
@@ -37,6 +37,6 @@ test("", async () => {
       `,
     })
     .then((res) => {
-      expect(res.body.data.ticket.violation).toEqual("Expired meter");
+      expect(res.body.data.ticket.violation).toEqual("expired meter");
     });
 });
