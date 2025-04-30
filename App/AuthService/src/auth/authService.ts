@@ -57,7 +57,7 @@ export class AuthService {
               return
             }
             (async () => {
-              const user = await db.checkAuth(uid.id);
+              const user = await db.checkAuth(uid.id)
               if (!user) {
                 reject(new Error("Unauthorized"));
                 return;
