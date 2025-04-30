@@ -1,7 +1,16 @@
+'use client'
+
+import { Fragment, useState } from 'react';
+import { Button, Typography } from '@mui/material';
+
+// import RegisterVehicle from './Register/Register'
+import Vehicles from './Register/Vehicles'
+
 export default function Home() {
   return (
-    <div>
-      Welcome to Virtual-Park!
-    </div>
+    <Fragment>
+      <Typography>Welcome to Virtual-Park!</Typography>
+      <Vehicles/>
+    </Fragment>
   );
 }

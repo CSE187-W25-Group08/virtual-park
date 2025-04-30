@@ -14,12 +14,13 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
-    "next": "15.3.1",
     "jose": "^4.14.6",
+    "next": "15.3.1",
     "react": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "*",
     "@types/node": "^20",
     "@types/react": "^19",
