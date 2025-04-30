@@ -10,7 +10,7 @@ import {
   Button, 
   TextField
 } from '@mui/material'
-// import { login } from './actions'
+import { login } from './action'
 
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
@@ -27,13 +27,14 @@ export default function LoginView() {
     setCredentials(u)
   }
 
-  // const handleClick = async () => {
-  //   const authenticated = await login(credentials)
-  //   if (authenticated) {
-  //     window.sessionStorage.setItem('name', authenticated.name)
-  //     router.push('/')
-  //   }
-  // }
+  const handleClick = async () => {
+    const authenticated = await login(credentials)
+    if (authenticated) {
+      const name = authenticated.name || 'undefined'
+      window.sessionStorage.setItem('name', name)
+      router.push('/')
+    }
+  }
 
   return (
     <Container
@@ -102,7 +103,7 @@ export default function LoginView() {
         >
           <Button
             variant="contained"
-            // onClick={handleClick}
+            onClick={handleClick}
           >
             Sign in
           </Button>
