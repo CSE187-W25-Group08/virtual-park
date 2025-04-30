@@ -28,11 +28,11 @@ test('Returns all vehicles', async () => {
     .set('Authorization', 'Bearer placeholder')
     .send({
       query: `{
-        vehicles
+        vehicle
         { licensePlate, make, model }
       }`
     })
     .then((res) => {
-      expect(res.body.data.vehicles.length).toEqual(1)
+      expect(res.body.data.vehicle.length).toEqual(1)
     })
 })
