@@ -1,0 +1,18 @@
+{
+  "name": "microservice-runner",
+  "version": "1.0.0",
+  "description": "Runs all micro service",
+  "author": "Harrison <dcharris@ucsc.edu>",
+  "license": "UNLICENSED",
+  "repository": "none",
+  "scripts": {
+    "install-auth": "cd AuthService && npm install",
+    "install-ticket": "cd TicketService && npm install",
+    "install-vehicle": "cd VehicleService && npm install",
+    "install": "npm run install-auth && npm run install-ticket && npm run install-vehicle",
+    "dev-auth": "cd AuthService && npm run dev",
+    "dev-ticket": "cd TicketService && npm run dev",
+    "dev-vehicle": "cd VehicleService && npm run dev",
+    "dev": "(npm run dev-auth) & (npm run dev-ticket) & (npm run dev-vehicle)"
+  }
+}
