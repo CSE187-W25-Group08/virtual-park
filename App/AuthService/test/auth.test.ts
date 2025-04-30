@@ -1,4 +1,4 @@
-import { test, beforeAll, afterAll, expect } from 'vitest'
+import { test, beforeAll, afterAll } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
 
@@ -32,3 +32,17 @@ export const anna = {
   password: 'annaadmin',
   name: "Anna Admin",
 }
+
+const tommy = {
+  email: "tommy@books.com",
+  password: "tommytimekeeper",
+  name: "Tommy Timekeeper",
+}
+
+test('Sign Up as tommy', async () => {
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+    .expect(201)
+})
+
