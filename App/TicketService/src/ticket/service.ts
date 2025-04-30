@@ -1,0 +1,34 @@
+import { pool } from '../db'
+import { Ticket } from './schema';
+import * as queries from './queries'
+import { SessionUser } from '../types/express';
+
+export class TicketService {
+  
+  public async getAll(): Promise<Ticket[]> {
+    const query = {
+      text: queries.selectAllTickets,
+      //values: [user.id]
+    }
+
+    const {rows} = await pool.query(query);
+    const tickets = await Promise.all(rows.map(async (ticket) => {
+      const data = ticket.data
+      const ticketObj: Ticket = {
+        'id': ticket.id,
+        'vehicle': data.driver,
+        'enforcer': data.enforcer,
+        'lot': data.lot,
+        'status': data.status,
+        'description': data.description,
+        'due': data.due,
+        'issue': data.issue,
+        'violation': data.violation,
+        'image': data.image
+      }
+      return ticketObj
+    }))
+    console.log(tickets)
+
+    return tickets;
+}}

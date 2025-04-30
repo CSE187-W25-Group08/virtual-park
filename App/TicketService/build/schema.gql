@@ -4,10 +4,18 @@
 # -----------------------------------------------
 
 type Query {
-  ticket: Ticket!
+  ticket: [Ticket!]!
 }
 
 type Ticket {
-  id: Int!
+  description: String!
+  due: String!
+  enforcer: String!
+  id: ID!
+  image: String!
+  issue: String!
+  lot: String!
+  status: String!
+  vehicle: String!
   violation: String!
 }

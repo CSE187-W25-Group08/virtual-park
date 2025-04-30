@@ -7,6 +7,7 @@ import {
   // Ctx 
 } from "type-graphql"
 import { Ticket } from "./schema"
+import { TicketService } from "./service"
 // import { Request } from "express"
 
 
@@ -14,10 +15,10 @@ import { Ticket } from "./schema"
 export class TicketResolver {
   @Authorized("driver")
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @Query(returns => Ticket)
+  @Query(returns => [Ticket])
   async ticket(
-  ): Promise<Ticket> {
-    return {id: 4, violation: 'Expired meter'}
+  ): Promise<Ticket[]> {
+    return await new TicketService().getAll()
   }
 
 }
