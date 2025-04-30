@@ -29,8 +29,6 @@ export default function Signup() {
       case 'password':
         setPassword(value)
         break
-      default:
-        break
     }
   }
 
