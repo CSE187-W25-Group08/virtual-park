@@ -16,10 +16,14 @@ import {
   Response,
   Route,
   SuccessResponse,
+  Get,
+  Security,
+  Request
 } from 'tsoa'
 
 import { Credentials, Authenticated, NewUser } from '.'
 import { AuthService } from './authService'
+import { SessionUser } from '../types'
 
 @Route('auth')
 export class AuthController extends Controller {
@@ -51,5 +55,18 @@ export class AuthController extends Controller {
         }
         return user
       })
+  }
+
+  @Get('check')
+  @Security("jwt")
+  @Response('401', 'Unauthorised')
+  public async check(
+    @Request() request: Express.Request
+  ): Promise<SessionUser | undefined> {
+    // Nothing to check, Express middleware will have rejected the request
+    // by now if the caller is unauthorised
+    return new Promise((resolve) => {
+      resolve(request.user)
+    })
   }
 }

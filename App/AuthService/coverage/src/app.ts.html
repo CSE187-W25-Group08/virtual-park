@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.69% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/26</span>
+                <span class='fraction'>26/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.69% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/26</span>
+                <span class='fraction'>26/26</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -153,23 +153,23 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -208,23 +208,23 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 &nbsp;
 app.use('/api/v0/docs', swaggerUi.serve, async (_req: ExRequest, res: ExResponse) =&gt; {
-<span class="cstat-no" title="statement not covered" >  res.send(</span>
-<span class="cstat-no" title="statement not covered" >    swaggerUi.generateHTML(await import('../build/swagger.json'))</span>
-<span class="cstat-no" title="statement not covered" >  )</span>
-<span class="cstat-no" title="statement not covered" >})</span>
+  res.send(
+    swaggerUi.generateHTML(await import('../build/swagger.json'))
+  )
+})
 &nbsp;
 const router = Router()
 RegisterRoutes(router)
 app.use('/api/v0', router)
 &nbsp;
-const errorHandler: ErrorRequestHandler = <span class="fstat-no" title="function not covered" >(err, _req, res, _next: NextFunction) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  res.status(err.status).json( {</span>
-<span class="cstat-no" title="statement not covered" >    message: err.message,</span>
-<span class="cstat-no" title="statement not covered" >    errors: err.errors,</span>
-<span class="cstat-no" title="statement not covered" >    status: err.status,</span>
-<span class="cstat-no" title="statement not covered" >  })</span>
-<span class="cstat-no" title="statement not covered" >  _next()</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+const errorHandler: ErrorRequestHandler = (err, _req, res, _next: NextFunction) =&gt; {
+  res.status(err.status).json( {
+    message: err.message,
+    errors: err.errors,
+    status: err.status,
+  })
+  _next()
+}
 app.use(errorHandler)
 &nbsp;
 export default app
@@ -235,7 +235,7 @@ export default app
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-30T04:00:28.548Z
+                at 2025-04-30T04:19:31.932Z
             </div>
         <script src="../prettify.js"></script>
         <script>
