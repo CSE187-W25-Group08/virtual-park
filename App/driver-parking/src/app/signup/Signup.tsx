@@ -7,11 +7,15 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+
+import { signup } from './actions'
 
 export default function Signup() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const router = useRouter()
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {value, name} = event.target
@@ -31,7 +35,13 @@ export default function Signup() {
   }
 
   const handleClick = async () => {
-
+  const user = await signup({name: name, email: email, password: password})
+    if (user) {
+      window.sessionStorage.setItem('name', user.name)
+      router.push('/')
+    } else {
+      alert('This email has already been taken.')
+    }
   }
 
   return (
@@ -91,7 +101,7 @@ export default function Signup() {
       </Divider>
       <Typography variant="body1" sx={{
         marginTop: '20px',
-      }}>Already have an account? <a href="/">Log In</a></Typography>
+      }}>Already have an account? <a href="/login">Log In</a></Typography>
     </Box>
   )
 }
