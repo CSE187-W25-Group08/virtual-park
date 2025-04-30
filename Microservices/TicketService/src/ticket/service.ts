@@ -16,7 +16,7 @@ export class TicketService {
       const data = ticket.data
       const ticketObj: Ticket = {
         'id': ticket.id,
-        'vehicle': data.driver,
+        'vehicle': data.vehicle,
         'enforcer': data.enforcer,
         'lot': data.lot,
         'status': data.status,

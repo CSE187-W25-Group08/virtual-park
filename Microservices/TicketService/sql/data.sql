@@ -4,7 +4,7 @@ INSERT INTO ticket(id, data)
 VALUES (
   'cc97d397-6906-44ee-b616-6ee746914474',
   jsonb_build_object(
-    'vehicle', 'e25734d1-3907-4466-b8fb-511815115c00',
+    'vehicle', 'f2169fe8-16ae-4c3c-b4e4-4b9c243b9ce3',
     'enforcer', 'bc83ae1d-1009-410a-bd28-8cb067bd40c3',
     'lot', 'f6d8425d-eccf-474a-bfed-c126eb7d00e2',
     'status', 'unpaid',
