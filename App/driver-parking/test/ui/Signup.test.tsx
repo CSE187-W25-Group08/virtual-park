@@ -7,7 +7,6 @@ import { signup } from '../../src/app/signup/actions'
 
 afterEach(() => {
   cleanup()
-  localStorage.clear()
   vi.restoreAllMocks()
 })
 
