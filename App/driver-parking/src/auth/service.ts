@@ -24,7 +24,7 @@ export async function signupUser(user: NewUser): Promise<Authenticated|undefined
 
 export async function authenticate(credentials: Credentials): Promise<Authenticated|undefined> {
   return new Promise((resolve, reject) => {
-    fetch('http://localhost:3010/api/v0/login', {
+    fetch('http://localhost:3010/api/v0/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
