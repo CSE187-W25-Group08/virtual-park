@@ -4,7 +4,7 @@ import { NewUser, Authenticated, Credentials} from './'
 
 export async function signupUser(user: NewUser): Promise<Authenticated|undefined> {
   return new Promise((resolve, reject) => {
-    fetch('http://localhost:3010/api/v0/signup', {
+    fetch('http://localhost:3010/api/v0/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -12,13 +12,13 @@ export async function signupUser(user: NewUser): Promise<Authenticated|undefined
       body: JSON.stringify(user),
     })
     .then(response => { 
-      if (response.status != 200) {
-        reject('Email taken')
+      if (response.status != 201) {
+        reject(response.statusText)
       }
       return response.json()} 
     )
     .then(data => resolve(data))
-    .catch(() => reject('Email taken'))
+    .catch(error => reject(error))
   })
 }
 
