@@ -1,15 +1,50 @@
 {
-  "name": "ticketservice",
+  "name": "ticket-service",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "description": "Micro service ticket service",
+  "author": "Jin Le",
+  "license": "UNLICENSED",
+  "repository": "none",
   "devDependencies": {
-    "typescript": "^5.8.3"
+    "@eslint/js": "*",
+    "@types/express": "*",
+    "@types/node": "*",
+    "@types/pg": "*",
+    "@vitest/coverage-v8": "^3.1.2",
+    "eslint": "*",
+    "eslint-config-typescript": "*",
+    "globals": "8",
+    "nodemon": "*",
+    "supertest": "*",
+    "ts-node": "*",
+    "typescript": "*",
+    "typescript-eslint": "*",
+    "vite-plugin-eslint": "*",
+    "vite-ts-decorators": "*",
+    "vitest": "*"
+  },
+  "dependencies": {
+    "class-validator": "*",
+    "dotenv": "*",
+    "express": "*",
+    "graphql": "*",
+    "graphql-http": "*",
+    "graphql-playground-middleware-express": "*",
+    "pg": "*",
+    "reflect-metadata": "*",
+    "type-graphql": "*",
+    "unplugin-swc": "^1.5.2"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "exec": "ts-node src/server.ts"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "lint": "eslint src/**/*.[jt]s --fix",
+    "test": "vitest run --no-file-parallelism --testTimeout=3000 --coverage"
   }
 }
