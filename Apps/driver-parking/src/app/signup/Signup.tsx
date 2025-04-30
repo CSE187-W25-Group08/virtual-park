@@ -5,6 +5,10 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import InputAdornment from '@mui/material/InputAdornment'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -15,6 +19,7 @@ export default function Signup() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,19 +78,32 @@ export default function Signup() {
           marginTop: '20px',
           width: '300px',
         }}
-      />
+      />        
       <TextField
         required
         name='password'
         label="Password"
         aria-label='Password'
-        type='password'
+        type={showPassword ? 'text' : 'password'}
         onChange={handleInputChange}
         sx={{
           marginTop: '20px',
           width: '300px',
         }}
-      />
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                edge="end"
+                aria-label='Toggle Password Visibility'
+              >
+                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />   
       <Button variant="contained"
         onClick={handleClick}
         aria-label='Sign Up'

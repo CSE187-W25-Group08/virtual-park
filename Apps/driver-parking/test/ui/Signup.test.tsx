@@ -76,3 +76,22 @@ it('mocks unsuccessful Signup process', async () => {
     expect(alertMock).toHaveBeenCalledWith('This email has already been taken.')
   })
 })
+
+it('toggles password visibility', () => {
+  render(<Signup />)
+
+  const password = screen.getByLabelText('Password').querySelector('input')
+  const togglePassword = screen.getByLabelText('Toggle Password Visibility')
+
+  if (!password) {
+    throw new Error('Input(s) not found')
+  }
+
+  fireEvent.click(togglePassword)
+
+  expect(password.type).toBe('text')
+
+  fireEvent.click(togglePassword)
+
+  expect(password.type).toBe('password')
+})
