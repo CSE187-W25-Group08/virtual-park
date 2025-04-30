@@ -5,6 +5,6 @@ export class Ticket {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Field(type => Int)
   id!: number
-  @Field()
+  @Field(() => String)
   violation!: string 
 }
