@@ -1,7 +1,7 @@
 import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 
-import Vehicles from '../../src/app/Register/Vehicles'
+import Vehicles from '../../src/app/register/Vehicles'
 // import { signup } from '../../src/app/signup/actions'
 
 afterEach(() => {
