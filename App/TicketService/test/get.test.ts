@@ -37,6 +37,6 @@ test("", async () => {
       `,
     })
     .then((res) => {
-      expect(res.body.data.ticket.violation).toEqual("expired meter");
+      expect(res.body.data.ticket[0].violation).toEqual("expired meter");
     });
 });
