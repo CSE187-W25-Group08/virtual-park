@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: virtual-park
+    container_name: virtual-park-vehicle
     image: postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
