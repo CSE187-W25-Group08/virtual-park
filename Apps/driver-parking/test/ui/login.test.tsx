@@ -1,7 +1,7 @@
 import { it, afterEach, vi } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 
-import Login from '../../src/app/Login/View'
+import Login from '../../src/app/login/View'
 
 afterEach(() => {
   cleanup()

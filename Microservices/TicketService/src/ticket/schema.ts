@@ -36,7 +36,6 @@ export class Ticket {
 
   @Field()
   enforcer!: string;
-
   @Field()
   lot!: string;
 
