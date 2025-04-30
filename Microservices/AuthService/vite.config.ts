@@ -1,4 +1,4 @@
-import { defineConfig, configDefaults } from 'vitest/config.js';
+import { defineConfig, configDefaults } from 'vitest/config';
 
 // https://vitejs.dev/config/
 export default defineConfig({

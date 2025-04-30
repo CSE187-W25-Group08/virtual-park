@@ -87,6 +87,13 @@ test('Sign Up and login as tommy', async () => {
     .expect(200)
 })
 
+test('login as anna', async () => {
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .expect(200)
+})
+
 test('Attempt bad credential login', async () => {
   await supertest(server)
     .post('/api/v0/auth/login')
