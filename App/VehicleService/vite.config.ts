@@ -18,7 +18,7 @@ export default defineConfig({
       ],
       exclude: [
         'src/server.ts',
-        'src/ticket/schema.ts',
+        'src/vehicle/schema.ts',
         'src/db.ts',
         '**/index.ts',
         '**/index.d.ts',
