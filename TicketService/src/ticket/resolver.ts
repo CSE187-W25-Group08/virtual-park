@@ -15,9 +15,9 @@ export class TicketResolver {
   @Authorized("driver")
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => Ticket)
-  async task(
+  async ticket(
   ): Promise<Ticket> {
-    return {id: 4, violation: 'test'}
+    return {id: 4, violation: 'Expired meter'}
   }
 
 }
