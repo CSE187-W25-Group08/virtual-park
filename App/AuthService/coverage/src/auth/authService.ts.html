@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">52.72% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/55</span>
+                <span class='fraction'>29/55</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">52.72% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/55</span>
+                <span class='fraction'>29/55</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -165,26 +165,26 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -253,18 +253,18 @@ export class AuthService {
     const newUser = await db.createNewUser(signUpDetails);
     if (newUser) {
       return { accessToken: generateToken(newUser.id, '') };
-<span class="branch-0 cbranch-no" title="branch not covered" >    } else {</span>
-<span class="cstat-no" title="statement not covered" >      return undefined</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+    } else {
+      return undefined
+    }
   }
-<span class="fstat-no" title="function not covered" >  public async login(credentials: Credentials): Promise&lt;Authenticated | undefined&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const user = await db.verifyLogin(credentials);</span>
-<span class="cstat-no" title="statement not covered" >    if (user) {</span>
-<span class="cstat-no" title="statement not covered" >      return { name: user.name, accessToken: generateToken(user.id, '') };</span>
-<span class="cstat-no" title="statement not covered" >    } else {</span>
-<span class="cstat-no" title="statement not covered" >      return undefined</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  public async login(credentials: Credentials): Promise&lt;Authenticated | undefined&gt; {
+    const user = await db.verifyLogin(credentials);
+    if (user) {
+      return { name: user.name, accessToken: generateToken(user.id, '') };
+    } else {
+      return undefined
+    }
+  }
   // https://claude.ai/chat/bb2b0366-a336-4241-b4c4-4da2d74c9bc4
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 <span class="fstat-no" title="function not covered" >  public async check(authHeader?: string, scopes?: string[]): Promise&lt;SessionUser&gt; {</span>
@@ -310,7 +310,7 @@ export class AuthService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-30T03:42:45.205Z
+                at 2025-04-30T04:00:28.548Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

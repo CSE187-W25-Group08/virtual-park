@@ -20,7 +20,7 @@ export async function createNewUser(signUpDetails: NewUser): Promise<User | unde
           'roles', jsonb_build_array('driver')::text
         ))
         RETURNING id, data->>'name' AS name;`,
-    values: [signUpDetails.email, signUpDetails.name, signUpDetails.password]
+    values: [signUpDetails.email, signUpDetails.password, signUpDetails.name]
   }
   const { rows } = await pool.query(signUp);
   if (rows.length === 1) {
