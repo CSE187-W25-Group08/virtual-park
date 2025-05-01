@@ -1,0 +1,57 @@
+{
+  "name": "permit-service",
+  "version": "1.0.0",
+  "description": "Microservice for permits in virtual-park",
+  "author": "Jennifer Chen <jchen566@ucsc.edu>",
+  "license": "UNLICENSED",
+  "repository": "none",
+  "devDependencies": {
+    "@types/express": "*",
+    "@types/jsonwebtoken": "*",
+    "@types/node": "*",
+    "@types/pg": "*",
+    "@types/supertest": "*",
+    "@vitest/coverage-v8": "*",
+    "bestzip": "*",
+    "eslint": "*",
+    "eslint-config-typescript": "*",
+    "globals": "8",
+    "nodemon": "*",
+    "supertest": "*",
+    "ts-node": "*",
+    "ts-postgres": "*",
+    "typescript": "*",
+    "typescript-eslint": "*",
+    "unplugin-swc": "*",
+    "vite-plugin-eslint": "*",
+    "vite-ts-decorators": "*",
+    "vitest": "*"
+  },
+  "dependencies": {
+    "class-validator": "*",
+    "dotenv": "*",
+    "express": "*",
+    "graphql-http": "*",
+    "graphql": "*",
+    "graphql-playground-middleware-express": "*",
+    "jsonwebtoken": "*",
+    "pg": "*",
+    "reflect-metadata": "*",
+    "type-graphql": "*"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "exec": "ts-node src/server.ts"
+  },
+  "scripts": {
+    "prestart": "npm run build",
+    "start": "node build/server.js",
+    "build": "tsc",
+    "dev": "nodemon",
+    "test": "vitest run --no-file-parallelism --testTimeout=3000 --coverage",
+    "lint": "eslint test/**/*.[jt]s src/**/*.[jt]s --fix"
+  }
+}
