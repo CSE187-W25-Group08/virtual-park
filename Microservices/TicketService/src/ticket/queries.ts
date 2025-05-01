@@ -1,4 +1,4 @@
-import {pool} from '../db';
+import { pool } from '../db';
 import { Ticket } from './schema';
 
 /**
@@ -6,6 +6,7 @@ import { Ticket } from './schema';
  */
 export const selectAllTickets =
   `
-  SELECT id, data
+  SELECT id, driver. data
   FROM ticket
+  WHERE
   `

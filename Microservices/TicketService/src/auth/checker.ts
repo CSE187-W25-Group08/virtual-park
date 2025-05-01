@@ -1,12 +1,17 @@
+import { SessionUser } from '../types/express'
+
 import { AuthChecker } from "type-graphql"
 import { Request } from "express"
 
+import { AuthService } from "./service"
 
 export const expressAuthChecker: AuthChecker<Request> = async (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { root, args, context, info },) => 
-{
-  // placeholder
-  context.user = {id : '7d9dcfd9-096c-4cae-8f57-1de15f6caa79'}
+  { root, args, context, info },) => {
+  try {
+    context.user = await new AuthService().check(context.headers.authorization)
+  } catch {
+    return false
+  }
   return true
 }
