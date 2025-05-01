@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { NewUser, Authenticated, Credentials} from './'
-import { rejects } from 'assert'
+// import { rejects } from 'assert'
 
 export async function signupUser(user: NewUser): Promise<Authenticated|undefined> {
   return new Promise((resolve, reject) => {
@@ -33,7 +33,7 @@ export async function authenticate(credentials: Credentials): Promise<Authentica
       body: JSON.stringify(credentials),
     })
     .then(response => { 
-      if (response.status != 201) {
+      if (response.status != 200) {
         reject(response.statusText)
       }
       return response.json()} 
