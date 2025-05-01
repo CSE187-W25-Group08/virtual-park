@@ -4,14 +4,14 @@ import * as queries from './queries'
 import { SessionUser } from '../types/express';
 
 export class TicketService {
-  
-  public async getAll(): Promise<Ticket[]> {
+
+  public async getAll(userId: string | undefined): Promise<Ticket[]> {
     const query = {
       text: queries.selectAllTickets,
-      //values: [user.id]
+      values: [userId]
     }
 
-    const {rows} = await pool.query(query);
+    const { rows } = await pool.query(query);
     const tickets = await Promise.all(rows.map(async (ticket) => {
       const data = ticket.data
       const ticketObj: Ticket = {
@@ -31,4 +31,5 @@ export class TicketService {
     console.log(tickets)
 
     return tickets;
-}}
+  }
+}
