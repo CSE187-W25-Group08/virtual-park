@@ -46,6 +46,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       if (!authHeader) {
         reject(new Error("Unauthorized"))
+        console.log('header unauthorization')
       }
       else {
         const token = authHeader.split(' ')[1]
@@ -60,6 +61,7 @@ export class AuthService {
               const user = await db.checkAuth(uid.id)
               if (!user) {
                 reject(new Error("Unauthorized"));
+                console.log('id checkAuth unauthorization')
                 return;
               }
               // if (scopes) {

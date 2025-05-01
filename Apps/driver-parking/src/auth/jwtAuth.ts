@@ -1,4 +1,4 @@
-import { SignJWT} from 'jose'
+import { SignJWT, jwtVerify} from 'jose'
 
 const encodedKey = new TextEncoder().encode(process.env.MASTER_SECRET)
 
@@ -10,9 +10,9 @@ export async function encrypt(userId: string): Promise<string> {
   .sign(encodedKey)
 }
 
-// export async function decrypt(token: string | undefined = ''): Promise<string> {
-//   const { payload } = await jwtVerify(token, encodedKey, {
-//     algorithms: ['HS256'],
-//   })
-//   return payload.id + ''
-// }
+export async function decrypt(token: string | undefined = ''): Promise<string> {
+  const { payload } = await jwtVerify(token, encodedKey, {
+    algorithms: ['HS256'],
+  })
+  return payload.id + ''
+}
