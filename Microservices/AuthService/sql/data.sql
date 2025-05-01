@@ -9,3 +9,14 @@ VALUES (
     'roles','["admin"]'
   )
 );
+
+INSERT INTO member(id, data) 
+VALUES (
+  'bea45ed8-aa83-4c49-a201-4625baa0e91a',
+  jsonb_build_object(
+    'email','molly@books.com',
+    'name','Molly Member',
+    'pwhash',crypt('mollymember',gen_salt('bf')),
+    'roles','["driver"]'
+  )
+);
