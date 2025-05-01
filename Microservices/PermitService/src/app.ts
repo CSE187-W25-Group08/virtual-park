@@ -1,5 +1,5 @@
-import express, { 
-  Express, 
+import express, {
+  Express,
 } from 'express'
 
 import path from 'path'
@@ -13,25 +13,25 @@ import { expressAuthChecker } from './auth/checker'
 
 const app: Express = express()
 app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 
 async function bootstrap() {
   const schema = await buildSchema({
     resolvers: resolvers,
-    validate: true, 
+    validate: true,
     authChecker: expressAuthChecker,
     emitSchemaFile: {
       path: path.resolve(__dirname, "../build/schema.gql"),
-      sortedSchema: true, 
+      sortedSchema: true,
     }
   })
   app.use(
     "/graphql",
     createHandler({
-        schema: schema,
-        context: (req) => ({
-          headers: req.headers
-        }),
+      schema: schema,
+      context: (req) => ({
+        headers: req.headers
+      }),
     })
   )
   app.get("/playground", expressPlayground({ endpoint: "/graphql" }))
