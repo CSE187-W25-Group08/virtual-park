@@ -40,6 +40,11 @@ it('contains expired meter violation', async () => {
     await screen.findByText('Expired meter');
 })
 
+it('contains expired meter violation', async () => {
+    render(<TicketList/>)
+    await screen.findByText('Friday, April 25 at 2:00 AM');
+})
+
 /*
 it('contains ticket deductible', async () => {
     render(<TicketList/>)
