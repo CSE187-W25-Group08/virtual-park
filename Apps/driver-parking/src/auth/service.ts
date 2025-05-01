@@ -49,12 +49,11 @@ export async function authenticate(credentials: Credentials): Promise<Authentica
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
     });
-
-    if (!response.ok) return undefined;
-
+    if (!response.ok) {
+      return undefined;
+    }
     return await response.json();
   } catch (err) {
-    console.error('[authenticate] fetch error:', err);
     return undefined;
   }
 }
