@@ -22,22 +22,40 @@ export async function signupUser(user: NewUser): Promise<Authenticated|undefined
   })
 }
 
-export async function authenticate(credentials: Credentials): Promise<Authenticated|undefined> {
-  return new Promise(async (resolve, reject) => {
-    await fetch('http://localhost:3010/api/v0/auth/login', {
+// export async function authenticate(credentials: Credentials): Promise<Authenticated|undefined> {
+//   return new Promise(async (resolve) => {
+//     await fetch('http://localhost:3010/api/v0/auth/login', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(credentials),
+//     })
+//     .then(response => { 
+//       if (response.status != 200) {
+//         resolve(undefined)
+//       }
+//       return response.json()
+//     } 
+//     )
+//     .then(data => resolve(data))
+//   })
+// }
+
+export async function authenticate(credentials: Credentials): Promise<Authenticated | undefined> {
+  try {
+    const response = await fetch('http://localhost:3010/api/v0/auth/login', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
-    })
-    .then(response => { 
-      if (response.status != 200) {
-        reject('Unauthorized')
-      }
-      return response.json()} 
-    )
-    .then(data => resolve(data))
-    .catch(() => reject('Unauthorized'))
-  })
+    });
+
+    if (!response.ok) return undefined;
+
+    return await response.json();
+  } catch (err) {
+    console.error('[authenticate] fetch error:', err);
+    return undefined;
+  }
 }
+

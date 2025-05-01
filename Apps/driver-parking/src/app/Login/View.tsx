@@ -30,8 +30,7 @@ export default function LoginView() {
   const handleClick = async () => {
     const authenticated = await login(credentials)
     if (authenticated) {
-      const name = authenticated.name || 'undefined'
-      window.sessionStorage.setItem('name', name)
+      window.sessionStorage.setItem('name', authenticated.name || 'undefined')
       router.push('/')
     }
   }
