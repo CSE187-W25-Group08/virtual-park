@@ -54,7 +54,7 @@ export default function LoginView() {
         }}
       >
         <Typography variant="h5">
-          {'CSE187 Assignment 3'}
+          {'Welcome to Virtual-Park!'}
         </Typography>
         
         <Box

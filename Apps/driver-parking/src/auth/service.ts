@@ -1,4 +1,4 @@
-// import 'server-only'
+import 'server-only'
 
 import { NewUser, Authenticated, Credentials} from './'
 
@@ -23,8 +23,8 @@ export async function signupUser(user: NewUser): Promise<Authenticated|undefined
 }
 
 export async function authenticate(credentials: Credentials): Promise<Authenticated|undefined> {
-  return new Promise((resolve, reject) => {
-    fetch('http://localhost:3010/api/v0/auth/login', {
+  return new Promise(async (resolve, reject) => {
+    await fetch('http://localhost:3010/api/v0/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

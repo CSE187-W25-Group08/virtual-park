@@ -12,12 +12,25 @@ export default function TicketList() {
   { id: '100', driver: 'Pork', make: 'Honda', model: 'Civic', color: 'red', license_plate: 'R682LJD' },
   ];
 
+  const TableHeader= (title: string) => (
+    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Typography>Violation</Typography>
+      <Typography>{title}</Typography>
+      <Box>
+        <Typography>Deductible</Typography>
+        <Typography>Issue Date</Typography>
+      </Box>
+    </Box>
+  );
+
   return (
 
-    <Card sx={{ p: 2, border: '1px solid #ccc', width: 325 }}>
+    <Card sx={{ p: 2, border: '1px solid #ccc'}}>
+      {TableHeader('Paid')}
       {initialVehicles.map((vehicle, index) => (
         <TicketCard key = {index}/>
       ))}
+      {TableHeader('Unpaid')}
     </Card>
   );
 }
