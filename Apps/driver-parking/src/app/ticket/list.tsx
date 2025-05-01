@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Box, Card, Typography, Button, TextField, Switch, FormControlLabel } from '@mui/material';
+import { Box, Card, Typography} from '@mui/material';
 import TicketCard from './card';
 import { Ticket } from '../../ticket';
 import { list } from './actions';
@@ -9,8 +9,7 @@ import { list } from './actions';
 export default function TicketList() {
   const [ticketList, setTicketList] = useState<Ticket[]>([]);
 
-
-    useEffect(() => {
+  useEffect(() => {
   const fetchData = async () => {
     const result = await list();
     if (result) {
