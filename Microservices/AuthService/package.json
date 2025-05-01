@@ -28,7 +28,7 @@
     "typescript": "*",
     "typescript-eslint": "*",
     "vite-plugin-eslint": "*",
-    "vitest": "*"
+    "vitest": "^3.1.2"
   },
   "dependencies": {
     "cors": "*",
