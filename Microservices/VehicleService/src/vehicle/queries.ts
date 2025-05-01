@@ -7,3 +7,11 @@ SELECT
 FROM
   vehicle
 `;
+
+export const selectUserVehicles = `
+SELECT
+  id, data
+FROM
+  vehicle
+WHERE driver::text = $1::text;
+`;
