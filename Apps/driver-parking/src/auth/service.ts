@@ -22,39 +22,43 @@ export async function signupUser(user: NewUser): Promise<Authenticated|undefined
   })
 }
 
-// export async function authenticate(credentials: Credentials): Promise<Authenticated|undefined> {
-//   return new Promise(async (resolve) => {
-//     await fetch('http://localhost:3010/api/v0/auth/login', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(credentials),
-//     })
-//     .then(response => { 
-//       if (response.status != 200) {
-//         resolve(undefined)
-//       }
-//       return response.json()
-//     } 
-//     )
-//     .then(data => resolve(data))
-//   })
-// }
-
-export async function authenticate(credentials: Credentials): Promise<Authenticated | undefined> {
-  try {
-    const response = await fetch('http://localhost:3010/api/v0/auth/login', {
+export async function authenticate(credentials: Credentials): Promise<Authenticated|undefined> {
+  return new Promise(async (resolve) => {
+    await fetch('http://localhost:3010/api/v0/auth/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(credentials),
-    });
-    if (!response.ok) {
-      return undefined;
-    }
-    return await response.json();
-  } catch (err) {
-    return undefined;
-  }
+    })
+    .then(response => { 
+      if (response.status != 200) {
+        resolve(undefined)
+      }
+      return response.json()
+    } 
+    )
+    .then(data => resolve(data))
+  })
 }
-
+// export async function authenticate(credentials: Credentials): Promise<Authenticated | undefined> { 
+//   try { 
+//     const response = await fetch('http://localhost:3010/api/v0/auth/login', { 
+//       method: 'POST', 
+//       headers: { 'Content-Type': 'application/json' }, 
+//       body: JSON.stringify(credentials), 
+//     }); 
+    
+//     if (!response.ok) { 
+//       console.error('Authentication failed:', response.status, response.statusText);
+//       const errorText = await response.text();
+//       console.error('Error response:', errorText);
+//       return undefined; 
+//     } 
+    
+//     return await response.json(); 
+//   } catch (err) { 
+//     console.error('Authentication error:', err);
+//     return undefined; 
+//   } 
+// }
