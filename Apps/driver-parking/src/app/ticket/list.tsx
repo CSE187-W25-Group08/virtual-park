@@ -14,7 +14,9 @@ export default function TicketList() {
 
   return (
 
-    <Card sx={{ p: 2, border: '1px solid #ccc', width: 325 }}>
+    <Card sx={{ p: 2, border: '1px solid #ccc'}}>
+      <div>Violation</div>
+      <div>Violation</div>
       {initialVehicles.map((vehicle, index) => (
         <TicketCard key = {index}/>
       ))}
