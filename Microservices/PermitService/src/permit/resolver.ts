@@ -5,11 +5,11 @@ import { PermitService } from './service'
 
 @Resolver()
 export class PermitResolver {
-  @Authorized('driver')
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @Query(returns => [Permit])
-    async permits(
-    ): Promise<Permit[]> {
-      return await new PermitService().getAll()
-    }
+  @Authorized()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(returns => [Permit])
+  async permits(
+  ): Promise<Permit[]> {
+    return await new PermitService().getAll()
+  }
 }
