@@ -1,5 +1,5 @@
 export interface Authenticated {
-  name?: string,
+  name: string,
   accessToken: string
 }
 
