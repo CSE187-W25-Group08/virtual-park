@@ -4,6 +4,9 @@ import supertest from "supertest";
 import * as db from './db'
 import { app, bootstrap } from "../src/app";
 
+
+
+
 let server: http.Server<
   typeof http.IncomingMessage,
   typeof http.ServerResponse
@@ -20,8 +23,14 @@ afterAll(() => {
   db.shutdown()
   server.close();
 });
+export const anna = {
+  email: 'anna@books.com',
+  password: 'annaadmin',
+  name: "Anna Admin",
+}
 
 const accessToken = 'Placeholder before authenticated implementation'
+
 
 test("", async () => {
   await supertest(server)
