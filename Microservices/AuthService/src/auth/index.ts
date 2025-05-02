@@ -24,7 +24,7 @@ export interface CheckUser {
   roles: string
 }
 export interface Authenticated {
-  name?: string,
+  name: string,
   accessToken: midt
 }
 
