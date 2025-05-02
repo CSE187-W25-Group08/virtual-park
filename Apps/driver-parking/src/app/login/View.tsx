@@ -31,7 +31,7 @@ export default function LoginView() {
     const authenticated = await login(credentials)
     if (authenticated) {
       window.sessionStorage.setItem('name', authenticated.name || 'undefined')
-      router.push('/')
+      router.push('/register')
     }
   }
 
