@@ -7,8 +7,8 @@ import { TicketService } from "../../ticket/service";
 
 export async function list(): Promise<Ticket[] | undefined> {
   try {
-    // const cookie = (await cookies()).get("session")?.value;
-    return new TicketService().getUserTickets()
+    const cookie = (await cookies()).get("session")?.value;
+    return new TicketService().getUserTickets(cookie)
     /*
     const ticketList = [
       {
