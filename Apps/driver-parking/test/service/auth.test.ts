@@ -1,5 +1,5 @@
 import { vi, it, expect, afterEach } from 'vitest'
-import { signupUser } from '../../src/auth/service'
+import { signupUser, authenticate, check } from '../../src/auth/service'
 
 vi.mock('server-only', () => ({}))
 
@@ -29,4 +29,50 @@ it('unsuccessfully signs up a user', async () => {
   } as Response)
 
   await expect(signupUser(mockUser)).rejects.toEqual('Conflict')
+})
+
+it('successfully authenticates a user', async () => {
+  const mockUser = {email: 'test@email.com', password: 'password'}
+  const mockResponse = {name: 'Test User', accessToken: 'token'}
+
+  vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+    status: 200,
+    json: async () => mockResponse,
+  } as Response)
+
+  const result = await authenticate(mockUser)
+  expect(result).toEqual(mockResponse)
+})
+
+it('unsuccessfully authenticates a user', async () => {
+  const mockUser = {email: 'test@email.com', password: 'password'}
+
+  vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+    status: 401,
+    statusText: 'Unauthorized',
+  } as Response)
+
+  await expect(authenticate(mockUser)).rejects.toEqual('Unauthorized')
+})
+
+it('successfully checks authentication', async () => {
+  const mockToken = 'token'
+
+  vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+    status: 200,
+    json: async () => ({}),
+  } as Response)
+
+  await expect(check(mockToken)).resolves
+})
+
+it('unsuccessfully checks authentication', async () => {
+  const mockToken = 'token'
+
+  vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+    status: 401,
+    json: async () => ({}),
+  } as Response)
+
+  await expect(check(mockToken)).rejects.toEqual('Unauthorized')
 })
