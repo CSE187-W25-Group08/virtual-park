@@ -8,7 +8,7 @@ import {
   Get,
   Security,
   Request,
-  Path
+  Query
 } from 'tsoa'
 
 import { Credentials, Authenticated, NewUser } from '.'
@@ -47,18 +47,18 @@ export class AuthController extends Controller {
       })
   }
 
-  @Get('check/:scope?')
+  @Get('check')
   @Security("jwt")
-  @Response('401', 'Unauthorised')
-  public async check(@Request() request: Express.Request, @Path() scope?: string): Promise<SessionUser | undefined> {
-    return new Promise((resolve, reject) => {
-      const user = request.user as SessionUser
-      resolve(request.user)
-      if (scope === 'adminonly' && (!user.roles || !user.roles.includes('admin'))) {
-        reject(new Error("Unauthorized: Admin role required"))
-      } else {
-        resolve(user)
-      }
-    })
+  @Response('401', 'Unauthorized')
+  public async check(
+    @Request() request: Express.Request,
+    @Query() scope?: string
+  ): Promise<SessionUser | undefined> {
+    const user = request.user as SessionUser;
+    if (scope === 'adminonly' && !user.roles?.includes('admin')) {
+      throw new Error("Unauthorized: Admin role required");
+    }
+    return user;
   }
+
 }
