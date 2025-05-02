@@ -7,7 +7,8 @@ import {
   SuccessResponse,
   Get,
   Security,
-  Request
+  Request,
+  Path
 } from 'tsoa'
 
 import { Credentials, Authenticated, NewUser } from '.'
@@ -46,16 +47,18 @@ export class AuthController extends Controller {
       })
   }
 
-  @Get('check')
+  @Get('check/:scope?')
   @Security("jwt")
   @Response('401', 'Unauthorised')
-  public async check(
-    @Request() request: Express.Request
-  ): Promise<SessionUser | undefined> {
-    // Nothing to check, Express middleware will have rejected the request
-    // by now if the caller is unauthorised
-    return new Promise((resolve) => {
+  public async check(@Request() request: Express.Request, @Path() scope?: string): Promise<SessionUser | undefined> {
+    return new Promise((resolve, reject) => {
+      const user = request.user as SessionUser
       resolve(request.user)
+      if (scope === 'adminonly' && (!user.roles || !user.roles.includes('admin'))) {
+        reject(new Error("Unauthorized: Admin role required"))
+      } else {
+        resolve(user)
+      }
     })
   }
 }

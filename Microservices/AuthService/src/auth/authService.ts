@@ -27,7 +27,7 @@ export class AuthService {
   public async signUp(signUpDetails: NewUser): Promise<Authenticated | undefined> {
     const newUser = await db.createNewUser(signUpDetails);
     if (newUser) {
-      return { accessToken: generateToken(newUser.id, '') };
+      return { name: newUser.name, accessToken: generateToken(newUser.id, '') };
     } else {
       return undefined
     }
@@ -41,7 +41,7 @@ export class AuthService {
     }
   }
   // https://claude.ai/chat/bb2b0366-a336-4241-b4c4-4da2d74c9bc4
-   
+
   public async check(authHeader?: string, scopes?: string[]): Promise<SessionUser> {
     return new Promise((resolve, reject) => {
       if (!authHeader) {
@@ -72,7 +72,7 @@ export class AuthService {
                   }
                 }
               }
-              resolve({ id: user.id });
+              resolve({ id: user.id, roles: user.roles });
             })();
           }
         )

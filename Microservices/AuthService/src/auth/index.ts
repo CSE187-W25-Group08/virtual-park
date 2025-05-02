@@ -27,7 +27,6 @@ export interface Authenticated {
   name: string,
   accessToken: midt
 }
-
 export interface NewUser {
   name: string,
   email: email,
