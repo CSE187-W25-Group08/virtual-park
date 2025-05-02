@@ -56,9 +56,10 @@ export class AuthController extends Controller {
   ): Promise<SessionUser | undefined> {
     const user = request.user as SessionUser;
     if (scope === 'adminonly' && !user.roles?.includes('admin')) {
-      throw new Error("Unauthorized: Admin role required");
+      this.setStatus(401);
+    } else {
+      return user;
     }
-    return user;
   }
 
 }

@@ -152,3 +152,32 @@ test('check with no access token', async () => {
     .get('/api/v0/auth/check')
     .expect(401)
 })
+
+
+test('admin check as non-admin', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .get('/api/v0/auth/check?scope=adminonly')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(401)
+})
+
+test('admin check as admin', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .get('/api/v0/auth/check?scope=adminonly')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(200)
+})
