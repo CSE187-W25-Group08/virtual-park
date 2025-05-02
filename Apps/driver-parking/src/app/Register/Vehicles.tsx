@@ -86,7 +86,9 @@ export default function Vehicles() {
                 }}
               >
                 <Typography variant="body2">
-                  {vehicle.make}, {vehicle.model} - {vehicle.color} ({vehicle.licensePlate})
+                  {vehicle.make}, {vehicle.model} - {vehicle.color} 
+                  <br />
+                  ({vehicle.licensePlate})
                 </Typography>
                 <Typography
                   variant="body2"
