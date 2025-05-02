@@ -3,15 +3,12 @@
 import { cookies } from "next/headers";
 
 import { Ticket } from "../../ticket";
-import { decrypt } from "../../auth/jwtAuth";
+import { check } from "../../auth/service";
 
 export async function list(): Promise<Ticket[] | undefined> {
   try {
     const cookie = (await cookies()).get("session")?.value;
-    const userId = await decrypt(cookie);
-    // query for microservice action goes here
-    console.log(userId);
-
+    const user_id = await check(cookie);
     const ticketList = [
       {
         id: "t1",

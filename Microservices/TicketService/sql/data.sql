@@ -10,8 +10,8 @@ VALUES (
     'lot', 'f6d8425d-eccf-474a-bfed-c126eb7d00e2',
     'status', 'unpaid',
     'description', 'unpaid',
-    'due', 'unpaid',
-    'issue', 'unpaid',
+    'due', '2025-05-10T12:00:00Z',
+    'issue', '2025-04-25T09:30:00Z',
     'violation', 'expired meter',
     'image', 'https://static.wikia.nocookie.net/marvel-rivals/images/b/b0/Rocket_Raccoon_Hero_Portrait.png/revision/latest?cb=20240819163711'
   )
