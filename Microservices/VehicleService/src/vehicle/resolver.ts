@@ -1,5 +1,5 @@
-import { Authorized, Query, Resolver, Ctx } from 'type-graphql'
-import { Vehicle } from './schema'
+import { Authorized, Query, Mutation, Resolver, Ctx, Arg } from 'type-graphql'
+import { Vehicle, RegisterVehicle } from './schema'
 import { Request } from "express"
 import { VehicleService } from './service'
 
@@ -18,5 +18,12 @@ export class VehicleResolver {
   @Query(returns => [Vehicle])
   async userVehicle(@Ctx() request: Request): Promise<Vehicle[]> {
     return await new VehicleService().getUserVehicles(request.user?.id)
+  }
+
+  @Authorized()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Mutation(() => Vehicle)
+  async registerVehicle(@Ctx() request: Request, @Arg("input") input: RegisterVehicle): Promise<Vehicle> {
+    return await new VehicleService().registerVehicle(request.user?.id, input)
   }
 }

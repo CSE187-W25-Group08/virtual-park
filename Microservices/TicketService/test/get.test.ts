@@ -1,8 +1,9 @@
-import { test, beforeAll, afterAll, expect } from "vitest";
+import { vi, test, beforeAll, afterAll, expect } from "vitest";
 import * as http from "http";
 import supertest from "supertest";
 import * as db from './db'
 import { app, bootstrap } from "../src/app";
+import { AuthService } from "../src/auth/service";
 
 
 
@@ -28,6 +29,9 @@ export const anna = {
   password: 'annaadmin',
   name: "Anna Admin",
 }
+vi.spyOn(AuthService.prototype, 'check').mockResolvedValue({
+  id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a'
+})
 
 const accessToken = 'Placeholder before authenticated implementation'
 
@@ -46,6 +50,8 @@ test("", async () => {
       `,
     })
     .then((res) => {
+      console.log(res.body.errors[0].message)
       expect(res.body.data.ticket[0].violation).toEqual("expired meter");
+
     });
 });

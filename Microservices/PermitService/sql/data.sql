@@ -4,5 +4,7 @@ INSERT INTO permit (id, data) VALUES (
     'license_number', 'Y1234567',
     'issue_date', '2025-03-05T08:00:00.000Z',
     'exp_date', '2025-03-05T09:00:00.000Z',
+    'price', 3.14,
+    'type', 'Slug Student'
   )
 );

@@ -6,3 +6,10 @@ export interface Vehicle {
     model: string,
     color: string
 }
+
+export interface VehicleForm {
+    licensePlate: string,
+    make: string,
+    model: string,
+    color: string
+}

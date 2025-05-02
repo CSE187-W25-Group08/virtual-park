@@ -2,18 +2,10 @@
 import { useEffect, useState } from 'react';
 import { Box, Card, Typography, Button, TextField, MenuItem, Switch, FormControlLabel } from '@mui/material';
 
-import {Vehicle} from '../../register'
-import { getUserVehicles } from './actions'
-
-// const initialVehicles = [
-//   { id: '123', driver: 'Bob', make: 'Toyota', model: 'Corolla', color: 'silver', license_plate: 'B247KLM' },
-//   { id: '456', driver: 'Bill', make: 'Honda', model: 'Accord', color: 'black', license_plate: 'F918WZQ' },
-//   { id: '789', driver: 'John', make: 'Toyota', model: 'Prius', color: 'blue', license_plate: 'T304MNE' },
-//   { id: '100', driver: 'Pork', make: 'Honda', model: 'Civic', color: 'red', license_plate: 'R682LJD' },
-// ];
+import {Vehicle,VehicleForm} from '../../register'
+import { getUserVehicles, registerVehicle } from './actions'
 
 export default function Vehicles() {
-  // const [vehicles, setVehicles] = useState(initialVehicles);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState('');
@@ -49,24 +41,31 @@ export default function Vehicles() {
   };
 
   const isFormValid =
-  formData.driver.trim() &&
+  // formData.driver.trim() &&
   formData.licensePlate.trim() &&
   formData.make.trim() &&
   formData.model.trim() &&
   formData.color.trim();
 
-  const handleSubmit = () => {
-    const newVehicle = {
-      id: Date.now().toString(),
-      driver: formData.driver,
+
+  // register a new vehicle
+  const handleSubmit = async () => {
+    const newVehicle: VehicleForm = {
       make: formData.make,
       model: formData.model,
       licensePlate: formData.licensePlate,
       color: formData.color
     };
-    setVehicles(prev => [...prev, newVehicle]);
-    setShowForm(false);
-    setFormData(emptyForm)
+
+    try {
+      const result = await registerVehicle(newVehicle)
+
+      setVehicles(prev => [...prev, result])
+      setShowForm(false)
+      setFormData(emptyForm)
+    } catch (e) {
+      setError(e + '')
+    }
   };
 
   return (
@@ -113,7 +112,7 @@ export default function Vehicles() {
       ) : (
         <>
         <Typography variant="h6" sx={{ mb: 2 }}>Register Vehicle</Typography>
-          <TextField
+          {/* <TextField
             required
             label="Driver"
             name="driver"
@@ -121,7 +120,7 @@ export default function Vehicles() {
             value={formData.driver}
             onChange={handleChange}
             sx={{ mb: 2 }}
-          />
+          /> */}
           <TextField
             required
             label="License Plate"
