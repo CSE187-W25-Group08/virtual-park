@@ -19,7 +19,7 @@ export async function signup(user: NewUser) : Promise<User|undefined> {
       sameSite: 'lax',
       path: '/',
     })
-    return { name: data.name ?? '' }
+    return {name: data.name}
   }
   return undefined
 }

@@ -27,7 +27,7 @@ export class AuthService {
   public async signUp(signUpDetails: NewUser): Promise<Authenticated | undefined> {
     const newUser = await db.createNewUser(signUpDetails);
     if (newUser) {
-      return { accessToken: generateToken(newUser.id, '') };
+      return { name: newUser.name, accessToken: generateToken(newUser.id, '') };
     } else {
       return undefined
     }
