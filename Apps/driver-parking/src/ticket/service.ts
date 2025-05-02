@@ -9,7 +9,7 @@ export class TicketService {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${cookie}`,
         },
-        body: JSON.stringify({query: `{ticket {id, vehicle, enforcer, lot, status, description, due, issue, violation, image}}`}),
+        body: JSON.stringify({query: `{ticket {id, vehicle, enforcer, lot, status, description, due, issue, violation, image, deductible}}`}),
       })
       .then(response => { 
         if (response.status != 200) {

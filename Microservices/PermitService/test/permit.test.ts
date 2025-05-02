@@ -30,11 +30,26 @@ test('Get all permits', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `{
-        permit
-        { license_number, issue_date, exp_date }
+        permits
+        { licenseNumber, issueDate, expDate }
       }`
     })
     .then((res) => {
-      expect(res.body.data.permit.length).toEqual(1)
+      expect(res.body.data.permits.length).toEqual(1)
+      
+    })
+})
+test('Permit contains price', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `{
+        permits
+        { licenseNumber, issueDate, expDate, price}
+      }`
+    })
+    .then((res) => {
+      expect(res.body.data.permits[0].price).toEqual(3.14)
     })
 })

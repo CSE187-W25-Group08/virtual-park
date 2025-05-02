@@ -15,6 +15,8 @@ export class PermitService {
         'licenseNumber': data['license_number'],
         'issueDate': data['issue_date'],
         'expDate': data['exp_date'],
+        'type': data['type'],
+        'price': data['price'],
       }
       return permitObj
     }))

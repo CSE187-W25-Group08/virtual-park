@@ -1,9 +1,11 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Card, Typography} from '@mui/material';
+import ListItem from '@mui/material/ListItem';
 import TicketCard from './card';
 import { Ticket } from '../../ticket';
 import { list } from './actions';
+import List from '@mui/material/List';
 
 
 export default function TicketList() {
@@ -32,13 +34,13 @@ export default function TicketList() {
   );
 
   return (
+    <List>
 
-    <Card sx={{ p: 2, border: '1px solid #ccc'}}>
-      {TableHeader('Paid')}
+        {TableHeader('Unpaid')}
       {ticketList.map((ticket, index) => (
         <TicketCard key = {index} ticket = {ticket}/>
       ))}
-      {TableHeader('Unpaid')}
-    </Card>
+      {TableHeader('Paid')}
+    </List>
   );
 }

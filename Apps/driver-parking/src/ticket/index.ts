@@ -9,4 +9,5 @@ export interface Ticket {
   issue: string,
   violation: string,
   image: string
+  deductible: number
 }

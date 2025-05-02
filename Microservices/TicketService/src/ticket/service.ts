@@ -25,7 +25,8 @@ export class TicketService {
         'due': data.due,
         'issue': data.issue,
         'violation': data.violation,
-        'image': data.image
+        'image': data.image,
+        'deductible' :data.deductible
       }
       return ticketObj
     }))
