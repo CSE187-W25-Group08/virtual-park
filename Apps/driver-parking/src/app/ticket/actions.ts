@@ -3,12 +3,13 @@
 import { cookies } from "next/headers";
 
 import { Ticket } from "../../ticket";
-import { check } from "../../auth/service";
+import { TicketService } from "../../ticket/service";
 
 export async function list(): Promise<Ticket[] | undefined> {
   try {
-    const cookie = (await cookies()).get("session")?.value;
-    const user_id = await check(cookie);
+    // const cookie = (await cookies()).get("session")?.value;
+    return new TicketService().getUserTickets()
+    /*
     const ticketList = [
       {
         id: "t1",
@@ -37,6 +38,7 @@ export async function list(): Promise<Ticket[] | undefined> {
     ];
 
     return ticketList;
+    */
   } catch {
     return [];
   }
