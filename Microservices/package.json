@@ -6,6 +6,11 @@
   "license": "UNLICENSED",
   "repository": "none",
   "scripts": {
+    "docker-auth": "cd AuthService && docker-compose up -d",
+    "docker-ticket": "cd TicketService && docker-compose up -d",
+    "docker-vehicle": "cd VehicleService && docker-compose up -d",
+    "docker-permit": "cd PermitService && docker-compose up -d",
+    "docker-all": "npm run docker-auth && npm run docker-ticket && npm run docker-vehicle && npm run docker-permit",
     "install-auth": "cd AuthService && npm install",
     "install-ticket": "cd TicketService && npm install",
     "install-vehicle": "cd VehicleService && npm install",
