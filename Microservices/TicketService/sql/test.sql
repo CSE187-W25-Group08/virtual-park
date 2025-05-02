@@ -13,7 +13,8 @@ VALUES (
     'due', '2025-05-10T12:00:00Z',
     'issue', '2025-04-25T09:30:00Z',
     'violation', 'expired meter',
-    'image', 'https://static.wikia.nocookie.net/marvel-rivals/images/b/b0/Rocket_Raccoon_Hero_Portrait.png/revision/latest?cb=20240819163711'
+    'image', 'https://static.wikia.nocookie.net/marvel-rivals/images/b/b0/Rocket_Raccoon_Hero_Portrait.png/revision/latest?cb=20240819163711',
+    'deductible', 50.04
   )
 );
 
@@ -30,6 +31,7 @@ VALUES (
     'due', '2025-05-15T12:00:00Z',
     'issue', '2025-04-30T12:00:00Z',
     'violation', 'restricted area',
-    'image', 'https://static.wikia.nocookie.net/marvel-rivals/images/b/b0/Rocket_Raccoon_Hero_Portrait.png/revision/latest?cb=20240819163711'
+    'image', 'https://static.wikia.nocookie.net/marvel-rivals/images/b/b0/Rocket_Raccoon_Hero_Portrait.png/revision/latest?cb=20240819163711',
+    'deductible', 50.02
   )
 );
