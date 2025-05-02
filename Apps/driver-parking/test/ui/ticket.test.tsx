@@ -21,6 +21,7 @@ vi.mock('../../src/app/ticket/actions', () => ({
       issue: "2025-04-25T09:00:00Z",
       violation: "Expired Meter",
       image: "/images/tickets/t2.jpg",
+      deductible: 50.02
     }])
 }))
 
@@ -42,7 +43,7 @@ it('contains expired meter violation', async () => {
 
 it('contains expired meter violation', async () => {
     render(<TicketList/>)
-    await screen.findByText('Friday, April 25 at 2:00 AM');
+    await screen.findByText('4/25/2025');
 })
 
 it('contains ticket deductible', async () => {
