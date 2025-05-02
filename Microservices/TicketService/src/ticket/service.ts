@@ -7,16 +7,17 @@ export class TicketService {
 
   public async getAll(userId: string | undefined): Promise<Ticket[]> {
     const query = {
-      text: queries.selectAllTickets,
-      values: [userId]
+      text: queries.selectAllTickets
+      // values: [userId]
     }
 
     const { rows } = await pool.query(query);
+    console.log(rows)
     const tickets = await Promise.all(rows.map(async (ticket) => {
       const data = ticket.data
       const ticketObj: Ticket = {
         'id': ticket.id,
-        'vehicle': ticket.vehicle,
+        'vehicle': data.vehicle,
         'enforcer': data.enforcer,
         'lot': data.lot,
         'status': data.status,

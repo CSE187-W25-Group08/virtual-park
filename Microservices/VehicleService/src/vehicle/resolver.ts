@@ -21,6 +21,3 @@ export class VehicleResolver {
     return await new VehicleService().getUserVehicles(request.user?.id)
   }
 }
-
-
-

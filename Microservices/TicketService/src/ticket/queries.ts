@@ -6,7 +6,6 @@ import { Ticket } from './schema';
  */
 export const selectAllTickets =
   `
-  SELECT id, driver. data
+  SELECT id, driver, data
   FROM ticket
-  WHERE
   `
