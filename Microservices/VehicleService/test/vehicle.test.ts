@@ -1,11 +1,16 @@
-import { test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
+import { vi, test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
 
 import * as db from './db'
 import { app, bootstrap } from '../src/app'
+import { AuthService } from '../src/auth/service'
 
 let server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
+
+vi.spyOn(AuthService.prototype, 'check').mockResolvedValue({
+  id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54'
+})
 
 beforeAll(async () => {
   server = http.createServer(app)
@@ -25,14 +30,57 @@ beforeEach(async () => {
 test('Returns all vehicles', async () => {
   await supertest(server)
     .post('/graphql')
-    .set('Authorization', 'Bearer placeholder')
+    .set('Authorization', `Bearer Placeholder`)
     .send({
       query: `{
         vehicle
-        { licensePlate, make, model }
+        { id, driver, licensePlate, make, model, color }
       }`
     })
     .then((res) => {
-      expect(res.body.data.vehicle.length).toEqual(1)
+      expect(res.body.data.vehicle.length).toEqual(3)
+    })
+})
+
+test('Returns Member\'s Vehicles', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `{
+        userVehicle
+        { id, driver, licensePlate, make, model, color }
+      }`
+    })
+    .then((res) => {
+      expect(res.body.data.userVehicle.length).toEqual(2)
+    })
+})
+
+test('Member Registers a Vehicle', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
+        mutation {
+          registerVehicle(input: {
+            licensePlate: "TEST123",
+            make: "Toyota",
+            model: "Corolla",
+            color: "Silver"
+          }) {
+            id
+            licensePlate
+            make
+            model
+            color
+            driver
+          }
+        }
+      `
+    })
+    .then((res) => {
+      expect(res.body.data.registerVehicle.licensePlate).toBe("TEST123")
     })
 })

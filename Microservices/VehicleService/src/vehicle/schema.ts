@@ -1,5 +1,5 @@
 import { IsUUID, MaxLength, MinLength } from 'class-validator'
-import { Field, ID, ObjectType } from 'type-graphql'
+import { Field, ID, ObjectType, InputType } from 'type-graphql'
 
 @ObjectType()
 export class Vehicle {
@@ -25,6 +25,23 @@ export class Vehicle {
   make!: string
   @Field()
   model!: string
+  @Field()
+  color!: string
+}
+
+@InputType()
+export class RegisterVehicle {
+  @Field()
+  @MinLength(1)
+  @MaxLength(8)
+  licensePlate!: string
+
+  @Field()
+  make!: string
+
+  @Field()
+  model!: string
+
   @Field()
   color!: string
 }
