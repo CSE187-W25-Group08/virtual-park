@@ -8,3 +8,5 @@ INSERT INTO permit (id, data) VALUES (
     'type', 'Slug Student'
   )
 );
+
+

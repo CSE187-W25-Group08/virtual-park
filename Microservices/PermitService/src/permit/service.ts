@@ -22,6 +22,5 @@ export class PermitService {
     }))
 
     return permits
-
   }
 }
