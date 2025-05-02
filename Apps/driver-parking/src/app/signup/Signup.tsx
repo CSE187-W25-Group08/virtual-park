@@ -41,7 +41,7 @@ export default function Signup() {
   const user = await signup({name: name, email: email, password: password})
     if (user) {
       window.sessionStorage.setItem('name', user.name)
-      router.push('/')
+      router.push('/register')
     } else {
       alert('This email has already been taken.')
     }
