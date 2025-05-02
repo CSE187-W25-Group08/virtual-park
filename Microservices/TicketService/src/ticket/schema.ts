@@ -1,4 +1,4 @@
-import { IsUUID, MaxLength, MinLength, IsDateString} from 'class-validator'
+import { IsUUID, MaxLength, MinLength, IsDateString, IsNumber } from 'class-validator'
 import { Field, ID, ObjectType, } from 'type-graphql'
 
 @ObjectType()
@@ -13,7 +13,8 @@ export class Ticket {
     due: string,
     issue: string,
     violation: string,
-    image: string
+    image: string,
+    deductible: number
   ) {
     this.id = id;
     this.vehicle = vehicle;
@@ -25,6 +26,7 @@ export class Ticket {
     this.issue = issue;
     this.violation = violation;
     this.image = image;
+    this.deductible = deductible;
   }
 
   @Field(() => ID)
@@ -58,4 +60,8 @@ export class Ticket {
 
   @Field()
   image!: string;
+
+  @Field()
+  @IsNumber()
+  deductible!: number;
 }
