@@ -1,12 +1,11 @@
 import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useRouter } from 'next/navigation'
 
 
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({
-    push: vi.fn()
-  })
+  useRouter: vi.fn()
 }))
 
 vi.mock('../../src/app/Login/action', () => ({
@@ -14,13 +13,10 @@ vi.mock('../../src/app/Login/action', () => ({
 }))
 
 import Login from '../../src/app/login/View'
-// import { login } from '../../src/app/Login/action'
-
-
-// const loginSpy = vi.spyOn({ login }, 'login')
 
 afterEach(() => {
   cleanup()
+  window.sessionStorage.clear()
   vi.clearAllMocks()
 })
 
@@ -42,9 +38,12 @@ it('should handle input changes correctly', async () => {
 })
 
 it('should call login function when button is clicked', async () => {
+  const mockPush = vi.fn();
+  
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  
   render(<Login />)
 
-  // Get form fields and button
   const emailInput = screen.getByPlaceholderText('Email Address')
   const passwordInput = screen.getByPlaceholderText('Password')
   const button = screen.getByText('Sign in')
@@ -52,8 +51,8 @@ it('should call login function when button is clicked', async () => {
   await userEvent.type(emailInput, 'anna@books.com')
   await userEvent.type(passwordInput, 'annaadmin')
   userEvent.click(button)
-  // expect(loginSpy).toHaveBeenCalledWith({
-  //   email: 'anna@books.com',
-  //   password: 'annaadmin'
-  // })
+
+  await vi.waitFor(() => {
+    expect(mockPush).toHaveBeenCalledWith('/register')
+  })
 })
