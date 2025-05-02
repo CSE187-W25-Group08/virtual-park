@@ -4,12 +4,17 @@ import * as http from 'http'
 
 import * as db from './db'
 import { app, bootstrap } from '../src/app'
-import { AuthService } from '../src/auth/service'
 
 let server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
 
-vi.spyOn(AuthService.prototype, 'check').mockResolvedValue({
-  id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54'
+vi.mock('../src/auth/service', () => {
+  return {
+    AuthService: class {
+      async check() {
+        return { id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54' }
+      }
+    }
+  }
 })
 
 beforeAll(async () => {

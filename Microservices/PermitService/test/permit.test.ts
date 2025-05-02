@@ -1,7 +1,6 @@
 import { vi, test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
-import { AuthService } from '../src/auth/service'
 
 import * as db from './db'
 import { app, bootstrap } from '../src/app'
@@ -23,8 +22,14 @@ beforeEach(async () => {
   return db.reset()
 })
 
-vi.spyOn(AuthService.prototype, 'check').mockResolvedValue({
-  id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a'
+vi.mock('../src/auth/service', () => {
+  return {
+    AuthService: class {
+      async check() {
+        return { id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a' }
+      }
+    }
+  }
 })
 
 const accessToken = "placeholder"
