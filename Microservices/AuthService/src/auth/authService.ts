@@ -41,7 +41,7 @@ export class AuthService {
     }
   }
   // https://claude.ai/chat/bb2b0366-a336-4241-b4c4-4da2d74c9bc4
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   public async check(authHeader?: string, scopes?: string[]): Promise<SessionUser> {
     return new Promise((resolve, reject) => {
       if (!authHeader) {
@@ -64,14 +64,14 @@ export class AuthService {
                 console.log('id checkAuth unauthorization')
                 return;
               }
-              // if (scopes) {
-              //   for (const scope of scopes) {
-              //     if (!user.roles || !user.roles.includes(scope)) {
-              //       reject(new Error("Unauthorized"))
-              //       return;
-              //     }
-              //   }
-              // }
+              if (scopes) {
+                for (const scope of scopes) {
+                  if (!user.roles || !user.roles.includes(scope)) {
+                    reject(new Error("Unauthorized"))
+                    return;
+                  }
+                }
+              }
               resolve({ id: user.id });
             })();
           }

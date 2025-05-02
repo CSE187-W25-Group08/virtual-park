@@ -5,8 +5,7 @@ import { VehicleService } from './service'
 
 @Resolver()
 export class VehicleResolver {
-  // should be admin only, but roles not yet implemented
-  @Authorized()
+  @Authorized("admin")
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => [Vehicle])
   async vehicle(
