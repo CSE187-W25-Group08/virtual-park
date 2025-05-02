@@ -1,6 +1,7 @@
-import { test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
+import { vi, test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
+import { AuthService } from '../src/auth/service'
 
 import * as db from './db'
 import { app, bootstrap } from '../src/app'
@@ -22,6 +23,10 @@ beforeEach(async () => {
   return db.reset()
 })
 
+vi.spyOn(AuthService.prototype, 'check').mockResolvedValue({
+  id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a'
+})
+
 const accessToken = "placeholder"
 
 test('Get all permits', async () => {
@@ -30,11 +35,26 @@ test('Get all permits', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `{
-        permit
-        { license_number, issue_date, exp_date }
+        permits
+        { licenseNumber, issueDate, expDate }
       }`
     })
     .then((res) => {
-      expect(res.body.data.permit.length).toEqual(1)
+      expect(res.body.data.permits.length).toEqual(1)
+      
+    })
+})
+test('Permit contains price', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `{
+        permits
+        { licenseNumber, issueDate, expDate, price}
+      }`
+    })
+    .then((res) => {
+      expect(res.body.data.permits[0].price).toEqual(3.14)
     })
 })

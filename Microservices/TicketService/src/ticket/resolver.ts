@@ -13,7 +13,6 @@ import { Request } from "express"
 
 @Resolver()
 export class TicketResolver {
-  @Authorized()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => [Ticket])
   async ticket(@Ctx() request: Request): Promise<Ticket[]> {

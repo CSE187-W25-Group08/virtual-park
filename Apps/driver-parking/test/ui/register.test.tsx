@@ -2,16 +2,35 @@ import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 
 import Vehicles from '../../src/app/register/Vehicles'
-// import { signup } from '../../src/app/signup/actions'
+import RegisterVehiclesPage  from '../../src/app/register/page'
+import * as actions from '../../src/app/register/actions'
+
+vi.spyOn(actions, 'registerVehicle').mockResolvedValue({
+  id: '1',
+  licensePlate: 'TEST123',
+  make: 'Toyota',
+  model: 'Corolla',
+  color: 'Silver',
+  driver: 'some-driver-id'
+})
 
 afterEach(() => {
   cleanup()
 })
 
 it('Register Button Exists', async () => {
-    render(<Vehicles/>)
+    render(<RegisterVehiclesPage/>)
     const registerButton = screen.getByText('+ Register Vehicle');
     expect(registerButton).not.toBeNull();
+})
+
+it('Click on Register Vehicle then Click Cancel', async () => {
+  render(<Vehicles/>)
+  const registerButton = screen.getByText('+ Register Vehicle');
+  fireEvent.click(registerButton);
+
+  const cancelButton = screen.getByText('Cancel');
+  fireEvent.click(cancelButton);
 })
 
 it('Click on Register Vehicle and access registration form', async () => {
@@ -19,6 +38,26 @@ it('Click on Register Vehicle and access registration form', async () => {
   const registerButton = screen.getByText('+ Register Vehicle');
   fireEvent.click(registerButton);
 
-  const formHeading = screen.queryByText('Register Vehicle');
-  expect(formHeading).not.toBeNull();
+  // Fill inputs
+  fireEvent.change(screen.getByLabelText(/License Plate/i), {
+    target: { value: 'TEST123' },
+  })
+  fireEvent.change(screen.getByLabelText(/Make/i), {
+    target: { value: 'Toyota' },
+  })
+  fireEvent.change(screen.getByLabelText(/Model/i), {
+    target: { value: 'Corolla' },
+  })
+  fireEvent.change(screen.getByLabelText(/Color/i), {
+    target: { value: 'Silver' },
+  })
+  fireEvent.click(screen.getByText(/Default Vehicle/i))
+
+  const saveButton = screen.getByText(/Save/i)
+  expect(saveButton.hasAttribute('disabled')).toBe(false)
+  fireEvent.click(saveButton)
+
+  await screen.findByText(/Toyota, Corolla - Silver/i)
+
+  // expect(screen.queryByText(/Register Vehicle/i)).toBeNull()
 })

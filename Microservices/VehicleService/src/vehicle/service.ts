@@ -1,5 +1,5 @@
 import { pool } from '../db'
-import { Vehicle } from './schema'
+import { Vehicle, RegisterVehicle } from './schema'
 import * as queries from './queries'
 
 export class VehicleService {
@@ -43,5 +43,23 @@ export class VehicleService {
     }))
 
     return vehicles
+  }
+
+  public async registerVehicle(userId: string | undefined, input: RegisterVehicle) {
+    const query = {
+      text: queries.registerVehicle,
+      values: [userId, input.licensePlate, input.make, input.model, input.color]
+    }
+    const { rows } = await pool.query(query)
+
+    const vehicleObj: Vehicle = {
+      'id': rows[0].id,
+      'driver': rows[0].driver,
+      'licensePlate': rows[0].data.license_plate,
+      'make': rows[0].data.make,
+      'model': rows[0].data.model,
+      'color': rows[0].data.color,
+  }
+  return vehicleObj;
   }
 }
