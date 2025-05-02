@@ -2,20 +2,37 @@
 import { useEffect, useState } from 'react';
 import { Box, Card, Typography, Button, TextField, MenuItem, Switch, FormControlLabel } from '@mui/material';
 
-const initialVehicles = [
-  { id: '123', driver: 'Bob', make: 'Toyota', model: 'Corolla', color: 'silver', license_plate: 'B247KLM' },
-  { id: '456', driver: 'Bill', make: 'Honda', model: 'Accord', color: 'black', license_plate: 'F918WZQ' },
-  { id: '789', driver: 'John', make: 'Toyota', model: 'Prius', color: 'blue', license_plate: 'T304MNE' },
-  { id: '100', driver: 'Pork', make: 'Honda', model: 'Civic', color: 'red', license_plate: 'R682LJD' },
-];
+import {Vehicle} from '../../register'
+import { getUserVehicles } from './actions'
+
+// const initialVehicles = [
+//   { id: '123', driver: 'Bob', make: 'Toyota', model: 'Corolla', color: 'silver', license_plate: 'B247KLM' },
+//   { id: '456', driver: 'Bill', make: 'Honda', model: 'Accord', color: 'black', license_plate: 'F918WZQ' },
+//   { id: '789', driver: 'John', make: 'Toyota', model: 'Prius', color: 'blue', license_plate: 'T304MNE' },
+//   { id: '100', driver: 'Pork', make: 'Honda', model: 'Civic', color: 'red', license_plate: 'R682LJD' },
+// ];
 
 export default function Vehicles() {
-  const [vehicles, setVehicles] = useState(initialVehicles);
+  // const [vehicles, setVehicles] = useState(initialVehicles);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [showForm, setShowForm] = useState(false);
+  const [error, setError] = useState('');
+
+  // fetches user's registered vehicles
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setVehicles(await getUserVehicles())
+      } catch (e) {
+        setError(e+'')
+      }
+    };
+    fetchData()
+  }, []);
 
   const emptyForm = {
     driver: '',
-    license_plate: '',
+    licensePlate: '',
     make: '',
     model: '',
     color: '',
@@ -33,7 +50,7 @@ export default function Vehicles() {
 
   const isFormValid =
   formData.driver.trim() &&
-  formData.license_plate.trim() &&
+  formData.licensePlate.trim() &&
   formData.make.trim() &&
   formData.model.trim() &&
   formData.color.trim();
@@ -44,7 +61,7 @@ export default function Vehicles() {
       driver: formData.driver,
       make: formData.make,
       model: formData.model,
-      license_plate: formData.license_plate,
+      licensePlate: formData.licensePlate,
       color: formData.color
     };
     setVehicles(prev => [...prev, newVehicle]);
@@ -69,7 +86,7 @@ export default function Vehicles() {
                 }}
               >
                 <Typography variant="body2">
-                  {vehicle.driver} - {vehicle.make}, {vehicle.model} ({vehicle.license_plate})
+                  {vehicle.make}, {vehicle.model} - {vehicle.color} ({vehicle.licensePlate})
                 </Typography>
                 <Typography
                   variant="body2"
@@ -89,6 +106,7 @@ export default function Vehicles() {
           >
             + Register Vehicle
           </Button>
+          <div>{error}</div>
         </>
       ) : (
         <>
@@ -105,9 +123,9 @@ export default function Vehicles() {
           <TextField
             required
             label="License Plate"
-            name="license_plate"
+            name="licensePlate"
             fullWidth
-            value={formData.license_plate}
+            value={formData.licensePlate}
             onChange={handleChange}
             sx={{ mb: 2 }}
           />

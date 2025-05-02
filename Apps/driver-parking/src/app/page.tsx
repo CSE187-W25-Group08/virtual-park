@@ -4,7 +4,7 @@ import { Fragment, useState } from 'react';
 import { Button, Typography } from '@mui/material';
 
 // import RegisterVehicle from './Register/Register'
-import Vehicles from './Register/Vehicles'
+import Vehicles from './register/Vehicles'
 // import Login from './Login/page'
 
 export default function Home() {

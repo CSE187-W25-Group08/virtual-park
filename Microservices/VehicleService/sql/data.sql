@@ -9,6 +9,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
   )
 );
 
+--molly 2 vehicles
 INSERT INTO vehicle (id, driver, data) VALUES (
   '18fa94fc-4783-42df-a904-7ec17efadca5',
   'bea45ed8-aa83-4c49-a201-4625baa0e91a',
@@ -17,5 +18,15 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Toyota',
     'model', 'Corolla',
     'color', 'Silver'
+  )
+);
+INSERT INTO vehicle (id, driver, data) VALUES (
+  'a642d881-af5d-46be-a5c8-8fe979979bbd',
+  'bea45ed8-aa83-4c49-a201-4625baa0e91a',
+  jsonb_build_object(
+    'license_plate', '456DE5B',
+    'make', 'Honda',
+    'model', 'Accord',
+    'color', 'Black'
   )
 );
