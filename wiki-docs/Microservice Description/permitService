@@ -1,0 +1,2 @@
+1. permitType function will return a list of available permit types for the driver to purchase
+2. driverPermit function takes the driverID as argument, it will return a list of permit that belong to the specific driver, and each permit will have attribute, such as issue-date, expre-date and permit-type.
