@@ -4,7 +4,7 @@ import * as queries from './queries'
 
 export class TicketService {
 
-  private rowToTicket = async(rows : any) => {
+  private rowToTicket = async(rows : Ticket[]) => {
     const tickets = await Promise.all(rows.map(async (ticket : any) => {
       const data = ticket.data
       const ticketObj: Ticket = {
@@ -32,7 +32,7 @@ export class TicketService {
     }
 
     const { rows } = await pool.query(query);
-    const tickets = this.rowToTicket(rows);
+    const tickets = await this.rowToTicket(rows);
     return tickets;
   }
   public async getPaid(userId: string | undefined, paidStatus: boolean): Promise<Ticket[]> {
@@ -42,7 +42,18 @@ export class TicketService {
     }
 
     const { rows } = await pool.query(query);
-    const tickets = this.rowToTicket(rows);
+    const tickets = await this.rowToTicket(rows);
     return tickets;
+  }
+
+  public async get(userId: string | undefined, ticketId: string): Promise<Ticket> {
+    const query = {
+      text: queries.selectTicket,
+      values: [ticketId]
+    }
+
+    const { rows } = await pool.query(query);
+    const tickets  = await this.rowToTicket(rows);
+    return tickets[0];
   }
 }

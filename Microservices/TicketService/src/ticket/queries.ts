@@ -18,3 +18,9 @@ export const selectPaidTickets =
 
   WHERE (data->>'paid')::boolean = $1
   `
+
+export const selectTicket =
+  `
+  SELECT id, driver, data
+  FROM ticket WHERE id = $1
+  `

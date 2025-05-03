@@ -109,7 +109,7 @@ test("Get ticket with id", async () => {
     .send({
       query: `
         query {
-          ticket(id: "cc97d397-6906-44ee-b616-6ee746914474") {
+          ticketId(id: "cc97d397-6906-44ee-b616-6ee746914474") {
             violation
           }
         }
@@ -117,7 +117,7 @@ test("Get ticket with id", async () => {
     })
     .then((res) => {
       console.log(res.body.data)
-      expect(res.body.data.ticket.length).toEqual(1);
+      expect(res.body.data.ticketId.violation).toBe('expired meter')
 
     });
 });
