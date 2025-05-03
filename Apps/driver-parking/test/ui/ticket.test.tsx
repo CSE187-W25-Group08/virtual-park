@@ -7,6 +7,9 @@ afterEach(() => {
   cleanup()
   vi.restoreAllMocks()
 })
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn()
+}))
 
 vi.mock('../../src/app/ticket/actions', () => ({
   list: vi.fn(() => [      
@@ -15,13 +18,13 @@ vi.mock('../../src/app/ticket/actions', () => ({
       vehicle: "XYZ5678",
       enforcer: "E456",
       lot: "Lot B",
-      status: "paid",
-      description: "Expired meter",
-      due: "2025-04-28T23:59:59Z",
+      paid: true,
+      description: "Does not matter",
+      due: "2025-04-25T23:59:59Z",
       issue: "2025-04-25T09:00:00Z",
-      violation: "Expired Meter",
+      violation: "Expired meter",
       image: "/images/tickets/t2.jpg",
-      deductible: 50.02
+      cost: 50.02
     }])
 }))
 

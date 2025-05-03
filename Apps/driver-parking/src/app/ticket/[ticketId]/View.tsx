@@ -63,6 +63,7 @@ export default function View({ ticketId }: { ticketId: string }) {
             alt="Invalid image"
             loading="lazy"
             style={{ width: "100%", height: "auto" }}
+            aria-label={"image_" + ticketId}
           />
         <List>
           <ListItem>
