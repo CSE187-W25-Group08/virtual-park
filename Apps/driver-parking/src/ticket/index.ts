@@ -3,11 +3,11 @@ export interface Ticket {
   vehicle: string,
   enforcer: string,
   lot: string,
-  status: string,
+  paid: boolean,
   description: string,
   due: string,
   issue: string,
   violation: string,
   image: string
-  deductible: number
+  cost: number
 }

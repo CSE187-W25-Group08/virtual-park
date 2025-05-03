@@ -23,7 +23,7 @@ export default function TicketCard({ticket} : {ticket: Ticket}) {
         <Typography>{ticket.description}</Typography>
         <Box sx={{ display: 'flex' , flexDirection: 'column',  justifyContent: 'space-between' }}>
           <Typography>{handleHourDate(ticket.issue)}</Typography>
-          <Typography>${ticket.deductible}</Typography>
+          <Typography>${ticket.cost}</Typography>
         </Box>
       </Box>
     </Card>
