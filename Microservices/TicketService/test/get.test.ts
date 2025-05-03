@@ -23,6 +23,7 @@ afterAll(() => {
   db.shutdown()
   server.close();
 });
+
 export const anna = {
   email: 'anna@books.com',
   password: 'annaadmin',
@@ -33,7 +34,7 @@ vi.mock('../src/auth/service', () => {
   return {
     AuthService: class {
       async check() {
-        return { id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a' }
+        return { id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54' }
       }
     }
   }
@@ -56,7 +57,6 @@ test("", async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.errors[0].message)
       expect(res.body.data.ticket[0].violation).toEqual("expired meter");
 
     });

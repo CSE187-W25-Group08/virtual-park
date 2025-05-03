@@ -1,7 +1,6 @@
 import { pool } from '../db'
 import { Ticket } from './schema';
 import * as queries from './queries'
-import { SessionUser } from '../types/express';
 
 export class TicketService {
 
@@ -20,17 +19,16 @@ export class TicketService {
         'vehicle': data.vehicle,
         'enforcer': data.enforcer,
         'lot': data.lot,
-        'status': data.status,
+        'paid': data.paid,
         'description': data.description,
         'due': data.due,
         'issue': data.issue,
         'violation': data.violation,
         'image': data.image,
-        'deductible' :data.deductible
+        'cost' :data.cost
       }
       return ticketObj
     }))
-    console.log(tickets)
 
     return tickets;
   }
