@@ -3,8 +3,11 @@ import { Card, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import { Ticket } from '../../ticket';
 import ListItemButton from '@mui/material/ListItemButton';
+import { useRouter } from 'next/navigation'
 
 export default function TicketCard({ticket} : {ticket: Ticket}) {
+  const router = useRouter()
+
   const handleHourDate = (dateArg: string) => {
   const dateReceived = new Date(dateArg);
 
@@ -15,9 +18,15 @@ export default function TicketCard({ticket} : {ticket: Ticket}) {
   return `${month}/${day}/${year}`;
   };
 
+  const handleClick = (ticketId: string) => {
+    console.log(ticketId);
+    router.push('ticket/' + ticketId)
+
+  }
+
 
   return (
-    <ListItemButton>
+    <ListItemButton onClick={() => {handleClick(ticket.id)}}>
     <Card sx={{ p: 2, border: '1px solid #ccc', width: '100%' }}>
       <Box sx={{ display: 'flex' , justifyContent: 'space-between' }}>
         <Typography>{ticket.description}</Typography>
