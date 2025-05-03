@@ -1,0 +1,23 @@
+services:
+  postgres:
+    container_name: virtual-park-db
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./Microservices/AuthService/sql/databases.sql:/docker-entrypoint-initdb.d/1.databases.sql
+      - ./Microservices/AuthService/sql/schema.sql:/docker-entrypoint-initdb.d/2.schema.sql
+      - ./Microservices/AuthService/sql/data.sql:/docker-entrypoint-initdb.d/3.data.sql
+      - ./Microservices/VehicleService/sql/databases.sql:/docker-entrypoint-initdb.d/4.databases.sql
+      - ./Microservices/VehicleService/sql/schema.sql:/docker-entrypoint-initdb.d/5.schema.sql
+      - ./Microservices/VehicleService/sql/data.sql:/docker-entrypoint-initdb.d/6.data.sql
+      - ./Microservices/TicketService/sql/databases.sql:/docker-entrypoint-initdb.d/7.databases.sql
+      - ./Microservices/TicketService/sql/schema.sql:/docker-entrypoint-initdb.d/8.schema.sql
+      - ./Microservices/TicketService/sql/data.sql:/docker-entrypoint-initdb.d/9.data.sql
+      - ./Microservices/PermitService/sql/databases.sql:/docker-entrypoint-initdb.d/10.databases.sql
+      - ./Microservices/PermitService/sql/schema.sql:/docker-entrypoint-initdb.d/11.schema.sql
+      - ./Microservices/PermitService/sql/data.sql:/docker-entrypoint-initdb.d/12.data.sql
