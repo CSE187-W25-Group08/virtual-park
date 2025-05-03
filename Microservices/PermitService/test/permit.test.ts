@@ -1,4 +1,4 @@
-import { vi, test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
+import { vi, test, beforeAll, afterAll,  expect } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
 
@@ -18,9 +18,9 @@ afterAll(() => {
   server.close
 })
 
-beforeEach(async () => {
-  return db.reset()
-})
+// beforeEach(async () => {
+//   return db.reset()
+// })
 
 vi.mock('../src/auth/service', () => {
   return {
@@ -34,32 +34,42 @@ vi.mock('../src/auth/service', () => {
 
 const accessToken = "placeholder"
 
-test('Get all permits', async () => {
+test('Get all permitType', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `{
-        permits
-        { licenseNumber, issueDate, expDate }
+        PermitType {
+          type
+          price
+        }
       }`
     })
     .then((res) => {
-      expect(res.body.data.permits.length).toEqual(1)
+      console.log('dataPermit type:', res.body.data)
+      expect(res.body.data.PermitType.length).toEqual(3)
       
     })
 })
-test('Permit contains price', async () => {
+test('retrieve all the permits belong to the specific user', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `{
-        permits
-        { licenseNumber, issueDate, expDate, price}
+        permitsByDriver {
+          issueDate
+          expDate
+          type
+        }
       }`
     })
     .then((res) => {
-      expect(res.body.data.permits[0].price).toEqual(3.14)
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      console.log('permit by user:', res.body.data)
+      expect(res.body.data.permitsByDriver.length).toEqual(2)
     })
 })
