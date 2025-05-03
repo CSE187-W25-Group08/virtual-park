@@ -4,11 +4,12 @@ CREATE TABLE permitType (
     data jsonb
     );
 
+DROP TABLE IF EXISTS driverPermit CASCADE;
 CREATE TABLE driverPermit (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     driverID UUID,
     permitType UUID,
-    data jsonb
+    data jsonb,
     Foreign Key (permitType) REFERENCES permitType (id)
 );
 
