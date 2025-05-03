@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ListItem from '@mui/material/ListItem';
+import ListItem from "@mui/material/ListItem";
 import { Ticket } from "@/ticket";
 import { getTicketById } from "../actions";
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
+import List from "@mui/material/List";
+import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
 import { Box } from "@mui/material";
 
@@ -57,7 +57,7 @@ export default function View({ ticketId }: { ticketId: string }) {
     <React.Fragment>
       {ticket ? (
         <Box>
-                    <CardMedia
+          <CardMedia
             component="img"
             image={`${ticket.image}?w=164&h=164&fit=crop&auto=format`}
             alt="Invalid image"
@@ -65,19 +65,31 @@ export default function View({ ticketId }: { ticketId: string }) {
             style={{ width: "100%", height: "auto" }}
             aria-label={"image_" + ticketId}
           />
-        <List>
-          <ListItem>
-          <ListItemText>{handleHourDate(ticket?.issue)}</ListItemText>
-          </ListItem>
+          <List>
+            <ListItem>
+              <ListItemText>Violation: {ticket?.violation}</ListItemText>
+            </ListItem>
 
-          <ListItem>
-          <ListItemText>{ticket?.violation}</ListItemText>
-          </ListItem>
+            <ListItem>
+              <ListItemText>Description: {ticket?.description}</ListItemText>
+            </ListItem>
 
-          <ListItem>
-          <ListItemText>{ticket?.paid ? "Paid" : "Unpaid"}</ListItemText>
-          </ListItem>
-        </List>
+            <ListItem>
+              <ListItemText>Issued: {handleHourDate(ticket?.issue)}</ListItemText>
+            </ListItem>
+
+            <ListItem>
+              <ListItemText>Due: {handleHourDate(ticket?.due)}</ListItemText>
+            </ListItem>
+
+            <ListItem>
+              <ListItemText>Cost: ${ticket?.cost}</ListItemText>
+            </ListItem>
+
+            <ListItem>
+              <ListItemText>{ticket?.paid ? "Paid" : "Unpaid"}</ListItemText>
+            </ListItem>
+          </List>
         </Box>
       ) : (
         <div>test</div>
