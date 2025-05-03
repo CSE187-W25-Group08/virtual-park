@@ -43,8 +43,11 @@
     "exec": "ts-node src/server.ts"
   },
   "scripts": {
+    "prestart": "npm run build",
+    "start": "node build/server.js",
+    "build": "tsc",
     "dev": "nodemon",
-    "lint": "eslint src/**/*.[jt]s --fix",
-    "test": "vitest run --no-file-parallelism --testTimeout=3000 --coverage"
+    "test": "vitest run --no-file-parallelism --testTimeout=3000 --coverage",
+    "lint": "eslint test/**/*.[jt]s src/**/*.[jt]s --fix"
   }
 }
