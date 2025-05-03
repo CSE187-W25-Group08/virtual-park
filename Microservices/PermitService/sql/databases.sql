@@ -1,6 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-CREATE DATABASE test;
+CREATE DATABASE permit;
 
-\connect test
+\connect permit
 CREATE EXTENSION IF NOT EXISTS pgcrypto;

@@ -1,6 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-CREATE DATABASE test;
+CREATE DATABASE ticket;
 
-\connect test
+\connect ticket
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
