@@ -11,3 +11,7 @@ export interface Ticket {
   image: string
   cost: number
 }
+
+export interface TicketId {
+  ticketId: string
+}

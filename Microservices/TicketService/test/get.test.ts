@@ -43,7 +43,7 @@ vi.mock('../src/auth/service', () => {
 const accessToken = 'Placeholder before authenticated implementation'
 
 
-test("", async () => {
+test("Gets all tickets", async () => {
   await supertest(server)
     .post("/graphql")
     .set('Authorization', 'Bearer ' + accessToken)
@@ -62,7 +62,7 @@ test("", async () => {
     });
 });
 
-test("", async () => {
+test("Get all paid tickets", async () => {
   await supertest(server)
     .post("/graphql")
     .set('Authorization', 'Bearer ' + accessToken)
@@ -82,7 +82,7 @@ test("", async () => {
     });
 });
 
-test("", async () => {
+test("Get all unpaid tickets", async () => {
   await supertest(server)
     .post("/graphql")
     .set('Authorization', 'Bearer ' + accessToken)
@@ -98,6 +98,26 @@ test("", async () => {
     .then((res) => {
       console.log(res.body.data)
       expect(res.body.data.unpaidTicket.length).toEqual(1);
+
+    });
+});
+
+test("Get ticket with id", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          ticket(id: "cc97d397-6906-44ee-b616-6ee746914474") {
+            violation
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.data)
+      expect(res.body.data.ticket.length).toEqual(1);
 
     });
 });
