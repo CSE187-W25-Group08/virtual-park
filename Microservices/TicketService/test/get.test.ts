@@ -61,3 +61,43 @@ test("", async () => {
 
     });
 });
+
+test("", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          paidTicket {
+            violation
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.data)
+      expect(res.body.data.paidTicket.length).toEqual(1);
+
+    });
+});
+
+test("", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          unpaidTicket {
+            violation
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.data)
+      expect(res.body.data.unpaidTicket.length).toEqual(1);
+
+    });
+});
