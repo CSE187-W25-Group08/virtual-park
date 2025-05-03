@@ -38,7 +38,7 @@ it('valid token login', async () => {
   });
 
   const req = {
-    nextUrl: { pathname: '/' },
+    nextUrl: { pathname: '/register' },
     cookies: { get: vi.fn().mockReturnValue({ value: 'validTok' }) },
   } as unknown as NextRequest;
 
@@ -59,7 +59,7 @@ it('invalid token will redirect back to the login', async () => {
     json: () => Promise.reject('Unauthorized')
   });
   const req = {
-    nextUrl: { pathname: '/' },
+    nextUrl: { pathname: '/register' },
     cookies: { get: vi.fn().mockReturnValue({ value: 'invalidTok' }) },
   } as unknown as NextRequest;
 

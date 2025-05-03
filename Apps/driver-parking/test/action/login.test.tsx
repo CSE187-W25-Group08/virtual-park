@@ -1,4 +1,4 @@
-import { login } from '../../src/app/login/action';
+import { login, logout } from '../../src/app/login/action';
 import { authenticate } from '../../src/auth/service';
 import { cookies } from 'next/headers';
 import { vi, beforeEach, it, expect} from 'vitest';
@@ -45,3 +45,13 @@ it('should return undefined when authentication fails', async () => {
   const result = await login(credentials);
   expect(result).toBeUndefined();
 });
+
+it('should log out the user', async () => {
+  const mockCookies = {
+    delete: vi.fn()
+  };
+  vi.mocked(cookies).mockReturnValue(mockCookies as any);
+  await login({ email: 'anna@books.com', password: 'annaadmin' });
+  await logout();
+  expect(mockCookies.delete).toHaveBeenCalledWith('session');
+})

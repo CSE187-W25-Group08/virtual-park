@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import {check} from './auth/service'
 
-const publicRoutes = ['/login', '/signup']
+const publicRoutes = ['/login', '/signup', '/']
 
 export default async function middleware(req: NextRequest) {
   if (!publicRoutes.includes(req.nextUrl.pathname)) {
