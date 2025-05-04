@@ -6,8 +6,8 @@ import Typography from '@mui/material/Typography'
 import { useState, useEffect } from 'react'
 
 import PermitListCard from './PermitListCard'
-import { getUserPermits } from './actions'
-import { Permit } from '../../permit'
+import { getUserPermits } from '../actions'
+import { Permit } from '../../../permit'
 
 export default function PermitList() {
   const [permits, setPermits] = useState<Permit[]>([])
