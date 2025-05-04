@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Ticket } from "@/ticket";
-import { getTicketById } from "../actions";
+import { getTicketById, setTicketPaid } from "../actions";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
@@ -52,6 +52,12 @@ export default function Card({ ticketId }: { ticketId: string }) {
       return `${datePart} at ${timeString}`;
     }
   };
+  const handleClick = async () => {
+    const newTicket = await setTicketPaid(ticketId, true);
+    if (newTicket) {
+      setTicket(newTicket);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -81,7 +87,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
                 {ticket?.paid ? "Paid" : "Unpaid"}
 
                 {!ticket?.paid && (
-                  <Button variant="outlined">Pay Ticket</Button>
+                  <Button variant="outlined" onClick={() => {handleClick()}}>Pay Ticket</Button>
                 )}
               </Box>
             </ListItemText>
