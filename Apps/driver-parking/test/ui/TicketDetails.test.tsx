@@ -1,7 +1,7 @@
-import { it, afterEach, vi, expect } from 'vitest'
+import { it, afterEach, vi} from 'vitest'
 import { render, screen, cleanup} from '@testing-library/react'
 
-import TicketView from '../../src/app/ticket/[ticketId]/View';
+import TicketCard from '../../src/app/ticket/[ticketId]/Card';
 
 afterEach(() => {
   cleanup()
@@ -27,11 +27,11 @@ vi.mock('../../src/app/ticket/actions', () => ({
 }));
 
 it('contains Violation Text', async () => {
-  render(<TicketView ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
+  render(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
   await screen.findByText('Violation: Expired meter');
 })
 
 it('contains image', async () => {
-  render(<TicketView ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
+  render(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
   await screen.findByLabelText('image_e5fd7cb1-75b0-4d23-a7bc-361e2d0621da')
 })

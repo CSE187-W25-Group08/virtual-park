@@ -6,5 +6,5 @@ export default async function TicketDetails({params} : {params: TicketId}) {
   const param = await params;
   const ticketId = await param.ticketId
 
-  return <View ticketId = {ticketId}/>
+  return <View ticketId={ticketId}></View>
 }
