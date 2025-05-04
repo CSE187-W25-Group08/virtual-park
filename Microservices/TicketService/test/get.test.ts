@@ -121,3 +121,23 @@ test("Get ticket with id", async () => {
 
     });
 });
+
+test("Update ticket paid status", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          updateTicketPaid(id: "cc97d397-6906-44ee-b616-6ee746914474") {
+            paid
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.data)
+      expect(res.body.data.updateTicketPaid.paid).toBeTruthy()
+
+    });
+});

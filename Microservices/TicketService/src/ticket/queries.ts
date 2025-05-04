@@ -24,3 +24,14 @@ export const selectTicket =
   SELECT id, driver, data
   FROM ticket WHERE id = $1
   `
+
+export const updatePaidTicket =
+  `
+  WITH updated AS (
+    UPDATE ticket
+    SET data = jsonb_set(data, '{paid}', $2::jsonb)
+    WHERE id = $1 
+    RETURNING *
+  )
+  SELECT id, driver, data FROM UPDATED
+  `
