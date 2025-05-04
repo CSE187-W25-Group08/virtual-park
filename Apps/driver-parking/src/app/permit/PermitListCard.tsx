@@ -3,27 +3,30 @@
 import ListItem from '@mui/material/ListItem'
 import PropTypes from 'prop-types'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 
 import { Permit } from '../../permit'
 
 const PermitListCard = ({permit}: {permit: Permit}) => {
   return (
     <ListItem disablePadding>
-      <Box>
-        <Typography variant="body1" color="text.primary">
-          {permit.type}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {`Permit Price: $${permit.price}`}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {`Issue Date: ${timeFormatter(permit.issueDate)}`}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {`Expiry Date: ${timeFormatter(permit.expDate)}`}
-        </Typography>
-      </Box>
+      <Card raised sx={{ width: '300px', height: '200px', marginTop: '20px', alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <CardContent>
+          <Typography variant="h5" color="text.primary" align="center" gutterBottom>
+            {permit.type}
+          </Typography>
+          <Typography variant="body1" color="text.secondary" align="center" gutterBottom>
+            ${permit.price}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            {`Issue Date: ${timeFormatter(permit.issueDate)}`}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            {`Expiry Date: ${timeFormatter(permit.expDate)}`}
+          </Typography>
+        </CardContent>
+      </Card>
     </ListItem>
   )
 }
