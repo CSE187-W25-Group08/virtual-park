@@ -5,7 +5,7 @@ import * as queries from './queries'
 export class PermitService {
   public async getPermitByDriver(driverID: string | undefined):Promise<Permit[]> {
     const query = {
-      text: queries.driverPermit,
+      text: queries.selectDriverPermits,
       values: [driverID]
     }
     const {rows} = await pool.query(query)
