@@ -44,6 +44,16 @@ export class TicketResolver {
     return await new TicketService().get(request.user?.id, id)
   }
 
+  @Authorized()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Mutation(returns => Ticket)
+  async setTicketPaid(
+    @Arg("id") id: string,
+    @Ctx() request: Request
+  ): Promise<Ticket> {
+    return await new TicketService().setPaid(request.user?.id, id)
+  }
+
 
 
 }

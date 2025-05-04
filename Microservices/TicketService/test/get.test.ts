@@ -116,7 +116,7 @@ test("Get ticket with id", async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.data)
+      // console.log(res.body.data)
       expect(res.body.data.ticketId.violation).toBe('expired meter')
 
     });
@@ -129,15 +129,13 @@ test("Update ticket paid status", async () => {
     .send({
       query: `
         mutation {
-          updateTicketPaid(id: "cc97d397-6906-44ee-b616-6ee746914474") {
+          setTicketPaid(id: "cc97d397-6906-44ee-b616-6ee746914474") {
             paid
           }
         }
       `,
     })
     .then((res) => {
-      console.log(res.body.data)
-      expect(res.body.data.updateTicketPaid.paid).toBeTruthy()
-
+      expect(res.body.data.setTicketPaid.paid).toBeTruthy()
     });
 });

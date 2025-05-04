@@ -56,4 +56,15 @@ export class TicketService {
     const tickets  = await this.rowToTicket(rows);
     return tickets[0];
   }
+
+  public async setPaid(userId: string | undefined, ticketId: string): Promise<Ticket> {
+    const query = {
+      text: queries.updatePaidTicket,
+      values: [ticketId]
+    }
+
+    const { rows } = await pool.query(query);
+    const tickets  = await this.rowToTicket(rows);
+    return tickets[0];
+  }
 }
