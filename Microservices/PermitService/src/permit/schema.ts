@@ -1,19 +1,14 @@
-import { Field, ID, ObjectType, GraphQLISODateTime } from 'type-graphql'
-import { IsNumber, IsUUID} from 'class-validator'
+import { Field, ObjectType, GraphQLISODateTime } from 'type-graphql'
+import { IsNumber} from 'class-validator'
 
 @ObjectType()
 export class Permit {
-  constructor(issueDate: string, expDate: string, type: string) {
-    // this.id = id
+  constructor(issueDate: string, expDate: string, type: string, price: number) {
     this.issueDate = issueDate
     this.expDate = expDate
     this.type = type
+    this.price = price
   }
-
-  // @Field(() => ID)
-  // @IsUUID()
-  // id!: string
-
 
   @Field(() => GraphQLISODateTime)
   issueDate!: string
@@ -24,9 +19,9 @@ export class Permit {
   @Field()
   type!: string
 
-  // @Field()
-  // @IsNumber()
-  // price!: number;
+  @Field()
+  @IsNumber()
+  price!: number;
 }
 
 @ObjectType()

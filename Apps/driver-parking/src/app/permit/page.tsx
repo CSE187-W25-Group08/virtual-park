@@ -1,13 +1,11 @@
 import type { NextPage } from 'next'
 
-import Permit from './list'
+import PermitList from './PermitList'
 
-const permitPage: NextPage = () => {
+const PermitPage: NextPage = () => {
   return (
-    <Permit />
+    <PermitList />
   )
 }
 
-export default permitPage
-
-
+export default PermitPage

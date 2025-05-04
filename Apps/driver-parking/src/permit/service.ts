@@ -1,7 +1,9 @@
-import {permitType } from "."
+import 'server-only'
+
+import {Permit} from '.'
 
 export class PermitService {
-  public async getpermitTypes(cookie: string|undefined): Promise<permitType[]>  {
+  public async getPermitByDriver(cookie: string | undefined):Promise<Permit[]> {
     return new Promise((resolve, reject) => {
       fetch('http://localhost:4000/graphql', {
         method: 'POST',
@@ -9,7 +11,7 @@ export class PermitService {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${cookie}`,
         },
-        body: JSON.stringify({query: `{PermitType {type, price}}`}),
+        body: JSON.stringify({query: `{permitsByDriver {issueDate, expDate, type, price}}`}),
       })
       .then(response => { 
         if (response.status != 200) {
@@ -18,50 +20,9 @@ export class PermitService {
         return response.json()} 
       )
       .then(json => {
-        resolve(json.data.userVehicle)
+        resolve(json.data.permitsByDriver)
       })
-      .catch(() => reject('Unauthorized'))
+      .catch((error) => reject(error))
     })
   }
-
-  // public async registerVehicle(cookie: string|undefined, vehicle: VehicleForm): Promise<Vehicle>  {
-  //   return new Promise((resolve, reject) => {
-  //     fetch('http://localhost:4000/graphql', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `Bearer ${cookie}`,
-  //       },
-  //       body: JSON.stringify({
-  //         query: `
-  //           mutation {
-  //             registerVehicle(input: {
-  //               licensePlate: "${vehicle.licensePlate}",
-  //               make: "${vehicle.make}",
-  //               model: "${vehicle.model}",
-  //               color: "${vehicle.color}"
-  //             }) {
-  //               id
-  //               licensePlate
-  //               make
-  //               model
-  //               color
-  //               driver
-  //             }
-  //           }
-  //         `
-  //       })
-  //     })
-  //     .then(response => { 
-  //       if (response.status != 200) {
-  //         reject('Unauthorized')
-  //       }
-  //       return response.json()} 
-  //     )
-  //     .then(json => {
-  //       resolve(json.data.registerVehicle)
-  //     })
-  //     .catch(() => reject('Unauthorized'))
-  //   })
-  // }
 }

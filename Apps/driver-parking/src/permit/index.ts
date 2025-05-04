@@ -1,4 +1,6 @@
-export interface permitType {
-  type: string,
-  price: number
+export interface Permit {
+    issueDate: string,
+    expDate: string,
+    type: string,
+    price: number
 }

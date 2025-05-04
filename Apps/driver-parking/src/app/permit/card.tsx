@@ -1,9 +1,9 @@
 'use client'
 
 import { Card, Typography, Box, ListItemButton } from '@mui/material'
-import { permitType } from '../../permit/index'
+import { Permit } from '../../permit/index'
 
-export default function PermitCard({permit}: {permit: permitType}) {
+export default function PermitCard({permit}: {permit: Permit}) {
   return (
     <ListItemButton>
       <Card sx={{ p: 2, border: '1px solid #ccc', width: '100%' }}>

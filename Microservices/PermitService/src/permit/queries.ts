@@ -2,12 +2,16 @@ export const permitType= `
 select * from permitType;
 `;
 
-export const driverPermit= `
+export const selectDriverPermits = `
 SELECT 
-  driverPermit.data->>'issue_date' AS issue_date,
-  driverPermit.data->>'exp_date' AS exp_date,
-  permitType.data->>'type' AS type
-from driverPermit
-join permitType ON driverPermit.permitType = permitType.id
-where driverPermit.driverID::text = $1::text;
+    dp.data->>'issue_date' AS issue_date,
+    dp.data->>'exp_date' AS exp_date,
+    pt.data->>'type' AS type,
+    pt.data->>'price' AS price
+FROM 
+    driverPermit dp
+JOIN 
+    permitType pt ON dp.permitType = pt.id
+WHERE 
+    dp.driverID = $1
 `;
