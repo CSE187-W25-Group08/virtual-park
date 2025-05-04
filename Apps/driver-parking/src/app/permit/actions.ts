@@ -4,15 +4,15 @@ import { cookies } from 'next/headers'
 
 
 import { Permit } from '../../permit'
-import { PermitService } from '../../permit/service'
+import { getPermitByDriver, getPermitType } from '../../permit/service'
 
 export async function getUserPermits() : Promise<Permit[]> {
   const cookie = (await cookies()).get('session')?.value
-  return new PermitService().getPermitByDriver(cookie)
+  return getPermitByDriver(cookie)
 }
 
 export async function permitTypes() : Promise<Permit[]> {
   const cookie = (await cookies()).get('session')?.value
-  return new PermitService().getpermitType(cookie)
+  return getPermitType(cookie)
 }
 
