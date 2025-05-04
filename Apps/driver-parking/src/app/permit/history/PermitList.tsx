@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import { useState, useEffect } from 'react'
 
 import PermitListCard from './PermitListCard'
-import { getUserPermits } from '../purchase/actions'
+import { getUserPermits } from '../actions'
 import { Permit } from '../../../permit'
 
 export default function PermitList() {

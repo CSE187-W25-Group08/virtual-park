@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { permitTypes } from './actions'
+import { permitTypes } from '../actions'
 import PermitCard from './Typecard'
 import { Permit } from '../../../permit'
 
