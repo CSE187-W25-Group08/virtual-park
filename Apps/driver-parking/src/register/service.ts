@@ -11,7 +11,7 @@ export class RegisterService {
         },
         body: JSON.stringify({query: `{userVehicle {id, licensePlate, driver, make, model, color}}`}),
       })
-      .then(response => { 
+      .then(response => {
         if (response.status != 200) {
           reject('Unauthorized')
         }
