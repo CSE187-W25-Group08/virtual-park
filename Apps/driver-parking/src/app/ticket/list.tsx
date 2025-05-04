@@ -1,29 +1,37 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { Box, Card, Typography} from '@mui/material';
-import ListItem from '@mui/material/ListItem';
-import TicketCard from './card';
-import { Ticket } from '../../ticket';
-import { list } from './actions';
-import List from '@mui/material/List';
-
+"use client";
+import React, { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
+import TicketCard from "./card";
+import { Ticket } from "../../ticket";
+import { listPaid, listUnpaid } from "./actions";
+import List from "@mui/material/List";
 
 export default function TicketList() {
-  const [ticketList, setTicketList] = useState<Ticket[]>([]);
+  const [paidTicketList, setPaidTicketList] = useState<Ticket[]>([]);
+  const [unpaidTicket, setUnpaidTicket] = useState<Ticket[]>([]);
 
   useEffect(() => {
-  const fetchData = async () => {
-    const result = await list();
-    if (result) {
-      setTicketList(result);
-    }
-  };
-  fetchData();
-
+    const fetchData = async () => {
+      const resultPaid = await listPaid();
+      const resultUnpaid = await listUnpaid();
+      if (resultPaid) {
+        setPaidTicketList(resultPaid);
+      }
+      if (resultUnpaid) {
+        setUnpaidTicket(resultUnpaid);
+      }
+    };
+    fetchData();
   }, []);
 
-  const TableHeader= (title: string) => (
-    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+  const TableHeader = (title: string) => (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+      }}
+    >
       <Typography>Violation</Typography>
       <Typography>{title}</Typography>
       <Box>
@@ -35,12 +43,14 @@ export default function TicketList() {
 
   return (
     <List>
-
-        {TableHeader('Unpaid')}
-      {ticketList.map((ticket, index) => (
-        <TicketCard key = {index} ticket = {ticket}/>
+      {TableHeader("Unpaid")}
+      {unpaidTicket.map((ticket, index) => (
+        <TicketCard key={index} ticket={ticket} />
       ))}
-      {TableHeader('Paid')}
+      {TableHeader("Paid")}
+      {paidTicketList.map((ticket, index) => (
+        <TicketCard key={index} ticket={ticket} />
+      ))}
     </List>
   );
 }
