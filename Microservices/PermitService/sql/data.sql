@@ -28,6 +28,26 @@ INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
   'c4bcb5ba-57f6-4d09-85ba-86fc729ce1e4',
   jsonb_build_object(
     'issue_date', '2025-03-05T08:00:00.000Z',
-    'exp_date', '2025-03-05T09:00:00.000Z'
+    'exp_date', '2025-03-05T17:00:00.000Z'
+  )
+);
+
+INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
+  'bd8cccc2-8ae9-4b55-9281-83bb45c5c0a0',
+  'bea45ed8-aa83-4c49-a201-4625baa0e91a',
+  'c4bcb5ba-57f6-4d09-85ba-86fc729ce1e4',
+  jsonb_build_object(
+    'issue_date', '2025-03-10T08:00:00.000Z',
+    'exp_date', '2025-03-10T17:00:00.000Z'
+  )
+);
+
+INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
+  '6b721f7b-ad12-4180-b219-9e3e3aab7653',
+  'bea45ed8-aa83-4c49-a201-4625baa0e91a',
+  'c4bcb5ba-57f6-4d09-85ba-86fc729ce1e4',
+  jsonb_build_object(
+    'issue_date', '2025-03-15T08:00:00.000Z',
+    'exp_date', '2025-03-15T17:00:00.000Z'
   )
 );
