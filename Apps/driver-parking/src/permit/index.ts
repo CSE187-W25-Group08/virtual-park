@@ -4,3 +4,7 @@ export interface Permit {
     type: string,
     price: number
 }
+
+export interface PermitPurchase {
+  purchased: (permit: Permit) => void
+}
