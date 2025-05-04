@@ -1,10 +1,10 @@
 'use client'
 
 import { Card, Typography, Box, Button, ListItem } from '@mui/material'
-import { Permit } from '../../permit/index'
+import { Permit } from '../../../permit/index'
 
 /* reference: https://www.typescriptlang.org/docs/handbook/functions.html */
-export default function PermitCard({permit, purchased}: { permit: Permit, purchased: (permit: Permit) => void}) {
+export default function typeCard({permit, purchased}: { permit: Permit, purchased: (permit: Permit) => void}) {
   return (
     <ListItem disablePadding>
       <Card sx={{ p: 2, border: 'solid', width: '100%' }}>
