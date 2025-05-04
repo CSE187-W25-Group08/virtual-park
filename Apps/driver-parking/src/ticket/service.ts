@@ -3,7 +3,7 @@ import { Ticket } from "."
 export class TicketService {
   public async getUserTickets(cookie: string|undefined): Promise<Ticket[]>  {
     return new Promise((resolve, reject) => {
-      fetch('http://localhost:4000/graphql', {
+      fetch('http://localhost:4010/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export class TicketService {
   }
   public async getUserTicket(cookie: string|undefined, ticketId : string): Promise<Ticket>  {
     return new Promise((resolve, reject) => {
-      fetch('http://localhost:4000/graphql', {
+      fetch('http://localhost:4010/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

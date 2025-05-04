@@ -3,7 +3,7 @@ import { Vehicle, VehicleForm } from "."
 export class RegisterService {
   public async getUserVehicles(cookie: string|undefined): Promise<Vehicle[]>  {
     return new Promise((resolve, reject) => {
-      fetch('http://localhost:4000/graphql', {
+      fetch('http://localhost:4020/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export class RegisterService {
 
   public async registerVehicle(cookie: string|undefined, vehicle: VehicleForm): Promise<Vehicle>  {
     return new Promise((resolve, reject) => {
-      fetch('http://localhost:4000/graphql', {
+      fetch('http://localhost:4020/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
