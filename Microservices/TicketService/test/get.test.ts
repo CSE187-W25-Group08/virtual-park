@@ -129,13 +129,14 @@ test("Update ticket paid status", async () => {
     .send({
       query: `
         mutation {
-          setTicketPaid(id: "cc97d397-6906-44ee-b616-6ee746914474") {
+          setTicketPaid(id: "cc97d397-6906-44ee-b616-6ee746914474", paid: true) {
             paid
           }
         }
       `,
     })
     .then((res) => {
+      console.log(res.body.errors)
       expect(res.body.data.setTicketPaid.paid).toBeTruthy()
     });
 });

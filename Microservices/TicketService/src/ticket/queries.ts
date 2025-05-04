@@ -29,7 +29,7 @@ export const updatePaidTicket =
   `
   WITH updated AS (
     UPDATE ticket
-    SET data = jsonb_set(data, '{paid}', 'true'::jsonb)
+    SET data = jsonb_set(data, '{paid}', $2::jsonb)
     WHERE id = $1 
     RETURNING *
   )

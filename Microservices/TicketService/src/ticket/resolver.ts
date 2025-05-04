@@ -49,9 +49,10 @@ export class TicketResolver {
   @Mutation(returns => Ticket)
   async setTicketPaid(
     @Arg("id") id: string,
+    @Arg("paid") newPaidValue: boolean,
     @Ctx() request: Request
   ): Promise<Ticket> {
-    return await new TicketService().setPaid(request.user?.id, id)
+    return await new TicketService().setPaid(request.user?.id, id, newPaidValue)
   }
 
 

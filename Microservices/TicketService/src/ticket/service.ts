@@ -57,10 +57,10 @@ export class TicketService {
     return tickets[0];
   }
 
-  public async setPaid(userId: string | undefined, ticketId: string): Promise<Ticket> {
+  public async setPaid(userId: string | undefined, ticketId: string, newPaidValue: boolean): Promise<Ticket> {
     const query = {
       text: queries.updatePaidTicket,
-      values: [ticketId]
+      values: [ticketId, newPaidValue]
     }
 
     const { rows } = await pool.query(query);
