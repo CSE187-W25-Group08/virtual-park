@@ -11,7 +11,7 @@ export class PermitService {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${cookie}`,
         },
-        body: JSON.stringify({query: `{permits {id, issueDate, expDate, type, price}}`}),
+        body: JSON.stringify({query: `{permitsByDriver {issueDate, expDate, type, price}}`}),
       })
       .then(response => { 
         if (response.status != 200) {
@@ -20,7 +20,7 @@ export class PermitService {
         return response.json()} 
       )
       .then(json => {
-        resolve(json.data.permits)
+        resolve(json.data.permitsByDriver)
       })
       .catch((error) => reject(error))
     })

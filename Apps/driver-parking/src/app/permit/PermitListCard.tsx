@@ -23,7 +23,6 @@ const PermitListCard = ({permit}: {permit: Permit}) => {
         <Typography variant="body2" color="text.secondary">
           {`Expiry Date: ${timeFormatter(permit.expDate)}`}
         </Typography>
-        
       </Box>
     </ListItem>
   )
