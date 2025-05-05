@@ -3,7 +3,7 @@ import * as fs from 'fs'
 
 import dotenv from 'dotenv'
 dotenv.config()
-process.env.POSTGRES_DB = 'test'
+process.env.POSTGRES_DB = 'permit'
 
 const pool = new Pool({
   host: 'localhost',
