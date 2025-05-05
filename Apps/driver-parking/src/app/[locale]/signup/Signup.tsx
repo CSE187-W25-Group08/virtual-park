@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import InputAdornment from '@mui/material/InputAdornment'
+import { useTranslations } from "next-intl";
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -21,6 +22,7 @@ export default function Signup() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+  const t = useTranslations('signup')
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {value, name} = event.target
@@ -54,11 +56,11 @@ export default function Signup() {
       alignItems: 'center'}}>
       <Typography variant="h4" sx={{
         marginTop: '120px',
-      }}>Create an Account</Typography>
+      }}>{t("createAccount")}</Typography>
       <TextField
         required
         name='email'
-        label="Email"
+        label={t("email")}
         aria-label='Email'
         type='email'
         onChange={handleInputChange}
@@ -70,7 +72,7 @@ export default function Signup() {
       <TextField
         required
         name='name'
-        label="Name"
+        label={t("name")}
         aria-label='Name'
         type="text"
         onChange={handleInputChange}
@@ -82,7 +84,7 @@ export default function Signup() {
       <TextField
         required
         name='password'
-        label="Password"
+        label={t("password")}
         aria-label='Password'
         type={showPassword ? 'text' : 'password'}
         onChange={handleInputChange}
@@ -111,13 +113,13 @@ export default function Signup() {
         sx={{
           marginTop: '20px',
           width: '300px',
-        }}>Sign Up</Button>
+        }}>{t("signup")}</Button>
       <Divider sx={{ width: '300px', marginTop: '20px' }}>
         <Typography>OR</Typography>
       </Divider>
       <Typography variant="body1" sx={{
         marginTop: '20px',
-      }}>Already have an account? <a href="/login">Log In</a></Typography>
+      }}>{t("accountExist")}<a href="/login">{t("login")}</a></Typography>
     </Box>
   )
 }

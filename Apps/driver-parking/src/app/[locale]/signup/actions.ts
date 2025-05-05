@@ -2,8 +2,8 @@
 
 import { cookies } from 'next/headers'
 
-import { NewUser, User } from '../../auth'
-import { signupUser } from '../../auth/service'
+import { NewUser, User } from '../../../auth'
+import { signupUser } from '../../../auth/service'
 
 export async function signup(user: NewUser) : Promise<User|undefined> {
   const data = await signupUser(user)

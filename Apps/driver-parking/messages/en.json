@@ -4,12 +4,21 @@
   },
   "common": {
     "english": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 English",
-    "spanish": "󠁢Spanish Placeholder"
+    "spanish": "󠁢🇪🇸 Spanish"
   },
-  "task": {
-    "header": "Task List",
-    "title": "Title",
-    "add": "Add Task"
+  "landing": {
+    "signup": "SIGN UP",
+    "login": "LOGIN",
+    "welcome": "Welcome come to Virtual-Park!"
+  },
+  "signup": {
+    "createAccount": "Create an Account",
+    "email": "email ",
+    "name": "name ",
+    "password": "password ",
+    "signup": "sign up",
+    "accountExist": "Already have an account? ",
+    "login": "Login"
   }
 }
 

@@ -9,10 +9,12 @@ import { useRouter } from 'next/navigation'
 
 import { logout } from '../[locale]/login/action'
 import logo from '../public/img/virtual-park-logo.png'
+import { useTranslations } from "next-intl";
 
 export default function Landing() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const router = useRouter()
+  const t = useTranslations('landing')
 
   useEffect(() => {
     const session = window.sessionStorage.getItem('name')
@@ -41,7 +43,7 @@ export default function Landing() {
         </picture>
       </Box>
       <Typography variant="h5">
-          Welcome to Virtual-Park!
+        {t("welcome")}
       </Typography>
       {isAuthenticated === false && (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -51,7 +53,7 @@ export default function Landing() {
               marginTop: '20px',
               width: '100px'
             }}>
-            Login
+            {t('login')}
           </Button>
           <Button variant="contained"
             onClick={() => router.push('/signup')}
@@ -59,7 +61,7 @@ export default function Landing() {
               marginTop: '20px',
               width: '100px'
             }}>
-            Sign Up
+            {t('signup')}
           </Button>
         </Box>
       )}

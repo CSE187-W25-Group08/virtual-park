@@ -3,12 +3,21 @@
     "title": "Exemple de Tâche"
   },
   "common": {
-    "english": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Anglais",
-    "spanish": "Spanish Placeholder"
+    "english": "🏴󠁧󠁢󠁥󠁮Anglais",
+    "spanish": "🇪🇸 Español"
   },
-  "task": {
-    "header": "Liste de Tâches",
-    "title": "Titre",
-    "add": "Ajouter une Tâche"
+  "landing": {
+    "signup": "REGISTRARSE",
+    "login": "INICIAR SESIÓN",
+    "welcome": "Bienvenido a Virtual-Park!"
+  },
+  "signup": {
+    "createAccount": "Crear una cuenta",
+    "email": "Correo electrónico ",
+    "name": "Nombre ",
+    "password": "Contraseña ",
+    "signup": "REGISTRARSE",
+    "accountExist": "¿Ya tienes una cuenta?",
+    "login": "Iniciar sesión"
   }
 }
