@@ -1,0 +1,14 @@
+{
+    "name": "apps-runner",
+    "version": "1.0.0",
+    "description": "Installs all apps",
+    "license": "UNLICENSED",
+    "repository": "none",
+    "scripts": {
+        "install-driver": "cd driver-parking && npm install",
+        "install-admin": "cd admin && npm install",
+        "install-enforcement": "cd enforcement && npm install",
+        "install": "npm run install-driver && npm run install-admin && npm run install-enforcement"
+    }
+}
+  

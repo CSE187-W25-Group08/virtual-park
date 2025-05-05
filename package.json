@@ -8,6 +8,9 @@
     "typescript": "^5.8.3"
   },
   "scripts": {
+    "install-microservices": "cd Microservices && npm install",
+    "install-apps": "cd Apps && npm install",
+    "install": "npm run install-microservices && npm run install-apps",
     "dev-auth": "cd Microservices/AuthService && npm run dev",
     "dev-ticket": "cd Microservices/TicketService && npm run dev",
     "dev-vehicle": "cd Microservices/VehicleService && npm run dev",
