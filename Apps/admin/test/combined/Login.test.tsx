@@ -71,12 +71,12 @@ it('Login denies invalid credentials', async () => {
         json: () => Promise.resolve(undefined),
       } as Response)
     }
-    // if (url?.toString().includes('/check')) {
-    //   return Promise.resolve({
-    //     status: 200,
-    //     json: () => Promise.resolve({}),
-    //   } as Response)
-    // }
+    if (url?.toString().includes('/check')) {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({}),
+      } as Response)
+    }
     return Promise.reject('Unknown fetch')
   })
 
@@ -86,7 +86,5 @@ it('Login denies invalid credentials', async () => {
   await userEvent.type(screen.getByPlaceholderText('Password'), 'annaadmin')
   await userEvent.click(screen.getByText('Sign in'))
 
-  await vi.waitFor(() => {
-    expect(mockPush).toHaveBeenCalledWith('/')
-  })
+  await screen.findByText('Incorrect login credentials, please try again');
 })
