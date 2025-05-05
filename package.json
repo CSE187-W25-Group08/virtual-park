@@ -2,9 +2,10 @@
   "devDependencies": {
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "typescript": "^5.8.3",
+    "concurrently": "^9.1.2",
     "jose": "^4.14.6",
-    "next": "15.3.1"
+    "next": "15.3.1",
+    "typescript": "^5.8.3"
   },
   "scripts": {
     "dev-auth": "cd Microservices/AuthService && npm run dev",
@@ -12,6 +13,6 @@
     "dev-vehicle": "cd Microservices/VehicleService && npm run dev",
     "dev-permit": "cd Microservices/PermitService && npm run dev",
     "dev-app": "cd Apps/driver-parking && npm run dev",
-    "dev": "(npm run dev-auth) & (npm run dev-ticket) & (npm run dev-vehicle) & (npm run dev-permit) & (npm run dev-app)"
+      "dev": "concurrently \"npm run dev-auth\" \"npm run dev-ticket\" \"npm run dev-vehicle\" \"npm run dev-permit\" \"npm run dev-app\""
   }
 }
