@@ -16,6 +16,7 @@
     "@mui/material": "^7.0.2",
     "jose": "^4.14.6",
     "next": "15.3.1",
+    "next-intl": "^4.1.0",
     "react": "^19.0.0"
   },
   "devDependencies": {

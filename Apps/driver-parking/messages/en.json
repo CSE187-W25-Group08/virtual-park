@@ -1,0 +1,15 @@
+{
+  "metadata": {
+    "title": "Task Example"
+  },
+  "common": {
+    "english": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 English",
+    "spanish": "󠁢Spanish Placeholder"
+  },
+  "task": {
+    "header": "Task List",
+    "title": "Title",
+    "add": "Add Task"
+  }
+}
+

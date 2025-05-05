@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "title": "Exemple de Tâche"
+  },
+  "common": {
+    "english": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Anglais",
+    "spanish": "Spanish Placeholder"
+  },
+  "task": {
+    "header": "Liste de Tâches",
+    "title": "Titre",
+    "add": "Ajouter une Tâche"
+  }
+}
