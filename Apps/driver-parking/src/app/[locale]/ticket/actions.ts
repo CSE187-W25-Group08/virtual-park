@@ -2,8 +2,8 @@
 
 import { cookies } from "next/headers";
 
-import { Ticket } from "../../ticket";
-import { TicketService } from "../../ticket/service";
+import { Ticket } from "../../../ticket";
+import { TicketService } from "../../../ticket/service";
 
 /* Currently unused
 export async function list(): Promise<Ticket[] | undefined> {

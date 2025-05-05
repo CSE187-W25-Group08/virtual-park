@@ -29,7 +29,7 @@ export default function LocaleSwitcher() {
   return (
     <div>
       <button onClick={() => switchLocale('en')}>{t('english')}</button>
-      <button onClick={() => switchLocale('sp')}>{t('spanish')}</button>
+      <button onClick={() => switchLocale('es')}>{t('spanish')}</button>
     </div>
   );
 };

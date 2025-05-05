@@ -1,7 +1,7 @@
 'use client'
 
 import { Card, Typography, Box, Button, ListItem } from '@mui/material'
-import { Permit } from '../../../permit/index'
+import { Permit } from '../../../../permit/index'
 
 /* reference: https://www.typescriptlang.org/docs/handbook/functions.html */
 export default function typeCard({permit, purchased}: { permit: Permit, purchased: (permit: Permit) => void}) {

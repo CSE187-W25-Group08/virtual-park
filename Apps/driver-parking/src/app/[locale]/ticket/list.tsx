@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import TicketCard from "./card";
-import { Ticket } from "../../ticket";
+import { Ticket } from "../../../ticket";
 import { listPaid, listUnpaid } from "./actions";
 import List from "@mui/material/List";
 

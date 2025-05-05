@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { permitTypes } from '../actions'
 import PermitCard from './Typecard'
-import { Permit } from '../../../permit'
+import { Permit } from '../../../../permit'
 
 export default function typeList() {
   const [permitType, setpermitType] = useState<Permit[]>([])

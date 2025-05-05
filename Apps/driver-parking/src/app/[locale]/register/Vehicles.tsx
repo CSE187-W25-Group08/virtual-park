@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Card, Typography, Button, TextField, MenuItem, Switch, FormControlLabel } from '@mui/material';
 
-import {Vehicle,VehicleForm} from '../../register'
+import {Vehicle,VehicleForm} from '../../../register'
 import { getUserVehicles, registerVehicle } from './actions'
 
 export default function Vehicles() {
