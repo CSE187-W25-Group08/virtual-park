@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import {check} from './auth/service'
+import createMiddleware from 'next-intl/middleware';
+import {routing} from './i18n/routing';
+ 
+const middlewareInitial = createMiddleware(routing);
 
 const publicRoutes = ['/login', '/signup', '/']
 
 export default async function middleware(req: NextRequest) {
-  if (!publicRoutes.includes(req.nextUrl.pathname)) {
+  const response = middlewareInitial(req)
+  const pathname = req.nextUrl.pathname.replace(/^\/(en|es)/, '');
+  if (!publicRoutes.includes(pathname)) {
     try {
       const cookie = req.cookies.get('session')?.value;
       await check(cookie)
@@ -12,9 +18,12 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/login', req.nextUrl))
     }
   }
-  return NextResponse.next()
+  return response
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+    '/(en|sp)/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'
+  ],
 }
+

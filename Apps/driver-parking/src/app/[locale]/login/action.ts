@@ -2,8 +2,8 @@
 
 import { cookies } from 'next/headers'
 
-import { Credentials, User } from '../../auth'
-import {authenticate} from '../../auth/service'
+import { Credentials, User } from '../../../auth'
+import {authenticate} from '../../../auth/service'
 
 export async function login(credential: Credentials) : Promise<User|undefined> {
   const user = await authenticate(credential)

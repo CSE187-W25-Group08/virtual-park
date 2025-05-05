@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-import { logout } from '../login/action'
+import { logout } from '../[locale]/login/action'
 import logo from '../public/img/virtual-park-logo.png'
 
 export default function Landing() {
