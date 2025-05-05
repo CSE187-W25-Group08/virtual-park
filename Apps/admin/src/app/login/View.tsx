@@ -4,16 +4,17 @@ import React from 'react'
 import { useState,ChangeEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
-  Container, 
   Typography, 
   Box, 
   Button, 
-  TextField
+  TextField,
+  Alert
 } from '@mui/material'
 import { login } from './action'
 
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
+  const [failedLogin, setFailedLogin] = useState(false)
   const router = useRouter()
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -30,20 +31,26 @@ export default function LoginView() {
   const handleClick = async () => {
     const authenticated = await login(credentials)
     if (authenticated) {
+      setFailedLogin(false);
       window.sessionStorage.setItem('name', authenticated.name)
       router.push('/')
+    } else {
+      setFailedLogin(true);
     }
   }
 
   return (
-    <Container
-      maxWidth="xs"
+    <Box
       sx={{
+        mt: 20,
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
       }}
     >
+      {failedLogin &&
+            <Alert severity="error">Incorrect login credentials, please try again</Alert>}
       <Box
         sx={{
           display: 'flex',
@@ -52,7 +59,7 @@ export default function LoginView() {
           mt: 4,
         }}
       >
-        <Typography variant="h5">
+        <Typography variant="h3">
           {'Virtual-Park Admin Login'}
         </Typography>
         
@@ -108,6 +115,6 @@ export default function LoginView() {
           </Button>
         </Box>
       </Box>
-    </Container>
+    </Box>
   )
 }
