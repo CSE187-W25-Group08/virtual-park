@@ -32,10 +32,8 @@ vi.mock('../../src/app/ticket/actions', () => {
       mockTicket = {
         ...mockTicket,
         paid: true,
-        description: "dragon"
       };
-      console.log(mockTicket)
-      return Promise.resolve({ success: true });
+      return Promise.resolve(mockTicket);
     })
   };
 });
