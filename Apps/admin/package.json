@@ -14,10 +14,11 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
+    "@testing-library/user-event": "14.6.1",
     "jose": "^4.14.6",
     "next": "15.3.1",
     "react": "^19.0.0",
-    "@testing-library/user-event": "14.6.1"
+    "react-window": "^1.8.11"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -26,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-window": "^1.8.8",
     "@vitejs/plugin-react": "^4.4.1",
     "@vitest/coverage-v8": "^3.1.2",
     "eslint": "^9",

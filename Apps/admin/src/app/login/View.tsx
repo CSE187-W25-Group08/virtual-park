@@ -1,7 +1,6 @@
 'use client'
 
-import React from 'react'
-import { useState,ChangeEvent } from 'react'
+import { useState, ChangeEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
   Typography, 
