@@ -48,11 +48,11 @@ it('should call login function when button is clicked', async () => {
   const passwordInput = screen.getByPlaceholderText('Password')
   const button = screen.getByText('Sign in')
 
-  await userEvent.type(emailInput, 'molly@books.com')
-  await userEvent.type(passwordInput, 'mollymember')
+  await userEvent.type(emailInput, 'anna@books.com')
+  await userEvent.type(passwordInput, 'annaadmin')
   userEvent.click(button)
 
   await vi.waitFor(() => {
-    expect(mockPush).toHaveBeenCalledWith('/register')
+    expect(mockPush).toHaveBeenCalledWith('/')
   })
 })
