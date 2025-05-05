@@ -3,9 +3,19 @@ import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useRouter } from 'next/navigation'
 import Page from '@/app/login/page'
+// https://chatgpt.com/g/g-p-6812f0a14ce48191b88ff0acaa65015c-virtual-park-app/c/6812f1f1-1608-8007-a132-0de188c60fc6
 
+// mock next.js stuff navigation and cookies
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
+}))
+
+vi.mock('next/headers', () => ({
+  cookies: () => ({
+    set: vi.fn(),
+    get: vi.fn(),
+    delete: vi.fn(),
+  }),
 }))
 
 beforeEach(() => {
