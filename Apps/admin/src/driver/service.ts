@@ -17,8 +17,7 @@ export async function getAllDrivers(cookie: string | undefined): Promise<Driver[
       }
       )
       .then(json => {
-        console.log(json?.body)
-        resolve(json.body)
+        resolve(json)
       })
       .catch((error) => reject(error))
   })

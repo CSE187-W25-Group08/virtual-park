@@ -66,7 +66,8 @@ export class AuthController extends Controller {
   @Security("jwt", ["admin"])
   @Response('401', 'Unauthorized')
   public async drivers(): Promise<Driver[]> {
-    return await new AuthService().getDrivers();
+    const drivers = await new AuthService().getDrivers();
+    return drivers
   }
 
 }

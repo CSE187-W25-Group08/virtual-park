@@ -1,4 +1,4 @@
-'user server'
+'use server'
 import { Driver } from '../../driver'
 import { getAllDrivers } from '../../driver/service'
 import { cookies } from 'next/headers'
