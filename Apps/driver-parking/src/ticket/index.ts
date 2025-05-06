@@ -8,8 +8,9 @@ export interface Ticket {
   due: string,
   issue: string,
   violation: string,
-  image: string
-  cost: number
+  image: string,
+  cost: number,
+  appeal: string
 }
 
 export interface TicketId {

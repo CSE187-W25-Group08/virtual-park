@@ -10,6 +10,11 @@ export async function getUserVehicles() : Promise<Vehicle[]> {
   return new RegisterService().getUserVehicles(cookie)
 }
 
+export async function getVehicleById(vehicleId: string) : Promise<Vehicle> {
+  const cookie = (await cookies()).get('session')?.value
+  return new RegisterService().getVehicleById(cookie, vehicleId)
+}
+
 export async function registerVehicle(vehicle: VehicleForm) : Promise<Vehicle> {
   const cookie = (await cookies()).get('session')?.value
   return new RegisterService().registerVehicle(cookie, vehicle)

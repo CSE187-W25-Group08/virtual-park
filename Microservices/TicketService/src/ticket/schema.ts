@@ -14,7 +14,8 @@ export class Ticket {
     issue: string,
     violation: string,
     image: string,
-    cost: number
+    cost: number,
+    appeal: string
   ) {
     this.id = id;
     this.vehicle = vehicle;
@@ -27,6 +28,7 @@ export class Ticket {
     this.violation = violation;
     this.image = image;
     this.cost = cost;
+    this.appeal = appeal;
   }
 
   @Field(() => ID)
@@ -64,4 +66,7 @@ export class Ticket {
   @Field()
   @IsNumber()
   cost!: number;
+
+  @Field()
+  appeal!: string;
 }
