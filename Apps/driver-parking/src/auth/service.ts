@@ -1,7 +1,4 @@
-import 'server-only'
-
 import { NewUser, Authenticated, Credentials} from './'
-// import { rejects } from 'assert'
 
 export async function signupUser(user: NewUser): Promise<Authenticated|undefined> {
   return new Promise((resolve, reject) => {
