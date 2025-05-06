@@ -1,9 +1,9 @@
 'user server'
-import { Vehicle } from '../../vehicle'
-import { getAllVehicles } from '../../vehicle/service'
+import { Driver } from '../../driver'
+import { getAllDrivers } from '../../driver/service'
 import { cookies } from 'next/headers'
 
-export async function fetchVehicles(): Promise<Vehicle[]> {
+export async function fetchDrivers(): Promise<Driver[]> {
   const cookie = (await cookies()).get('session')?.value;
-  return await getAllVehicles(cookie);
+  return await getAllDrivers(cookie);
 }

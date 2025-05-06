@@ -6,8 +6,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { FixedSizeList } from 'react-window';
-import {fetchVehicles} from './action';
-import { Vehicle } from '@/vehicle';
+import {fetchDrivers} from './action';
+import { Driver } from '@/driver';
 
 // based on MUI https://mui.com/material-ui/react-list/
 
@@ -21,16 +21,16 @@ function renderRow(props : any) {
   );
 }
 
-export default function VehiclesList() {
-  const [vehicles, setVehicles] = React.useState<Vehicle[]>([]);
-  const setVehicleData = async () => {
-    const vehicleList = await fetchVehicles();
-    if (vehicleList) {
-      setVehicles(vehicleList);
+export default function DriversList() {
+  const [drivers, setDrivers] = React.useState<Driver[]>([]);
+  const setDriverData = async () => {
+    const driverList = await fetchDrivers();
+    if (driverList) {
+      setDrivers(driverList);
     }
   };
   React.useEffect(() => {
-    setVehicleData()
+    setDriverData()
   }, [])
 
   return (

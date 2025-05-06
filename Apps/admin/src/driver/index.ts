@@ -6,3 +6,10 @@ export interface Vehicle {
   make: String,
   model: String
 }
+
+export interface Driver {
+  name: string,
+  email: string,
+  jwt: string,
+  joinDate: string,
+}

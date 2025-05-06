@@ -1,9 +1,9 @@
-import VehiclesList from './drivers/view';
+import DriversList from './drivers/view';
 
 export default function Home() {
   return (
     <>
-      <VehiclesList />
+      <DriversList />
     </>
   );
 }
