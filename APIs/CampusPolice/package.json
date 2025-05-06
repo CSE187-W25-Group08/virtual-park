@@ -32,6 +32,7 @@
     "cors": "*",
     "dotenv": "*",
     "express": "*",
+    "joi": "^17.13.3",
     "jsonwebtoken": "*",
     "pg": "*",
     "swagger-ui-express": "*",
