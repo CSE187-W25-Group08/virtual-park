@@ -25,6 +25,9 @@
     "dev-ticket": "cd TicketService && npm run dev",
     "dev-vehicle": "cd VehicleService && npm run dev",
     "dev-permit": "cd PermitService && npm run dev",
-    "dev": "(npm run dev-auth) & (npm run dev-ticket) & (npm run dev-vehicle) & (npm run dev-permit)"
+    "dev": "concurrently \"npm run dev-auth\" \"npm run dev-ticket\" \"npm run dev-vehicle\" \"npm run dev-permit\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
