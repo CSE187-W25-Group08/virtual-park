@@ -1,4 +1,4 @@
-import VehiclesList from './vehicles/view';
+import VehiclesList from './drivers/view';
 
 export default function Home() {
   return (

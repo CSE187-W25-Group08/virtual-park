@@ -11,7 +11,7 @@
 import * as jwt from "jsonwebtoken"
 import * as db from './db'
 import { midt, UUID, SessionUser } from '../types'
-import { Credentials, Authenticated, NewUser } from '.'
+import { Credentials, Authenticated, NewUser, Driver } from '.'
 
 // https://chat.deepseek.com/a/chat/s/b44e480a-f720-4b4e-b923-ac03aa7f7fc6
 const JWT_SECRET = process.env.MASTER_SECRET;
@@ -40,8 +40,11 @@ export class AuthService {
       return undefined
     }
   }
-  // https://claude.ai/chat/bb2b0366-a336-4241-b4c4-4da2d74c9bc4
 
+  public async getDrivers(): Promise<Driver[]> {
+
+  }
+  // https://claude.ai/chat/bb2b0366-a336-4241-b4c4-4da2d74c9bc4
   public async check(authHeader?: string, scopes?: string[]): Promise<SessionUser> {
     console.log("Check called on real auth service");
     return new Promise((resolve, reject) => {

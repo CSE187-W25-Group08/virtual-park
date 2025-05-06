@@ -11,7 +11,7 @@ import {
   Query
 } from 'tsoa'
 
-import { Credentials, Authenticated, NewUser } from '.'
+import { Credentials, Authenticated, NewUser, Driver } from '.'
 import { AuthService } from './authService'
 import { SessionUser } from '../types'
 
@@ -60,6 +60,13 @@ export class AuthController extends Controller {
     } else {
       return user;
     }
+  }
+
+  @Get('drivers')
+  @Security("jwt", ["admin"])
+  @Response('401', 'Unauthorized')
+  public async drivers(): Promise<Driver[]> {
+    return await new AuthService().getDrivers();
   }
 
 }
