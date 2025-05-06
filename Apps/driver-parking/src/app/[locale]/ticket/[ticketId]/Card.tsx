@@ -7,15 +7,23 @@ import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
 import { Box} from "@mui/material";
 import Button from "@mui/material/Button";
+import { Vehicle } from "@/register";
+import { getVehicleById } from "../../register/actions";
 
 export default function Card({ ticketId }: { ticketId: string }) {
   const [ticket, setTicket] = useState<Ticket | null>(null);
+  const [vehicle, setVehicle] = useState<Vehicle | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const result = await getTicketById(ticketId);
       if (result) {
         setTicket(result);
+        
+        const vehicle = await getVehicleById(result.vehicle);
+        if (vehicle) {
+          setVehicle(vehicle);
+        }
       }
     };
     fetchData();
@@ -76,6 +84,8 @@ export default function Card({ ticketId }: { ticketId: string }) {
             <ListItemText>Violation: {ticket?.violation}</ListItemText>
 
             <ListItemText>Description: {ticket?.description}</ListItemText>
+
+            <ListItemText>License Plate: {vehicle?.licensePlate}</ListItemText>
 
             <ListItemText>Issued: {handleHourDate(ticket?.issue)}</ListItemText>
 

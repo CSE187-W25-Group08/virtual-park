@@ -1,6 +1,43 @@
 import { Vehicle, VehicleForm } from "."
 
 export class RegisterService {
+  public async getVehicleById(cookie: string|undefined, vehicleId: string): Promise<Vehicle>  {
+    return new Promise((resolve, reject) => {
+      fetch('http://localhost:4020/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${cookie}`,
+        },
+        body: JSON.stringify({
+          query: `
+            query ($id: String!) {
+              getVehicleById(id: $id) {
+                id
+                licensePlate
+                driver
+                make
+                model
+                color
+              }
+            }
+          `,
+          variables: { id: vehicleId },
+        }),
+      })
+      .then(response => {
+        if (response.status != 200) {
+          reject('Unauthorized')
+        }
+        return response.json()} 
+      )
+      .then(json => {
+        resolve(json.data.getVehicleById)
+      })
+      .catch(() => reject('Unauthorized'))
+    })
+  }
+
   public async getUserVehicles(cookie: string|undefined): Promise<Vehicle[]>  {
     return new Promise((resolve, reject) => {
       fetch('http://localhost:4020/graphql', {

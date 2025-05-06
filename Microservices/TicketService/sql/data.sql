@@ -36,7 +36,7 @@ VALUES (
   )
 );
 
--- molly ticket
+-- molly 2 tickets
 INSERT INTO ticket(id, driver, data)
 VALUES (
   '4b14a022-8e94-43a6-b607-2d8269431326',
@@ -52,5 +52,23 @@ VALUES (
     'violation', 'restricted area',
     'image', 'https://krcrtv.com/resources/media2/16x9/full/1015/center/80/6918a95f-2801-4fa8-b65f-51c46a5395a5-large16x9_crash.jpg',
     'cost', 49.02
+  )
+);
+
+INSERT INTO ticket(id, driver, data)
+VALUES (
+  '42498f0c-08d4-48cd-a943-5f08c5be6303',
+  'bea45ed8-aa83-4c49-a201-4625baa0e91a',
+  jsonb_build_object(
+    'vehicle', '18fa94fc-4783-42df-a904-7ec17efadca5',
+    'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
+    'lot', 'c72e1459-5b52-41f2-b731-15c7c981e8b0',
+    'paid', false,
+    'description', 'Molly cant park again',
+    'due', '2025-05-15T12:00:00Z',
+    'issue', '2025-04-30T12:00:00Z',
+    'violation', 'restricted area, testing longer violation name',
+    'image', 'https://krcrtv.com/resources/media2/16x9/full/1015/center/80/6918a95f-2801-4fa8-b65f-51c46a5395a5-large16x9_crash.jpg',
+    'cost', 46.12
   )
 );

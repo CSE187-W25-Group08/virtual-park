@@ -26,11 +26,23 @@ export default function TicketCard({ticket} : {ticket: Ticket}) {
 
 
   return (
-    <ListItemButton onClick={() => {handleClick(ticket.id)}}>
-    <Card sx={{ p: 2, border: '1px solid #ccc', width: '100%' }}>
+    <ListItemButton 
+      onClick={() => {handleClick(ticket.id)}}
+      sx={{ width: '100%', p: 0, mb: 2 }}
+    >
+    <Card 
+      sx={{ 
+        borderRadius: 3,
+        boxShadow: 2,
+
+        p: 2,
+        border: '1px solid #ccc',
+        width: '100%'
+      }}
+    >
       <Box sx={{ display: 'flex' , justifyContent: 'space-between' }}>
         <Typography>{ticket.violation}</Typography>
-        <Box sx={{ display: 'flex' , flexDirection: 'column',  justifyContent: 'space-between' }}>
+        <Box sx={{ ml: 3, display: 'flex' , flexDirection: 'column',  justifyContent: 'space-between' }}>
           <Typography>{handleHourDate(ticket.issue)}</Typography>
           <Typography>${ticket.cost}</Typography>
         </Box>

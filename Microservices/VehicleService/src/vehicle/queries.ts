@@ -29,3 +29,13 @@ VALUES (
 )
 RETURNING id, driver, data;
 `;
+
+export const getVehicleById = `
+SELECT
+  id, driver, data
+FROM
+  vehicle
+WHERE
+  driver = $1
+AND id = $2;
+`;
