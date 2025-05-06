@@ -18,5 +18,6 @@ VALUES (
     'name','Molly Member',
     'pwhash',crypt('mollymember',gen_salt('bf')),
     'roles','["driver"]',
+    'joindate', '2025-04-16T04:59:03+00:00'
   )
 );

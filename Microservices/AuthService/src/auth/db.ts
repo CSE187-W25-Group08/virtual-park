@@ -12,16 +12,18 @@ export async function createNewUser(signUpDetails: NewUser): Promise<User | unde
   if (check.rows.length > 0) {
     return undefined;
   }
+  const currentTimestamp = new Date().toISOString();
   const signUp = {
     text: `
       INSERT INTO member (data) VALUES (jsonb_build_object(
           'email', $1::text,
           'pwhash', crypt($2, gen_salt('bf')),
           'name', $3::text,
-          'roles', jsonb_build_array('driver')::text
+          'roles', jsonb_build_array('driver')::text,
+          'joindate', $4::text
         ))
         RETURNING id, data->>'name' AS name;`,
-    values: [signUpDetails.email, signUpDetails.password, signUpDetails.name]
+    values: [signUpDetails.email, signUpDetails.password, signUpDetails.name, currentTimestamp]
   }
   const { rows } = await pool.query(signUp);
   if (rows.length === 1) {
