@@ -1,4 +1,4 @@
-import { TicketId } from "@/ticket";
+// import { TicketId } from "@/ticket";
 import View from "./View";
 
 // For npm build 
