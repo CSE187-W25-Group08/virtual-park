@@ -1,19 +1,19 @@
 import { it, afterEach, vi } from 'vitest'
 import { render, cleanup, screen } from '@testing-library/react'
 
-import PermitList from '../../src/app/permit/history/PermitList'
-import { getUserPermits } from '../../src/app/permit/actions'
+import PermitList from '../../src/app/[locale]/permit/history/PermitList'
+import { getUserPermits } from '../../src/app/[locale]/permit/actions'
 
 afterEach(() => {
   cleanup()
   vi.restoreAllMocks()
 })
 
-vi.mock('../../src/app/permit/actions', () => ({
+vi.mock('../../src/app/[locale]/permit/actions', () => ({
   getUserPermits: vi.fn()
 }))
 
-const mockgetUserPermits = getUserPermits as ReturnType<typeof vi.fn>
+const mockgetUserPermits = vi.mocked(getUserPermits)
 
 it('mocks PermitList component', async () => {
   const testPermits = [{

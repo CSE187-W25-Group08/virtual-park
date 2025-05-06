@@ -1,5 +1,3 @@
-import 'server-only'
-
 import {Permit} from '.'
 
 export async function getPermitByDriver(cookie: string | undefined):Promise<Permit[]> {
