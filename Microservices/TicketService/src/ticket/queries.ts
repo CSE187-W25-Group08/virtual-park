@@ -17,6 +17,8 @@ export const selectPaidTickets =
   FROM ticket
 
   WHERE (data->>'paid')::boolean = $1
+  
+  AND (driver = $2);
   `
 
 export const selectTicket =

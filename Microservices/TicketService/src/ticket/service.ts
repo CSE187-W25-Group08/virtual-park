@@ -38,7 +38,7 @@ export class TicketService {
   public async getPaid(userId: string | undefined, paidStatus: boolean): Promise<Ticket[]> {
     const query = {
       text: queries.selectPaidTickets,
-      values: [paidStatus]
+      values: [paidStatus, userId]
     }
 
     const { rows } = await pool.query(query);
