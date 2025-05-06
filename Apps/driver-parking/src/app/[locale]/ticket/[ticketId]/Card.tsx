@@ -9,10 +9,13 @@ import { Box} from "@mui/material";
 import Button from "@mui/material/Button";
 import { Vehicle } from "@/register";
 import { getVehicleById } from "../../register/actions";
+import { useRouter } from 'next/navigation'
 
 export default function Card({ ticketId }: { ticketId: string }) {
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
+
+  const router = useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,6 +68,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
     const newTicket = await setTicketPaid(ticketId, true);
     if (newTicket) {
       setTicket(newTicket);
+      router.push('/ticket');
     }
   };
 
