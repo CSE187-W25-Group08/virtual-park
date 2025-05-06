@@ -2,9 +2,9 @@
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-CREATE DATABASE police;
+CREATE DATABASE registrar;
 
-\connect police
+\connect registrar
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 ----- DO NOT CHANGE ANYTHING IN THIS FILE ------

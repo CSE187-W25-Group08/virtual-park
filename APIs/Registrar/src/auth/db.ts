@@ -7,7 +7,7 @@ export async function verifyLogin(credentials: Credentials): Promise<User | unde
     text: `
       SELECT data->>'name' AS name, id,
       (crypt($2, data->>'pwhash') = data->>'pwhash') AS valid
-      FROM police
+      FROM registrar
       WHERE data->>'email' = $1
       AND (data->>'deleted' IS NULL OR data->>'deleted' != 'true')
     `,
@@ -25,9 +25,9 @@ export async function checkAuth(uid: string): Promise<CheckUser | undefined> {
   const query = {
     text: `
       SELECT id, data->>'roles' AS roles
-      FROM police
+      FROM registrar
       WHERE id = $1
-      AND (police.data->>'deleted' IS NULL OR police.data->>'deleted' != 'true')
+      AND (registrar.data->>'deleted' IS NULL OR registrar.data->>'deleted' != 'true')
     `,
     values: [uid],
   }

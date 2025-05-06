@@ -17,6 +17,6 @@ VALUES (
     'email','poppy@police.com',
     'name','Poppy Police',
     'pwhash',crypt('poppypolice',gen_salt('bf')),
-    'roles','["admin"]'
+    'roles','["police"]'
   )
 );

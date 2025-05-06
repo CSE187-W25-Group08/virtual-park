@@ -6,14 +6,14 @@
     "outputDirectory": "build",
     "specVersion": 3,
     "schemes": [ "http" ],
-    "basePath": "/api/v0/police",
+    "basePath": "/api/v0/registrar",
     "securityDefinitions": {
       "jwt": {
         "type": "http",
         "scheme": "bearer",
         "scopes": {
           "admin": "admin",
-          "police": "police"
+          "registrar": "registrar"
         }
       }
     }

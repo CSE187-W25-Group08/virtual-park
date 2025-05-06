@@ -1,7 +1,7 @@
-DELETE FROM police;
-INSERT INTO police(id, data) 
+DELETE FROM registrar;
+INSERT INTO registrar(id, data) 
 VALUES (
-  '27f541bf-2a00-457c-be0d-9cfc18fd66fa',
+  '173eaabe-705e-4888-bd0e-4af283f95ff7',
   jsonb_build_object(
     'email','anna@books.com',
     'name','Anna Admin',
@@ -10,13 +10,13 @@ VALUES (
   )
 );
 
-INSERT INTO police(id, data) 
+INSERT INTO registrar(id, data) 
 VALUES (
-  'd06e4ace-0f6d-4489-9c41-4d4e9dd9a025',
+  '3c690ee0-2e00-4653-a2c7-945a11c75c77',
   jsonb_build_object(
-    'email','poppy@police.com',
-    'name','Poppy Police',
-    'pwhash',crypt('poppypolice',gen_salt('bf')),
-    'roles','["admin"]'
+    'email','rina@registrar.com',
+    'name','Rina Registrar',
+    'pwhash',crypt('rinaregistrar',gen_salt('bf')),
+    'roles','["registrar"]'
   )
 );
