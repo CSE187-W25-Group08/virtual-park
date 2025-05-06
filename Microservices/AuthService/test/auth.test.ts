@@ -183,6 +183,9 @@ test('admin check as admin', async () => {
 })
 
 test('Get drivers as admin', async () => {
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
   let accessToken;
   await supertest(server)
     .post('/api/v0/auth/login')
@@ -207,5 +210,5 @@ test('Get drivers as non-admin', async () => {
   await supertest(server)
     .get('/api/v0/auth/drivers')
     .set('Authorization', 'Bearer ' + accessToken)
-    .expect(200)
+    .expect(401)
 })

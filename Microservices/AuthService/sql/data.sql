@@ -17,6 +17,6 @@ VALUES (
     'email','molly@books.com',
     'name','Molly Member',
     'pwhash',crypt('mollymember',gen_salt('bf')),
-    'roles','["driver"]'
+    'roles','["driver"]',
   )
 );

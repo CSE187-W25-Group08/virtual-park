@@ -68,15 +68,15 @@ export async function checkAuth(uid: string): Promise<CheckUser | undefined> {
 
 export async function fetchDrivers(): Promise<Driver[]> {
   const query = {
-    text: `SELECT id, data->>'name' AS name, data=>>'email' AS email, data->>'joinDate' as joinDate
+    text: `SELECT id, data->>'name' AS name, data->>'email' AS email, data->>'joindate' as joindate
       FROM member
-      HERE data->>'roles'::text = '["driver"]';`
+      WHERE data->>'roles'::text = '["driver"]';`
   }
   const { rows } = await pool.query(query);
   return rows.map((row) => ({
     jwt: generateToken(row.id),
     name: row.name,
     email: row.email,
-    joinDate: row.joinDate
+    joinDate: new Date(row.joindate).toDateString()
   }))
 }
