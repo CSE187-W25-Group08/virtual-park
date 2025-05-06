@@ -49,7 +49,7 @@ export class TicketService {
   public async get(userId: string | undefined, ticketId: string): Promise<Ticket> {
     const query = {
       text: queries.selectTicket,
-      values: [ticketId]
+      values: [ticketId, userId]
     }
 
     const { rows } = await pool.query(query);

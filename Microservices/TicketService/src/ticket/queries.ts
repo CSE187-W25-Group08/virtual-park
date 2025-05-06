@@ -25,6 +25,7 @@ export const selectTicket =
   `
   SELECT id, driver, data
   FROM ticket WHERE id = $1
+  AND driver = $2;
   `
 
 export const updatePaidTicket =
