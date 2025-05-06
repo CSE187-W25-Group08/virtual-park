@@ -1,7 +1,7 @@
 {
-  "name": "campus-police",
+  "name": "registrar",
   "version": "1.0.0",
-  "description": "Campus Police API for usage in relation to Virtual-Park",
+  "description": "Registrar API for usage in relation to Virtual-Park",
   "author": "Virtual-Park Team",
   "license": "UNLICENSED",
   "repository": "none",
