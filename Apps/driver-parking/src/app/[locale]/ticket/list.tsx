@@ -73,7 +73,7 @@ export default function TicketList() {
 
           {paidTicketList.length > 0 && (
             <>
-              {TableHeader("✅ Paid Violations", "paid")}
+              {TableHeader("🟢 Paid Violations", "paid")}
               {paidTicketList.map((ticket, index) => (
                 <TicketCard key={index} ticket={ticket} />
               ))}
