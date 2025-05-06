@@ -16,6 +16,35 @@
     "dev-vehicle": "cd Microservices/VehicleService && npm run dev",
     "dev-permit": "cd Microservices/PermitService && npm run dev",
     "dev-app": "cd Apps/driver-parking && npm run dev",
-      "dev": "concurrently \"npm run dev-auth\" \"npm run dev-ticket\" \"npm run dev-vehicle\" \"npm run dev-permit\" \"npm run dev-app\""
+    "dev": "concurrently \"npm run dev-auth\" \"npm run dev-ticket\" \"npm run dev-vehicle\" \"npm run dev-permit\" \"npm run dev-app\"",
+
+
+
+    "package": "docker build . -t cte-linux-amd64 --platform linux/amd64 && docker save -o cte-linux-amd64.tar cte-linux-amd64",
+    "containerised": "npm run build && npm run compose",
+    "compose": "docker compose up --build",
+    "installs": "npm install && npm run install-auth && npm run install-ticket && npm run install-vehicle && npm run install-permit && npm run install-driver-app && npm run install-admin-app && npm run install-enforcement-app",
+    "install-auth": "cd Microservices/AuthService && npm install",
+    "install-ticket": "cd Microservices/TicketService && npm install",
+    "install-vehicle": "cd Microservices/VehicleService && npm install",
+    "install-permit": "cd Microservices/PermitService && npm install",
+    "install-driver-app": "cd Apps/driver-parking && npm install",
+    "install-admin-app": "cd Apps/admin && npm install",
+    "install-enforcement-app": "cd Apps/enforcement && npm install",
+
+
+    "cis": "npm ci && npm run ci-auth && npm run ci-ticket && npm run ci-vehicle && npm run ci-permit && npm run ci-driver-app && npm run ci-admin-app && npm run ci-enforcement-app",
+    "ci-auth": "cd Microservices/AuthService && npm ci",
+    "ci-ticket": "cd Microservices/TicketService && npm ci",
+    "ci-vehicle": "cd Microservices/VehicleService && npm ci",
+    "ci-permit": "cd Microservices/PermitService && npm ci",
+    "ci-driver-app": "cd Apps/driver-parking && npm ci",
+    "ci-admin-app": "cd Apps/admin && npm ci",
+    "ci-enforcement-app": "cd Apps/enforcement && npm ci"
+
+
+
+
+
   }
 }
