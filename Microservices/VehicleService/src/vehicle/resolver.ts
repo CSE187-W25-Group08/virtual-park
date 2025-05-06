@@ -15,6 +15,13 @@ export class VehicleResolver {
 
   @Authorized()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(returns => Vehicle)
+  async getVehicleById(@Arg("id") id: string, @Ctx() request: Request): Promise<Vehicle> {
+    return await new VehicleService().getVehicleById(request.user?.id, id)
+  }
+
+  @Authorized()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => [Vehicle])
   async userVehicle(@Ctx() request: Request): Promise<Vehicle[]> {
     return await new VehicleService().getUserVehicles(request.user?.id)

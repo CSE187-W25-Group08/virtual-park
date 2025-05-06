@@ -3,7 +3,7 @@ import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 
 import Landing from '../../src/app/landing/Landing'
-import { logout } from '../../src/app/login/action'
+import { logout } from '../../src/app/[locale]/login/action'
 
 afterEach(() => {
   cleanup()

@@ -5,9 +5,9 @@ import { permitTypes } from '../actions'
 import PermitCard from './Typecard'
 import { Permit } from '../../../../permit'
 
-export default function typeList() {
+export default function TypeList() {
   const [permitType, setpermitType] = useState<Permit[]>([])
-  const [purchased, setPurchased] = useState<Permit | null>(null)
+  // const [purchased, setPurchased] = useState<Permit | null>(null)
   useEffect(() => {
     const fetchData = async () => {
       const fetch = await permitTypes()
@@ -17,7 +17,7 @@ export default function typeList() {
   }, [])
 
   const purchaseHandler = (permit: Permit) => {
-    setPurchased(permit)
+    // setPurchased(permit)
     alert(`Purchased: ${permit.type} ($${permit.price})`)
   }
 

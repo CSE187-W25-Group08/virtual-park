@@ -1,7 +1,7 @@
 import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup} from '@testing-library/react'
 
-import TicketList from '../../src/app/ticket/list'
+import TicketList from '../../src/app/[locale]/ticket/list'
 
 afterEach(() => {
   cleanup()
@@ -11,7 +11,7 @@ vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
 
-vi.mock('../../src/app/ticket/actions', () => ({
+vi.mock('../../src/app/[locale]/ticket/actions', () => ({
   listPaid: vi.fn(() => [      
     {
       id: "t2",

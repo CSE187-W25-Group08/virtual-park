@@ -3,8 +3,11 @@ import { getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { notFound} from 'next/navigation';
 
+
+// npm build
+type Params = Promise<{ locale: string }>
 /* https://medium.com/hackernoon/follow-single-argument-principle-in-typescript-with-parameter-objects-c8a259dd7191 */
-export async function generateMetadata({ params }:{params:{locale: string}}) {
+export async function generateMetadata({ params }:{params: Params}) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'metadata' });
 
@@ -18,7 +21,7 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params:  { locale: string };
+  params: Params;
 }) {
   const {locale} = await params;
   if (!hasLocale(routing.locales, locale)) {

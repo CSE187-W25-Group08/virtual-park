@@ -16,13 +16,42 @@ export const selectPaidTickets =
 
   FROM ticket
 
-  WHERE (data->>'paid')::boolean = $1
+  WHERE (data->>'paid' = 'true')
+  
+  AND (driver = $1)
+  
+  AND (data->>'appeal' = 'null' OR data->>'appeal' = 'rejected');
+  `
+
+  export const selectUnpaidTickets =
+  `
+  SELECT id, driver, data
+
+  FROM ticket
+
+  WHERE (data->>'paid' = 'false')
+  
+  AND (driver = $1)
+  
+  AND (data->>'appeal' = 'null' OR data->>'appeal' = 'rejected');
+  `
+
+  export const selectAppealedTickets =
+  `
+  SELECT id, driver, data
+
+  FROM ticket
+
+  WHERE (data->>'appeal' = 'submitted' OR data->>'appeal' = 'approved')
+  
+  AND (driver = $1);
   `
 
 export const selectTicket =
   `
   SELECT id, driver, data
   FROM ticket WHERE id = $1
+  AND driver = $2;
   `
 
 export const updatePaidTicket =

@@ -33,6 +33,15 @@ export async function listUnpaid(): Promise<Ticket[] | undefined> {
   }
 }
 
+export async function listAppealed(): Promise<Ticket[] | undefined> {
+  try {
+    const cookie = (await cookies()).get("session")?.value;
+    return new TicketService().getAppealedTicket(cookie)
+  } catch {
+    return [];
+  }
+}
+
 export async function getTicketById(id : string): Promise<Ticket | undefined> {
   try {
     const cookie = (await cookies()).get("session")?.value;
