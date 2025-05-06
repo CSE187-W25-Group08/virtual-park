@@ -1,10 +1,10 @@
 export interface Vehicle {
-  color: String,
-  driver: String,
-  id: String,
-  licensePlate: String,
-  make: String,
-  model: String
+  color: string,
+  driver: string,
+  id: string,
+  licensePlate: string,
+  make: string,
+  model: string
 }
 
 export interface Driver {
