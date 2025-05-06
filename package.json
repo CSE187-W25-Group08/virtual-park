@@ -40,7 +40,16 @@
     "ci-permit": "cd Microservices/PermitService && npm ci",
     "ci-driver-app": "cd Apps/driver-parking && npm ci",
     "ci-admin-app": "cd Apps/admin && npm ci",
-    "ci-enforcement-app": "cd Apps/enforcement && npm ci"
+    "ci-enforcement-app": "cd Apps/enforcement && npm ci",
+
+    "build": "npm run build-auth && npm run build-ticket && npm run build-vehicle && npm run build-permit && npm run build-driver-app && npm run build-admin-app && npm run build-enforcement-app",
+    "build-auth": "cd Microservices/AuthService && npm run build",
+    "build-ticket": "cd Microservices/TicketService && npm run build",
+    "build-vehicle": "cd Microservices/VehicleService && npm run build",
+    "build-permit": "cd Microservices/PermitService && npm run build",
+    "build-driver-app": "cd Apps/driver-parking && npm run build",
+    "build-admin-app": "cd Apps/admin && npm run build",
+    "build-enforcement-app": "cd Apps/enforcement && npm run build"
 
 
 
