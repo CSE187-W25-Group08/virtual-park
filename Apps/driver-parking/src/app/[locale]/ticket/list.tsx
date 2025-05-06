@@ -3,22 +3,27 @@ import React, { useEffect, useState } from "react";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import TicketCard from "./card";
 import { Ticket } from "../../../ticket";
-import { listPaid, listUnpaid } from "./actions";
+import { listPaid, listUnpaid, listAppealed } from "./actions";
 import List from "@mui/material/List";
 
 export default function TicketList() {
   const [paidTicketList, setPaidTicketList] = useState<Ticket[]>([]);
   const [unpaidTicket, setUnpaidTicket] = useState<Ticket[]>([]);
+  const [appealedTickets, setAppealedTickets] = useState<Ticket[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const resultPaid = await listPaid();
       const resultUnpaid = await listUnpaid();
+      const resultAppealed = await listAppealed();
       if (resultPaid) {
         setPaidTicketList(resultPaid);
       }
       if (resultUnpaid) {
         setUnpaidTicket(resultUnpaid);
+      }
+      if (resultAppealed) {
+        setAppealedTickets(resultAppealed);
       }
     };
     fetchData();
@@ -33,13 +38,15 @@ export default function TicketList() {
         justifyContent: "space-between",
       }}
     >
-      {/* <Typography>Violation</Typography> */}
       <Typography>{title}</Typography>
       <Box>
-        {/* <Typography>Deductible</Typography> */}
-        {type == "unpaid" ? 
-        (<Typography>Issue Date</Typography>) :
-        (<Typography>Date Paid</Typography>)}
+      {type === "unpaid" ? (
+        <Typography>Issue Date</Typography>
+      ) : type === "paid" ? (
+        <Typography>Date Paid</Typography>
+      ) : (
+        <Typography>Status</Typography>
+      )}
       </Box>
     </Box>
   );
@@ -55,7 +62,7 @@ export default function TicketList() {
       <Box sx={{ px: 2 }}>
         <List sx={{ width: '100%' }}>
           {unpaidTicket.length <= 0 ?
-          <Typography sx={{mt: 7}}>No current violations on file.</Typography> : (
+            <Typography sx={{mt: 7}}>No current violations on file.</Typography> : (
             <>
               {TableHeader("🔴 Unpaid Violations", "unpaid")}
               {unpaidTicket.map((ticket, index) => (
@@ -68,6 +75,15 @@ export default function TicketList() {
             <>
               {TableHeader("✅ Paid Violations", "paid")}
               {paidTicketList.map((ticket, index) => (
+                <TicketCard key={index} ticket={ticket} />
+              ))}
+            </>
+          )}
+
+          {appealedTickets.length > 0 && (
+            <>
+              {TableHeader("🟡 Appealed Violations", "appeal")}
+              {appealedTickets.map((ticket, index) => (
                 <TicketCard key={index} ticket={ticket} />
               ))}
             </>

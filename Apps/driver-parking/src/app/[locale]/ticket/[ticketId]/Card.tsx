@@ -5,7 +5,7 @@ import { getTicketById, setTicketPaid } from "../actions";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
-import { Box} from "@mui/material";
+import { Box, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import { Vehicle } from "@/register";
 import { getVehicleById } from "../../register/actions";
@@ -72,6 +72,37 @@ export default function Card({ ticketId }: { ticketId: string }) {
     }
   };
 
+  const appealed = ticket?.appeal != "null"
+
+  const appealedDisplay = (ticket: Ticket) => {
+
+    return (
+      <ListItemText
+  primary={
+    <Typography>
+      Appeal Status:&nbsp;
+      <Typography
+        component="span"
+        sx={{
+          color:
+            ticket?.appeal === "submitted"
+              ? "warning.dark"
+              : ticket?.appeal === "approved"
+              ? "success.dark"
+              : ticket?.appeal === "rejected"
+              ? "red"
+              : "text.primary",
+        }}
+      >
+        {ticket?.appeal}
+      </Typography>
+    </Typography>
+  }
+/>
+
+    )
+  }
+
   return (
     <React.Fragment>
       {ticket ? (
@@ -97,11 +128,16 @@ export default function Card({ ticketId }: { ticketId: string }) {
 
             <ListItemText>Cost: ${ticket?.cost}</ListItemText>
 
+            {appealed && appealedDisplay(ticket)}
+
+
             <ListItemText>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                {ticket?.paid ? "Paid" : "Unpaid"}
-
-                {!ticket?.paid && (
+                {ticket?.paid ? 
+                <Typography color='success.dark'>Paid</Typography> : 
+                <Typography color='red'>Unpaid</Typography>}
+  
+                {(!ticket?.paid && ticket?.appeal != "approved") && (
                   <Button variant="outlined" onClick={() => {handleClick()}}>Pay Ticket</Button>
                 )}
               </Box>
@@ -109,7 +145,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
           </List>
         </Box>
       ) : (
-        <div>test</div>
+        <div>Loading</div>
       )}
     </React.Fragment>
   );

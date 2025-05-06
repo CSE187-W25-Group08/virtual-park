@@ -18,7 +18,8 @@ export class TicketService {
         'issue': data.issue,
         'violation': data.violation,
         'image': data.image,
-        'cost' :data.cost
+        'cost' :data.cost,
+        'appeal': data.appeal
       }
       return ticketObj
     }))
@@ -35,10 +36,32 @@ export class TicketService {
     const tickets = await this.rowToTicket(rows);
     return tickets;
   }
-  public async getPaid(userId: string | undefined, paidStatus: boolean): Promise<Ticket[]> {
+  public async getPaid(userId: string | undefined): Promise<Ticket[]> {
     const query = {
       text: queries.selectPaidTickets,
-      values: [paidStatus, userId]
+      values: [userId]
+    }
+
+    const { rows } = await pool.query(query);
+    const tickets = await this.rowToTicket(rows);
+    return tickets;
+  }
+
+  public async getUnpaid(userId: string | undefined): Promise<Ticket[]> {
+    const query = {
+      text: queries.selectUnpaidTickets,
+      values: [userId]
+    }
+    
+    const { rows } = await pool.query(query);
+    const tickets = await this.rowToTicket(rows);
+    return tickets;
+  }
+
+  public async getAppealed(userId: string | undefined): Promise<Ticket[]> {
+    const query = {
+      text: queries.selectAppealedTickets,
+      values: [userId]
     }
 
     const { rows } = await pool.query(query);
