@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Box, Card, Typography, Button, TextField, MenuItem, Switch, FormControlLabel } from '@mui/material';
+import { Box, Card, Typography, Button, TextField, Switch, FormControlLabel } from '@mui/material';
 
 import {Vehicle,VehicleForm} from '../../../register'
 import { getUserVehicles, registerVehicle } from './actions'
@@ -32,7 +32,7 @@ export default function Vehicles() {
   };
   const [formData, setFormData] = useState(emptyForm);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 

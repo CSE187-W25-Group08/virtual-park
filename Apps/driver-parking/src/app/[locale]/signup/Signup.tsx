@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -119,7 +120,7 @@ export default function Signup() {
       </Divider>
       <Typography variant="body1" sx={{
         marginTop: '20px',
-      }}>{t("accountExist")}<a href="/login">{t("login")}</a></Typography>
+      }}>{t("accountExist")}<Link href="/login">{t("login")}</Link></Typography>
     </Box>
   )
 }
