@@ -8,17 +8,6 @@
     "typescript": "^5.8.3"
   },
   "scripts": {
-    "install-microservices": "cd Microservices && npm install",
-    "install-apps": "cd Apps && npm install",
-    "install": "npm run install-microservices && npm run install-apps",
-    "dev-auth": "cd Microservices/AuthService && npm run dev",
-    "dev-ticket": "cd Microservices/TicketService && npm run dev",
-    "dev-vehicle": "cd Microservices/VehicleService && npm run dev",
-    "dev-permit": "cd Microservices/PermitService && npm run dev",
-    "dev-app": "cd Apps/driver-parking && npm run dev",
-    "dev": "concurrently \"npm run dev-auth\" \"npm run dev-ticket\" \"npm run dev-vehicle\" \"npm run dev-permit\" \"npm run dev-app\"",
-
-
 
     "package": "docker build . -t cte-linux-amd64 --platform linux/amd64 && docker save -o cte-linux-amd64.tar cte-linux-amd64",
     "containerised": "npm run build && npm run compose",
