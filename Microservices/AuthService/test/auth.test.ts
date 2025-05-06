@@ -195,3 +195,17 @@ test('Get drivers as admin', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .expect(200)
 })
+
+test('Get drivers as non-admin', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .get('/api/v0/auth/drivers')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(200)
+})
