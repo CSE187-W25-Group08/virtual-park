@@ -32,3 +32,10 @@ export interface NewUser {
   email: email,
   password: string
 }
+
+export interface Driver {
+  name: string,
+  email: string,
+  jwt: midt,
+  joinDate: string,
+}

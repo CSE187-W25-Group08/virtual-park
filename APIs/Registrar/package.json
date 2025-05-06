@@ -1,0 +1,60 @@
+{
+  "name": "registrar",
+  "version": "1.0.0",
+  "description": "Registrar API for usage in relation to Virtual-Park",
+  "author": "Virtual-Park Team",
+  "license": "UNLICENSED",
+  "repository": "none",
+  "devDependencies": {
+    "@eslint/js": "*",
+    "@types/cors": "*",
+    "@types/express": "*",
+    "@types/jsonwebtoken": "*",
+    "@types/node": "*",
+    "@types/pg": "*",
+    "@types/supertest": "*",
+    "@types/swagger-ui-express": "*",
+    "@vitest/coverage-v8": "*",
+    "concurrently": "*",
+    "eslint": "*",
+    "eslint-config-typescript": "*",
+    "globals": "8",
+    "nodemon": "*",
+    "supertest": "*",
+    "ts-node": "*",
+    "ts-postgres": "*",
+    "typescript": "*",
+    "typescript-eslint": "*",
+    "vite-plugin-eslint": "*",
+    "vitest": "*"
+  },
+  "dependencies": {
+    "cors": "*",
+    "dotenv": "*",
+    "express": "*",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "*",
+    "pg": "*",
+    "swagger-ui-express": "*",
+    "tsoa": "*"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "exec": "ts-node src/server.ts"
+  },
+  "scripts": {
+    "prestart": "npm run build",
+    "start": "node build/src/server.js",
+    "prebuild": "npm run swagger",
+    "build": "tsc",
+    "predev": "npm run swagger",
+    "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\"",
+    "swagger": "tsoa spec-and-routes",
+    "pretest": "npm run swagger && npm run lint",
+    "test": "vitest run --no-file-parallelism --testTimeout=3000 --coverage",
+    "lint": "eslint test/**/*.[jt]s src/**/*.[jt]s --fix"
+  }
+}

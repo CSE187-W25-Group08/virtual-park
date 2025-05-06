@@ -1,18 +1,17 @@
-import { it, afterEach, vi, expect } from 'vitest'
+import { it, afterEach, vi, expect, beforeEach } from 'vitest'
 import { render, screen, cleanup} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useRouter } from 'next/navigation'
-
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
 
-vi.mock('../../src/app/Login/action', () => ({
+vi.mock('../../src/app/[locale]/login/action', () => ({
   login: () => Promise.resolve({ name: 'Anna Admin', accessToken: '1234' })
 }))
 
-import Login from '../../src/app/login/View'
+import Login from '../../src/app/[locale]/login/View'
 
 afterEach(() => {
   cleanup()

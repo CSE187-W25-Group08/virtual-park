@@ -1,16 +1,18 @@
 import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
+import { NextIntlClientProvider } from 'next-intl';
 
-import Signup from '../../src/app/signup/Signup'
-import { signup } from '../../src/app/signup/actions'
+import Signup from '../../src/app/[locale]/signup/Signup'
+import { signup } from '../../src/app/[locale]/signup/actions'
+import {signup as signupMessages} from '../../messages/en.json'
 
 afterEach(() => {
   cleanup()
   vi.restoreAllMocks()
 })
 
-vi.mock('../../src/app/signup/actions', () => ({
+vi.mock('../../src/app/[locale]/signup/actions', () => ({
   signup: vi.fn()
 }))
 
@@ -20,6 +22,14 @@ vi.mock('next/navigation', () => ({
 
 const mockSignup = signup as ReturnType<typeof vi.fn>
 
+const renderWithIntl = (component: React.ReactElement) => {
+  return render(
+    <NextIntlClientProvider locale="en" messages={{signup: signupMessages}}>
+      {component}
+    </NextIntlClientProvider>
+  )
+}
+
 it('mocks successful Signup process', async () => {
   const mockPush = vi.fn();
 
@@ -27,7 +37,7 @@ it('mocks successful Signup process', async () => {
 
   mockSignup.mockResolvedValueOnce({ name: 'Test User' })
 
-  render(<Signup />)
+  renderWithIntl(<Signup />)
 
   const email = screen.getByLabelText('Email').querySelector('input')
   const name = screen.getByLabelText('Name').querySelector('input')
@@ -56,7 +66,7 @@ it('mocks unsuccessful Signup process', async () => {
   const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
 
-  render(<Signup />)
+  renderWithIntl(<Signup />)
 
   const email = screen.getByLabelText('Email').querySelector('input')
   const name = screen.getByLabelText('Name').querySelector('input')
@@ -78,7 +88,7 @@ it('mocks unsuccessful Signup process', async () => {
 })
 
 it('toggles password visibility', () => {
-  render(<Signup />)
+  renderWithIntl(<Signup />)
 
   const password = screen.getByLabelText('Password').querySelector('input')
   const togglePassword = screen.getByLabelText('Toggle Password Visibility')

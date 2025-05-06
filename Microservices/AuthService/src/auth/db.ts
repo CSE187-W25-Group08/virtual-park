@@ -1,5 +1,6 @@
-import { Credentials, User, CheckUser, NewUser } from '.';
+import { Credentials, User, CheckUser, NewUser, Driver } from '.';
 import { pool } from '../db';
+import { generateToken } from './authService';
 
 export async function createNewUser(signUpDetails: NewUser): Promise<User | undefined> {
   const emailUniqueCheck = {
@@ -11,16 +12,18 @@ export async function createNewUser(signUpDetails: NewUser): Promise<User | unde
   if (check.rows.length > 0) {
     return undefined;
   }
+  const currentTimestamp = new Date().toISOString();
   const signUp = {
     text: `
       INSERT INTO member (data) VALUES (jsonb_build_object(
           'email', $1::text,
           'pwhash', crypt($2, gen_salt('bf')),
           'name', $3::text,
-          'roles', jsonb_build_array('driver')::text
+          'roles', jsonb_build_array('driver')::text,
+          'joindate', $4::text
         ))
         RETURNING id, data->>'name' AS name;`,
-    values: [signUpDetails.email, signUpDetails.password, signUpDetails.name]
+    values: [signUpDetails.email, signUpDetails.password, signUpDetails.name, currentTimestamp]
   }
   const { rows } = await pool.query(signUp);
   if (rows.length === 1) {
@@ -63,4 +66,19 @@ export async function checkAuth(uid: string): Promise<CheckUser | undefined> {
   } else {
     return undefined;
   }
+}
+
+export async function fetchDrivers(): Promise<Driver[]> {
+  const query = {
+    text: `SELECT id, data->>'name' AS name, data->>'email' AS email, data->>'joindate' as joindate
+      FROM member
+      WHERE data->>'roles'::text = '["driver"]';`
+  }
+  const { rows } = await pool.query(query);
+  return rows.map((row) => ({
+    jwt: generateToken(row.id),
+    name: row.name,
+    email: row.email,
+    joinDate: new Date(row.joindate).toDateString()
+  }))
 }

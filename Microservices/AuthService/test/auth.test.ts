@@ -45,7 +45,7 @@ const tommy = {
 }
 
 export const badJWT = "7m#pK9@L!2xQ$5vR%8sT^1wU&3yV*6zW(4aX)9bY_0cZ+dA=eB-fC/gD|hEiF]jG[kH{lI}mJ~nK`oL'pM,qN.rO/sP0tQ1uR2vS3wT4xU5yV6zW7aX8bY9cZ0dA1eB2fC3gD4hE5iF6jG7kH8lI9mJ0nK1oL2pM3qN4rO5sP6tQ7uR8vS9wT"
-export const badIdJWT = generateToken('483a70c3-7d24-4b45-bcc2-1589e624a483', '')
+export const badIdJWT = generateToken('483a70c3-7d24-4b45-bcc2-1589e624a483')
 
 test('Serves API Docs', async () => {
   await supertest(server)
@@ -180,4 +180,35 @@ test('admin check as admin', async () => {
     .get('/api/v0/auth/check?scope=adminonly')
     .set('Authorization', 'Bearer ' + accessToken)
     .expect(200)
+})
+
+test('Get drivers as admin', async () => {
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .get('/api/v0/auth/drivers')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(200)
+})
+
+test('Get drivers as non-admin', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .get('/api/v0/auth/drivers')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(401)
 })

@@ -1,9 +1,9 @@
 import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 
-import Vehicles from '../../src/app/register/Vehicles'
-import RegisterVehiclesPage  from '../../src/app/register/page'
-import * as actions from '../../src/app/register/actions'
+import Vehicles from '../../src/app/[locale]/register/Vehicles'
+import RegisterVehiclesPage  from '../../src/app/[locale]/register/page'
+import * as actions from '../../src/app/[locale]/register/actions'
 
 vi.spyOn(actions, 'registerVehicle').mockResolvedValue({
   id: '1',

@@ -1,7 +1,7 @@
 import { it, afterEach, vi} from 'vitest'
 import { fireEvent, render, screen, cleanup} from '@testing-library/react'
 
-import TicketCard from '../../src/app/ticket/[ticketId]/Card';
+import TicketCard from '../../src/app/[locale]/ticket/[ticketId]/Card';
 
 afterEach(() => {
   cleanup()
@@ -10,7 +10,7 @@ afterEach(() => {
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
-vi.mock('../../src/app/ticket/actions', () => {
+vi.mock('../../src/app/[locale]/ticket/actions', () => {
   // Store the mock ticket data
   let mockTicket = {
     id: "e5fd7cb1-75b0-4d23-a7bc-361e2d0621da",
