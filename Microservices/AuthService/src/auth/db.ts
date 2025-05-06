@@ -1,5 +1,6 @@
-import { Credentials, User, CheckUser, NewUser } from '.';
+import { Credentials, User, CheckUser, NewUser, Driver } from '.';
 import { pool } from '../db';
+import { generateToken } from './authService';
 
 export async function createNewUser(signUpDetails: NewUser): Promise<User | undefined> {
   const emailUniqueCheck = {
@@ -63,4 +64,19 @@ export async function checkAuth(uid: string): Promise<CheckUser | undefined> {
   } else {
     return undefined;
   }
+}
+
+export async function fetchDrivers(): Promise<Driver[]> {
+  const query = {
+    text: `SELECT id, data->>'name' AS name, data=>>'email' AS email, data->>'joinDate' as joinDate
+      FROM member
+      HERE data->>'roles'::text = '["driver"]';`
+  }
+  const { rows } = await pool.query(query);
+  return rows.map((row) => ({
+    jwt: generateToken(row.id),
+    name: row.name,
+    email: row.email,
+    joinDate: row.joinDate
+  }))
 }

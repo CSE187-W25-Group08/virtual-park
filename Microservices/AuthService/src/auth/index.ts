@@ -37,5 +37,5 @@ export interface Driver {
   name: string,
   email: string,
   jwt: midt,
-  registerDate: string,
+  joinDate: string,
 }

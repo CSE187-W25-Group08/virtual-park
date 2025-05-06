@@ -14,20 +14,20 @@ import { midt, UUID, SessionUser } from '../types'
 import { Credentials, Authenticated, NewUser, Driver } from '.'
 
 // https://chat.deepseek.com/a/chat/s/b44e480a-f720-4b4e-b923-ac03aa7f7fc6
-const JWT_SECRET = process.env.MASTER_SECRET;
+const JWT_SECRET = process.env.MASTER_SECRET!
 const JWT_OPTIONS: jwt.SignOptions = {
   expiresIn: "30m",
   algorithm: "HS256"
 };
-export function generateToken(userId: UUID, text = "nonauth"): midt {
-  return jwt.sign({ id: userId }, JWT_SECRET + text, JWT_OPTIONS);
+export function generateToken(userId: UUID): midt {
+  return jwt.sign({ id: userId }, JWT_SECRET, JWT_OPTIONS);
 }
 
 export class AuthService {
   public async signUp(signUpDetails: NewUser): Promise<Authenticated | undefined> {
     const newUser = await db.createNewUser(signUpDetails);
     if (newUser) {
-      return { name: newUser.name, accessToken: generateToken(newUser.id, '') };
+      return { name: newUser.name, accessToken: generateToken(newUser.id) };
     } else {
       return undefined
     }
@@ -35,14 +35,14 @@ export class AuthService {
   public async login(credentials: Credentials): Promise<Authenticated | undefined> {
     const user = await db.verifyLogin(credentials);
     if (user) {
-      return { name: user.name, accessToken: generateToken(user.id, '') };
+      return { name: user.name, accessToken: generateToken(user.id) };
     } else {
       return undefined
     }
   }
 
   public async getDrivers(): Promise<Driver[]> {
-
+    return await db.fetchDrivers();
   }
   // https://claude.ai/chat/bb2b0366-a336-4241-b4c4-4da2d74c9bc4
   public async check(authHeader?: string, scopes?: string[]): Promise<SessionUser> {
