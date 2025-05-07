@@ -47,7 +47,6 @@
     "exec": "ts-node src/server.ts"
   },
   "scripts": {
-    "prestart": "npm run build",
     "start": "node build/server.js",
     "build": "tsc",
     "dev": "nodemon",
