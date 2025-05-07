@@ -1,4 +1,4 @@
-export type SessionUser = {
+export interface SessionUser {
   id: string
 }
 
