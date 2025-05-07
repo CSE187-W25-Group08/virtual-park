@@ -18,6 +18,7 @@
     "password": "Contraseña ",
     "signup": "REGISTRARSE",
     "accountExist": "¿Ya tienes una cuenta?",
-    "login": "Iniciar sesión"
+    "login": "Iniciar sesión",
+    "emailTaken": "El correo electrónico ya está en uso"
   }
 }
