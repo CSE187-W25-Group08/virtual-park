@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import {check} from './auth/service'
+import { check } from './auth/service'
 import createMiddleware from 'next-intl/middleware';
-import {routing} from './i18n/routing';
- 
+import { routing } from './i18n/routing';
+
 const middlewareInitial = createMiddleware(routing);
 
 const publicRoutes = ['/login', '/signup', '/']

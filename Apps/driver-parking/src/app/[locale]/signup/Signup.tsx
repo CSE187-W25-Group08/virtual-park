@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import InputAdornment from '@mui/material/InputAdornment'
+import Alert from '@mui/material/Alert'
 import { useTranslations } from "next-intl";
 
 import { useState } from 'react'
@@ -22,6 +23,7 @@ export default function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [failedSignup, setFailedSignup] = useState(false)
   const router = useRouter()
   const t = useTranslations('signup')
 
@@ -43,10 +45,11 @@ export default function Signup() {
   const handleClick = async () => {
   const user = await signup({name: name, email: email, password: password})
     if (user) {
+      setFailedSignup(false)
       window.sessionStorage.setItem('name', user.name)
       router.push('/register')
     } else {
-      alert('This email has already been taken.')
+      setFailedSignup(true)
     }
   }
 
@@ -55,6 +58,8 @@ export default function Signup() {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center'}}>
+      {failedSignup &&
+        <Alert severity="error">{t("emailTaken")}</Alert>}
       <Typography variant="h4" sx={{
         marginTop: '120px',
       }}>{t("createAccount")}</Typography>

@@ -8,12 +8,14 @@ import {
   Typography, 
   Box, 
   Button, 
-  TextField
+  TextField,
+  Alert
 } from '@mui/material'
 import { login } from './action'
 
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
+  const [failedLogin, setFailedLogin] = useState(false)
   const router = useRouter()
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -30,8 +32,11 @@ export default function LoginView() {
   const handleClick = async () => {
     const authenticated = await login(credentials)
     if (authenticated) {
+      setFailedLogin(false)
       window.sessionStorage.setItem('name', authenticated.name)
       router.push('/register')
+    } else {
+      setFailedLogin(true)
     }
   }
 
@@ -44,6 +49,8 @@ export default function LoginView() {
         alignItems: 'center',
       }}
     >
+      {failedLogin &&
+            <Alert severity="error">Incorrect login credentials, please try again</Alert>}
       <Box
         sx={{
           display: 'flex',
