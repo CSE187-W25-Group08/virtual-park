@@ -9,7 +9,8 @@
   "landing": {
     "signup": "SIGN UP",
     "login": "LOGIN",
-    "welcome": "Welcome to Virtual-Park!"
+    "welcome": "Welcome to Virtual-Park!",
+    "logout": "LOG OUT"
   },
   "signup": {
     "createAccount": "Create an Account",

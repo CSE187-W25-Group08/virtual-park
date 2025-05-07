@@ -59,7 +59,7 @@ it('should call login and redirect on valid credentials', async () => {
   })
 })
 
-it('Login denies invalid credentials', async () => {
+it('denies invalid login credentials', async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
 

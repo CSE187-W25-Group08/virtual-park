@@ -9,7 +9,8 @@
   "landing": {
     "signup": "REGISTRARSE",
     "login": "INICIAR SESIÓN",
-    "welcome": "Bienvenido a Virtual-Park!"
+    "welcome": "Bienvenido a Virtual-Park!",
+    "logout": "CERRAR SESIÓN"
   },
   "signup": {
     "createAccount": "Crear una cuenta",

@@ -73,7 +73,7 @@ export default function Landing() {
               marginTop: '20px',
               width: '100px'
             }}>
-            Log Out
+            {t('logout')}
           </Button>
         </Box>
       )}
