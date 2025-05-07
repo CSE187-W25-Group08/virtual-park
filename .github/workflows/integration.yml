@@ -3,7 +3,7 @@ name: Integration - Lint, Build, and Test
 on:
   push:
     tags:
-      - 'integrate'
+      - 'integration v*.*.*'
 
 jobs:
   lint:
