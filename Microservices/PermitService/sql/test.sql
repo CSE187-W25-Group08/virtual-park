@@ -1,3 +1,4 @@
+-- Dummy line
 INSERT INTO permitType (data) VALUES (
   jsonb_build_object(
     'price', 3.14,

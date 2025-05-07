@@ -1,4 +1,4 @@
-\connect vehicle
+\c vehicle
 
 INSERT INTO vehicle (id, driver, data) VALUES (
   '93b35c24-3ad2-4ec9-8404-f50d8e357ace',

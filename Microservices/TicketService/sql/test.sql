@@ -1,3 +1,4 @@
+-- Dummy line
 DELETE FROM ticket;
 
 INSERT INTO ticket(id, driver, data)
