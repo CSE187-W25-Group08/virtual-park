@@ -1,3 +1,5 @@
+\connect permit
+
 DROP TABLE IF EXISTS permitType CASCADE;
 CREATE TABLE permitType (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

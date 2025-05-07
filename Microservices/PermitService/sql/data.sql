@@ -1,3 +1,5 @@
+\connect permit
+
 INSERT INTO permitType (id, data) VALUES (
   'c4bcb5ba-57f6-4d09-85ba-86fc729ce1e4',
   jsonb_build_object(

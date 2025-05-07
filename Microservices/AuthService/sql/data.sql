@@ -1,3 +1,5 @@
+\connect account
+
 DELETE FROM member;
 INSERT INTO member(id, data) 
 VALUES (

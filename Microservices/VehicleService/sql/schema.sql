@@ -1,3 +1,5 @@
+\connect vehicle
+
 DROP TABLE IF EXISTS vehicle CASCADE;
 
 CREATE TABLE vehicle (

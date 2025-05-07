@@ -1,3 +1,4 @@
+\connect ticket
 DELETE FROM ticket;
 
 INSERT INTO ticket(id, driver, data)

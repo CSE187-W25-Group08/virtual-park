@@ -1,3 +1,5 @@
+\connect ticket
+
 DROP TABLE IF EXISTS ticket CASCADE;
 
 CREATE TABLE ticket(
