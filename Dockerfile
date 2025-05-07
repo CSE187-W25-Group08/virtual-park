@@ -1,5 +1,5 @@
 FROM node:23-alpine
-EXPOSE 3003
+EXPOSE 3000
 
 WORKDIR /home/app
 
@@ -8,6 +8,7 @@ COPY package-lock.json /home/app/
 COPY .env /home/app/
 
 # Microservices
+COPY Microservices/AuthService/tsoa.json /home/app/Microservices/AuthService/
 COPY Microservices/AuthService/build/ /home/app/Microservices/AuthService/build/
 COPY Microservices/AuthService/package.json /home/app/Microservices/AuthService/
 COPY Microservices/AuthService/package-lock.json /home/app/Microservices/AuthService/
