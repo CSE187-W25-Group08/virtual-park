@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div>
-      Welcome to Virtual-Park!
+      Hi enforcement, welcome to Virtual-Park!
     </div>
   );
 }
