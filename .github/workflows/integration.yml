@@ -10,7 +10,9 @@ jobs:
     name: Linter
     runs-on: ubuntu-latest
     steps:
+      # Have the runner execute in a branch
       - uses: actions/checkout@v4
+      # Setup node env w/ lts version
       - uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
