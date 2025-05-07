@@ -40,4 +40,37 @@ WHERE
 AND id = $2;
 `;
 
-CREATE EXTENSION IF NOT EXISTS dblink;
+
+/* reference: https://www.postgresql.org/docs/current/contrib-dblink-function.html */
+export const getpermitByVehiclePlateNum = `
+SELECT 
+  permitInfo.permit_id,
+  permitInfo.permitType,
+  permitInfo.issueDate,
+  permitInfo.expDate,
+  permitInfo.isValid
+FROM 
+  vehicle v
+LEFT JOIN 
+  dblink('dbname=permit user=postgres',
+    'SELECT 
+      dp.driver AS driverID, 
+      dp.id AS permit_id, 
+      pt.data->>'type' AS permitType,
+      dp.data->>'issue_date' AS issueDate,
+      dp.data->>'exp_date' AS expDate,
+      (dp.data->>'exp_date')::timestamp > NOW() AS isValid
+     FROM driverpermit dp 
+     JOIN permittype pt ON dp.permitType = pt.id')
+  AS permitInfo(
+    driverID UUID, 
+    permit_id UUID, 
+    permitType TEXT,
+    issueDate TEXT,
+    expDate TEXT,
+    isValid BOOLEAN
+  )
+  ON v.driver = permitInfo.driverID
+WHERE 
+  v.data->>'license_plate' = $1;
+`;
