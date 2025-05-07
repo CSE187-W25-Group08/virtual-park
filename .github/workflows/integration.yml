@@ -3,6 +3,7 @@ name: Integration - Lint, Build, and Test
 on:
   push:
     tags:
+      # Version the tag as you can only use a tag once
       - 'integration v*.*.*'
 
 jobs:
