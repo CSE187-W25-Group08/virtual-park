@@ -39,3 +39,5 @@ WHERE
   driver = $1
 AND id = $2;
 `;
+
+CREATE EXTENSION IF NOT EXISTS dblink;
