@@ -1,84 +1,111 @@
-'use client'
+// based on MUI https://mui.com/material-ui/react-list/
+'use client';
 
 import * as React from 'react';
-import {
-  Box,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-} from '@mui/material';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import PersonIcon from '@mui/icons-material/Person';
-import { FixedSizeList, ListChildComponentProps} from 'react-window';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import { fetchDrivers } from './action';
 import { Driver } from '@/driver';
 
-// based on MUI https://mui.com/material-ui/react-list/
-
-export default function DriversList() {
+export default function DriversGrid() {
   const [drivers, setDrivers] = React.useState<Driver[]>([]);
-  const setDriverData = async () => {
-    const driverList = await fetchDrivers();
-    if (driverList) {
-      setDrivers(driverList);
-    }
-  };
-  React.useEffect(() => {
-    setDriverData()
-  }, [])
 
-  // https://chatgpt.com/c/68119ae6-b920-8007-b832-ae70486ea142
-  const renderRow = ({ index, style }: ListChildComponentProps) => {
-    const driver = drivers[index];
-  
-    return (
-      <ListItem 
-        style={style} 
-        key={driver?.email} 
-        component="div" 
-        disablePadding 
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between', // Changed from space-evenly
-          width: '100%', // Added to ensure full width
-          border: '5px solid black'
-        }}
-      >
-        <ListItemIcon sx={{ minWidth: 'auto', mr: 2 }}> {/* Adjusted minWidth */}
-          <PersonIcon sx={{ fontSize: 40 }} /> {/* Directly set icon size */}
-        </ListItemIcon>
-        <ListItemText 
-          primary={driver?.name}
-          slotProps={{ primary: { style: { fontSize: '1.2rem' } }}}
-          sx={{ flex: 1, textAlign: 'left' }}
-        />
-        <ListItemText 
-          primary={driver?.email}
-          primaryTypographyProps={{ style: { fontSize: '1.2rem' } }}
-          sx={{ flex: 1, textAlign: 'left' }}
-        />
-        <ListItemText 
-          primary={`Joined: ${new Date(driver?.joinDate).toLocaleDateString()}`}
-          primaryTypographyProps={{ style: { fontSize: '1.2rem' } }}
-          sx={{ flex: 1, textAlign: 'left' }}
-        />
-      </ListItem>
-    );
+  React.useEffect(() => {
+    const setDriverData = async () => {
+      const driverList = await fetchDrivers();
+      if (driverList) setDrivers(driverList);
+      console.log(driverList[0])
+    };
+    setDriverData();
+  }, []);
+
+  const columns: GridColDef[] = [
+    {
+      field: 'icon',
+      headerName: '',
+      width: 80,
+      renderCell: () => (
+        <PersonIcon sx={{ fontSize: 40, color: 'action.active' }} />
+      ),
+      sortable: false,
+      filterable: false,
+    },
+    {
+      field: 'name',
+      headerName: 'Name',
+      width: 200,
+      renderCell: (params) => params.value || 'N/A',
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      width: 300,
+      renderCell: (params) => params.value || 'No email',
+    },
+    {
+      field: 'joinDate',
+      headerName: 'Join Date',
+      width: 200,
+      renderCell: (params) => params.value || 'Unknown date',
+    },
+    {
+      field: 'actions',
+      headerName: '',
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="error"
+          size="small"
+          onClick={() => handleSuspend(params.row?.email)}
+          disabled={!params.row?.email}
+        >
+          Suspend
+        </Button>
+      ),
+      sortable: false,
+      filterable: false,
+    },
+  ];  
+
+  const handleSuspend = (email?: string) => {
+    if (!email) return;
+    console.log('Suspending user:', email);
+    alert(`Suspend functionality for ${email}`);
   };
 
   return (
-    <Box
-      sx={{ display:'flex', alignItems:'center', justifyContent:'center', width: '100%', height:'100%', bgcolor: 'background.paper' }}
-    >
-      <FixedSizeList
-        height={800}
-        width={1000}
-        itemSize={100}
-        itemCount={drivers.length < 30 ? drivers.length : 30}
-        overscanCount={5}
-      >
-        {renderRow}
-      </FixedSizeList>
+    <Box sx={{ 
+      height: 800, 
+      width: '100%',
+      '& .MuiDataGrid-root': {
+        border: '5px solid black',
+        borderRadius: 0
+      }
+    }}>
+      <DataGrid
+        rows={drivers}
+        columns={columns}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 20 } },
+        }}
+        pageSizeOptions={[10, 20, 50]}
+        density="compact"
+        disableColumnResize
+        getRowId={(row) => row.email || Math.random().toString()}
+        sx={{
+          '& .MuiDataGrid-cell': {
+            borderBottom: '2px solid black',
+          },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#f5f5f5',
+            borderBottom: '3px solid black',
+          },
+        }}
+        loading={drivers.length === 0}
+      />
     </Box>
   );
 }
