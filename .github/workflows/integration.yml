@@ -18,4 +18,5 @@ jobs:
         with:
           node-version: 'lts/*'
       - run: npm install
+      - run: npm run installs
       - run: npm run lint
