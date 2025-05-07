@@ -26,6 +26,7 @@ export default async function LocaleLayout({
   const {locale} = await params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
+    // redirect('/')
   }
  
   return (
