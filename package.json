@@ -31,6 +31,15 @@
     "ci-admin-app": "cd Apps/admin && npm ci",
     "ci-enforcement-app": "cd Apps/enforcement && npm ci",
 
+    "lint": "npm run lint-auth && npm run lint-ticket && npm run lint-vehicle && npm run lint-permit && npm run lint-driver-app && npm run lint-admin-app && npm run lint-enforcement-app",
+    "lint-auth": "cd Microservices/AuthService && npm run lint",
+    "lint-permit": "cd Microservices/PermitService && npm run lint",
+    "lint-ticket": "cd Microservices/TicketService && npm run lint",
+    "lint-vehicle": "cd Microservices/VehicleService && npm run lint",
+    "lint-driver-app": "cd Apps/driver-parking && npm run lint",
+    "lint-admin-app": "cd Apps/admin && npm run lint",
+    "lint-enforcement-app": "cd Apps/enforcement && npm run lint",
+
     "build": "npm run build-auth && npm run build-ticket && npm run build-vehicle && npm run build-permit && npm run build-driver-app && npm run build-admin-app && npm run build-enforcement-app",
     "build-auth": "cd Microservices/AuthService && npm run build",
     "build-ticket": "cd Microservices/TicketService && npm run build",
