@@ -1,12 +1,8 @@
 import { it, afterEach, vi} from 'vitest'
 import { fireEvent, render, screen, cleanup} from '@testing-library/react'
-
 import TicketCard from '../../src/app/[locale]/ticket/[ticketId]/Card';
+import { useRouter } from 'next/navigation';
 
-afterEach(() => {
-  cleanup()
-  vi.restoreAllMocks()
-})
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
@@ -38,7 +34,18 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => {
   };
 });
 
+vi.mock('next/headers', () => ({
+  cookies: () => ({
+    set: vi.fn(),
+    get: vi.fn(),
+    delete: vi.fn(),
+  }),
+}))
 
+afterEach(() => {
+  cleanup()
+  vi.clearAllMocks()
+})
 
 
 it('contains Violation Text', async () => {
@@ -55,12 +62,13 @@ it('contains pay ticket button', async () => {
   render(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
   await screen.findByText('Pay Ticket')
 })
-it('Cling pay ticket button changes ticket status to paid', async () => {
+it('Cicking pay ticket button changes ticket status to paid', async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  
   render(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
   const button = await screen.findByText('Pay Ticket')
   fireEvent.click(button)
-  screen.debug()
+  // screen.debug()
   await screen.findByText('Paid')
-
-  
 })
