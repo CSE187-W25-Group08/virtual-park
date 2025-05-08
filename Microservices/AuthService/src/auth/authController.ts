@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Post,
+  Put,
   Response,
   Route,
   SuccessResponse,
@@ -68,6 +69,16 @@ export class AuthController extends Controller {
   public async drivers(): Promise<Driver[]> {
     const drivers = await new AuthService().getDrivers();
     return drivers
+  }
+
+  @Put('suspend')
+  @Security("jwt", ["admin"])
+  @Response('401', 'Unauthorized')
+  public async suspend(
+    @Body() body: { email: string },
+  ): Promise<void> {
+    const {email} = body;
+    await new AuthService().suspendDriver(email);
   }
 
 }

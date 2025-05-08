@@ -82,3 +82,12 @@ export async function fetchDrivers(): Promise<Driver[]> {
     joinDate: new Date(row.joindate).toDateString()
   }))
 }
+
+export async function suspendAccount(email: string): Promise<void> {
+  const query = {
+    text: `UPDATE member SET data = jsonb_set(data, '{active}', 'false')
+      WHERE data->>'email' = $1;`,
+    values: [email],
+  };
+  await pool.query(query);
+}
