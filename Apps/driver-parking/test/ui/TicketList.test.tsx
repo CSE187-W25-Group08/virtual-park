@@ -50,13 +50,12 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
 
 it('contains Violation Text', async () => {
   render(<TicketList/>)
-  const violationTexts = screen.getAllByText('Violation');
-  expect(violationTexts).toHaveLength(2);
+  await screen.findByText('🔴 Unpaid Violations');
 })
 
 it('contains Paid Text', async () => {
     render(<TicketList/>)
-    screen.getByText('Paid');
+    await screen.findByText('🟢 Paid Violations');
 })
 
 it('contains expired meter violation', async () => {

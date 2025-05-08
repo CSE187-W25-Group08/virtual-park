@@ -6,11 +6,12 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import PersonIcon from '@mui/icons-material/Person';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { fetchDrivers } from './action';
+import { fetchDrivers, suspendDriver } from './action';
 import { Driver } from '@/driver';
 
 export default function DriversGrid() {
   const [drivers, setDrivers] = React.useState<Driver[]>([]);
+  const [suspendDisabled, setSuspendDisabled] = React.useState<Set<string>>(new Set());
 
   React.useEffect(() => {
     const setDriverData = async () => {
@@ -53,28 +54,50 @@ export default function DriversGrid() {
     {
       field: 'actions',
       headerName: '',
-      width: 150,
+      width: 210,
       renderCell: (params) => (
+        <Box>
         <Button
           variant="contained"
           color="error"
           size="small"
           onClick={() => handleSuspend(params.row?.email)}
-          disabled={!params.row?.email}
+          disabled={suspendDisabled.has(params.row?.email)}
+          sx={{marginRight: 1}}
         >
           Suspend
         </Button>
+        <Button
+        variant="contained"
+        color="success"
+        size="small"
+        onClick={() => handleReactivate(params.row?.email)}
+        disabled={!suspendDisabled.has(params.row?.email)}
+      >
+        Reactivate
+      </Button>
+      </Box>
       ),
       sortable: false,
       filterable: false,
     },
   ];  
 
-  const handleSuspend = (email?: string) => {
+  const handleSuspend = async (email?: string) => {
     if (!email) return;
+    setSuspendDisabled((prev) => new Set([...prev, email]));
+    await suspendDriver(email);
     console.log('Suspending user:', email);
     alert(`Suspend functionality for ${email}`);
   };
+
+  const handleReactivate = async (email?: string) => {
+    if (!email) return;
+    setSuspendDisabled((prev) => new Set([...prev].filter((e) => e !== email)));
+    console.log('Reactivating user:', email);
+    alert(`Reactivate functionality for ${email}`);
+  }
+
 
   return (
     <Box sx={{ 

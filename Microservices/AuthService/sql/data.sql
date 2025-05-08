@@ -21,7 +21,7 @@ VALUES (
     'pwhash',crypt('mollymember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2025-04-16T04:59:03+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -33,7 +33,7 @@ VALUES (
     'pwhash',crypt('alexmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-08-12T14:30:45+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -45,7 +45,7 @@ VALUES (
     'pwhash',crypt('jamiemember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-02-28T09:15:22+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -57,7 +57,7 @@ VALUES (
     'pwhash',crypt('taylormember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-11-05T18:45:10+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -69,7 +69,7 @@ VALUES (
     'pwhash',crypt('caseymember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2024-01-15T12:00:00+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -81,7 +81,7 @@ VALUES (
     'pwhash',crypt('rileymember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-05-20T07:45:30+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -93,7 +93,7 @@ VALUES (
     'pwhash',crypt('morganmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-07-22T08:12:17+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -105,7 +105,7 @@ VALUES (
     'pwhash',crypt('jordanmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-11-03T16:45:09+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -117,7 +117,7 @@ VALUES (
     'pwhash',crypt('averymember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2024-03-14T12:30:55+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -129,7 +129,7 @@ VALUES (
     'pwhash',crypt('reesemember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-09-18T19:20:31+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -141,7 +141,7 @@ VALUES (
     'pwhash',crypt('blakemember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-05-01T07:55:44+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -153,7 +153,7 @@ VALUES (
     'pwhash',crypt('caseymember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2024-01-09T23:10:12+00:00',
-    'active', true  
+    'suspended', false  
   )
 );
 
@@ -165,7 +165,7 @@ VALUES (
     'pwhash',crypt('taylormember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-04-30T14:22:38+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -177,7 +177,7 @@ VALUES (
     'pwhash',crypt('jamiemember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-10-11T05:45:29+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -189,7 +189,7 @@ VALUES (
     'pwhash',crypt('alexmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2024-04-02T20:15:03+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -201,7 +201,7 @@ VALUES (
     'pwhash',crypt('rileymember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-01-07T11:33:47+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -213,7 +213,7 @@ VALUES (
     'pwhash',crypt('emilymember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-09-25T08:15:00+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -225,7 +225,7 @@ VALUES (
     'pwhash',crypt('liammember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-02-14T14:30:45+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -237,7 +237,7 @@ VALUES (
     'pwhash',crypt('sofiamember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2024-01-07T09:45:22+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -249,7 +249,7 @@ VALUES (
     'pwhash',crypt('ethanmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-11-30T16:20:15+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -261,7 +261,7 @@ VALUES (
     'pwhash',crypt('oliviamember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-07-19T12:10:30+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -273,7 +273,7 @@ VALUES (
     'pwhash',crypt('noahmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2024-03-03T18:55:00+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -285,7 +285,7 @@ VALUES (
     'pwhash',crypt('avamember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-04-18T07:30:45+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -297,7 +297,7 @@ VALUES (
     'pwhash',crypt('lucasmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-10-31T23:15:10+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -309,7 +309,7 @@ VALUES (
     'pwhash',crypt('miamember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2024-05-22T13:40:25+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -321,7 +321,7 @@ VALUES (
     'pwhash',crypt('jacksonmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-12-01T10:05:50+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -333,7 +333,7 @@ VALUES (
     'pwhash',crypt('chloemember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-09-15T17:25:35+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -345,7 +345,7 @@ VALUES (
     'pwhash',crypt('aidenmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2024-02-14T11:10:15+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -357,7 +357,7 @@ VALUES (
     'pwhash',crypt('harpermember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-06-09T14:50:00+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -369,7 +369,7 @@ VALUES (
     'pwhash',crypt('loganmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-04-01T08:00:00+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -381,7 +381,7 @@ VALUES (
     'pwhash',crypt('elliemember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2024-07-19T16:45:30+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -393,7 +393,7 @@ VALUES (
     'pwhash',crypt('cartermember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-03-22T09:15:20+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -405,7 +405,7 @@ VALUES (
     'pwhash',crypt('zoeymember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-12-25T00:00:00+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -417,7 +417,7 @@ VALUES (
     'pwhash',crypt('samuelmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2024-08-12T19:30:45+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -429,7 +429,7 @@ VALUES (
     'pwhash',crypt('gracemember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2022-10-31T20:15:30+00:00',
-    'active', true
+    'suspended', false
   )
 );
 
@@ -441,6 +441,6 @@ VALUES (
     'pwhash',crypt('owenmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2023-06-15T12:00:00+00:00',
-    'active', true
+    'suspended', false
   )
 );

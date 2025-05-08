@@ -20,7 +20,8 @@ export async function createNewUser(signUpDetails: NewUser): Promise<User | unde
           'pwhash', crypt($2, gen_salt('bf')),
           'name', $3::text,
           'roles', jsonb_build_array('driver')::text,
-          'joindate', $4::text
+          'joindate', $4::text,
+          'suspended', 'false',
         ))
         RETURNING id, data->>'name' AS name;`,
     values: [signUpDetails.email, signUpDetails.password, signUpDetails.name, currentTimestamp]
@@ -38,7 +39,7 @@ export async function verifyLogin(credentials: Credentials): Promise<User | unde
       (crypt($2, data->>'pwhash') = data->>'pwhash') AS valid
       FROM member
       WHERE data->>'email' = $1
-      AND (data->>'deleted' IS NULL OR data->>'deleted' != 'true');
+      AND (data->>'suspended' IS NULL OR data->>'suspended' != 'true');
     `,
     values: [credentials.email, credentials.password],
   };
@@ -56,7 +57,7 @@ export async function checkAuth(uid: string): Promise<CheckUser | undefined> {
       SELECT id, data->>'roles' AS roles
       FROM member
       WHERE id = $1
-      AND (member.data->>'deleted' IS NULL OR member.data->>'deleted' != 'true');
+      AND (member.data->>'suspended' IS NULL OR member.data->>'suspended' != 'true');
     `,
     values: [uid],
   };
@@ -81,4 +82,13 @@ export async function fetchDrivers(): Promise<Driver[]> {
     email: row.email,
     joinDate: new Date(row.joindate).toDateString()
   }))
+}
+
+export async function suspendAccount(email: string): Promise<void> {
+  const query = {
+    text: `UPDATE member SET data = jsonb_set(data, '{suspended}', 'true')
+      WHERE data->>'email' = $1;`,
+    values: [email],
+  };
+  await pool.query(query);
 }
