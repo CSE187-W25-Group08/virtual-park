@@ -49,6 +49,10 @@ export class AuthService {
     return await db.suspendAccount(email);
   }
 
+  public async reactivateDriver(email: string): Promise<void> {
+    return await db.reactivateAccount(email);
+  }
+
   // https://claude.ai/chat/bb2b0366-a336-4241-b4c4-4da2d74c9bc4
   public async check(authHeader?: string, scopes?: string[]): Promise<SessionUser> {
     // console.log("Check called on real auth service");

@@ -230,3 +230,21 @@ test('Suspend driver tommy', async () => {
     .send({ email: tommy.email })
     .expect(204)
 })
+
+test('Reactivate driver tommy', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .put('/api/v0/auth/reactivate')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({ email: tommy.email })
+    .expect(204)
+})

@@ -81,4 +81,14 @@ export class AuthController extends Controller {
     await new AuthService().suspendDriver(email);
   }
 
+  @Put('reactivate')
+  @Security("jwt", ["admin"])
+  @Response('401', 'Unauthorized')
+  public async reactivate(
+    @Body() body: { email: string },
+  ): Promise<void> {
+    const {email} = body;
+    await new AuthService().reactivateDriver(email);
+  }
+
 }
