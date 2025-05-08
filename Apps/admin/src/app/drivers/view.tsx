@@ -54,17 +54,29 @@ export default function DriversGrid() {
     {
       field: 'actions',
       headerName: '',
-      width: 150,
+      width: 210,
       renderCell: (params) => (
+        <Box>
         <Button
           variant="contained"
           color="error"
           size="small"
           onClick={() => handleSuspend(params.row?.email)}
           disabled={suspendDisabled.has(params.row?.email)}
+          sx={{marginRight: 1}}
         >
           Suspend
         </Button>
+        <Button
+        variant="contained"
+        color="success"
+        size="small"
+        onClick={() => handleReactivate(params.row?.email)}
+        disabled={!suspendDisabled.has(params.row?.email)}
+      >
+        Reactivate
+      </Button>
+      </Box>
       ),
       sortable: false,
       filterable: false,
@@ -78,6 +90,14 @@ export default function DriversGrid() {
     console.log('Suspending user:', email);
     alert(`Suspend functionality for ${email}`);
   };
+
+  const handleReactivate = async (email?: string) => {
+    if (!email) return;
+    setSuspendDisabled((prev) => new Set([...prev].filter((e) => e !== email)));
+    console.log('Reactivating user:', email);
+    alert(`Reactivate functionality for ${email}`);
+  }
+
 
   return (
     <Box sx={{ 
