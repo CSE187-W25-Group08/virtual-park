@@ -1,5 +1,5 @@
 import { pool } from '../db'
-import { Permit, PermitType} from './schema'
+import { Permit, PermitType, PermitValid} from './schema'
 import * as queries from './queries'
 
 export class PermitService {
@@ -25,6 +25,19 @@ export class PermitService {
     return rows.map(result => ({
       price: result.data.price,
       type: result.data.type
+    }))
+  }
+  public async getPermitByCar(carPlateNum: string | undefined):Promise<PermitValid[]> {
+    const query = {
+      text: queries.getpermitByVehiclePlateNum,
+      values: [carPlateNum]
+    }
+    const {rows} = await pool.query(query)
+    return rows.map(result => ({
+      driverID: result.data.driverID,
+      issueDate: result.data.issue_date,
+      expDate: result.data.exp_date,
+      isValid: result.data.isValid,
     }))
   }
 }

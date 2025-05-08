@@ -64,3 +64,4 @@ export const updatePaidTicket =
   )
   SELECT id, driver, data FROM UPDATED
   `
+
