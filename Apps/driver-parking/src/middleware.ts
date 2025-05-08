@@ -9,7 +9,7 @@ const publicRoutes = ['/login', '/signup', '/']
 
 export default async function middleware(req: NextRequest) {
   const response = middlewareInitial(req)
-  const pathname = req.nextUrl.pathname.replace(/^\/(es)/, '') || '/';
+  const pathname = req.nextUrl.pathname.replace(/^\/(en|es)/, '') || '/';
   if (!publicRoutes.includes(pathname)) {
     try {
       const cookie = req.cookies.get('session')?.value;
