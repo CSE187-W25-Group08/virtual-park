@@ -42,3 +42,23 @@ export async function suspendDriverAccount(email: string, cookie: string | undef
       .catch((error) => reject(error))
   })
 }
+
+export async function reactivateDriverAccount(email: string, cookie: string | undefined): Promise<void> {
+  return new Promise((resolve, reject) => {
+    fetch('http://localhost:3010/api/v0/auth/reactivate', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookie}`,
+      },
+      body: JSON.stringify({ email })
+    })
+      .then(response => {
+        if (response.status != 204) {
+          reject('Unauthorized')
+        }
+        resolve()
+      })
+      .catch((error) => reject(error))
+  })
+}

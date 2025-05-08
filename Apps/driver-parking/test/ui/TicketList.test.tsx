@@ -1,8 +1,10 @@
 import { it, afterEach, vi, expect } from 'vitest'
-import { render, screen, cleanup} from '@testing-library/react'
+import { render, screen, cleanup, fireEvent} from '@testing-library/react'
 
 import TicketList from '../../src/app/[locale]/ticket/list'
 import Page from '../../src/app/[locale]/ticket/page'
+
+import {paidList, unpaidList, appealedList} from '../testData'
 
 afterEach(() => {
   cleanup()
@@ -13,37 +15,9 @@ vi.mock('next/navigation', () => ({
 }))
 
 vi.mock('../../src/app/[locale]/ticket/actions', () => ({
-  listPaid: vi.fn(() => [      
-    {
-      id: "t2",
-      vehicle: "XYZ5678",
-      enforcer: "E456",
-      lot: "Lot B",
-      paid: true,
-      description: "Does not matter",
-      due: "2025-04-25T23:59:59Z",
-      issue: "2025-04-25T09:00:00Z",
-      violation: "Expired meter",
-      image: "/images/tickets/t2.jpg",
-      cost: 50.02
-    }
-  ]),
-  listUnpaid: vi.fn(() => [      
-    {
-      id: "t3",
-      vehicle: "XYZ5678",
-      enforcer: "E456",
-      lot: "Lot B",
-      paid: false,
-      description: "Does not matter",
-      due: "2025-04-25T23:59:59Z",
-      issue: "2025-04-25T09:00:00Z",
-      violation: "dab",
-      image: "/images/tickets/t2.jpg",
-      cost: 50.02
-    }
-  ]),
-  listAppealed: vi.fn(() => {}),
+  listPaid: vi.fn(() => paidList),
+  listUnpaid: vi.fn(() => unpaidList),
+  listAppealed: vi.fn(() => appealedList),
   getTicketById: vi.fn(() => {}),
   setTicketPaid: vi.fn(() => {})
 }))
@@ -64,7 +38,13 @@ it('contains Paid Text', async () => {
 
 it('contains expired meter violation', async () => {
     render(<TicketList/>)
-    await screen.findByText('Expired meter');
+    await screen.findAllByText('Expired meter');
+})
+
+it('Clicks on ticket', async () => {
+  render(<TicketList/>)
+  const ticket = await screen.findByText('Cannot park');
+  fireEvent.click(ticket)
 })
 
 /*

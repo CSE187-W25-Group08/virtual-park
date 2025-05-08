@@ -6,6 +6,8 @@ import { notFound} from 'next/navigation';
 import Navbar from '../../components/Navbar'
 import { Toolbar } from '@mui/material';
 
+import { cookies } from 'next/headers';
+
 // npm build
 type Params = Promise<{ locale: string }>
 /* https://medium.com/hackernoon/follow-single-argument-principle-in-typescript-with-parameter-objects-c8a259dd7191 */
@@ -30,13 +32,20 @@ export default async function LocaleLayout({
     notFound();
     // redirect('/')
   }
- 
+
+  const session = (await cookies()).get("session")?.value;
+  const isLoggedIn = Boolean(session); // or use your own session validation
+  
   return (
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale}>
-          <Navbar locale={locale} />
-          <Toolbar /> {/** pushes body below the NavBar */}
+          {isLoggedIn && (
+            <>
+              <Navbar locale={locale} />
+              <Toolbar />
+            </>
+          )}
           <main>{children}</main>
         </NextIntlClientProvider>
       </body>
