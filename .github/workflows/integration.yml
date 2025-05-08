@@ -54,6 +54,7 @@ jobs:
       - run: npm install
       - run: npm run installs
 
+      # Uses GH's container registry and GH generates a token for us
       - name: Log in to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
