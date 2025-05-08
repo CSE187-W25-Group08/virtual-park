@@ -1,5 +1,5 @@
 import { it, afterEach, vi, expect } from 'vitest'
-import { render, screen, cleanup} from '@testing-library/react'
+import { render, screen, cleanup, fireEvent} from '@testing-library/react'
 
 import TicketList from '../../src/app/[locale]/ticket/list'
 import Page from '../../src/app/[locale]/ticket/page'
@@ -25,7 +25,36 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
       issue: "2025-04-25T09:00:00Z",
       violation: "Expired meter",
       image: "/images/tickets/t2.jpg",
-      cost: 50.02
+      cost: 50.02,
+      appeal: "submitted"
+    },
+    {
+      id: "t4",
+      vehicle: "XYZ5678",
+      enforcer: "E456",
+      lot: "Lot B",
+      paid: true,
+      description: "Does not matter",
+      due: "2025-04-25T23:59:59Z",
+      issue: "2025-04-25T09:00:00Z",
+      violation: "Cannot park",
+      image: "/images/tickets/t2.jpg",
+      cost: 50.02,
+      appeal: "null"
+    },
+    {
+      id: "t5",
+      vehicle: "XYZ5678",
+      enforcer: "E456",
+      lot: "Lot B",
+      paid: true,
+      description: "Does not matter",
+      due: "2025-04-25T23:59:59Z",
+      issue: "2025-04-25T09:00:00Z",
+      violation: "Expired meter",
+      image: "/images/tickets/t2.jpg",
+      cost: 50.02,
+      appeal: "rejected"
     }
   ]),
   listUnpaid: vi.fn(() => [      
@@ -40,7 +69,8 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
       issue: "2025-04-25T09:00:00Z",
       violation: "dab",
       image: "/images/tickets/t2.jpg",
-      cost: 50.02
+      cost: 50.02,
+      appeal: "approved"
     }
   ]),
   listAppealed: vi.fn(() => {}),
@@ -64,7 +94,13 @@ it('contains Paid Text', async () => {
 
 it('contains expired meter violation', async () => {
     render(<TicketList/>)
-    await screen.findByText('Expired meter');
+    await screen.findAllByText('Expired meter');
+})
+
+it('Clicks on ticket', async () => {
+  render(<TicketList/>)
+  const ticket = await screen.findByText('Cannot park');
+  fireEvent.click(ticket)
 })
 
 /*
