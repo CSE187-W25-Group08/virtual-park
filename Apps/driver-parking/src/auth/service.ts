@@ -31,22 +31,22 @@ export async function authenticate(credentials: Credentials): Promise<Authentica
 }
 
 export async function check(cookie: string | undefined): Promise<void> {
-  return new Promise((resolve, reject) => {
-    fetch('http://localhost:3010/api/v0/auth/check', {
+  try {
+    const response = await fetch('http://localhost:3010/api/v0/auth/check', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${cookie}`,
       }
-    })
-      .then(response => {
-        if (response.status != 200) {
-          reject('Unauthorized')
-        }
-        return response.json()
-      }
-      )
-      .then(data => resolve(data))
-      .catch(() => reject('Unauthorized'))
-  })
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Unauthorized');
+    }
+
+    await response.json();
+  } catch {
+    return Promise.reject('Unauthorized');
+  }
 }
+
 
