@@ -54,7 +54,7 @@ export default function DriversGrid() {
     {
       field: 'actions',
       headerName: '',
-      width: 210,
+      width: 300,
       renderCell: (params) => (
         <Box>
         <Button
@@ -73,8 +73,17 @@ export default function DriversGrid() {
         size="small"
         onClick={() => handleReactivate(params.row?.email)}
         disabled={!suspendDisabled.has(params.row?.email)}
+        sx={{marginRight: 1}}
       >
         Reactivate
+      </Button>
+        <Button
+        variant="contained"
+        color="success"
+        size="small"
+        onClick={() => handleOpenDriver(params.row?.email)}
+      >
+        Details
       </Button>
       </Box>
       ),
@@ -99,6 +108,9 @@ export default function DriversGrid() {
     alert(`Reactivate functionality for ${email}`);
   }
 
+  const handleOpenDriver = async (email?: string) => {
+    console.log(email)
+  }
 
   return (
     <Box sx={{ 
