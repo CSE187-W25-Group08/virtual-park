@@ -3,6 +3,8 @@ import { getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { notFound} from 'next/navigation';
 
+import Navbar from '../../components/Navbar'
+import { Toolbar } from '@mui/material';
 
 // npm build
 type Params = Promise<{ locale: string }>
@@ -32,7 +34,11 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider locale={locale} >{children}</NextIntlClientProvider>
+        <NextIntlClientProvider locale={locale}>
+          <Navbar locale={locale} />
+          <Toolbar /> {/** pushes body below the NavBar */}
+          <main>{children}</main>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

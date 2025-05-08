@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import TicketCard from "./card";
 import { Ticket } from "../../../ticket";
 import { listPaid, listUnpaid, listAppealed } from "./actions";
@@ -32,7 +32,7 @@ export default function TicketList() {
   const TableHeader = (title: string, type: string) => (
     <Box
       sx={{
-        mt: 7,
+        mt: 1,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
@@ -53,12 +53,11 @@ export default function TicketList() {
 
   return (
     <>
-      <AppBar>
+      {/* <AppBar>
         <Toolbar>
           <Typography>Tickets</Typography>
         </Toolbar>
-      </AppBar>
-      
+      </AppBar> */}
       <Box sx={{ px: 2 }}>
         <List sx={{ width: '100%' }}>
           {unpaidTicket.length <= 0 ?
