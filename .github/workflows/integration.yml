@@ -78,6 +78,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, build, deploy-docker]
     steps:
-      - name: SSH into EC2 and Deploy
       - uses: actions/checkout@v4
-      - run: echo "This would ssh into EC2, pull the latest image, and run npm run containerised"
+      - name: SSH into EC2 and Deploy
+        run: echo "This would ssh into EC2, pull the latest image, and run npm run containerised"
