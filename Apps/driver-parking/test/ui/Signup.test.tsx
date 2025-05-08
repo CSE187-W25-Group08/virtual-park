@@ -63,7 +63,7 @@ it('mocks unsuccessful Signup process', async () => {
 
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
   mockSignup.mockResolvedValueOnce(undefined)
-  const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
+  // const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
 
   renderWithIntl(<Signup />)
@@ -82,9 +82,7 @@ it('mocks unsuccessful Signup process', async () => {
   fireEvent.change(password, {target: { value: 'password' }})
   fireEvent.click(signup)
 
-  await vi.waitFor(() => {
-    expect(alertMock).toHaveBeenCalledWith('This email has already been taken.')
-  })
+  await screen.findByLabelText('sign up error');
 })
 
 it('toggles password visibility', () => {

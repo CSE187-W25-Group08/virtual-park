@@ -8,8 +8,8 @@ afterEach(() => {
 })
 
 it('successfully signs up a user', async () => {
-  const mockUser = {email: 'test@email.com', password: 'password', name: 'Test User'}
-  const mockResponse = {name: 'Test User', accessToken: 'token'}
+  const mockUser = { email: 'test@email.com', password: 'password', name: 'Test User' }
+  const mockResponse = { name: 'Test User', accessToken: 'token' }
 
   vi.spyOn(global, 'fetch').mockResolvedValueOnce({
     status: 201,
@@ -21,19 +21,19 @@ it('successfully signs up a user', async () => {
 })
 
 it('unsuccessfully signs up a user', async () => {
-  const mockUser = {email: 'test@email.com', password: 'password', name: 'Test User'}
+  const mockUser = { email: 'test@email.com', password: 'password', name: 'Test User' }
 
   vi.spyOn(global, 'fetch').mockResolvedValueOnce({
     status: 409,
     statusText: 'Conflict',
   } as Response)
 
-  await expect(signupUser(mockUser)).rejects.toEqual('Conflict')
+  await expect(signupUser(mockUser)).rejects.toThrow('Conflict');
 })
 
 it('successfully authenticates a user', async () => {
-  const mockUser = {email: 'test@email.com', password: 'password'}
-  const mockResponse = {name: 'Test User', accessToken: 'token'}
+  const mockUser = { email: 'test@email.com', password: 'password' }
+  const mockResponse = { name: 'Test User', accessToken: 'token' }
 
   vi.spyOn(global, 'fetch').mockResolvedValueOnce({
     status: 200,
@@ -45,14 +45,14 @@ it('successfully authenticates a user', async () => {
 })
 
 it('unsuccessfully authenticates a user', async () => {
-  const mockUser = {email: 'test@email.com', password: 'password'}
+  const mockUser = { email: 'test@email.com', password: 'password' }
 
   vi.spyOn(global, 'fetch').mockResolvedValueOnce({
     status: 401,
     statusText: 'Unauthorized',
   } as Response)
 
-  await expect(authenticate(mockUser)).rejects.toEqual('Unauthorized')
+  await expect(authenticate(mockUser)).rejects.toThrow("Unauthorized")
 })
 
 it('successfully checks authentication', async () => {

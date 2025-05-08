@@ -41,7 +41,10 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
       image: "/images/tickets/t2.jpg",
       cost: 50.02
     }
-  ])
+  ]),
+  listAppealed: vi.fn(() => {}),
+  getTicketById: vi.fn(() => {}),
+  setTicketPaid: vi.fn(() => {})
 }))
 
 
