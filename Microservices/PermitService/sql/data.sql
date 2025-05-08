@@ -54,6 +54,7 @@ INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
   )
 );
 
+/*
 SELECT 
   vinfo.license_plate,
   dp.id AS permitID,
@@ -69,3 +70,4 @@ LEFT JOIN dblink('dbname=vehicle user=postgres',
 AS vinfo(driverID UUID, license_plate TEXT)
 ON dp.driverID = vinfo.driverID
 WHERE vinfo.license_plate = '123BC4A';
+*/

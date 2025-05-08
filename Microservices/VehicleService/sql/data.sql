@@ -34,6 +34,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
 );
 
 
+/*
 select permitInfo.permitID, permitInfo.permitType, permitInfo.issueDate, permitInfo.expDate, permitInfo.isValid
 from vehicle v
 LEFT JOIN 
@@ -48,3 +49,5 @@ LEFT JOIN
       v.data->>'license_plate' = '123BC4A';
 
 
+
+*/
