@@ -20,3 +20,70 @@ jobs:
       - run: npm install
       - run: npm run installs
       - run: npm run lint
+  
+  build:
+    name: Check Build
+    runs-on: ubuntu-latest
+    # needs: [lint]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - run: npm install
+      - run: npm run installs
+      - run: npm run build
+  
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    # needs: [lint, build]
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "This would run the tests"
+  
+  deploy-docker:
+    name: Build and Push Docker Image to GHCR
+    runs-on: ubuntu-latest
+    # needs: [lint, build, test]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - run: npm install
+      - run: npm run installs
+
+      # Uses GH's container registry and GH generates a token for us
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Build Tagged Docker Image
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          REPO_OWNER=$(echo $GITHUB_REPOSITORY_OWNER | tr '[:upper:]' '[:lower:]')
+          IMAGE=ghcr.io/$REPO_OWNER/virtual-park:$VERSION
+          docker build . -t $IMAGE --platform linux/amd64
+          docker push $IMAGE
+
+      # I had ChatGPT generate the lowercase conversion, which is why it failed the first time
+      - name: Tag and Push as Latest
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          REPO_OWNER=$(echo $GITHUB_REPOSITORY_OWNER | tr '[:upper:]' '[:lower:]')
+          IMAGE=ghcr.io/$REPO_OWNER/virtual-park:$VERSION
+          LATEST=ghcr.io/$REPO_OWNER/virtual-park:latest
+          docker tag $IMAGE $LATEST
+          docker push $LATEST
+    
+  deploy:
+    name: Deploy and Spin Up on EC2 Instance
+    runs-on: ubuntu-latest
+    # needs: [lint, build, test, deploy-docker]
+    steps:
+      - uses: actions/checkout@v4
+      - name: SSH into EC2 and Deploy
+        run: echo "This would ssh into EC2, pull the latest image, and run npm run containerised"
