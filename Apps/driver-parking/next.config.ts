@@ -1,10 +1,10 @@
-import {NextConfig} from 'next';
+import { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
- 
+
 const nextConfig: NextConfig = {
-  basePath: '/driver',
+  // basePath: '/driver',
 };
 
- 
+
 const withNextIntl = createNextIntlPlugin();
 export default withNextIntl(nextConfig);

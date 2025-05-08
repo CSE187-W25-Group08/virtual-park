@@ -212,3 +212,21 @@ test('Get drivers as non-admin', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .expect(401)
 })
+
+test('Suspend driver tommy', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .put('/api/v0/auth/suspend')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({ email: tommy.email })
+    .expect(204)
+})

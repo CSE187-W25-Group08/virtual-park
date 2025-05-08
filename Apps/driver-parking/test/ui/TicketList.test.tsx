@@ -41,19 +41,21 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
       image: "/images/tickets/t2.jpg",
       cost: 50.02
     }
-  ])
+  ]),
+  listAppealed: vi.fn(() => {}),
+  getTicketById: vi.fn(() => {}),
+  setTicketPaid: vi.fn(() => {})
 }))
 
 
 it('contains Violation Text', async () => {
   render(<TicketList/>)
-  const violationTexts = screen.getAllByText('Violation');
-  expect(violationTexts).toHaveLength(2);
+  await screen.findByText('🔴 Unpaid Violations');
 })
 
 it('contains Paid Text', async () => {
     render(<TicketList/>)
-    screen.getByText('Paid');
+    await screen.findByText('🟢 Paid Violations');
 })
 
 it('contains expired meter violation', async () => {

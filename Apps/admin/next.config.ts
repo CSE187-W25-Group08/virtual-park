@@ -1,7 +1,7 @@
-import type { NextConfig } from "next";
+// import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  basePath: '/admin',
-};
+// const nextConfig: NextConfig = {
+//   basePath: '/admin',
+// };
 
-export default nextConfig;
+// export default nextConfig;
