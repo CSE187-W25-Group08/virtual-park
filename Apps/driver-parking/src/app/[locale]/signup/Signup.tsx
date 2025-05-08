@@ -59,7 +59,7 @@ export default function Signup() {
       flexDirection: 'column',
       alignItems: 'center'}}>
       {failedSignup &&
-        <Alert severity="error">{t("emailTaken")}</Alert>}
+        <Alert severity="error" aria-label="sign up error">{t("emailTaken")}</Alert>}
       <Typography variant="h4" sx={{
         marginTop: '120px',
       }}>{t("createAccount")}</Typography>

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { check } from './auth/service'
 
-const publicRoutes = ['/login', '/signup']
+const publicRoutes = ['/login']
 
 export default async function middleware(req: NextRequest) {
   if (!publicRoutes.includes(req.nextUrl.pathname)) {
@@ -18,3 +18,4 @@ export default async function middleware(req: NextRequest) {
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'],
 }
+

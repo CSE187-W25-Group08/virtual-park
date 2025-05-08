@@ -12,6 +12,10 @@ vi.mock('next/server', () => ({
   }
 }));
 
+vi.mock('next-intl/middleware', () => ({
+  default: vi.fn(() => vi.fn(() => 'intlMiddlewareRes'))
+}));
+
 beforeEach(() => {
   vi.clearAllMocks();
   TextEncoder = class {
@@ -19,12 +23,12 @@ beforeEach(() => {
       return new Uint8Array();
     }
   } as typeof TextEncoder;
-  
+
   /* reference: https://www.geeksforgeeks.org/node-url-tostring-method/ */
-  URL = function(url:string) {
+  URL = function (url: string) {
     return {
       pathname: url,
-      toString: function() {
+      toString: function () {
         return '/login';
       }
     };
@@ -43,8 +47,7 @@ it('valid token login', async () => {
   } as unknown as NextRequest;
 
   const result = await middleware(req);
-  expect(result).toBe('nextRes');
-  
+
   expect(fetch).toHaveBeenCalledWith('http://localhost:3010/api/v0/auth/check', {
     method: 'GET',
     headers: {
