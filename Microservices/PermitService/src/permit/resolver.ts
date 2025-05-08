@@ -1,5 +1,5 @@
-import { Authorized, Ctx, Query, Resolver } from 'type-graphql'
-import { Permit, PermitType } from './schema'
+import { Authorized, Ctx, Query, Resolver, Arg } from 'type-graphql'
+import { Permit, PermitType, PermitValid } from './schema'
 import { Request } from "express"
 import { PermitService } from './service'
 
@@ -21,4 +21,13 @@ export class PermitResolver {
   ): Promise<PermitType[]> {
     return await new PermitService().getPermitType()
   }
+  /* should Only allow officer to do that, and in the future, I might consider adding a member with the role of enforcement officer */
+  @Authorized()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(returns => [PermitValid])
+  async getPermitBycarPlate(  @Arg("input") carPlate: string
+  ): Promise<PermitValid[]> {
+    return await new PermitService().getPermitByCar(carPlate)
+  }
 }
+
