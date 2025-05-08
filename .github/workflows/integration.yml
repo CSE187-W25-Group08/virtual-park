@@ -20,3 +20,63 @@ jobs:
       - run: npm install
       - run: npm run installs
       - run: npm run lint
+  
+  build:
+    name: Check Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - run: npm install
+      - run: npm run installs
+      - run: npm run build
+  
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "This would run the tests"
+  
+  deploy-docker:
+    name: Build and Push Docker Image to GHCR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - run: npm install
+      - run: npm run installs
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Build Tagged Docker Image
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          IMAGE=ghcr.io/${{ github.repository_owner }}/virtual-park:$VERSION
+          docker build . -t $IMAGE --platform linux/amd64
+          docker push $IMAGE
+
+      - name: Tag and Push as Latest
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          IMAGE=ghcr.io/${{ github.repository_owner }}/virtual-park:$VERSION
+          LATEST=ghcr.io/${{ github.repository_owner }}/virtual-park:latest
+          docker tag $IMAGE $LATEST
+          docker push $LATEST
+    
+  deploy:
+    name: Deploy and Spin Up on EC2 Instance
+    runs-on: ubuntu-latest
+    needs: [lint, build, deploy-docker]
+    steps:
+      - name: SSH into EC2 and Deploy
+      - uses: actions/checkout@v4
+      - run: echo "This would ssh into EC2, pull the latest image, and run npm run containerised"
