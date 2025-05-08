@@ -2,6 +2,7 @@ import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup} from '@testing-library/react'
 
 import TicketList from '../../src/app/[locale]/ticket/list'
+import Page from '../../src/app/[locale]/ticket/page'
 
 afterEach(() => {
   cleanup()
@@ -47,6 +48,9 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
   setTicketPaid: vi.fn(() => {})
 }))
 
+it('Renders Page', async () => {
+  render(<Page/>)
+})
 
 it('contains Violation Text', async () => {
   render(<TicketList/>)
