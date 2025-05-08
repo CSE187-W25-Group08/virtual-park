@@ -6,7 +6,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import PersonIcon from '@mui/icons-material/Person';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { fetchDrivers, suspendDriver } from './action';
+import { fetchDrivers, reactivateDriver, suspendDriver } from './action';
 import { Driver } from '@/driver';
 
 export default function DriversGrid() {
@@ -94,6 +94,7 @@ export default function DriversGrid() {
   const handleReactivate = async (email?: string) => {
     if (!email) return;
     setSuspendDisabled((prev) => new Set([...prev].filter((e) => e !== email)));
+    await reactivateDriver(email);
     console.log('Reactivating user:', email);
     alert(`Reactivate functionality for ${email}`);
   }

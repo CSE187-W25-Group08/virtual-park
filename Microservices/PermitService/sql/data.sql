@@ -53,3 +53,19 @@ INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
     'exp_date', '2025-03-15T17:00:00.000Z'
   )
 );
+
+SELECT 
+  vinfo.license_plate,
+  dp.id AS permitID,
+  pt.data->>'type' AS permitType,
+  dp.data->>'issue_date' AS issueDate,
+  dp.data->>'exp_date' AS expDate,
+  (dp.data->>'exp_date')::timestamp > NOW() AS isValid
+FROM driverpermit dp
+JOIN permittype pt ON dp.permitType = pt.id
+LEFT JOIN dblink('dbname=vehicle user=postgres',
+  $$SELECT id AS driverID, data->>'license_plate' AS license_plate FROM vehicle$$
+) 
+AS vinfo(driverID UUID, license_plate TEXT)
+ON dp.driverID = vinfo.driverID
+WHERE vinfo.license_plate = '123BC4A';

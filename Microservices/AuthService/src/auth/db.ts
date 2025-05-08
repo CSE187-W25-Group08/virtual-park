@@ -21,7 +21,7 @@ export async function createNewUser(signUpDetails: NewUser): Promise<User | unde
           'name', $3::text,
           'roles', jsonb_build_array('driver')::text,
           'joindate', $4::text,
-          'suspended', 'false',
+          'suspended', 'false'
         ))
         RETURNING id, data->>'name' AS name;`,
     values: [signUpDetails.email, signUpDetails.password, signUpDetails.name, currentTimestamp]
@@ -87,6 +87,15 @@ export async function fetchDrivers(): Promise<Driver[]> {
 export async function suspendAccount(email: string): Promise<void> {
   const query = {
     text: `UPDATE member SET data = jsonb_set(data, '{suspended}', 'true')
+      WHERE data->>'email' = $1;`,
+    values: [email],
+  };
+  await pool.query(query);
+}
+
+export async function reactivateAccount(email: string): Promise<void> {
+  const query = {
+    text: `UPDATE member SET data = jsonb_set(data, '{suspended}', 'false')
       WHERE data->>'email' = $1;`,
     values: [email],
   };
