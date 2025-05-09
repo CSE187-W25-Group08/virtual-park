@@ -1,6 +1,3 @@
-import { pool } from '../db';
-import { Ticket } from './schema';
-
 /**
  * Retrieves all tickets fromd database
  */
