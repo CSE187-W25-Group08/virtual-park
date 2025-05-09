@@ -28,6 +28,11 @@
     "password": "password",
     "signin": "Sign In",
     "error": "Incorrect login credentials, please try again"
+  },
+  "permit_history": {
+    "title": "Purchase History",
+    "issued": "Issue Date: ",
+    "expires": "Expiry Date: "
   }
 }
 

@@ -28,5 +28,10 @@
     "password": "Contraseña",
     "signin": "Iniciar sesión",
     "error": "Credenciales de inicio de sesión incorrectas, por favor inténtelo de nuevo"
+  },
+  "permit_history": {
+    "title": "Historial de compras",
+    "issued": "Fecha de emisión: ",
+    "expires": "Fecha de caducidad: "
   }
 }

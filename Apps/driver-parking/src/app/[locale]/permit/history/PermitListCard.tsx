@@ -5,10 +5,12 @@ import PropTypes from 'prop-types'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
+import { useTranslations } from 'next-intl'
 
 import { Permit } from '../../../../permit'
 
 const PermitListCard = ({permit}: {permit: Permit}) => {
+  const t = useTranslations('permit_history')
   return (
     <ListItem disablePadding>
       <Card raised sx={{ width: '300px', height: '200px', marginTop: '20px', alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -20,10 +22,10 @@ const PermitListCard = ({permit}: {permit: Permit}) => {
             ${permit.price}
           </Typography>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            {`Issue Date: ${timeFormatter(permit.issueDate)}`}
+            {t('issued')}{timeFormatter(permit.issueDate)}
           </Typography>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            {`Expiry Date: ${timeFormatter(permit.expDate)}`}
+            {t('expires')}{timeFormatter(permit.expDate)}
           </Typography>
         </CardContent>
       </Card>
