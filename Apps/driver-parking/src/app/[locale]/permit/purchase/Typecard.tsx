@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 import { Permit } from '../../../../permit/index'
 
 /* reference: https://www.typescriptlang.org/docs/handbook/functions.html */
-export default function typeCard({permit, purchased}: { permit: Permit, purchased: (permit: Permit) => void}) {
+export default function PermitCard({permit, purchased}: { permit: Permit, purchased: (permit: Permit) => void}) {
   const t = useTranslations('purchase_permit')
   return (
     <ListItem disablePadding>
