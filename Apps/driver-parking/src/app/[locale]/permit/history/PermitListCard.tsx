@@ -16,7 +16,7 @@ const PermitListCard = ({permit}: {permit: Permit}) => {
       <Card raised sx={{ width: '300px', height: '200px', marginTop: '20px', alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <CardContent>
           <Typography variant="h5" color="text.primary" align="center" gutterBottom>
-            {permit.type}
+            {permit.type === 'Student' ? t('student') : permit.type === 'Staff' ? t('staff') : permit.type === 'Disabled' ? t('disabled') : ''}
           </Typography>
           <Typography variant="body1" color="text.secondary" align="center" gutterBottom>
             ${permit.price}
