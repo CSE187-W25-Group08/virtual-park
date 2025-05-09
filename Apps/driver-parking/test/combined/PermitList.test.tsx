@@ -1,7 +1,10 @@
 import { it, afterEach, vi, beforeEach } from 'vitest' 
 import { render, screen, cleanup } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
+import { NextIntlClientProvider } from 'next-intl'
+
 import PurchaseHistoryPage from '../../src/app/[locale]/permit/history/page'
+import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -23,6 +26,14 @@ afterEach(() => {
   cleanup()
   vi.clearAllMocks()
 })
+
+const renderWithIntl = (component: React.ReactElement) => {
+  return render(
+    <NextIntlClientProvider locale="en" messages={{ permit_history: permitHistoryMessages }}>
+      {component}
+    </NextIntlClientProvider>
+  )
+}
 
 it('should fetch user\'s purchased permits', async () => {
   const mockPush = vi.fn()
@@ -57,7 +68,7 @@ it('should fetch user\'s purchased permits', async () => {
     return Promise.reject('Unknown fetch')
   })
 
-  render(<PurchaseHistoryPage />)
+  renderWithIntl(<PurchaseHistoryPage />)
 
   await screen.findByText('Student')
 })

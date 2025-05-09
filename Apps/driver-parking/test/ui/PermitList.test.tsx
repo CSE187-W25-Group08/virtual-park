@@ -1,8 +1,10 @@
 import { it, afterEach, vi } from 'vitest'
 import { render, cleanup, screen } from '@testing-library/react'
+import { NextIntlClientProvider } from 'next-intl'
 
 import PermitList from '../../src/app/[locale]/permit/history/PermitList'
 import { getUserPermits } from '../../src/app/[locale]/permit/actions'
+import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 
 afterEach(() => {
   cleanup()
@@ -14,6 +16,14 @@ vi.mock('../../src/app/[locale]/permit/actions', () => ({
 }))
 
 const mockgetUserPermits = vi.mocked(getUserPermits)
+
+const renderWithIntl = (component: React.ReactElement) => {
+  return render(
+    <NextIntlClientProvider locale="en" messages={{ permit_history: permitHistoryMessages }}>
+      {component}
+    </NextIntlClientProvider>
+  )
+}
 
 it('mocks PermitList component', async () => {
   const testPermits = [{
@@ -30,7 +40,7 @@ it('mocks PermitList component', async () => {
   }]
   mockgetUserPermits.mockResolvedValueOnce(testPermits)
 
-  render(<PermitList />)
+  renderWithIntl(<PermitList />)
 
   await screen.findByText('Student')
 })
