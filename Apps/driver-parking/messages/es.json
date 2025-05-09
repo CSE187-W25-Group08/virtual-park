@@ -32,6 +32,16 @@
   "permit_history": {
     "title": "Historial de compras",
     "issued": "Fecha de emisión: ",
-    "expires": "Fecha de caducidad: "
+    "expires": "Fecha de caducidad: ",
+    "student": "Estudiante",
+    "staff": "Personal",
+    "disabled": "Discapacitado"
+  },
+  "purchase_permit": {
+    "student": "Estudiante",
+    "staff": "Personal",
+    "disabled": "Discapacitado",
+    "purchase": "Comprar",
+    "purchased": "Comprado: "
   }
 }

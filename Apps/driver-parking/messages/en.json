@@ -32,7 +32,17 @@
   "permit_history": {
     "title": "Purchase History",
     "issued": "Issue Date: ",
-    "expires": "Expiry Date: "
+    "expires": "Expiry Date: ",
+    "student": "Student",
+    "staff": "Staff",
+    "disabled": "Disabled"
+  },
+  "purchase_permit": {
+    "student": "Student",
+    "staff": "Staff",
+    "disabled": "Disabled",
+    "purchase": "Purchase",
+    "purchased": "Purchased: "
   }
 }
 

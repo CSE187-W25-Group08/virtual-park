@@ -1,12 +1,15 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
+
 import { permitTypes } from '../actions'
 import PermitCard from './Typecard'
 import { Permit } from '../../../../permit'
 
 export default function TypeList() {
   const [permitType, setpermitType] = useState<Permit[]>([])
+  const t = useTranslations('purchase_permit')
   // const [purchased, setPurchased] = useState<Permit | null>(null)
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +21,7 @@ export default function TypeList() {
 
   const purchaseHandler = (permit: Permit) => {
     // setPurchased(permit)
-    alert(`Purchased: ${permit.type} ($${permit.price})`)
+    alert(`${t('purchased')} ${permit.type === 'Student' ? t('student') : permit.type === 'Staff' ? t('staff') : permit.type === 'Disabled' ? t('disabled') : ''} $${permit.price}`)
   }
 
   return (
