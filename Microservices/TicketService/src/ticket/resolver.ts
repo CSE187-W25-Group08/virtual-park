@@ -16,8 +16,8 @@ export class TicketResolver {
   @Authorized()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => [Ticket])
-  async ticket(@Ctx() request: Request): Promise<Ticket[]> {
-    return await new TicketService().getAll(request.user?.id)
+  async ticket(): Promise<Ticket[]> {
+    return await new TicketService().getAll()
   }
 
   @Authorized()

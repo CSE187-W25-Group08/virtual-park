@@ -70,3 +70,12 @@ export class Ticket {
   @Field()
   appeal!: string;
 }
+
+@ObjectType()
+export class DBTicket {
+  @Field(() => ID)
+  id!: string
+
+  @Field(() => Ticket)
+  data!: Ticket
+}

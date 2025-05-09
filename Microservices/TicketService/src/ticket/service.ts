@@ -1,11 +1,11 @@
 import { pool } from '../db'
-import { Ticket } from './schema';
+import { Ticket, DBTicket } from './schema';
 import * as queries from './queries'
 
 export class TicketService {
 
-  private rowToTicket = async(rows : Ticket[]) => {
-    const tickets = await Promise.all(rows.map(async (ticket : any) => {
+  private rowToTicket = async(rows : DBTicket[]) => {
+    const tickets = await Promise.all(rows.map(async (ticket : DBTicket) => {
       const data = ticket.data
       const ticketObj: Ticket = {
         'id': ticket.id,
@@ -26,7 +26,7 @@ export class TicketService {
     return tickets;
   }
 
-  public async getAll(userId: string | undefined): Promise<Ticket[]> {
+  public async getAll(): Promise<Ticket[]> {
     const query = {
       text: queries.selectAllTickets
       // values: [userId]
