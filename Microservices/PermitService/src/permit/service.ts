@@ -27,10 +27,7 @@ export class PermitService {
       type: result.data.type
     }))
   }
-  public async getPermitByCar(carPlateNum: string | undefined): Promise<PermitValid[]> {
-    if (!carPlateNum) {
-      return []
-    }
+  public async getPermitByCar(carPlateNum: string): Promise<PermitValid[]> {
     const query = queries.getPermitByVehiclePlateNum(carPlateNum)
     const {rows} = await pool.query(query)
     return rows.map(result => ({

@@ -98,3 +98,32 @@ test('retrieve the permit info based on the vehicle car plate', async () => {
       expect(res.body.data.getPermitBycarPlate.length).toEqual(2)
     })
 })
+
+test('should return empty array with not exist car plate number', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query GetPermitByCar($input: String!) {
+          getPermitBycarPlate(input: $input) {
+            permitID
+            permitType
+            issueDate
+            expDate
+            isValid
+          }
+        }
+      `,
+      variables: {
+        input: '123BC1'
+      }
+    })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      console.log('permit by carPlate:', res.body.data)
+      expect(res.body.data.getPermitBycarPlate.length).toEqual(0)
+    })
+})
