@@ -43,5 +43,18 @@
     "disabled": "Discapacitado",
     "purchase": "Comprar",
     "purchased": "Comprado:"
+  },
+  "vehicle": {
+    "title": "Vehículos",
+    "register": "+ Registrar vehículo",
+    "edit": "Editar",
+    "addTitle": "Registrar vehículo",
+    "licensePlate": "Número de matrícula",
+    "color": "Color",
+    "make": "Marca",
+    "model": "Modelo",
+    "default": "Vehículo predeterminado",
+    "cancel": "Cancelar",
+    "save": "Guardar"
   }
 }

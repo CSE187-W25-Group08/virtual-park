@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Box, Card, Typography, Button, TextField, Switch, FormControlLabel } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 import {Vehicle,VehicleForm} from '../../../register'
 import { getUserVehicles, registerVehicle } from './actions'
@@ -9,6 +10,7 @@ export default function Vehicles() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState('');
+  const t = useTranslations('vehicle')
 
   // fetches user's registered vehicles
   useEffect(() => {
@@ -72,7 +74,7 @@ export default function Vehicles() {
     <Card sx={{ p: 2, border: '1px solid #ccc', width: 325 }}>
       {!showForm ? (
         <>
-        <Typography variant="h6" sx={{ mb: 2 }}>Vehicles</Typography>
+        <Typography variant="h6" sx={{ mb: 2 }}>{t('title')}</Typography>
           {vehicles.map((vehicle, index) => (
             <Box key={index}>
               <Box
@@ -93,7 +95,7 @@ export default function Vehicles() {
                   variant="body2"
                   sx={{ color: 'primary.main', cursor: 'pointer' }}
                 >
-                  Edit
+                  {t('edit')}
                 </Typography>
               </Box>
             </Box>
@@ -105,13 +107,13 @@ export default function Vehicles() {
             sx={{ mt: 2, textTransform: 'none', fontWeight: 500 }}
             onClick={() => setShowForm(true)}
           >
-            + Register Vehicle
+            {t('register')}
           </Button>
           <div>{error}</div>
         </>
       ) : (
         <>
-        <Typography variant="h6" sx={{ mb: 2 }}>Register Vehicle</Typography>
+        <Typography variant="h6" sx={{ mb: 2 }}>{t('addTitle')}</Typography>
           {/* <TextField
             required
             label="Driver"
@@ -123,7 +125,7 @@ export default function Vehicles() {
           /> */}
           <TextField
             required
-            label="License Plate"
+            label={t('licensePlate')}
             name="licensePlate"
             fullWidth
             value={formData.licensePlate}
@@ -132,7 +134,7 @@ export default function Vehicles() {
           />
           <TextField
             required
-            label="Make"
+            label={t('make')}
             name="make"
             fullWidth
             value={formData.make}
@@ -141,7 +143,7 @@ export default function Vehicles() {
           />
           <TextField
             required
-            label="Model"
+            label={t('model')}
             name="model"
             fullWidth
             value={formData.model}
@@ -150,7 +152,7 @@ export default function Vehicles() {
           />
           <TextField
             required
-            label="Color"
+            label={t('color')}
             name="color"
             fullWidth
             value={formData.color}
@@ -159,7 +161,7 @@ export default function Vehicles() {
           />
           <FormControlLabel
             control={<Switch checked={formData.isDefault} onChange={handleToggle} />}
-            label="Default Vehicle"
+            label={t('default')}
             sx={{ mb: 2 }}
           />
 
@@ -169,9 +171,9 @@ export default function Vehicles() {
                     setFormData(emptyForm);
                 }}
             >
-                Cancel
+              {t('cancel')}
             </Button>
-            <Button variant="contained" onClick={handleSubmit} disabled={!isFormValid}>Save</Button>
+            <Button variant="contained" onClick={handleSubmit} disabled={!isFormValid}>{t('save')}</Button>
           </Box>
         </>
       )}

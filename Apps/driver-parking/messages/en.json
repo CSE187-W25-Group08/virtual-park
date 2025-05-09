@@ -43,6 +43,19 @@
     "disabled": "Disabled",
     "purchase": "Purchase",
     "purchased": "Purchased:"
+  },
+  "vehicle": {
+    "title": "Vehicles",
+    "register": "+ Register Vehicle",
+    "edit": "Edit",
+    "addTitle": "Register Vehicle",
+    "licensePlate": "License Plate",
+    "color": "Color",
+    "make": "Make",
+    "model": "Model",
+    "default": "Default Vehicle",
+    "cancel": "Cancel",
+    "save": "Save"
   }
 }
 
