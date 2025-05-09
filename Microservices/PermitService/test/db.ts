@@ -29,6 +29,7 @@ const run = async (file: string) => {
     if (!line.startsWith('--')) {
       statement += ' ' + line + '\n'
       if (line.endsWith(';')) {
+        // console.log('Running statement:', statement);
         await pool.query(statement)
         statement = ''
       }

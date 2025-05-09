@@ -101,4 +101,3 @@ WHERE data->>'type' = 'Staff';
 -- ) AS v(driverID text, license_plate text)
 --   ON dp.driverID::text = v.driverID
 -- WHERE v.license_plate = '123BC4A';
-`;
