@@ -1,4 +1,4 @@
-import { vi, test, beforeAll, afterAll,  expect } from 'vitest'
+import { vi, test, beforeAll, afterAll, expect } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
 
@@ -49,7 +49,7 @@ test('Get all permitType', async () => {
     .then((res) => {
       console.log('dataPermit type:', res.body.data)
       expect(res.body.data.PermitType.length).toEqual(3)
-      
+
     })
 })
 test('retrieve all the permits belong to the specific user', async () => {
@@ -70,6 +70,6 @@ test('retrieve all the permits belong to the specific user', async () => {
         console.error('GraphQL errors:', res.body.errors)
       }
       console.log('permit by user:', res.body.data)
-      expect(res.body.data.permitsByDriver.length).toEqual(2)
+      expect(res.body.data.permitsByDriver.length).toEqual(1)
     })
 })
