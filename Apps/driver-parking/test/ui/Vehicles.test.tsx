@@ -1,9 +1,11 @@
 import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
+import { NextIntlClientProvider } from 'next-intl'
 
 import Vehicles from '../../src/app/[locale]/register/Vehicles'
 import RegisterVehiclesPage  from '../../src/app/[locale]/register/page'
 import * as actions from '../../src/app/[locale]/register/actions'
+import { vehicle as vehicleMessages } from '../../messages/en.json'
 
 vi.spyOn(actions, 'registerVehicle').mockResolvedValue({
   id: '1',
@@ -18,14 +20,22 @@ afterEach(() => {
   cleanup()
 })
 
+const renderWithIntl = (component: React.ReactElement) => {
+  return render(
+    <NextIntlClientProvider locale="en" messages={{ vehicle: vehicleMessages }}>
+      {component}
+    </NextIntlClientProvider>
+  )
+}
+
 it('Register Button Exists', async () => {
-    render(<RegisterVehiclesPage/>)
+    renderWithIntl(<RegisterVehiclesPage/>)
     const registerButton = screen.getByText('+ Register Vehicle');
     expect(registerButton).not.toBeNull();
 })
 
 it('Click on Register Vehicle then Click Cancel', async () => {
-  render(<Vehicles/>)
+  renderWithIntl(<Vehicles/>)
   const registerButton = screen.getByText('+ Register Vehicle');
   fireEvent.click(registerButton);
 
@@ -34,7 +44,7 @@ it('Click on Register Vehicle then Click Cancel', async () => {
 })
 
 it('Click on Register Vehicle and access registration form', async () => {
-  render(<Vehicles/>)
+  renderWithIntl(<Vehicles/>)
   const registerButton = screen.getByText('+ Register Vehicle');
   fireEvent.click(registerButton);
 
