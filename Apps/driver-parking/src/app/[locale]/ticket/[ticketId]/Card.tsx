@@ -67,7 +67,6 @@ export default function Card({ ticketId }: { ticketId: string }) {
     }
   };
   const handleClick = async () => {
-    console.log('clasldufhjadghadsghas')
     const newTicket = await setTicketPaid(ticketId, true);
     if (newTicket) {
       setTicket(newTicket);
