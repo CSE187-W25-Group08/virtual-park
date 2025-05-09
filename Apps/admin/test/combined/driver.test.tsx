@@ -2,7 +2,6 @@ import { it, afterEach, vi, expect, beforeEach } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useRouter } from 'next/navigation'
-import Page from '@/app/page'
 import {http, HttpResponse} from 'msw';
 // https://chatgpt.com/g/g-p-6812f0a14ce48191b88ff0acaa65015c-virtual-park-app/c/6812f1f1-1608-8007-a132-0de188c60fc6
 
@@ -14,7 +13,7 @@ vi.mock('next/navigation', () => ({
 vi.mock('next/headers', () => ({
   cookies: () => ({
     set: vi.fn(),
-    get: vi.fn(),
+    get: vi.fn(() => ({ value: 'mock-session-token' })),
     delete: vi.fn(),
   }),
 }))
@@ -34,7 +33,7 @@ const testDriver = {
   jwt: "test id",
   joinDate: "Feb 17 2025",
 }
-
+import Page from '@/app/page'
 import {fetchDrivers} from '@/app/drivers/action';
 it('should call login and redirect on valid credentials', async () => {
   const mockPush = vi.fn()
@@ -50,11 +49,8 @@ it('should call login and redirect on valid credentials', async () => {
     return Promise.reject('Unknown fetch')
   })
 
-
-  const drivers = await fetchDrivers();
-  // render(<Page />)
-  expect(drivers[0]).toEqual(testDriver);
-  // await screen.findByText('Testy Tim');
+  render(<Page />)
+  await screen.findByText('Testy Tim');
 })
 
 

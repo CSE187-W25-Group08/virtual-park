@@ -101,6 +101,9 @@ it('Renders Page', async () => {
     return Promise.reject(new Error('Unhandled GraphQL query'))
   }) as any
   renderWithIntl(<Page />)
+  //  await act(async () => {
+  //   render(<Page params={Promise.resolve({ locale: "en", ticketId: "dummyid" })} />)
+  // })
   const meterTickets = await screen.findAllByText('Expired meter');
   expect(meterTickets.length).toEqual(2);
 })
