@@ -1,19 +1,22 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Ticket } from "@/ticket";
-import { getTicketById, setTicketPaid } from "../actions";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
 import { Box, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
+import { useRouter } from 'next/navigation'
+import { useTranslations } from "next-intl";
+
+import { Ticket } from "@/ticket";
+import { getTicketById, setTicketPaid } from "../actions";
 import { Vehicle } from "@/register";
 import { getVehicleById } from "../../register/actions";
-import { useRouter } from 'next/navigation'
 
 export default function Card({ ticketId }: { ticketId: string }) {
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
+  const t = useTranslations("ticket_details");
 
   const router = useRouter()
 
@@ -51,9 +54,9 @@ export default function Card({ ticketId }: { ticketId: string }) {
     const timeString = dateReceived.toLocaleTimeString(undefined, options);
 
     if (isToday) {
-      return `Today at ${timeString}`;
+      return `${t('today')} ${timeString}`;
     } else if (isYesterday) {
-      return `Yesterday at ${timeString}`;
+      return `${t('yesterday')} ${timeString}`;
     } else {
       const datePart = dateReceived.toLocaleDateString(undefined, {
         weekday: "long",
@@ -80,7 +83,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
       <ListItemText
   primary={
     <Typography>
-      Appeal Status:&nbsp;
+      {t('appealStatus')}&nbsp;
       <Typography
         component="span"
         sx={{
@@ -94,7 +97,13 @@ export default function Card({ ticketId }: { ticketId: string }) {
               : "text.primary",
         }}
       >
-        {ticket?.appeal}
+        {ticket?.appeal === "submitted"
+          ? t("submitted")
+          : ticket?.appeal === "approved"
+          ? t("approved")
+          : ticket?.appeal === "rejected"
+          ? t("rejected")
+          : ""}
       </Typography>
     </Typography>
   }
@@ -116,17 +125,17 @@ export default function Card({ ticketId }: { ticketId: string }) {
             aria-label={"image_" + ticketId}
           />
           <List>
-            <ListItemText>Violation: {ticket?.violation}</ListItemText>
+            <ListItemText>{t('violation')} {ticket?.violation}</ListItemText>
 
-            <ListItemText>Description: {ticket?.description}</ListItemText>
+            <ListItemText>{t('description')} {ticket?.description}</ListItemText>
 
-            <ListItemText>License Plate: {vehicle?.licensePlate}</ListItemText>
+            <ListItemText>{t('licensePlate')} {vehicle?.licensePlate}</ListItemText>
 
-            <ListItemText>Issued: {handleHourDate(ticket?.issue)}</ListItemText>
+            <ListItemText>{t('issued')} {handleHourDate(ticket?.issue)}</ListItemText>
 
-            <ListItemText>Due: {handleHourDate(ticket?.due)}</ListItemText>
+            <ListItemText>{t('due')} {handleHourDate(ticket?.due)}</ListItemText>
 
-            <ListItemText>Cost: ${ticket?.cost}</ListItemText>
+            <ListItemText>{t('cost')} ${ticket?.cost}</ListItemText>
 
             {appealed && appealedDisplay(ticket)}
 
@@ -134,18 +143,18 @@ export default function Card({ ticketId }: { ticketId: string }) {
             <ListItemText>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 {ticket?.paid ? 
-                <Typography color='success.dark'>Paid</Typography> : 
-                <Typography color='red'>Unpaid</Typography>}
+                <Typography color='success.dark'>{t('paid')}</Typography> : 
+                <Typography color='red'>{t('unpaid')}</Typography>}
   
                 {(!ticket?.paid && ticket?.appeal != "approved") && (
-                  <Button variant="outlined" onClick={() => {handleClick()}}>Pay Ticket</Button>
+                  <Button variant="outlined" onClick={() => {handleClick()}}>{t('payTicket')}</Button>
                 )}
               </Box>
             </ListItemText>
           </List>
         </Box>
       ) : (
-        <div>Loading</div>
+        <div>{t('loading')}</div>
       )}
     </React.Fragment>
   );

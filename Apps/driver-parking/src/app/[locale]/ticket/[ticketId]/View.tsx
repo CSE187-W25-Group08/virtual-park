@@ -3,11 +3,12 @@ import React from "react";
 import Card from "./Card";
 import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function View({ ticketId }: { ticketId: string }) {
   const router = useRouter();
+  const t = useTranslations("ticket_details");
 
   const handleBack = () => {
     router.push("/ticket");
@@ -26,7 +27,7 @@ export default function View({ ticketId }: { ticketId: string }) {
             >
               <ArrowBackIcon />
             </IconButton>
-          <Typography>View Ticket</Typography>
+          <Typography>{t('viewTicket')}</Typography>
         </Toolbar>
       </AppBar>
 

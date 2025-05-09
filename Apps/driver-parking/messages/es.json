@@ -56,5 +56,36 @@
     "default": "Vehículo predeterminado",
     "cancel": "Cancelar",
     "save": "Guardar"
+  },
+  "ticket": {
+    "accepted": "Aceptado",
+    "submitted": "Enviado",
+    "rejected": "Apelación rechazada",
+    "issueDate": "Fecha de emisión",
+    "datePaid": "Fecha de pago",
+    "status": "Estado",
+    "noTickets": "No hay infracciones actuales en el archivo.",
+    "unpaid": "🔴 Violaciones no pagadas",
+    "paid": "🟢 Violaciones pagadas",
+    "appeal": "🟡 Violaciones apeladas"
+  },
+  "ticket_details": {
+    "violation": "Infracción:",
+    "description": "Descripción:",
+    "licensePlate": "Número de matrícula:",
+    "issued": "Emitido:",
+    "due": "Vencido:",
+    "cost": "Costo:",
+    "appealStatus": "Estado de apelación:",
+    "submitted": "enviado",
+    "approved": "aprobado",
+    "rejected": "rechazado",
+    "today": "Hoy a",
+    "yesterday": "Ayer a",
+    "paid": "Pagado",
+    "unpaid": "No pagado",
+    "payTicket": "Pagar multa",
+    "loading": "Cargando",
+    "viewTicket": "Ver multa"
   }
 }

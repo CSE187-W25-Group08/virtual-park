@@ -56,6 +56,37 @@
     "default": "Default Vehicle",
     "cancel": "Cancel",
     "save": "Save"
+  },
+  "ticket": {
+    "accepted": "Accepted",
+    "submitted": "Submitted",
+    "rejected": "Appeal Rejected",
+    "issueDate": "Issue Date",
+    "datePaid": "Date Paid",
+    "status": "Status",
+    "noTickets": "No current violations on file.",
+    "unpaid": "🔴 Unpaid Violations",
+    "paid": "🟢 Paid Violations",
+    "appeal": "🟡 Appealed Violations"
+  },
+  "ticket_details": {
+    "violation": "Violation:",
+    "description": "Description:",
+    "licensePlate": "License Plate:",
+    "issued": "Issued:",
+    "due": "Due:",
+    "cost": "Cost:",
+    "appealStatus": "Appeal Status:",
+    "submitted": "submitted",
+    "approved": "approved",
+    "rejected": "rejected",
+    "today": "Today at",
+    "yesterday": "Yesterday at",
+    "paid": "Paid",
+    "unpaid": "Unpaid",
+    "payTicket": "Pay Ticket",
+    "loading": "Loading",
+    "viewTicket": "View Ticket"
   }
 }
 

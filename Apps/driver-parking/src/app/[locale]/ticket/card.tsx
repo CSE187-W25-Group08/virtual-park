@@ -1,12 +1,16 @@
 
 import { Card, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
-import { Ticket } from '../../../ticket';
 import ListItemButton from '@mui/material/ListItemButton';
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl';
+
+import { Ticket } from '../../../ticket';
+
 
 export default function TicketCard({ticket} : {ticket: Ticket}) {
   const router = useRouter()
+  const t = useTranslations('ticket')
 
   const handleHourDate = (dateArg: string) => {
   const dateReceived = new Date(dateArg);
@@ -30,18 +34,18 @@ export default function TicketCard({ticket} : {ticket: Ticket}) {
     const rejected =  ticket.appeal === "rejected";
   
     if (approved) {
-      return <Typography color='success.dark'>Accepted</Typography>;
+      return <Typography color='success.dark'>{t('accepted')}</Typography>;
     }
 
     if (submitted) {
-      return <Typography color='warning.dark'>Submitted</Typography>;
+      return <Typography color='warning.dark'>{t('submitted')}</Typography>;
     }
   
     return (
       <>
         <Typography>{handleHourDate(ticket.issue)}</Typography>
         <Typography>${ticket.cost}</Typography>
-        {rejected && (<Typography sx={{ fontSize: '0.60rem' }} color='red'>Appeal Rejected</Typography>)}
+        {rejected && (<Typography sx={{ fontSize: '0.60rem' }} color='red'>{t('rejected')}</Typography>)}
       </>
     );
   };
