@@ -21,7 +21,7 @@ export default function TypeList() {
 
   const purchaseHandler = (permit: Permit) => {
     // setPurchased(permit)
-    alert(`${t('purchased')} ${permit.type === 'Student' ? t('student') : permit.type === 'Staff' ? t('staff') : permit.type === 'Disabled' ? t('disabled') : ''} $${permit.price}`)
+    alert(`${t('purchased')} ${permit.type === 'Student' ? t('student') : permit.type === 'Staff' ? t('staff') : permit.type === 'Disabled' ? t('disabled') : ''} ($${permit.price})`)
   }
 
   return (
