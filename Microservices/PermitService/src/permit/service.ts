@@ -27,18 +27,18 @@ export class PermitService {
       type: result.data.type
     }))
   }
-  public async getPermitByCar(carPlateNum: string | undefined):Promise<PermitValid[]> {
-    const query = {
-      text: queries.getpermitByVehiclePlateNum,
-      values: [carPlateNum]
+  public async getPermitByCar(carPlateNum: string | undefined): Promise<PermitValid[]> {
+    if (!carPlateNum) {
+      return []
     }
+    const query = queries.getPermitByVehiclePlateNum(carPlateNum)
     const {rows} = await pool.query(query)
     return rows.map(result => ({
-      permitID: result.data.permitID,
-      permitType: result.data.permitType,
-      issueDate: result.data.issue_date,
-      expDate: result.data.exp_date,
-      isValid: result.data.isValid,
+      permitID: result.permitID,
+      permitType: result.permitType,
+      issueDate: result.issueDate,
+      expDate: result.expDate,
+      isValid: result.isValid,
     }))
   }
 }

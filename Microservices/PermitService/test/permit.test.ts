@@ -18,10 +18,6 @@ afterAll(() => {
   server.close()
 })
 
-// beforeEach(async () => {
-//   return db.reset()
-// })
-
 vi.mock('../src/auth/service', () => {
   return {
     AuthService: class {
@@ -70,6 +66,35 @@ test('retrieve all the permits belong to the specific user', async () => {
         console.error('GraphQL errors:', res.body.errors)
       }
       console.log('permit by user:', res.body.data)
-      expect(res.body.data.permitsByDriver.length).toEqual(1)
+      expect(res.body.data.permitsByDriver.length).toEqual(2)
+    })
+})
+
+test('retrieve the permit info based on the vehicle car plate', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query GetPermitByCar($input: String!) {
+          getPermitBycarPlate(input: $input) {
+            permitID
+            permitType
+            issueDate
+            expDate
+            isValid
+          }
+        }
+      `,
+      variables: {
+        input: '123BC4A'
+      }
+    })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      console.log('permit by carPlate:', res.body.data)
+      expect(res.body.data.getPermitBycarPlate.length).toEqual(3)
     })
 })
