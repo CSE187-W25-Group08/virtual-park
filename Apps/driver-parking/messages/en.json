@@ -21,6 +21,13 @@
     "accountExist": "Already have an account? ",
     "login": "Login",
     "emailTaken": "Email already taken"
+  },
+  "login": {
+    "title": "Welcome to Virtual-Park!",
+    "email": "email",
+    "password": "password",
+    "signin": "Sign In",
+    "error": "Incorrect login credentials, please try again"
   }
 }
 

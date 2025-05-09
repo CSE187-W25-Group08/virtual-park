@@ -21,5 +21,12 @@
     "accountExist": "¿Ya tienes una cuenta?",
     "login": "Iniciar sesión",
     "emailTaken": "El correo electrónico ya está en uso"
+  },
+  "login": {
+    "title": "Bienvenido a Virtual-Park!",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "signin": "Iniciar sesión",
+    "error": "Credenciales de inicio de sesión incorrectas, por favor inténtelo de nuevo"
   }
 }

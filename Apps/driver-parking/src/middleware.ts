@@ -10,7 +10,7 @@ const publicRoutes = ['/login', '/signup', '/']
 export default async function middleware(req: NextRequest) {
   const response = middlewareInitial(req)
   const segments = req.nextUrl.pathname.split('/');
-  const locale = segments[1];
+  // const locale = segments[1];
   const pathname = '/' + segments.slice(2).join('/');
   
   if (!publicRoutes.includes(pathname)) {

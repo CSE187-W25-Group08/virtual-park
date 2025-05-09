@@ -3,6 +3,7 @@
 import React from 'react'
 import { useState,ChangeEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from "next-intl";
 import { 
   Container, 
   Typography, 
@@ -16,6 +17,7 @@ import { login } from './action'
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
   const [failedLogin, setFailedLogin] = useState(false)
+  const t = useTranslations('login')
   const router = useRouter()
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +52,7 @@ export default function LoginView() {
       }}
     >
       {failedLogin &&
-            <Alert severity="error">Incorrect login credentials, please try again</Alert>}
+            <Alert severity="error">{t('error')}</Alert>}
       <Box
         sx={{
           display: 'flex',
@@ -60,7 +62,7 @@ export default function LoginView() {
         }}
       >
         <Typography variant="h5">
-          {'Welcome to Virtual-Park!'}
+          {t('title')}
         </Typography>
         
         <Box
@@ -74,7 +76,7 @@ export default function LoginView() {
           <TextField
             name="email"
             type="email"
-            placeholder="Email Address"
+            placeholder={t('email')}
             onChange={handleInputChange}
             fullWidth
             required
@@ -92,7 +94,7 @@ export default function LoginView() {
           <TextField
             name="password"
             type="password"
-            placeholder="Password"
+            placeholder={t('password')}
             onChange={handleInputChange}
             fullWidth
             required
@@ -111,7 +113,7 @@ export default function LoginView() {
             variant="contained"
             onClick={handleClick}
           >
-            Sign in
+            {t('signin')}
           </Button>
         </Box>
       </Box>

@@ -1,33 +1,43 @@
 import { NewUser, Authenticated, Credentials } from './'
 
 export async function signupUser(user: NewUser): Promise<Authenticated | undefined> {
-  const response = await fetch('http://localhost:3010/api/v0/auth/signup', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(user),
-  })
+  try {
+    const response = await fetch('http://localhost:3010/api/v0/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
+    });
 
-  if (response.status != 201) {
-    throw new Error(response.statusText)
+    if (response.status !== 201) {
+      throw new Error(response.statusText);
+    }
+
+    const data: Authenticated = await response.json();
+    return data;
+  } catch (err) {
+    console.error("Authentication failed:", err);
+    return undefined;
   }
-  return await response.json();
 }
 
 export async function authenticate(credentials: Credentials): Promise<Authenticated | undefined> {
-  const response = await fetch('http://localhost:3010/api/v0/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(credentials),
-  })
+  try {
+    const response = await fetch('http://localhost:3010/api/v0/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials),
+    });
 
-  if (response.status != 200) {
-    throw new Error(response.statusText)
+    if (response.status !== 200) {
+      throw new Error(response.statusText);
+    }
+
+    const data: Authenticated = await response.json();
+    return data;
+  } catch (err) {
+    console.error("Authentication failed:", err);
+    return undefined;
   }
-  return await response.json();
 }
 
 export async function check(cookie: string | undefined): Promise<void> {
