@@ -6,7 +6,7 @@ import { PermitService } from './service'
 @Resolver()
 export class PermitResolver {
   @Authorized()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   @Query(() => [Permit])
   async permitsByDriver(
     @Ctx() Request: Request

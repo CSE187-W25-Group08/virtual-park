@@ -15,7 +15,7 @@ beforeAll(async () => {
 
 afterAll(() => {
   db.shutdown()
-  server.close
+  server.close()
 })
 
 // beforeEach(async () => {

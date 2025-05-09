@@ -28,7 +28,7 @@ export class VehicleResolver {
   }
 
   @Authorized()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   @Mutation(() => Vehicle)
   async registerVehicle(@Ctx() request: Request, @Arg("input") input: RegisterVehicle): Promise<Vehicle> {
     return await new VehicleService().registerVehicle(request.user?.id, input)

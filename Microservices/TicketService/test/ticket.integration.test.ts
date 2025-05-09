@@ -33,7 +33,7 @@ beforeAll(async () => {
 
 afterAll(() => {
   db.shutdown()
-  server.close
+  server.close()
 })
 
 afterEach(async () => {

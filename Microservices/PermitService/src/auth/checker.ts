@@ -1,5 +1,3 @@
-import { SessionUser } from '../../types/express'
-
 import { AuthChecker } from "type-graphql"
 import { Request } from "express"
 
