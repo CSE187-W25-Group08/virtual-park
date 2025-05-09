@@ -1,8 +1,10 @@
-import { it, afterEach, vi, expect } from 'vitest'
+import { it, afterEach, vi } from 'vitest'
 import { render, screen, cleanup, fireEvent} from '@testing-library/react'
+import { NextIntlClientProvider } from 'next-intl'
 
 import TicketList from '../../src/app/[locale]/ticket/list'
 import Page from '../../src/app/[locale]/ticket/page'
+import { ticket as ticketMessages } from '../../messages/en.json'
 
 import {paidList, unpaidList, appealedList} from '../testData'
 
@@ -22,27 +24,35 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
   setTicketPaid: vi.fn(() => {})
 }))
 
+const renderWithIntl = (component: React.ReactElement) => {
+  return render(
+    <NextIntlClientProvider locale="en" messages={{ ticket: ticketMessages }}>
+      {component}
+    </NextIntlClientProvider>
+  )
+}
+
 it('Renders Page', async () => {
-  render(<Page/>)
+  renderWithIntl(<Page/>)
 })
 
 it('contains Violation Text', async () => {
-  render(<TicketList/>)
+  renderWithIntl(<TicketList/>)
   await screen.findByText('🔴 Unpaid Violations');
 })
 
 it('contains Paid Text', async () => {
-    render(<TicketList/>)
+    renderWithIntl(<TicketList/>)
     await screen.findByText('🟢 Paid Violations');
 })
 
 it('contains expired meter violation', async () => {
-    render(<TicketList/>)
+    renderWithIntl(<TicketList/>)
     await screen.findAllByText('Expired meter');
 })
 
 it('Clicks on ticket', async () => {
-  render(<TicketList/>)
+  renderWithIntl(<TicketList/>)
   const ticket = await screen.findByText('Cannot park');
   fireEvent.click(ticket)
 })

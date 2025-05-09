@@ -1,10 +1,13 @@
 import { it, vi, beforeEach, afterEach, expect} from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import { graphql, HttpResponse } from 'msw'
-import Page from '../../src/app/[locale]/ticket/page'
+import { NextIntlClientProvider } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { setupServer } from 'msw/node'
+
 import {paidList, unpaidList, appealedList} from '../testData'
+import Page from '../../src/app/[locale]/ticket/page'
+import { ticket as ticketMessages } from '../../messages/en.json'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -52,6 +55,14 @@ export const handlers = [
   })
 ]
 
+const renderWithIntl = (component: React.ReactElement) => {
+  return render(
+    <NextIntlClientProvider locale="en" messages={{ ticket: ticketMessages }}>
+      {component}
+    </NextIntlClientProvider>
+  )
+}
+
 it('Renders Page', async () => {
   vi.mocked(fetch).mockImplementation((url, options) => {
     const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}
@@ -89,7 +100,7 @@ it('Renders Page', async () => {
   
     return Promise.reject(new Error('Unhandled GraphQL query'))
   }) as any
-  render(<Page/>)
+  renderWithIntl(<Page/>)
   const meterTickets = await screen.findAllByText('Expired meter');
   expect(meterTickets.length).toEqual(2);
 })
