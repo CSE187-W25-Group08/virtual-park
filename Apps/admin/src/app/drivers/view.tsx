@@ -6,7 +6,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import PersonIcon from '@mui/icons-material/Person';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { fetchDrivers, suspendDriver } from './action';
+import { fetchDrivers, reactivateDriver, suspendDriver } from './action';
 import { Driver } from '@/driver';
 
 export default function DriversGrid() {
@@ -54,17 +54,38 @@ export default function DriversGrid() {
     {
       field: 'actions',
       headerName: '',
-      width: 150,
+      width: 300,
       renderCell: (params) => (
+        <Box>
         <Button
           variant="contained"
           color="error"
           size="small"
           onClick={() => handleSuspend(params.row?.email)}
           disabled={suspendDisabled.has(params.row?.email)}
+          sx={{marginRight: 1}}
         >
           Suspend
         </Button>
+        <Button
+        variant="contained"
+        color="success"
+        size="small"
+        onClick={() => handleReactivate(params.row?.email)}
+        disabled={!suspendDisabled.has(params.row?.email)}
+        sx={{marginRight: 1}}
+      >
+        Reactivate
+      </Button>
+        <Button
+        variant="contained"
+        color="success"
+        size="small"
+        onClick={() => handleOpenDriver(params.row?.email)}
+      >
+        Details
+      </Button>
+      </Box>
       ),
       sortable: false,
       filterable: false,
@@ -78,6 +99,18 @@ export default function DriversGrid() {
     console.log('Suspending user:', email);
     alert(`Suspend functionality for ${email}`);
   };
+
+  const handleReactivate = async (email?: string) => {
+    if (!email) return;
+    setSuspendDisabled((prev) => new Set([...prev].filter((e) => e !== email)));
+    await reactivateDriver(email);
+    console.log('Reactivating user:', email);
+    alert(`Reactivate functionality for ${email}`);
+  }
+
+  const handleOpenDriver = async (email?: string) => {
+    console.log(email)
+  }
 
   return (
     <Box sx={{ 

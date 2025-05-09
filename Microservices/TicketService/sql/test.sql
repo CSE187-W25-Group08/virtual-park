@@ -15,7 +15,8 @@ VALUES (
     'issue', '2025-04-25T09:30:00Z',
     'violation', 'expired meter',
     'image', 'https://static.wikia.nocookie.net/marvel-rivals/images/b/b0/Rocket_Raccoon_Hero_Portrait.png/revision/latest?cb=20240819163711',
-    'cost', 50.04
+    'cost', 50.04,
+    'appeal', 'approved'
   )
 );
 
@@ -33,6 +34,7 @@ VALUES (
     'issue', '2025-04-30T12:00:00Z',
     'violation', 'restricted area',
     'image', 'https://static.wikia.nocookie.net/marvel-rivals/images/b/b0/Rocket_Raccoon_Hero_Portrait.png/revision/latest?cb=20240819163711',
-    'cost', 50.02
+    'cost', 50.02,
+    'appeal', 'rejected'
   )
 );

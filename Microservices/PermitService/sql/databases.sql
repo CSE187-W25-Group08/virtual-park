@@ -4,3 +4,4 @@ CREATE DATABASE permit;
 
 \connect permit
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
+CREATE EXTENSION IF NOT EXISTS dblink; 

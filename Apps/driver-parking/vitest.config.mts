@@ -11,7 +11,7 @@ export default defineConfig({
         'src/**',
       ],
       exclude: [
-        'src/app/[locale]/layout.tsx',
+        'src/app/\\[locale\\]/layout.tsx',
       ],
     },
   },
