@@ -12,6 +12,5 @@ export default async function TicketDetails({
   params: Promise<{ locale: string; ticketId: string }>;
 }) {
   const { ticketId } = await params;
-
   return <View ticketId={ticketId} />;
 }
