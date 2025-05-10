@@ -37,10 +37,21 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => {
   };
 });
 
+vi.mock('../../src/register/actions', () => {
+  return {
+    getVehicleById: vi.fn(() =>
+      Promise.resolve({
+        id: 'v123',
+        licensePlate: 'ABC-123',
+      })
+    )
+  }
+})
+
 vi.mock('next/headers', () => ({
   cookies: () => ({
     set: vi.fn(),
-    get: vi.fn(),
+    get: vi.fn(() => ({ value: 'mock-session-token' })),
     delete: vi.fn(),
   }),
 }))
