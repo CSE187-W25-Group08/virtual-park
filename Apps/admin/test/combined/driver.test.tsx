@@ -35,7 +35,7 @@ const testDriver = {
 }
 import Page from '@/app/page'
 import {fetchDrivers} from '@/app/drivers/action';
-it('should call login and redirect on valid credentials', async () => {
+it('Displays list of drivers', async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
 

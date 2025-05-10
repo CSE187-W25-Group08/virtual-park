@@ -4,9 +4,6 @@ import supertest from "supertest";
 import * as db from './db'
 import { app, bootstrap } from "../src/app";
 
-
-
-
 let server: http.Server<
   typeof http.IncomingMessage,
   typeof http.ServerResponse
@@ -138,5 +135,26 @@ test("Update ticket paid status", async () => {
     .then((res) => {
       console.log(res.body.errors)
       expect(res.body.data.setTicketPaid.paid).toBeTruthy()
+    });
+});
+
+test("Get all active appeals", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          activeAppeals {
+            violation,
+            description
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.data)
+      expect(res.body.data.activeAppeals[0].description).toEqual("a ticket you might want to appeal");
+
     });
 });
