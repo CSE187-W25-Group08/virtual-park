@@ -13,7 +13,7 @@ const PermitListCard = ({permit}: {permit: Permit}) => {
   const t = useTranslations('permit_history')
   return (
     <ListItem disablePadding>
-      <Card raised sx={{ width: '300px', height: '200px', marginTop: '20px', alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <Card sx={{ width: '100%', marginTop: '20px', borderRadius: 3, boxShadow: 2, border: '1px solid #ccc', p: 2 }}>
         <CardContent>
           <Typography variant="h5" color="text.primary" align="center" gutterBottom>
             {permit.type === 'Student' ? t('student') : permit.type === 'Staff' ? t('staff') : permit.type === 'Disabled' ? t('disabled') : ''}
@@ -21,10 +21,10 @@ const PermitListCard = ({permit}: {permit: Permit}) => {
           <Typography variant="body1" color="text.secondary" align="center" gutterBottom>
             ${permit.price}
           </Typography>
-          <Typography variant="body2" color="text.secondary" gutterBottom>
+          <Typography variant="body2" color="text.secondary" align="center" gutterBottom>
             {t('issued')}{timeFormatter(permit.issueDate)}
           </Typography>
-          <Typography variant="body2" color="text.secondary" gutterBottom>
+          <Typography variant="body2" color="text.secondary" align="center">
             {t('expires')}{timeFormatter(permit.expDate)}
           </Typography>
         </CardContent>
