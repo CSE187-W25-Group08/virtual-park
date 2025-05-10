@@ -8,16 +8,19 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { fetchDrivers, reactivateDriver, suspendDriver } from './action';
 import { Driver } from '@/driver';
+import { useRouter } from 'next/navigation'
 
 export default function DriversGrid() {
   const [drivers, setDrivers] = React.useState<Driver[]>([]);
   const [suspendDisabled, setSuspendDisabled] = React.useState<Set<string>>(new Set());
 
+  const router = useRouter()
+
   React.useEffect(() => {
     const setDriverData = async () => {
       const driverList = await fetchDrivers();
       if (driverList) setDrivers(driverList);
-      console.log(driverList[0])
+      // console.log(driverList[0])
     };
     setDriverData();
   }, []);
@@ -81,7 +84,7 @@ export default function DriversGrid() {
         variant="contained"
         color="success"
         size="small"
-        onClick={() => handleOpenDriver(params.row?.email)}
+        onClick={() => handleOpenDriver(params.row?.jwt)}
       >
         Details
       </Button>
@@ -108,8 +111,8 @@ export default function DriversGrid() {
     alert(`Reactivate functionality for ${email}`);
   }
 
-  const handleOpenDriver = async (email?: string) => {
-    console.log(email)
+  const handleOpenDriver = async (userId?: string) => {
+    router.push('/drivers/' + userId)
   }
 
   return (
