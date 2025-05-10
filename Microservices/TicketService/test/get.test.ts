@@ -138,3 +138,23 @@ test("Update ticket paid status", async () => {
     });
 });
 
+test("Get all active appeals", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          activeAppeals {
+            violation,
+            description
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.data)
+      expect(res.body.data.activeAppeals[0].description).toEqual("a ticket you might want to appeal");
+
+    });
+});
