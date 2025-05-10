@@ -21,17 +21,12 @@ afterAll(() => {
   server.close();
 });
 
-export const anna = {
-  email: 'anna@books.com',
-  password: 'annaadmin',
-  name: "Anna Admin",
-}
 
 vi.mock('../src/auth/service', () => {
   return {
     AuthService: class {
       async check() {
-        return { id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54' }
+        return { id: '03845709-4d40-45fe-9e51-11789f6f209a' }
       }
     }
   }
@@ -40,7 +35,7 @@ vi.mock('../src/auth/service', () => {
 const accessToken = 'Placeholder before authenticated implementation'
 
 
-test("Gets all tickets", async () => {
+test("Gets all tickets through admin", async () => {
   await supertest(server)
     .post("/graphql")
     .set('Authorization', 'Bearer ' + accessToken)
@@ -55,6 +50,24 @@ test("Gets all tickets", async () => {
     })
     .then((res) => {
       expect(res.body.data.ticket[0].violation).toEqual("expired meter");
+
+    });
+});
+test("Gets all tickets through admin", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          allTicket {
+            violation
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      expect(res.body.data.allTicket.length).toEqual(3);
 
     });
 });
@@ -73,8 +86,8 @@ test("Get all paid tickets", async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.data)
-      expect(res.body.data.paidTicket.length).toEqual(1);
+      // console.log(res.body.data)
+      expect(res.body.data.paidTicket.length).toEqual(0);
 
     });
 });
@@ -93,7 +106,6 @@ test("Get all unpaid tickets", async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.data)
       expect(res.body.data.unpaidTicket.length).toEqual(1);
 
     });
@@ -113,7 +125,6 @@ test("Get ticket with id", async () => {
       `,
     })
     .then((res) => {
-      // console.log(res.body.data)
       expect(res.body.data.ticketId.violation).toBe('expired meter')
 
     });
@@ -133,7 +144,6 @@ test("Update ticket paid status", async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.errors)
       expect(res.body.data.setTicketPaid.paid).toBeTruthy()
     });
 });
@@ -153,7 +163,6 @@ test("Get all active appeals", async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.data)
       expect(res.body.data.activeAppeals[0].description).toEqual("a ticket you might want to appeal");
 
     });

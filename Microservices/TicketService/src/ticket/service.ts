@@ -26,9 +26,9 @@ export class TicketService {
     return tickets;
   }
 
-  public async getAll(): Promise<Ticket[]> {
+  public async getAllAdmin(): Promise<Ticket[]> {
     const query = {
-      text: queries.selectAllTickets
+      text: queries.selectAllTicketsAdmin
       // values: [userId]
     }
 
@@ -95,6 +95,17 @@ export class TicketService {
     const query = {
       text: queries.activeAppeals,
     }
+    const { rows } = await pool.query(query);
+    const tickets = await this.rowToTicket(rows);
+    return tickets;
+  }
+
+  public async getAllTicket(userId: string | undefined): Promise<Ticket[]> {
+    const query = {
+      text: queries.selectAllTickets,
+      values: [userId]
+    }
+
     const { rows } = await pool.query(query);
     const tickets = await this.rowToTicket(rows);
     return tickets;

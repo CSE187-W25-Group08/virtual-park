@@ -1,11 +1,17 @@
 /**
  * Retrieves all tickets fromd database
  */
-export const selectAllTickets =
+export const selectAllTicketsAdmin =
   `
   SELECT id, driver, data
   FROM ticket
   `
+
+export const selectAllTickets =
+`
+SELECT id, driver, data
+FROM ticket WHERE (driver = $1)
+`
 
 export const selectPaidTickets =
   `
