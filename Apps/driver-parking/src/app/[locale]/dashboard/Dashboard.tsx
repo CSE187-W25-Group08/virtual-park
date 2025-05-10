@@ -2,6 +2,7 @@
 
 import React from "react"
 import { useState, useEffect, Fragment } from "react"
+import { useRouter } from "next/navigation"
 import { Typography, Box, Button, Divider } from "@mui/material"
 
 import TicketCard from "../ticket/card"
@@ -16,12 +17,13 @@ export default function Dashboard() {
   const [name, setName] = useState<string | null>(null)
   const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([])
   const [vehicle, setVehicle] = useState<Vehicle>()
-  const [activePermit, setActivePermit] = useState<Permit | null>({
+  const [activePermit] = useState<Permit | null>({
     issueDate: "2024-09-21T08:00:00.000Z",
     expDate: "2025-06-14T08:00:00.000Z",
     type: "Student",
     price: 3.14
   })
+  const router = useRouter()
 
   useEffect(() => {
     setName(window.sessionStorage.getItem('name'))
@@ -86,9 +88,17 @@ export default function Dashboard() {
           Tickets
         </Typography>
         {unpaidTickets.length === 0 && (
-          <Typography variant="h6" sx={{ marginLeft: 1 }}>
-            You have no unpaid tickets.
-          </Typography>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography variant="h6" sx={{ marginLeft: 1 }}>
+              You have no unpaid tickets.
+            </Typography>
+            <Button
+              variant="contained"
+              sx={{ marginTop: 2, marginLeft: 1 }}
+              onClick={() => router.push("/ticket")}>
+              Manage Tickets
+            </Button>
+          </Box>
         )}
         {unpaidTickets.length > 0 && (
           <Box sx={{ display: "flex", flexDirection: "column", marginTop: 2 }}>
