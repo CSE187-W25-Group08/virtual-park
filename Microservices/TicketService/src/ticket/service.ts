@@ -4,8 +4,8 @@ import * as queries from './queries'
 
 export class TicketService {
 
-  private rowToTicket = async(rows : DBTicket[]) => {
-    const tickets = await Promise.all(rows.map(async (ticket : DBTicket) => {
+  private rowToTicket = async (rows: DBTicket[]) => {
+    const tickets = await Promise.all(rows.map(async (ticket: DBTicket) => {
       const data = ticket.data
       const ticketObj: Ticket = {
         'id': ticket.id,
@@ -18,7 +18,7 @@ export class TicketService {
         'issue': data.issue,
         'violation': data.violation,
         'image': data.image,
-        'cost' :data.cost,
+        'cost': data.cost,
         'appeal': data.appeal
       }
       return ticketObj
@@ -52,7 +52,7 @@ export class TicketService {
       text: queries.selectUnpaidTickets,
       values: [userId]
     }
-    
+
     const { rows } = await pool.query(query);
     const tickets = await this.rowToTicket(rows);
     return tickets;
@@ -76,7 +76,7 @@ export class TicketService {
     }
 
     const { rows } = await pool.query(query);
-    const tickets  = await this.rowToTicket(rows);
+    const tickets = await this.rowToTicket(rows);
     return tickets[0];
   }
 
@@ -87,7 +87,16 @@ export class TicketService {
     }
 
     const { rows } = await pool.query(query);
-    const tickets  = await this.rowToTicket(rows);
+    const tickets = await this.rowToTicket(rows);
     return tickets[0];
+  }
+
+  public async getActiveAppeals(): Promise<Ticket[]> {
+    const query = {
+      text: queries.activeAppeals,
+    }
+    const { rows } = await pool.query(query);
+    const tickets = await this.rowToTicket(rows);
+    return tickets;
   }
 }

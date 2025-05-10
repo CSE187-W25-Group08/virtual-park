@@ -4,9 +4,6 @@ import supertest from "supertest";
 import * as db from './db'
 import { app, bootstrap } from "../src/app";
 
-
-
-
 let server: http.Server<
   typeof http.IncomingMessage,
   typeof http.ServerResponse
@@ -140,3 +137,4 @@ test("Update ticket paid status", async () => {
       expect(res.body.data.setTicketPaid.paid).toBeTruthy()
     });
 });
+

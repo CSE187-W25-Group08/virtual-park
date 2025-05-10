@@ -20,7 +20,7 @@ export const selectPaidTickets =
   AND (data->>'appeal' = 'null' OR data->>'appeal' = 'rejected');
   `
 
-  export const selectUnpaidTickets =
+export const selectUnpaidTickets =
   `
   SELECT id, driver, data
 
@@ -33,7 +33,7 @@ export const selectPaidTickets =
   AND (data->>'appeal' = 'null' OR data->>'appeal' = 'rejected');
   `
 
-  export const selectAppealedTickets =
+export const selectAppealedTickets =
   `
   SELECT id, driver, data
 
@@ -62,3 +62,11 @@ export const updatePaidTicket =
   SELECT id, driver, data FROM UPDATED
   `
 
+export const activeAppeals =
+  `
+  SELECT id, driver, data
+
+  FROM ticket
+
+  WHERE (data->>'appeal' = 'submitted')
+`
