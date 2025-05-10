@@ -11,16 +11,16 @@ export default async function middleware(req: NextRequest) {
   const localeMatch = req.nextUrl.pathname.match(/^\/(en|es)(\/|$)/)
   const locale = localeMatch?.[1] || 'en'
   const pathname = req.nextUrl.pathname.replace(/^\/(en|es)\//, '/');
-  console.log('pathname', pathname);
+  // console.log('pathname', pathname);
 
   // If the route is protected
   if (!publicRoutes.includes(pathname)) {
     try {
-      console.log('attempting to get cookie');
+      // console.log('attempting to get cookie');
       const cookie = req.cookies.get('session')?.value;
       await check(cookie);
     } catch {
-      console.log('redirecting to /');
+      // console.log('redirecting to /');
       const redirectURL = new URL(`/${locale}/login`, req.url)
       return NextResponse.redirect(redirectURL)
     }
