@@ -47,7 +47,7 @@ export default function Signup() {
     if (user) {
       setFailedSignup(false)
       window.sessionStorage.setItem('name', user.name)
-      router.push('/register')
+      router.push('/dashboard')
     } else {
       setFailedSignup(true)
     }

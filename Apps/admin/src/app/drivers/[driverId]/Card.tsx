@@ -1,0 +1,37 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { Typography} from "@mui/material";
+import { Ticket } from "../../../ticket";
+import { listPaid, listUnpaid} from "../../ticket/action";
+
+
+export default function Card({ driverId }: { driverId: string }) {
+  const [paidTickets, setPaidTickets] = useState<Ticket[]>([]);
+  const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const allPaidTicket = await listPaid(driverId);
+      if (allPaidTicket) {
+        setPaidTickets(paidTickets)
+      }
+      const allUnpaidTicket = await listUnpaid(driverId);
+      if (allUnpaidTicket) {
+        setUnpaidTickets(allUnpaidTicket)
+      }
+    };
+    fetchData();
+  }, []);
+  
+  return (
+    <React.Fragment>
+      {paidTickets.map((ticket, index) => (
+        <div key={index}>test</div> 
+      ))}
+      {unpaidTickets.map((ticket, index) => (
+        <div key={index}>test</div> 
+      ))}
+      <Typography>{driverId}</Typography>
+
+    </React.Fragment>
+  );
+}

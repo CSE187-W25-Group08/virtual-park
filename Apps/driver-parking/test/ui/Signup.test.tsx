@@ -54,7 +54,7 @@ it('mocks successful Signup process', async () => {
   fireEvent.click(signup)
 
   await vi.waitFor(() => {
-    expect(mockPush).toHaveBeenCalledWith('/register')
+    expect(mockPush).toHaveBeenCalledWith('/dashboard')
   })
 })
 

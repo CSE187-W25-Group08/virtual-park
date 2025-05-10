@@ -66,7 +66,7 @@ it('should call login and redirect on valid credentials', async () => {
   await userEvent.click(screen.getByText('Sign In'))
 
   await vi.waitFor(() => {
-    expect(mockPush).toHaveBeenCalledWith('/register')
+    expect(mockPush).toHaveBeenCalledWith('/dashboard')
   })
 })
 
@@ -97,5 +97,5 @@ it('denies invalid login credentials', async () => {
   await userEvent.type(screen.getByPlaceholderText('password'), 'annaadmin')
   await userEvent.click(screen.getByText('Sign In'))
 
-  expect(mockPush).not.toHaveBeenCalledWith('/register')
+  expect(mockPush).not.toHaveBeenCalledWith('/dashboard')
 })
