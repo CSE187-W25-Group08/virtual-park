@@ -23,7 +23,7 @@ export default function PermitList() {
   }, [])
 
   return (
-    <Box sx={{width: '100%', bgcolor: 'background.paper', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+    <Box>
       <Typography variant="h4" color="text.primary" align="center" sx={{marginTop: '20px'}}>
         {t('title')}
       </Typography>
