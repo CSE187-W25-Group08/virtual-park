@@ -44,6 +44,7 @@ export default function Navbar({ locale }: { locale: string }) {
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
           <List>
             {[
+              { label: 'Dashboard', path: '/dashboard' },
               { label: 'Register Car', path: '/register' },
               { label: 'View Tickets', path: '/ticket' },
               { label: 'Purchase Permit', path: '/permit/purchase' },

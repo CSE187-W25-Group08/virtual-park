@@ -63,6 +63,6 @@ it('should call login function when button is clicked', async () => {
   userEvent.click(button)
 
   await vi.waitFor(() => {
-    expect(mockPush).toHaveBeenCalledWith('/register')
+    expect(mockPush).toHaveBeenCalledWith('/dashboard')
   })
 })

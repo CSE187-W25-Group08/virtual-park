@@ -36,7 +36,7 @@ export default function LoginView() {
     if (authenticated) {
       setFailedLogin(false)
       window.sessionStorage.setItem('name', authenticated.name)
-      router.push('/register')
+      router.push('/dashboard')
     } else {
       setFailedLogin(true)
     }

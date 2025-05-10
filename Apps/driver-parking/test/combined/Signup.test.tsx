@@ -79,7 +79,7 @@ it('should call signup and redirect on valid credentials', async () => {
   await userEvent.click(screen.getByText('sign up'))
 
   await vi.waitFor(() => {
-    expect(mockPush).toHaveBeenCalledWith('/register')
+    expect(mockPush).toHaveBeenCalledWith('/dashboard')
   })
   
 })
