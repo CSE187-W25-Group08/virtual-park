@@ -1,4 +1,4 @@
-'user server';
+'use server';
 // import { TicketId } from "@/ticket";
 import View from "./View";
 
