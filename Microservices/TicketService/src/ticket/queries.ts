@@ -68,6 +68,17 @@ export const updatePaidTicket =
   SELECT id, driver, data FROM UPDATED
   `
 
+export const updateAppealedTicket =
+  `
+  WITH updated AS (
+    UPDATE ticket
+    SET data = jsonb_set(data, '{appeal}', $2::jsonb)
+    WHERE id = $1
+    RETURNING *
+  )
+  SELECT id, driver, data FROM updated
+  `
+
 export const activeAppeals =
   `
   SELECT id, driver, data

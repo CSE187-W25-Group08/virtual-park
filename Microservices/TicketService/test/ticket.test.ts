@@ -3,6 +3,7 @@ import * as http from "http";
 import supertest from "supertest";
 import * as db from './db'
 import { app, bootstrap } from "../src/app";
+import { Ticket } from '../src/ticket/schema';
 
 let server: http.Server<
   typeof http.IncomingMessage,
@@ -67,7 +68,7 @@ test("Gets all tickets through admin", async () => {
       `,
     })
     .then((res) => {
-      expect(res.body.data.allTicket.length).toEqual(3);
+      expect(res.body.data.allTicket.length).toEqual(4);
 
     });
 });
@@ -86,7 +87,6 @@ test("Get all paid tickets", async () => {
       `,
     })
     .then((res) => {
-      // console.log(res.body.data)
       expect(res.body.data.paidTicket.length).toEqual(0);
 
     });
@@ -106,8 +106,7 @@ test("Get all unpaid tickets", async () => {
       `,
     })
     .then((res) => {
-      expect(res.body.data.unpaidTicket.length).toEqual(1);
-
+      expect(res.body.data.unpaidTicket.length).toEqual(2);
     });
 });
 
@@ -167,3 +166,58 @@ test("Get all active appeals", async () => {
 
     });
 });
+
+test('Update a ticket to be appealed', async () => {
+  let initialAppealCount: number
+  let unappealedTicketId = null
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          allTicket {
+            id,
+            appeal
+          }
+        }
+      `
+    })
+    .then((res) => {
+      unappealedTicketId = res.body.data.allTicket.filter((ticket: Ticket) => ticket.appeal == 'null')[0].id
+      initialAppealCount = res.body.data.allTicket.filter(
+        (ticket: Ticket) => ticket.appeal != 'null' && ticket.appeal != 'rejected'
+      ).length
+    })
+
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          setTicketAppealed(id: "${unappealedTicketId}", appealStatus: "submitted") {
+            id,
+            appeal
+          }
+        }
+      `
+    })
+
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          appealedTicket {
+            id,
+            appeal
+          }
+        }
+      `
+    })
+    .then((res) => {
+      expect(res.body.data.appealedTicket.length).toEqual(initialAppealCount + 1)
+    })
+})
