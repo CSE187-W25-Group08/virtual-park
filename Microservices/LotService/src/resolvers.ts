@@ -1,3 +1,3 @@
-import { LotResolver } from "./ticket/resolver";
+import { LotResolver } from "./lot/resolver";
 
 export const resolvers = [LotResolver] as const

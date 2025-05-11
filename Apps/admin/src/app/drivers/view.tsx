@@ -82,9 +82,10 @@ export default function DriversGrid() {
       </Button>
         <Button
         variant="contained"
-        color="success"
+        color="info"
         size="small"
         onClick={() => handleOpenDriver(params.row)}
+        disabled={suspendDisabled.has(params.row?.email)}
       >
         Details
       </Button>
