@@ -1,69 +1,49 @@
 import * as React from "react";
 import { Box} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { listAll} from "../../../ticket/action";
-import { Ticket } from "../../../../ticket";
+import { Permit } from "../../../../permit";
+import { getUserPermits } from "../../../permit/action";
 
-export default function TicketCollapsable({ driverId }: { driverId: string }) {
+export default function PermitCollapsable({ driverId }: { driverId: string }) {
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "violation",
+      field: "issueDate",
       headerName: "Violation",
       width: 110,
       //editable: true,
     },
     {
-      field: "paid",
+      field: "expDate",
       headerName: "Paid",
       width: 150,
       //editable: true,
     },
     {
-      field: "description",
+      field: "type",
       headerName: "Description",
       width: 150,
       editable: true,
     },
     {
-      field: "due",
+      field: "price",
       headerName: "Due",
-      width: 110,
-      //editable: true,
-    },
-    {
-      field: "issue",
-      headerName: "Issue",
-      width: 110,
-      //editable: true,
-    },
-    {
-      field: "cost",
-      headerName: "Cost",
-      width: 110,
-      //editable: true,
-    },
-    {
-      field: "appeal",
-      headerName: "Appeal",
       width: 110,
       //editable: true,
     },
   ];
 
 
-  const [ticket, setTicket] = React.useState<Ticket[]>([]);
+  const [permit, setPermit] = React.useState<Permit[]>([]);
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const result = await listAll(driverId);
+      const result = await getUserPermits(driverId);
       if (result) {
-        setTicket(result);
+        setPermit(result);
       }
-      console.log(ticket)
     };
     fetchData();
-
 
   }, [driverId])
 
@@ -74,8 +54,9 @@ export default function TicketCollapsable({ driverId }: { driverId: string }) {
     >
       <DataGrid
         density="compact"
-        rows={ticket}
+        rows={permit}
         columns={columns}
+        getRowId={(row) => row.issueDate || Math.random().toString()}
         initialState={{
           pagination: {
             paginationModel: {

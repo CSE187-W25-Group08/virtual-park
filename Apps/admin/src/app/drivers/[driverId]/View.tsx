@@ -13,7 +13,8 @@ import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 import MoneyIcon from '@mui/icons-material/Money';
 import AgricultureIcon from '@mui/icons-material/Agriculture';
 import TicketCollapsable from './ticket/Collapsable';
-import Card from './Card';
+import PermitCollapsable from './permit/Collapsable';
+import VehicleCollapsable from './vehicle/Collapsable';
 
 export default function View({ driverId }: { driverId: string }) {
   const [open, setOpen] = React.useState({
@@ -21,7 +22,6 @@ export default function View({ driverId }: { driverId: string }) {
     vehicle: false,
     permit: false,
   });
-
 
 
   const handleToggle = (key: keyof typeof open) => {
@@ -72,7 +72,7 @@ export default function View({ driverId }: { driverId: string }) {
         icon = {<MoneyIcon/>}
       />
       <Collapse in={open.permit} timeout="auto" unmountOnExit>
-        dagodas
+      <PermitCollapsable driverId={driverId}/>
       </Collapse>
 
       <MenuItem
@@ -82,7 +82,7 @@ export default function View({ driverId }: { driverId: string }) {
         icon = {<AgricultureIcon/>}
       />
       <Collapse in={open.vehicle} timeout="auto" unmountOnExit>
-        dagodas
+      <VehicleCollapsable driverId={driverId}/>
       </Collapse>
     </Box>
   );
