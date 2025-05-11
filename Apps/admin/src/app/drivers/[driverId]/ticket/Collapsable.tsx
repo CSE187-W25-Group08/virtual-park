@@ -60,12 +60,11 @@ export default function TicketCollapsable({ driverId }: { driverId: string }) {
       if (result) {
         setTicket(result);
       }
-      console.log(ticket)
     };
     fetchData();
 
 
-  }, [driverId])
+  }, [driverId, ticket])
 
   return (
     <Box

@@ -21,7 +21,7 @@ export default function Card({ driverId }: { driverId: string }) {
       }
     };
     fetchData();
-  }, [driverId]);
+  }, [driverId, paid]);
   
   return (
     <React.Fragment>
