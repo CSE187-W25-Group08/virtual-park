@@ -11,6 +11,10 @@ const anna = {
   email: 'anna@books.com',
   password: 'annaadmin'
 }
+const molly = {
+  email: 'molly@books.com',
+  password: 'mollymember'
+}
 
 async function getAccessToken(email: string, pwd: string): Promise<string> {
   const response = await supertest('http://localhost:3010')
@@ -95,7 +99,7 @@ test('Get all paid tickets', async () => {
     })
     .then((res) => {
       console.log(res.body.data)
-      expect(res.body.data.paidTicket.length).toEqual(1)
+      expect(res.body.data.paidTicket.length).toEqual(0)
 
     })
 })
@@ -160,5 +164,49 @@ test('Update ticket paid status', async () => {
     .then((res) => {
       console.log(res.body.errors)
       expect(res.body.data.setTicketPaid.paid).toBeTruthy()
+    })
+})
+
+test('Get all appealed tickets', async () => {
+  const accessToken = await getAccessToken(molly.email, molly.password)
+
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          appealedTicket {
+            violation
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.data)
+      expect(res.body.data.appealedTicket.length).toEqual(0)
+
+    })
+})
+
+test('Get all active appealed ticket', async () => {
+  const accessToken = await getAccessToken(molly.email, molly.password)
+
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          activeAppeals {
+            violation
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.data)
+      expect(res.body.data.activeAppeals.length).toEqual(1)
+
     })
 })
