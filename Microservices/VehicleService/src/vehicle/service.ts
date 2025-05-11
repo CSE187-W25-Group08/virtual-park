@@ -69,6 +69,7 @@ export class VehicleService {
       values: [userId, vehicleId]
     }
     const { rows } = await pool.query(query)
+    console.log(rows)
 
     const vehicleObj: Vehicle = {
       'id': rows[0].id,

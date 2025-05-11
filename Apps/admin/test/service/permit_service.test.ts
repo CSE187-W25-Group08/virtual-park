@@ -1,5 +1,4 @@
 import { it, expect, vi} from "vitest";
-import { TicketService } from "../../src/ticket/service";
 import { Permit } from "../../src/permit";
 import { getPermitByDriver } from "../../src/permit/service";
 
