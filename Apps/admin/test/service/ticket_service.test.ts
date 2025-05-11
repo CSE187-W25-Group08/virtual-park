@@ -52,12 +52,12 @@ it("successfully fetches paid tickets from GraphQL API", async () => {
     status: 200,
     json: async () => ({
       data: {
-        paidTicket: mockTickets
+        allTicket: mockTickets
       }
     })
   } as Response);
 
-  const result = await new TicketService().getPaidTicket("dummy");
+  const result = await new TicketService().getAllTicket("dummy");
 
   expect(result.length).toEqual(3);
   expect(result[0].id).toEqual("abc123");
@@ -68,38 +68,11 @@ it("Unauthorized on pay tickets", async () => {
     status: 500,
     json: async () => ({
       data: {
-        paidTicket: mockTickets
+        allTicket: mockTickets
       }
     })
   } as Response);
 
-  await expect(new TicketService().getPaidTicket("dummy")).rejects.toThrow('Unauthorized');
+  await expect(new TicketService().getAllTicket("dummy")).rejects.toThrow('Unauthorized');
 });
 
-it("successfully fetches unpaid tickets from GraphQL API", async () => {
-  vi.spyOn(global, "fetch").mockResolvedValueOnce({
-    status: 200,
-    json: async () => ({
-      data: {
-        unpaidTicket: mockTickets
-      }
-    })
-  } as Response);
-
-  const result = await new TicketService().getUnpaidTicket("dummy");
-  expect(result.length).toEqual(3);
-});
-
-
-it("Unauthorized on pay tickets", async () => {
-  vi.spyOn(global, "fetch").mockResolvedValueOnce({
-    status: 500,
-    json: async () => ({
-      data: {
-        getUnpaidTicket: mockTickets
-      }
-    })
-  } as Response);
-
-  await expect(new TicketService().getUnpaidTicket("dummy")).rejects.toThrow('Unauthorized');
-});
