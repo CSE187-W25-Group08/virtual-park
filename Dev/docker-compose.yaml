@@ -21,6 +21,9 @@ services:
       - .././Microservices/PermitService/sql/databases.sql:/docker-entrypoint-initdb.d/10.databases.sql
       - .././Microservices/PermitService/sql/schema.sql:/docker-entrypoint-initdb.d/11.schema.sql
       - .././Microservices/PermitService/sql/data.sql:/docker-entrypoint-initdb.d/12.data.sql
+      - .././Microservices/LotService/sql/databases.sql:/docker-entrypoint-initdb.d/10.databases.sql
+      - .././Microservices/LotService/sql/schema.sql:/docker-entrypoint-initdb.d/11.schema.sql
+      - .././Microservices/LotService/sql/data.sql:/docker-entrypoint-initdb.d/12.data.sql
       - .././APIs/CampusPolice/sql/databases.sql:/docker-entrypoint-initdb.d/13.databases.sql
       - .././APIs/CampusPolice/sql/schema.sql:/docker-entrypoint-initdb.d/14.schema.sql
       - .././APIs/CampusPolice/sql/data.sql:/docker-entrypoint-initdb.d/15.data.sql
