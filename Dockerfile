@@ -5,7 +5,6 @@ WORKDIR /home/app
 
 COPY package.json /home/app/
 COPY package-lock.json /home/app/
-COPY .env /home/app/
 
 # Microservices
 COPY Microservices/AuthService/tsoa.json /home/app/Microservices/AuthService/
