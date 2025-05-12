@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Ticket } from '@/ticket';
 import {listAppeals} from './actions'
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 import {
   Typography, 
   Box,
@@ -10,6 +10,7 @@ import {
 
 export default function AppealsList() {
   const [appeals, setAppeals] = React.useState<Ticket[]>([]);
+
   React.useEffect(() => {
     const setAppealData = async () => {
       const list = await listAppeals();
@@ -17,8 +18,10 @@ export default function AppealsList() {
       console.log(appeals);
     }
     setAppealData();
-  }, [])
-    // based on MUI https://mui.com/material-ui/react-list/
+  }, [appeals])
+
+  // based on MUI https://mui.com/material-ui/react-list/
+  /*
   const columns: GridColDef[] = [
     {
       field: 'icon',
@@ -37,6 +40,8 @@ export default function AppealsList() {
       renderCell: (params) => params.value || 'N/A',
     },
   ]
+  */
+
   return (
   <Box>
     <Typography>Active Appeals</Typography>

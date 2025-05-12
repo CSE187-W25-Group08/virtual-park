@@ -73,6 +73,7 @@ export class TicketService {
         .catch(() => reject('Unauthorized'))
     })
   }
+  */
 
   public async getActiveAppeals(cookie: string | undefined): Promise<Ticket[]> {
     return new Promise((resolve, reject) => {
@@ -97,6 +98,5 @@ export class TicketService {
         .catch(() => reject('Unauthorized'))
     })
   }
-    */
 
 }
