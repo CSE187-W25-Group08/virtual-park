@@ -17,7 +17,7 @@ export default function AppealsList() {
     const setAppealData = async () => {
       const list = await listAppeals();
       if (list) setAppeals(list);
-      console.log("in view", appeals);
+      // console.log("in view", appeals);
     }
     setAppealData();
   }, [])

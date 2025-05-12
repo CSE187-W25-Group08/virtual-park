@@ -9,36 +9,38 @@ import {
   ListItem,
   ListItemText
 } from'@mui/material'
+import NavList from './NavList'
 export default function SideBarNav() {
   const drawerWidth = 300;
-  // based on MUI example https://github.com/mui/material-ui/blob/v7.1.0/docs/data/material/getting-started/templates/dashboard/components/SideMenu.tsx
+  // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
   return (
-    <Drawer variant="permanent" sx={{
-      width: drawerWidth,
-      flexShrink: 0,
-      [`& .MuiDrawer-paper`]: {
+    <Drawer
+      variant="permanent"
+      sx={{
         width: drawerWidth,
-        boxSizing: 'border-box',
-      },
-    }}>
-      <Box
-        sx={{
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: {
+          width: drawerWidth,
+          boxSizing: 'border-box',
           display: 'flex',
-          mt: 'calc(var(--template-frame-height, 0px) + 4px)',
-          p: 1.5,
-        }}
-      >
-        <List>
-          <ListItem>
-            <ListItemText>
-              Drivers
-            </ListItemText>
-          </ListItem>
-        </List>
+          flexDirection: 'column',
+        },
+      }}
+    >
+      {/* Top Content */}
+      <Box sx={{ p: 1.5 }}>
+        <Typography variant="h5">Dashboard &gt; Home</Typography>
       </Box>
 
       <Divider />
-       <Stack
+
+      <NavList />
+
+      <Divider />
+      {/* Spacer pushes user card to bottom */}
+      <Box sx={{ flexGrow: 1 }} />
+
+      <Stack
         direction="row"
         sx={{
           p: 2,
@@ -64,5 +66,5 @@ export default function SideBarNav() {
         </Box>
       </Stack>
     </Drawer>
-  )
+  );
 }
