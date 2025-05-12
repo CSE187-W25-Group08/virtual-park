@@ -62,7 +62,7 @@ test('Get all permitType from in-process PermitService', async () => {
     })
 })
 
-test('Unauthorized PermitService call is rejected', async () => {
+test('Unauthorized PermitType call is rejected', async () => {
   await supertest(server)
     .post('/graphql')
     .send({
@@ -70,6 +70,23 @@ test('Unauthorized PermitService call is rejected', async () => {
         PermitType {
           type
           price
+        }
+      }`
+    })
+    .then((res) => {
+      expect(res.body.errors).toBeDefined()
+    })
+})
+
+test('Unauthorized PermitByDriver call is rejected', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .send({
+      query: `{
+        permitsByDriver {
+          issueDate
+          expDate
+          type
         }
       }`
     })
