@@ -1,9 +1,8 @@
-import DriversList from './drivers/view';
-
-export default function Home() {
+import DashBoardView from "./dashboard/View"
+export default function DashBoard() {
   return (
     <>
-      <DriversList />
+      <DashBoardView />
     </>
-  );
+  )
 }

@@ -21,7 +21,7 @@ export default function NavList() {
   const pathname = usePathname();
   const currentIndex = listItems.findIndex(item => item.page === pathname);
   const [selectedIndex, setSelectedIndex] = useState(currentIndex >= 0 ? currentIndex : 0);
-
+  // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
   const handleClick = (index: number, page: string) => {
     setSelectedIndex(index);
     router.push(page);
