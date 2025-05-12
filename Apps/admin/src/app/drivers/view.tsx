@@ -130,6 +130,7 @@ export default function DriversGrid() {
       <DataGrid
         rows={drivers}
         columns={columns}
+        getRowId={(row) => row.jwt}
         initialState={{
           pagination: { paginationModel: { pageSize: 20 } },
         }}
