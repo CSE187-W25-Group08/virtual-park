@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event'
 import { NextIntlClientProvider } from 'next-intl'
 
 import { purchase_permit as purchasePermitMessages } from '../../messages/en.json'
-import { getPermitType } from '@/permit/service'
+import { getPermitType } from '../../src/permit/service'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -76,6 +76,3 @@ it('getPermitType rejects and return authorized error', async () => {
 
   await expect(getPermitType('invalidCookie')).rejects.toBe('Unauthorized')
 })
-
-
-
