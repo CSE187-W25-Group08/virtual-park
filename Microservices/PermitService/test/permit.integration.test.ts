@@ -12,6 +12,12 @@ const anna = {
   password: 'annaadmin'
 }
 
+const nick = {
+  email: 'nick@books.com',
+  password: 'nickenforcement'
+}
+
+
 async function getAccessToken(email: string, pwd: string): Promise<string> {
   const response = await supertest('http://localhost:3010')
     .post('/api/v0/auth/login')
@@ -120,6 +126,39 @@ test('Unauthorized PermitByDriver call is rejected', async () => {
       expect(res.body.errors).toBeDefined()
     })
 })
+
+test('Get all getPermitBycarPlate from in-process PermitService', async () => {
+  const accessToken = await getAccessToken(nick.email, nick.password)
+  
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query GetPermitByCar($input: String!) {
+          getPermitBycarPlate(input: $input) {
+            permitID
+            permitType
+            issueDate
+            expDate
+            isValid
+          }
+        }
+      `,
+      variables: {
+        input: '123BC4A'
+      }
+    })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      console.log('get permit by carPlate integration test:', res.body.data.getPermitBycarPlate)
+      expect(res.body.data.getPermitBycarPlate.length).toEqual(2)
+    })
+})
+
+
 
 test('Unauthorized getPermitBycarPlate call is rejected', async () => {
   await supertest(server)
