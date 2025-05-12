@@ -167,3 +167,23 @@ test("Get all active appeals", async () => {
 
     });
 });
+
+test("Get all appeals", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          appealedTicket {
+            violation,
+            description
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      expect(res.body.data.appealedTicket[0].description).toEqual("a ticket you might want to appeal");
+
+    });
+});

@@ -4,6 +4,7 @@ export class AuthService {
 
   public async check(authHeader?: string): Promise<SessionUser> {
     return new Promise((resolve, reject) => {
+      console.log(authHeader)
       const token = authHeader?.split(' ')[1]
       fetch('http://localhost:3010/api/v0/auth/check', {
         method: 'GET',
