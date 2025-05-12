@@ -8,6 +8,7 @@ import { dashboard as dashboardMessages } from '../../messages/en.json'
 import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import { ticket as ticketMessages } from '../../messages/en.json'
 import { getUserVehicles } from '../../src/app/[locale]/register/actions'
+import { listUnpaid } from '@/app/[locale]/ticket/actions'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -24,6 +25,23 @@ vi.mock('next/headers', () => ({
 vi.mock('../../src/app/[locale]/ticket/actions', () => ({
   listUnpaid: vi.fn(),
 }))
+
+vi.mocked(listUnpaid).mockResolvedValue([
+  {
+    id: "t3",
+    vehicle: "XYZ5678",
+    enforcer: "E456",
+    lot: "Lot B",
+    paid: false,
+    description: "Does not matter",
+    due: "2025-04-25T23:59:59Z",
+    issue: "2025-04-25T09:00:00Z",
+    violation: "dab",
+    image: "/images/tickets/t2.jpg",
+    cost: 50.02,
+    appeal: "null"
+  }
+])
 
 vi.mock('../../src/app/[locale]/register/actions', () => ({
   getUserVehicles: vi.fn(),
