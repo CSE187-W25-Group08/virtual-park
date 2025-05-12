@@ -120,3 +120,22 @@ test('Unauthorized PermitByDriver call is rejected', async () => {
       expect(res.body.errors).toBeDefined()
     })
 })
+
+test('Unauthorized getPermitBycarPlate call is rejected', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .send({
+      query: `{
+        getPermitBycarPlate {
+          permitID
+          permitType
+          issueDate
+          expDate
+          isValid
+        }
+      }`
+    })
+    .then((res) => {
+      expect(res.body.errors).toBeDefined()
+    })
+})
