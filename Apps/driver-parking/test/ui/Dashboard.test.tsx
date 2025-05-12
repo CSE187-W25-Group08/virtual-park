@@ -15,10 +15,6 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
   listUnpaid: vi.fn(),
 }));
 
-vi.mock('../../src/app/[locale]/permit/actions', () => ({
-  getUserPermits: vi.fn(),
-}));
-
 vi.mock('../../src/app/[locale]/register/actions', () => ({
   getUserVehicles: vi.fn(),
 }));
