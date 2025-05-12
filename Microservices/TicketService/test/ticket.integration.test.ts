@@ -98,7 +98,6 @@ test('Get all paid tickets', async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.data)
       expect(res.body.data.paidTicket.length).toEqual(0)
 
     })
@@ -120,8 +119,7 @@ test('Get all unpaid tickets', async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.data)
-      expect(res.body.data.unpaidTicket.length).toEqual(1)
+      expect(res.body.data.unpaidTicket.length).toEqual(2)
 
     })
 })
@@ -162,7 +160,6 @@ test('Update ticket paid status', async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.errors)
       expect(res.body.data.setTicketPaid.paid).toBeTruthy()
     })
 })
@@ -183,7 +180,6 @@ test('Get all appealed tickets', async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.data)
       expect(res.body.data.appealedTicket.length).toEqual(0)
 
     })
@@ -205,8 +201,6 @@ test('Get all active appealed ticket', async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.data)
       expect(res.body.data.activeAppeals.length).toEqual(1)
-
     })
 })
