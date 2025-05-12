@@ -87,5 +87,21 @@
     "payTicket": "Pagar multa",
     "loading": "Cargando",
     "viewTicket": "Ver multa"
+  },
+  "dashboard": {
+    "permitBought": "Has comprado un permiso.",
+    "ticketsPaid": "Todas las multas pagadas. \nTotal: $",
+    "welcome": "Bienvenido de nuevo,",
+    "vehicle": "Vehículo activo:",
+    "noVehicle": "No hay vehículo activo.",
+    "permit": "Permiso activo",
+    "noPermit": "No tienes un permiso activo.",
+    "buyPermit": "Comprar permiso",
+    "tickets": "Multas",
+    "noTickets": "No tienes multas pendientes",
+    "manageTickets": "Gestionar multas",
+    "unpaidTickets": "Tienes {count} multas pendientes.",
+    "payTickets": "Pagar multas"
+
   }
 }

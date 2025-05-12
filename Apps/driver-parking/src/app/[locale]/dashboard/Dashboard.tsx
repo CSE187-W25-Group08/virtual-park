@@ -4,6 +4,7 @@ import React from "react"
 import { useState, useEffect, Fragment } from "react"
 import { useRouter } from "next/navigation"
 import { Typography, Box, Button, Divider } from "@mui/material"
+import { useTranslations } from "next-intl"
 
 import TicketCard from "../ticket/card"
 import { Ticket } from "@/ticket"
@@ -24,6 +25,7 @@ export default function Dashboard() {
     price: 3.14
   })
   const router = useRouter()
+  const t = useTranslations("dashboard")
 
   useEffect(() => {
     setName(window.sessionStorage.getItem('name'))
@@ -41,37 +43,37 @@ export default function Dashboard() {
   }, [])
 
   const buyPermit = () => {
-    alert("You have bought a permit.")
+    alert(t('permitBought'))
   }
 
   const payTickets = () => {
-    alert(`All tickets paid.\nTotal: $${unpaidTickets.reduce((acc, ticket) => acc + ticket.cost, 0)}`)
+    alert(`${t('ticketsPaid')}${unpaidTickets.reduce((acc, ticket) => acc + ticket.cost, 0)}`)
   }
 
   return (
     <Fragment>
       <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2 }}>
-        <Typography variant="h4">Welcome back,</Typography>
+        <Typography variant="h4">{t('welcome')}</Typography>
         <Typography variant="h4">{name}.</Typography>
         <Typography variant="body1" sx={{ marginTop: 2 }}>
-          Active Vehicle:
+          {t('vehicle')}
         </Typography>
         <Typography variant="body1">
-          {vehicle ? `${vehicle.make} ${vehicle.model} - ${vehicle.color} (${vehicle.licensePlate})` : "No active vehicle."}
+          {vehicle ? `${vehicle.make} ${vehicle.model} - ${vehicle.color} (${vehicle.licensePlate})` : t('noVehicle')}
         </Typography>
         <Divider sx={{ width: "100%", marginTop: 4 }}/>
         
       </Box>
       <Box sx={{display: 'flex', flexDirection: 'column', marginTop: 2 }}>
         <Typography variant="h4" sx={{ marginLeft: 1}}>
-          Active Permit
+          {t('permit')}
         </Typography>
         {activePermit && (
           <PermitListCard permit={activePermit} />
         )}
         {activePermit === null && (
           <Typography variant="h6" sx={{ marginLeft: 1 }}>
-            You have no active permit.
+            {t('noPermit')}
           </Typography>
         )}
         <Button
@@ -79,31 +81,31 @@ export default function Dashboard() {
           sx={{ marginTop: 4 }}
           onClick={buyPermit}
         >
-          Buy Permit
+          {t('buyPermit')}
         </Button>
         <Divider sx={{ width: "100%", marginTop: 4 }}/>
       </Box>
       <Box sx={{display: 'flex', flexDirection: 'column', marginTop: 2 }}>
         <Typography variant="h4" sx={{ marginLeft: 1}}>
-          Tickets
+          {t('tickets')}
         </Typography>
         {unpaidTickets.length === 0 && (
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Typography variant="h6" sx={{ marginLeft: 1 }}>
-              You have no unpaid tickets.
+              {t('noTickets')}
             </Typography>
             <Button
               variant="contained"
               sx={{ marginTop: 2, marginLeft: 1 }}
               onClick={() => router.push("/ticket")}>
-              Manage Tickets
+              {t('manageTickets')}
             </Button>
           </Box>
         )}
         {unpaidTickets.length > 0 && (
           <Box sx={{ display: "flex", flexDirection: "column", marginTop: 2 }}>
             <Typography variant="body1" color="error" sx={{ marginLeft: 1, marginBottom: 2 }}>
-              You have {unpaidTickets.length} unpaid tickets.
+              {t('unpaidTickets', { count: unpaidTickets.length })}
             </Typography>
             {unpaidTickets.map((ticket, index) => (
               <TicketCard key={index} ticket={ticket} />
@@ -112,7 +114,7 @@ export default function Dashboard() {
               variant="contained"
               sx={{ marginTop: 2, marginLeft: 1 }}
               onClick={payTickets}>
-              Pay Tickets
+              {t('payTickets')}
             </Button>
           </Box>
         )}
