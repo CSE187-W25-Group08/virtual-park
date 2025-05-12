@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { Ticket } from '@/ticket';
 import {listAppeals} from './actions'
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {
   Typography, 
   Box,
@@ -12,6 +11,7 @@ import {
 
 export default function AppealsList() {
   const [appeals, setAppeals] = React.useState<Ticket[]>([]);
+
   React.useEffect(() => {
     const setAppealData = async () => {
       const list = await listAppeals();
