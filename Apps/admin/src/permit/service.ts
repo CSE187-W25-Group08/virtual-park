@@ -8,7 +8,7 @@ export async function getPermitByDriver(cookie: string | undefined):Promise<Perm
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${cookie}`,
       },
-      body: JSON.stringify({query: `{permitsByDriver {issueDate, expDate, type, price}}`}),
+      body: JSON.stringify({query: `{permitsByDriver {id, issueDate, expDate, type, price}}`}),
     })
     .then(response => { 
       if (response.status != 200) {

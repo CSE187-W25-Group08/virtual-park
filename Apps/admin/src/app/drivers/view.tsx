@@ -136,7 +136,6 @@ export default function DriversGrid() {
         pageSizeOptions={[10, 20, 50]}
         density="compact"
         disableColumnResize
-        getRowId={(row) => row.email || Math.random().toString()}
         sx={{
           '& .MuiDataGrid-cell': {
             borderBottom: '2px solid black',
