@@ -72,7 +72,7 @@ test('Returns all vehicles', async () => {
       }`
     })
     .then((res) => {
-      expect(res.body.data.vehicle.length).toEqual(3)
+      expect(res.body.data.vehicle.length).toEqual(4)
     })
 })
 
@@ -103,5 +103,30 @@ test('Member Registers a Vehicle', async () => {
     })
     .then((res) => {
       expect(res.body.data.registerVehicle.licensePlate).toBe("TEST123")
+    })
+})
+test('Member gets vehicle by Id', async () => {
+  const accessToken = await getAccessToken(molly.email, molly.password)
+
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer ${accessToken}`)
+    .send({
+      query: `
+        query {
+          getVehicleById(id: "18fa94fc-4783-42df-a904-7ec17efadca5") {
+            id
+            licensePlate
+            driver
+            make
+            model
+            color
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body)
+      expect(res.body.data.getVehicleById).toHaveProperty('id', '18fa94fc-4783-42df-a904-7ec17efadca5')
     })
 })

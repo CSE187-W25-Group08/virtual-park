@@ -1,11 +1,17 @@
 /**
  * Retrieves all tickets fromd database
  */
-export const selectAllTickets =
+export const selectAllTicketsAdmin =
   `
   SELECT id, driver, data
   FROM ticket
   `
+
+export const selectAllTickets =
+`
+SELECT id, driver, data
+FROM ticket WHERE (driver = $1)
+`
 
 export const selectPaidTickets =
   `
@@ -60,6 +66,17 @@ export const updatePaidTicket =
     RETURNING *
   )
   SELECT id, driver, data FROM UPDATED
+  `
+
+export const updateAppealedTicket =
+  `
+  WITH updated AS (
+    UPDATE ticket
+    SET data = jsonb_set(data, '{appeal}', $2::jsonb)
+    WHERE id = $1
+    RETURNING *
+  )
+  SELECT id, driver, data FROM updated
   `
 
 export const activeAppeals =

@@ -1,0 +1,6 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE DATABASE lot;
+
+\connect lot
+CREATE EXTENSION IF NOT EXISTS pgcrypto;

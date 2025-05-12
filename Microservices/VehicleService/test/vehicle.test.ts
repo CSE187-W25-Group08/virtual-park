@@ -43,7 +43,7 @@ test('Returns all vehicles', async () => {
       }`
     })
     .then((res) => {
-      expect(res.body.data.vehicle.length).toEqual(3)
+      expect(res.body.data.vehicle.length).toEqual(4)
     })
 })
 

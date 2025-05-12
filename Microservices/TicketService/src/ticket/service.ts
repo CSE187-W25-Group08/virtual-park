@@ -26,9 +26,9 @@ export class TicketService {
     return tickets;
   }
 
-  public async getAll(): Promise<Ticket[]> {
+  public async getAllAdmin(): Promise<Ticket[]> {
     const query = {
-      text: queries.selectAllTickets
+      text: queries.selectAllTicketsAdmin
       // values: [userId]
     }
 
@@ -80,7 +80,7 @@ export class TicketService {
     return tickets[0];
   }
 
-  public async setPaid(userId: string | undefined, ticketId: string, newPaidValue: boolean): Promise<Ticket> {
+  public async setPaid(ticketId: string, newPaidValue: boolean): Promise<Ticket> {
     const query = {
       text: queries.updatePaidTicket,
       values: [ticketId, newPaidValue]
@@ -91,10 +91,32 @@ export class TicketService {
     return tickets[0];
   }
 
+  public async setAppealStatus(ticketId: string, newAppealStatus: string): Promise<Ticket> {
+    const query = {
+      text: queries.updateAppealedTicket,
+      values: [ticketId, JSON.stringify(newAppealStatus)]
+    }
+
+    const { rows } = await pool.query(query)
+    const tickets = await this.rowToTicket(rows)
+    return tickets[0]
+  }
+
   public async getActiveAppeals(): Promise<Ticket[]> {
     const query = {
       text: queries.activeAppeals,
     }
+    const { rows } = await pool.query(query);
+    const tickets = await this.rowToTicket(rows);
+    return tickets;
+  }
+
+  public async getAllTicket(userId: string | undefined): Promise<Ticket[]> {
+    const query = {
+      text: queries.selectAllTickets,
+      values: [userId]
+    }
+
     const { rows } = await pool.query(query);
     const tickets = await this.rowToTicket(rows);
     return tickets;

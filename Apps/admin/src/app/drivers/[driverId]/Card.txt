@@ -8,6 +8,7 @@ import { listPaid, listUnpaid} from "../../ticket/action";
 export default function Card({ driverId }: { driverId: string }) {
   const [paidTickets, setPaidTickets] = useState<Ticket[]>([]);
   const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const allPaidTicket = await listPaid(driverId);
@@ -20,15 +21,15 @@ export default function Card({ driverId }: { driverId: string }) {
       }
     };
     fetchData();
-  }, []);
+  }, [driverId, paid]);
   
   return (
     <React.Fragment>
       {paidTickets.map((ticket, index) => (
-        <div key={index}>test</div> 
+        <div key={index}>{ticket.id}</div> 
       ))}
       {unpaidTickets.map((ticket, index) => (
-        <div key={index}>test</div> 
+        <div key={index}>{ticket.id}</div> 
       ))}
       <Typography>{driverId}</Typography>
 

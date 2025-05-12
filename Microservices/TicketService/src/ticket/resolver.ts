@@ -17,7 +17,14 @@ export class TicketResolver {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => [Ticket])
   async ticket(): Promise<Ticket[]> {
-    return await new TicketService().getAll()
+    return await new TicketService().getAllAdmin()
+  }
+
+  @Authorized()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(returns => [Ticket])
+  async allTicket(@Ctx() request: Request): Promise<Ticket[]> {
+    return await new TicketService().getAllTicket(request.user?.id)
   }
 
   @Authorized()
@@ -56,12 +63,20 @@ export class TicketResolver {
   @Mutation(returns => Ticket)
   async setTicketPaid(
     @Arg("id") id: string,
-    @Arg("paid") newPaidValue: boolean,
-    @Ctx() request: Request
+    @Arg("paid") newPaidValue: boolean
   ): Promise<Ticket> {
-    return await new TicketService().setPaid(request.user?.id, id, newPaidValue)
+    return await new TicketService().setPaid(id, newPaidValue)
   }
 
+  @Authorized()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Mutation(returns => Ticket)
+  async setTicketAppealed(
+    @Arg('id') id: string,
+    @Arg('appealStatus') newAppealStatus: string
+  ): Promise<Ticket> {
+    return await new TicketService().setAppealStatus(id, newAppealStatus)
+  }
 
   @Authorized('admin')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -84,9 +84,10 @@ export default function DriversGrid() {
       </Button>
         <Button
         variant="contained"
-        color="success"
+        color="info"
         size="small"
-        onClick={() => handleOpenDriver(params.row?.jwt)}
+        onClick={() => handleOpenDriver(params.row)}
+        disabled={suspendDisabled.has(params.row?.email)}
       >
         Details
       </Button>
@@ -113,8 +114,8 @@ export default function DriversGrid() {
     alert(`Reactivate functionality for ${email}`);
   }
 
-  const handleOpenDriver = async (userId?: string) => {
-    router.push('/drivers/' + userId)
+  const handleOpenDriver = async (driver?: Driver) => {
+    router.push('/drivers/' + driver?.jwt)
   }
 
   return (
