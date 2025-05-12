@@ -13,7 +13,7 @@ export default function DashBoardView() {
         sx={{
           flexGrow: 1,
           flexBasis: '80%',
-          p: 3,
+          p: 7,
           overflow: 'auto',
           // display:'flex',
           // flexDirection:'column',
