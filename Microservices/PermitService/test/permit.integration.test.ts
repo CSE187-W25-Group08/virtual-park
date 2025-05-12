@@ -78,6 +78,32 @@ test('Unauthorized PermitType call is rejected', async () => {
     })
 })
 
+test('Get all permitByDriver from in-process PermitService', async () => {
+  const accessToken = await getAccessToken(anna.email, anna.password)
+  
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `{
+        permitsByDriver {
+          id
+          issueDate
+          expDate
+          type
+          price
+        }
+      }`
+    })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      console.log('permit by user integration test:', res.body.data.permitsByDriver)
+      expect(res.body.data.permitsByDriver.length).toEqual(0)
+    })
+})
+
 test('Unauthorized PermitByDriver call is rejected', async () => {
   await supertest(server)
     .post('/graphql')
