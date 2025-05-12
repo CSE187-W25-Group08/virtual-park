@@ -69,4 +69,6 @@ export const activeAppeals =
   FROM ticket
 
   WHERE (data->>'appeal' = 'submitted')
+
+  ORDER BY data->>'due' ASC;
 `

@@ -4,8 +4,10 @@
 import * as React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import PersonIcon from '@mui/icons-material/Person';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import {
+  Button, 
+  Box,
+} from'@mui/material'
 import { fetchDrivers, reactivateDriver, suspendDriver } from './action';
 import { Driver } from '@/driver';
 import { useRouter } from 'next/navigation'
