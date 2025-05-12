@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Ticket } from '@/ticket';
 import {listAppeals} from './actions'
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {
   Typography, 
   Box,
