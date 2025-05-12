@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
 
-import ValidPermitList from './validPermitList'
+import ValidPermitList from './ValidPermitList'
 
-const TypePage: NextPage = () => {
+const permitPage: NextPage = () => {
   return (
-    <ValidPermitList/>
+    <ValidPermitList />
   )
 }
 
