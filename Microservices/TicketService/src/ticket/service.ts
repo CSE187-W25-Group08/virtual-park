@@ -65,6 +65,7 @@ export class TicketService {
     }
 
     const { rows } = await pool.query(query);
+    console.log("appeals", rows);
     const tickets = await this.rowToTicket(rows);
     return tickets;
   }
