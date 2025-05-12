@@ -35,7 +35,7 @@ export async function getPermitType(cookie: string | undefined):Promise<Permit[]
     })
     .then(response => { 
       if (response.status != 200) {
-        reject('Unauthorized')
+        return reject('Unauthorized')
       }
       return response.json()} 
     )

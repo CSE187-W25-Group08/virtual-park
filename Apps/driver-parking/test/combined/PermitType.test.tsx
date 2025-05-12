@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event'
 import { NextIntlClientProvider } from 'next-intl'
 
 import { purchase_permit as purchasePermitMessages } from '../../messages/en.json'
+import { getPermitType } from '@/permit/service'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -65,5 +66,16 @@ it('renders permit types returned from permitTypes()', async () => {
   await userEvent.click(purchaseButton)
   expect(alert).toHaveBeenCalledWith('Purchased: Student ($3.14)')
 })
+
+/* reference: https://web.dev/learn/testing/get-started/component-testing */
+it('getPermitType rejects and return authorized error', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+    status: 401,
+    json: () => Promise.resolve({}),
+  } as Response))
+
+  await expect(getPermitType('invalidCookie')).rejects.toBe('Unauthorized')
+})
+
 
 
