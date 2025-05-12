@@ -1,4 +1,4 @@
-import DashBoardView from "./dashboard/View"
+import DashBoardView from "./dashboard/view"
 export default function DashBoard() {
   return (
     <>
