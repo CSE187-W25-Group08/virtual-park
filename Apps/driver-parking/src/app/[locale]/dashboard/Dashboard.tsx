@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([])
   const [vehicle, setVehicle] = useState<Vehicle>()
   const [activePermit] = useState<Permit | null>({
+    id: "1",
     issueDate: "2024-09-21T08:00:00.000Z",
     expDate: "2025-06-14T08:00:00.000Z",
     type: "Student",

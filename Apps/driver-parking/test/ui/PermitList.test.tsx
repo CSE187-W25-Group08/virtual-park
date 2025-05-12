@@ -27,12 +27,14 @@ const renderWithIntl = (component: React.ReactElement) => {
 
 it('mocks PermitList component', async () => {
   const testPermits = [{
+    id: '1',
     type: 'Student',
     issueDate: '2025-01-01',
     expDate: '2025-01-01',
     price: 3.14,
   },
   {
+    id: '2',
     type: 'Staff',
     issueDate: '2025-01-02',
     expDate: '2025-01-02',
