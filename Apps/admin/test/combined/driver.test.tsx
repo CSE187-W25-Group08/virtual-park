@@ -7,7 +7,8 @@ import {http, HttpResponse} from 'msw';
 
 // mock next.js stuff navigation and cookies
 vi.mock('next/navigation', () => ({
-  useRouter: vi.fn()
+  useRouter: vi.fn(),
+  usePathname: vi.fn()
 }))
 
 vi.mock('next/headers', () => ({
@@ -33,7 +34,7 @@ const testDriver = {
   jwt: "test id",
   joinDate: "Feb 17 2025",
 }
-import Page from '@/app/page'
+import Page from '@/app/drivers/page'
 import {fetchDrivers} from '@/app/drivers/action';
 it('Displays list of drivers', async () => {
   const mockPush = vi.fn()
