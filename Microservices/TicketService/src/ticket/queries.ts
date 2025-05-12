@@ -8,7 +8,7 @@ export const selectAllTicketsAdmin =
   `
 
 export const selectAllTickets =
-`
+  `
 SELECT id, driver, data
 FROM ticket WHERE (driver = $1)
 `
@@ -85,7 +85,7 @@ export const activeAppeals =
 
   FROM ticket
 
-  WHERE (data->>'appeal' = 'submitted')
+  WHERE (data->>'appeal'::text = 'submitted'::text)
 
   ORDER BY data->>'due' ASC;
 `

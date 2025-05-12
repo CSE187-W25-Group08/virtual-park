@@ -25,7 +25,6 @@ export class TicketService {
     })
   }
 
-  /*
   public async getPaidTicket(cookie: string | undefined): Promise<Ticket[]> {
     return new Promise((resolve, reject) => {
       fetch('http://localhost:4010/graphql', {
@@ -73,7 +72,6 @@ export class TicketService {
         .catch(() => reject('Unauthorized'))
     })
   }
-  */
 
   public async getActiveAppeals(cookie: string | undefined): Promise<Ticket[]> {
     return new Promise((resolve, reject) => {
@@ -93,10 +91,9 @@ export class TicketService {
         }
         )
         .then(json => {
-          resolve(json.data.unpaidTicket)
+          resolve(json.data.activeAppeals)
         })
         .catch(() => reject('Unauthorized'))
     })
   }
-
 }
