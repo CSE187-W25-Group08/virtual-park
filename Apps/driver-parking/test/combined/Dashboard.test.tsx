@@ -1,5 +1,5 @@
-import { it, afterEach, vi, beforeEach } from 'vitest' 
-import { render, screen, cleanup } from '@testing-library/react'
+import { it, afterEach, vi, beforeEach, expect } from 'vitest' 
+import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 
@@ -60,6 +60,7 @@ vi.mocked(getUserVehicles).mockResolvedValue([
 
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
+  vi.stubGlobal('alert', vi.fn())
 })
 
 afterEach(() => {
@@ -142,5 +143,9 @@ it('should fetch user\'s unpaid tickets', async () => {
 
   renderWithIntl(<Page />)
 
-  await screen.findByText('Pay Tickets')
+  const payTickets = await screen.findByText('Pay Tickets')
+
+  fireEvent.click(payTickets)
+
+  expect(alert).toHaveBeenCalledWith('All tickets paid. \nTotal: $50.02');
 })
