@@ -7,6 +7,7 @@ import Page from '../../src/app/[locale]/dashboard/page'
 import { dashboard as dashboardMessages } from '../../messages/en.json'
 import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import { ticket as ticketMessages } from '../../messages/en.json'
+import { getUserVehicles } from '../../src/app/[locale]/register/actions'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -27,6 +28,17 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
 vi.mock('../../src/app/[locale]/register/actions', () => ({
   getUserVehicles: vi.fn(),
 }))
+
+vi.mocked(getUserVehicles).mockResolvedValue([
+  {
+    id: '1',
+    licensePlate: 'ABC1234',
+    driver: 'Molly Member',
+    make: 'Honda',
+    model: 'Pilot',
+    color: 'Black',
+  }
+])
 
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
