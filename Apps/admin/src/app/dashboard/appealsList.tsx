@@ -94,26 +94,65 @@ export default function AppealsList() {
   <Box>
     <Typography>Active Appeals</Typography>
     {(appeals && appeals.length != 0) ? <DataGrid
-      rows={appeals}
-      columns={columns}
-      initialState={{
-        pagination: { paginationModel: { pageSize: 10 } },
-      }}
-      pageSizeOptions={[10, 20, 50]}
-      density="compact"
-      disableColumnResize
-      getRowId={(row) => row.id || Math.random().toString()}
-      sx={{
-        '& .MuiDataGrid-cell': {
-          borderBottom: '2px solid black',
+  rows={appeals}
+  columns={columns}
+  initialState={{
+    pagination: { paginationModel: { pageSize: 10 } },
+  }}
+  pageSizeOptions={[10, 20, 50]}
+  density="compact"
+  disableColumnResize
+  getRowId={(row) => row.id || Math.random().toString()}
+  getRowClassName={(params) =>
+    params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+  }
+  slotProps={{
+    filterPanel: {
+      filterFormProps: {
+        logicOperatorInputProps: {
+          variant: 'outlined',
+          size: 'small',
         },
-        '& .MuiDataGrid-columnHeaders': {
-          backgroundColor: '#f5f5f5',
-          borderBottom: '3px solid black',
+        columnInputProps: {
+          variant: 'outlined',
+          size: 'small',
+          sx: { mt: 'auto' },
         },
-      }}
-      loading={appeals.length === 0}
-    /> : <Typography>No Active Appeals</Typography>}
+        operatorInputProps: {
+          variant: 'outlined',
+          size: 'small',
+          sx: { mt: 'auto' },
+        },
+        valueInputProps: {
+          InputComponentProps: {
+            variant: 'outlined',
+            size: 'small',
+          },
+        },
+      },
+    },
+  }}
+  sx={{
+    // '& .MuiDataGrid-cell': {
+    //   borderBottom: '2px solid black',
+    // },
+    '& .MuiDataGrid-columnHeaders': {
+      backgroundColor: '#f5f5f5',
+      // borderBottom: '3px solid black',
+    },
+    '& .MuiDataGrid-row.even': {
+      backgroundColor: '#fafafa',
+    },
+    '& .MuiDataGrid-row.odd': {
+      backgroundColor: '#ffffff',
+    },
+    '& .MuiDataGrid-row:hover': {
+      backgroundColor: '#e6f7ff',
+    }
+  }}
+  loading={appeals.length === 0}
+/>
+: <Typography>No Active Appeals</Typography>}
   </Box>
   )
 }
