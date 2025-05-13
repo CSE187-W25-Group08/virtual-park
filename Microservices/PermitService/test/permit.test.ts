@@ -1,4 +1,4 @@
-import { vi, test, beforeAll, afterAll, expect } from 'vitest'
+import { vi, test, beforeAll, afterAll, expect, beforeEach } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
 
@@ -6,6 +6,8 @@ import * as db from './db'
 import { app, bootstrap } from '../src/app'
 
 let server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
+
+const AuthServiceMock= vi.fn()
 
 beforeAll(async () => {
   server = http.createServer(app)
@@ -21,16 +23,22 @@ afterAll(() => {
 vi.mock('../src/auth/service', () => {
   return {
     AuthService: class {
-      async check() {
-        return { id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a' }
-      }
+      check = AuthServiceMock
+      // async check() {
+      //   return { id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a' }
+      // }
     }
   }
+})
+
+beforeEach(() => {
+  AuthServiceMock.mockReset()
 })
 
 const accessToken = "placeholder"
 
 test('Get all permitType', async () => {
+  AuthServiceMock.mockResolvedValue({id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a'})
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
@@ -49,6 +57,7 @@ test('Get all permitType', async () => {
     })
 })
 test('retrieve all the permits belong to the specific user', async () => {
+  AuthServiceMock.mockResolvedValue({id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a'})
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
@@ -71,6 +80,7 @@ test('retrieve all the permits belong to the specific user', async () => {
 })
 
 test('retrieve the permit info based on the vehicle car plate', async () => {
+  AuthServiceMock.mockResolvedValue({id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a'})
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
@@ -100,6 +110,7 @@ test('retrieve the permit info based on the vehicle car plate', async () => {
 })
 
 test('should return empty array with not exist car plate number', async () => {
+  AuthServiceMock.mockResolvedValue({id: 'bea45ed8-aa83-4c49-a201-4625baa0e91a'})
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
@@ -127,3 +138,23 @@ test('should return empty array with not exist car plate number', async () => {
       expect(res.body.data.getPermitBycarPlate.length).toEqual(0)
     })
 })
+
+test('should return 401 when auth service throws an error', async () => {
+  AuthServiceMock.mockRejectedValue(new Error('Auth failed'))
+  
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `{
+        PermitType {
+          type
+          price
+        }
+      }`
+    })
+    .then((res) => {
+      expect(res.body.errors).toBeDefined()
+    })
+  }
+)
