@@ -40,7 +40,7 @@ jobs:
     # needs: [lint, build]
     steps:
       - uses: actions/checkout@v4
-      - run: npm instal
+      - run: npm install
       - run: npm run installs
       - run: npm run test
   
@@ -77,19 +77,12 @@ jobs:
           VERSION=${GITHUB_REF#refs/tags/}
           REPO_OWNER=$(echo $GITHUB_REPOSITORY_OWNER | tr '[:upper:]' '[:lower:]')
           IMAGE=ghcr.io/$REPO_OWNER/virtual-park:$VERSION
-          docker build . -t $IMAGE --platform linux/amd64
+          LATEST=ghcr.io/$REPO_OWNER/virtual-park:latest
+          docker compose -f docker-compose.yaml build
+          docker compose -f docker-compose.yaml push
+          docker tag $IMAGE $LATEST
           docker push $IMAGE
 
-      # I had ChatGPT generate the lowercase conversion, which is why it failed the first time
-      - name: Tag and Push as Latest
-        run: |
-          VERSION=${GITHUB_REF#refs/tags/}
-          REPO_OWNER=$(echo $GITHUB_REPOSITORY_OWNER | tr '[:upper:]' '[:lower:]')
-          IMAGE=ghcr.io/$REPO_OWNER/virtual-park:$VERSION
-          LATEST=ghcr.io/$REPO_OWNER/virtual-park:latest
-          docker tag $IMAGE $LATEST
-          docker push $LATEST
-    
   deploy:
     name: Deploy and Spin Up on EC2 Instance
     runs-on: ubuntu-latest
