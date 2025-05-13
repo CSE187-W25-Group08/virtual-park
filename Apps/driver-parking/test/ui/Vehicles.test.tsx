@@ -61,7 +61,7 @@ it('Click on Register Vehicle and access registration form', async () => {
   fireEvent.change(screen.getByLabelText(/Color/i), {
     target: { value: 'Silver' },
   })
-  fireEvent.click(screen.getByText(/Default Vehicle/i))
+  // fireEvent.click(screen.getByText(/Default Vehicle/i))
 
   const saveButton = screen.getByText(/Save/i)
   expect(saveButton.hasAttribute('disabled')).toBe(false)

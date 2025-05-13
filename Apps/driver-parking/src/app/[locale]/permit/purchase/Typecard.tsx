@@ -17,9 +17,9 @@ export default function PermitCard({permit}: { permit: PermitType }) {
     permitType = t('disabled')
   }
 
-    const purchaseHandler = () => {
-    alert(`${t('purchased')} ${permitType} ($${permit.price})`)
-  }
+  // const purchaseHandler = () => {
+  //   alert(`${t('purchased')} ${permitType} ($${permit.price})`)
+  // }
   
   return (
     <ListItem disablePadding>
@@ -31,9 +31,9 @@ export default function PermitCard({permit}: { permit: PermitType }) {
             </Typography>
             <Typography>${permit.price}</Typography>
           </Box>
-          <Button variant="contained" aria-label={`Purchase ${permitType} Permit`} color="primary" onClick={purchaseHandler}>
+          {/* <Button variant="contained" aria-label={`Purchase ${permitType} Permit`} color="primary" onClick={purchaseHandler}>
             {t('purchase')}
-          </Button>
+          </Button> */}
         </Box>
       </Card>
     </ListItem>

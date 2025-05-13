@@ -91,12 +91,12 @@ export default function Vehicles() {
                   <br />
                   ({vehicle.licensePlate})
                 </Typography>
-                <Typography
+                {/* <Typography
                   variant="body2"
                   sx={{ color: 'primary.main', cursor: 'pointer' }}
                 >
                   {t('edit')}
-                </Typography>
+                </Typography> */}
               </Box>
             </Box>
           ))}
@@ -159,11 +159,11 @@ export default function Vehicles() {
             onChange={handleChange}
             sx={{ mb: 2 }}
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Switch checked={formData.isDefault} onChange={handleToggle} />}
             label={t('default')}
             sx={{ mb: 2 }}
-          />
+          /> */}
 
           <Box display="flex" justifyContent="space-between">
             <Button onClick={() => {
