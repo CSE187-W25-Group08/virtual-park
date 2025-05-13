@@ -34,4 +34,14 @@ export class LotService {
     const lots = await this.rowToLot(rows);
     return lots;
   }
+
+  public async updateId(lotId: string): Promise<Lot> {
+    const query = {
+      text: queries.updateId,
+      values: [lotId]
+    }
+    const { rows } = await pool.query(query);
+    const lots = await this.rowToLot(rows);
+    return lots[0];
+  }
 }

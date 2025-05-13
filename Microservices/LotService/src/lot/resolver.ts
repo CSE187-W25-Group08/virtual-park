@@ -1,6 +1,9 @@
 import {
   Query,
+  Mutation,
   Resolver,
+  Authorized,
+  Arg
 } from "type-graphql"
 import { Lot} from "./schema"
 import { LotService} from "./service"
@@ -12,6 +15,15 @@ export class LotResolver {
   @Query(returns => [Lot])
   async getAll(): Promise<Lot[]> {
     return await new LotService().getAll()
+  }
+
+  @Authorized('admin')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Mutation(returns => Lot)
+  async putId(
+    @Arg("id") id: string,
+  ): Promise<Lot> {
+    return await new LotService().updateId(id)
   }
 
 
