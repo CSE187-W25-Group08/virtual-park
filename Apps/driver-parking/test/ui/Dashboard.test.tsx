@@ -1,4 +1,4 @@
-import { it, afterEach, vi, expect } from 'vitest';
+import { it, afterEach, vi, expect} from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
