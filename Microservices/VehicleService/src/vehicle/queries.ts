@@ -40,3 +40,12 @@ WHERE
 AND id = $2;
 `;
 
+export const getPrimaryVehicle = `
+SELECT
+  id, driver, data
+FROM
+  vehicle
+WHERE
+  driver = $1
+  AND data->>'active' = 'true';
+`;
