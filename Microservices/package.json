@@ -25,7 +25,13 @@
     "dev-ticket": "cd TicketService && npm run dev",
     "dev-vehicle": "cd VehicleService && npm run dev",
     "dev-permit": "cd PermitService && npm run dev",
-    "dev": "concurrently \"npm run dev-auth\" \"npm run dev-ticket\" \"npm run dev-vehicle\" \"npm run dev-permit\""
+    "dev": "concurrently \"npm run dev-auth\" \"npm run dev-ticket\" \"npm run dev-vehicle\" \"npm run dev-permit\"",
+    "test-auth": "cd AuthService && npm run test",
+    "test-lot": "cd LotService && npm run test",
+    "test-permit": "cd PermiteService && npm run test",
+    "test-ticket": "cd TicketService && npm run test",
+    "test-vehicle": "cd VehicleService && npm run test",
+    "test": "npm run test-auth && npm run test-lot && npm run test-permit && npm run test-ticket && npm run test-vehicle"
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",

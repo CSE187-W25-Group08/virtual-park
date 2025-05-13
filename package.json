@@ -8,7 +8,6 @@
     "typescript": "^5.8.3"
   },
   "scripts": {
-
     "package": "docker build . -t cte-linux-amd64 --platform linux/amd64 && docker save -o cte-linux-amd64.tar cte-linux-amd64",
     "containerised": "npm run build && npm run compose",
     "compose": "docker compose up --build",
@@ -20,8 +19,6 @@
     "install-driver-app": "cd Apps/driver-parking && npm install",
     "install-admin-app": "cd Apps/admin && npm install",
     "install-enforcement-app": "cd Apps/enforcement && npm install",
-
-
     "cis": "npm ci && npm run ci-auth && npm run ci-ticket && npm run ci-vehicle && npm run ci-permit && npm run ci-driver-app && npm run ci-admin-app && npm run ci-enforcement-app",
     "ci-auth": "cd Microservices/AuthService && npm ci",
     "ci-ticket": "cd Microservices/TicketService && npm ci",
@@ -30,7 +27,6 @@
     "ci-driver-app": "cd Apps/driver-parking && npm ci",
     "ci-admin-app": "cd Apps/admin && npm ci",
     "ci-enforcement-app": "cd Apps/enforcement && npm ci",
-
     "lint": "npm run lint-auth && npm run lint-ticket && npm run lint-vehicle && npm run lint-permit && npm run lint-driver-app && npm run lint-admin-app && npm run lint-enforcement-app",
     "lint-auth": "cd Microservices/AuthService && npm run lint",
     "lint-permit": "cd Microservices/PermitService && npm run lint",
@@ -39,7 +35,6 @@
     "lint-driver-app": "cd Apps/driver-parking && npm run lint",
     "lint-admin-app": "cd Apps/admin && npm run lint",
     "lint-enforcement-app": "cd Apps/enforcement && npm run lint",
-
     "build": "npm run build-auth && npm run build-ticket && npm run build-vehicle && npm run build-permit && npm run build-driver-app && npm run build-admin-app && npm run build-enforcement-app",
     "build-auth": "cd Microservices/AuthService && npm run build",
     "build-ticket": "cd Microservices/TicketService && npm run build",
@@ -48,7 +43,6 @@
     "build-driver-app": "cd Apps/driver-parking && npm run build",
     "build-admin-app": "cd Apps/admin && npm run build",
     "build-enforcement-app": "cd Apps/enforcement && npm run build",
-
     "start": "concurrently --kill-others \"npm run start-auth\" \"npm run start-ticket\" \"npm run start-vehicle\" \"npm run start-permit\" \"npm run start-driver-app\" \"npm run start-admin-app\" \"npm run start-enforcement-app\"",
     "start-auth": "cd Microservices/AuthService && npm start",
     "start-ticket": "cd Microservices/TicketService && npm start",
@@ -56,11 +50,9 @@
     "start-permit": "cd Microservices/PermitService && npm start",
     "start-driver-app": "cd Apps/driver-parking && npm start",
     "start-admin-app": "cd Apps/admin && npm  start",
-    "start-enforcement-app": "cd Apps/enforcement && npm start"
-
-
-
-
-
+    "start-enforcement-app": "cd Apps/enforcement && npm start",
+    "test-app": "cd Apps && npm run test",
+    "test-services": "cd Microservices && npm run test",
+    "test": "npm run test-app && npm run test-services"
   }
 }
