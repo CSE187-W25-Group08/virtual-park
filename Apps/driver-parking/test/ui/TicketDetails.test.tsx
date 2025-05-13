@@ -1,9 +1,12 @@
-import { it, afterEach, vi} from 'vitest'
+import { it, afterEach, vi, expect} from 'vitest'
 import { fireEvent, render, screen, cleanup} from '@testing-library/react'
 import { useRouter } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl'
 
 import TicketCard from '../../src/app/[locale]/ticket/[ticketId]/Card';
+import TicketDetails from '../../src/app/[locale]/ticket/[ticketId]/page';
+import View from '../../src/app/[locale]/ticket/[ticketId]/View'
+
 import { ticket_details as ticketDetailsMessages } from '../../messages/en.json'
 
 vi.mock('next/navigation', () => ({
@@ -56,6 +59,8 @@ vi.mock('next/headers', () => ({
   }),
 }))
 
+vi.stubGlobal('scrollTo', vi.fn())
+
 afterEach(() => {
   cleanup()
   vi.clearAllMocks()
@@ -68,6 +73,32 @@ const renderWithIntl = (component: React.ReactElement) => {
     </NextIntlClientProvider>
   )
 }
+
+it('clicking back navigates to /ticket and scrolls to top', () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  
+  renderWithIntl(<View ticketId="abc123" />)
+
+  const backButton = screen.getByLabelText('back')
+  fireEvent.click(backButton)
+
+  expect(mockPush).toHaveBeenCalledWith('/ticket')
+  expect(window.scrollTo).toHaveBeenCalledWith(0, 0)
+})
+
+it('render details page', async () => {
+  const page = await TicketDetails({
+    params: Promise.resolve({
+      locale: 'en',
+      ticketId: 'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'
+    }),
+  });
+
+  renderWithIntl(page);
+
+  await screen.findByText('Violation: Expired meter');
+});
 
 it('contains Violation Text', async () => {
   renderWithIntl(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
