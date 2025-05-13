@@ -102,9 +102,7 @@ it('should fetch user\'s active vehicle', async () => {
     }
     return Promise.reject('Unknown fetch')
   })
-
   renderWithIntl(<Page />)
-
   await screen.findByText('Honda Pilot - Black (ABC1234)')
 })
 
