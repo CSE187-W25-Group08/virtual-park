@@ -4,12 +4,14 @@ import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
 import { Box, Typography} from "@mui/material";
-import Button from "@mui/material/Button";
-import { useRouter } from 'next/navigation'
+// import Button from "@mui/material/Button";
+// import { useRouter } from 'next/navigation'
 import { useTranslations } from "next-intl";
 
 import { Ticket } from "@/ticket";
-import { getTicketById, setTicketPaid } from "../actions";
+import { getTicketById,
+  //  setTicketPaid 
+  } from "../actions";
 import { Vehicle } from "@/register";
 import { getVehicleById } from "../../register/actions";
 
@@ -18,7 +20,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
   const t = useTranslations("ticket_details");
 
-  const router = useRouter()
+  // const router = useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,13 +68,13 @@ export default function Card({ ticketId }: { ticketId: string }) {
       return `${datePart} at ${timeString}`;
     }
   };
-  const handleClick = async () => {
-    const newTicket = await setTicketPaid(ticketId, true);
-    if (newTicket) {
-      setTicket(newTicket);
-      router.push('/ticket');
-    }
-  };
+  // const handleClick = async () => {
+  //   const newTicket = await setTicketPaid(ticketId, true);
+  //   if (newTicket) {
+  //     setTicket(newTicket);
+  //     router.push('/ticket');
+  //   }
+  // };
 
   const appealed = ticket?.appeal != "null"
 

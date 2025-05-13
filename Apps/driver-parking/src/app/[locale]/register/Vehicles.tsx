@@ -1,6 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Box, Card, Typography, Button, TextField, Switch, FormControlLabel } from '@mui/material';
+import { Box, Card, Typography, Button, TextField,
+  //  Switch, 
+  //  FormControlLabel 
+  } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
 import {Vehicle,VehicleForm} from '../../../register'
@@ -38,9 +41,9 @@ export default function Vehicles() {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleToggle = () => {
-    setFormData(prev => ({ ...prev, isDefault: !prev.isDefault }));
-  };
+  // const handleToggle = () => {
+  //   setFormData(prev => ({ ...prev, isDefault: !prev.isDefault }));
+  // };
 
   const isFormValid =
   // formData.driver.trim() &&
