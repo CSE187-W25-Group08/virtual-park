@@ -1,5 +1,5 @@
 import { it, expect, vi, beforeEach } from 'vitest';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import middleware from '../../src/middleware';
 
 global.fetch = vi.fn();
@@ -69,3 +69,22 @@ it('invalid token will redirect back to the login', async () => {
   const result = await middleware(req);
   expect(result).toBe('redirectRes');
 });
+
+
+it('invalid token will redirect back to the login with locale prefix present', async () => {
+  global.fetch = vi.fn().mockResolvedValueOnce({
+    status: 401,
+    json: () => Promise.reject('Unauthorized')
+  });
+
+  const req = {
+    nextUrl: { pathname: '/es/register' },
+    cookies: { get: vi.fn().mockReturnValue({value: 'invalidToken'}) },
+  } as unknown as NextRequest;
+
+  const result = await middleware(req);
+  expect(result).toBe('redirectRes');
+});
+
+
+
