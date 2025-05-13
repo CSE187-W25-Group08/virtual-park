@@ -5,9 +5,9 @@ INSERT INTO member(id, data)
 VALUES (
   '03845709-4d40-45fe-9e51-11789f6f209a',
   jsonb_build_object(
-    'email','anna@books.com',
-    'name','Anna Admin',
-    'pwhash',crypt('annaadmin',gen_salt('bf')),
+    'email','amza@books.com',
+    'name','Amza Admin',
+    'pwhash',crypt('amzaadmin',gen_salt('bf')),
     'roles','["admin"]'
   )
 );
@@ -16,9 +16,9 @@ INSERT INTO member(id, data)
 VALUES (
   'bea45ed8-aa83-4c49-a201-4625baa0e91a',
   jsonb_build_object(
-    'email','molly@books.com',
-    'name','Molly Member',
-    'pwhash',crypt('mollymember',gen_salt('bf')),
+    'email','matt@books.com',
+    'name','Mathew Member',
+    'pwhash',crypt('matthewmember',gen_salt('bf')),
     'roles','["driver"]',
     'joindate', '2025-04-16T04:59:03+00:00',
     'suspended', false
