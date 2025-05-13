@@ -17,6 +17,7 @@ export class VehicleService {
         'make': data.make,
         'model': data.model,
         'color': data.color,
+        'active': rows[0].data.active
       }
       return vehicleObj
     }))
@@ -38,6 +39,7 @@ export class VehicleService {
         'make': data.make,
         'model': data.model,
         'color': data.color,
+        'active': rows[0].data.active
       }
       return vehicleObj
     }))
@@ -48,7 +50,7 @@ export class VehicleService {
   public async registerVehicle(userId: string | undefined, input: RegisterVehicle) {
     const query = {
       text: queries.registerVehicle,
-      values: [userId, input.licensePlate, input.make, input.model, input.color]
+      values: [userId, input.licensePlate, input.make, input.model, input.color, true]
     }
     const { rows } = await pool.query(query)
 
@@ -59,6 +61,7 @@ export class VehicleService {
       'make': rows[0].data.make,
       'model': rows[0].data.model,
       'color': rows[0].data.color,
+      'active': rows[0].data.active
   }
   return vehicleObj;
   }
@@ -78,6 +81,7 @@ export class VehicleService {
       'make': rows[0].data.make,
       'model': rows[0].data.model,
       'color': rows[0].data.color,
+      'active': rows[0].data.active
   }
   return vehicleObj;
   }
@@ -99,6 +103,7 @@ export class VehicleService {
         'make': rows[0].data.make,
         'model': rows[0].data.model,
         'color': rows[0].data.color,
+        'active': rows[0].data.active
       }
   
       console.log('vehicleObj: ', vehicleObj)

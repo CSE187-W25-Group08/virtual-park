@@ -81,6 +81,7 @@ test('Member Registers a Vehicle', async () => {
             model
             color
             driver
+            active
           }
         }
       `
@@ -90,7 +91,7 @@ test('Member Registers a Vehicle', async () => {
     })
 })
 
-test('get the primary Vehicle of a user', async () => {
+test('user who do no thave primary car', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
@@ -105,3 +106,4 @@ test('get the primary Vehicle of a user', async () => {
       expect(res.body.data.primaryVehicle).toBe(null)
     })
 })
+

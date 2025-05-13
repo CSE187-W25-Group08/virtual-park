@@ -24,7 +24,8 @@ VALUES (
     'license_plate', $2::text,
     'make', $3::text,
     'model', $4::text,
-    'color', $5::text
+    'color', $5::text,
+    'active', $6::bool
   )
 )
 RETURNING id, driver, data;
