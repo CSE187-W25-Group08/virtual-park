@@ -11,12 +11,21 @@ import { Permit } from '../../../../permit'
 
 const PermitListCard = ({permit}: {permit: Permit}) => {
   const t = useTranslations('permit_history')
+  let permitType
+  if (permit.type === 'Student') {
+    permitType = t('student')
+  } else if (permit.type === 'Staff') {
+    permitType = t('staff')
+  } else if (permit.type === 'Disabled') {
+    permitType = t('disabled')
+  }
+
   return (
     <ListItem disablePadding>
       <Card sx={{ width: '100%', marginTop: '20px', borderRadius: 3, boxShadow: 2, border: '1px solid #ccc', p: 2 }}>
         <CardContent>
           <Typography variant="h5" color="text.primary" align="center" gutterBottom>
-            {permit.type === 'Student' ? t('student') : permit.type === 'Staff' ? t('staff') : permit.type === 'Disabled' ? t('disabled') : ''}
+            {permitType}
           </Typography>
           <Typography variant="body1" color="text.secondary" align="center" gutterBottom>
             ${permit.price}
