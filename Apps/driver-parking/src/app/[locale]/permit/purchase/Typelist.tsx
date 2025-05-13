@@ -25,6 +25,6 @@ export default function TypeList() {
       {permitTypeList.map((permit) => (
         <PermitCard key={permit.type} permit={permit} />
       ))}
-    </div>
+    </div> 
   )
 }
