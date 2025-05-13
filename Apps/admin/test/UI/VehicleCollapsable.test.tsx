@@ -4,6 +4,7 @@ import { Permit } from '../../src/permit'
 import VehicleCollapsable from '../../src/app/drivers/[driverId]/vehicle/Collapsable'
 import { getUserVehicles } from '../../src/app/vehicle/action'
 import { Vehicle } from '../../src/vehicle'
+import { VehicleService } from '../../src/vehicle/service'
 
 
 afterEach(() => {
@@ -41,9 +42,13 @@ export const mockVehicles: Vehicle[] = [
 
 
 it('should render permit collapsable', async () => {
-  vi.mock('../../src/app/vehicle/action', () => ({
-    getUserVehicles: vi.fn(() => Promise.resolve(mockVehicles))
-  }))
+    vi.mock('../../src/vehicle/service', async () => {
+    return {
+      VehicleService: vi.fn().mockImplementation(() => ({
+        getUserVehicles: vi.fn(() => Promise.resolve(mockVehicles))
+      }))
+    }
+  })
 
   render(<VehicleCollapsable driverId='doesntmatter'/>)
   await screen.findByText('Honda')

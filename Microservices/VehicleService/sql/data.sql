@@ -7,7 +7,8 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'license_plate', '1XXX000',
     'make', 'Jeep',
     'model', 'Trailhawk',
-    'color', 'cyan'
+    'color', 'cyan',
+    'active', true
   )
 );
 
@@ -19,7 +20,8 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'license_plate', '123BC4A',
     'make', 'Toyota',
     'model', 'Corolla',
-    'color', 'Silver'
+    'color', 'Silver',
+    'active', true
   )
 );
 INSERT INTO vehicle (id, driver, data) VALUES (
@@ -29,6 +31,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'license_plate', '456DE5B',
     'make', 'Honda',
     'model', 'Accord',
-    'color', 'Black'
+    'color', 'Black',
+    'active', false
   )
 );

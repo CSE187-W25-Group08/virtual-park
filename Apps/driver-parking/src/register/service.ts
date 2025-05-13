@@ -101,4 +101,27 @@ export class RegisterService {
       .catch(() => reject('Unauthorized'))
     })
   }
+
+  public async getPrimaryVehicle(cookie: string|undefined): Promise<Vehicle|undefined>  {
+    return new Promise((resolve, reject) => {
+      fetch('http://localhost:4020/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${cookie}`,
+        },
+        body: JSON.stringify({query: `{primaryVehicle {id, licensePlate, driver, make, model, color}}`}),
+      })
+      .then(response => {
+        if (response.status != 200) {
+          reject('Unauthorized')
+        }
+        return response.json()} 
+      )
+      .then(json => {
+        resolve(json.data.primaryVehicle)
+      })
+      .catch(() => reject('Unauthorized'))
+    })
+  }
 }

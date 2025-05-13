@@ -49,7 +49,7 @@ it('renders the welcome message with the user name', async () => {
 
   renderWithIntl(<Dashboard />);
 
-  await screen.getByText('Molly Member.');
+  await screen.getByText('Molly Member');
 });
 
 it('renders the active vehicle', async () => {

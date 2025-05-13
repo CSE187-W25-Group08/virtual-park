@@ -15,7 +15,6 @@ export const routing = defineRouting({
   locales: ['en', 'es'],
   defaultLocale: 'en',
   localePrefix: "as-needed",
-
 });
 
 /* when you try to do http://localhost:3000/en, it will do nothing because the enligh is the default locale route */

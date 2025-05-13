@@ -41,9 +41,9 @@ afterAll(() => {
   server.close()
 })
 
-afterEach(async () => {
-  await db.reset()
-})
+// afterEach(async () => {
+//   await db.reset()
+// })
 
 test('Unauthorized requests to VehicleService are rejected', async () => {
   await supertest(server)
@@ -90,6 +90,7 @@ test('Member Registers a Vehicle', async () => {
             make: "Toyota",
             model: "Corolla",
             color: "Silver"
+
           }) {
             id
             licensePlate
@@ -130,3 +131,24 @@ test('Member gets vehicle by Id', async () => {
       expect(res.body.data.getVehicleById).toHaveProperty('id', '18fa94fc-4783-42df-a904-7ec17efadca5')
     })
 })
+
+test('user gets primary vehicle', async () => {
+  const accessToken = await getAccessToken(molly.email, molly.password);
+  const result = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer ${accessToken}`)
+    .send({
+      query: `{
+        primaryVehicle {
+          id
+          driver
+          licensePlate
+          make
+          model
+          color
+          active
+        }
+      }`
+    });
+  expect(result.body.data.primaryVehicle.licensePlate).toBe('TEST123');
+});

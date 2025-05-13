@@ -81,6 +81,7 @@ test('Member Registers a Vehicle', async () => {
             model
             color
             driver
+            active
           }
         }
       `
@@ -89,3 +90,20 @@ test('Member Registers a Vehicle', async () => {
       expect(res.body.data.registerVehicle.licensePlate).toBe("TEST123")
     })
 })
+
+test('user who do no thave primary car', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `{
+        primaryVehicle
+        { id, driver, licensePlate, make, model, color }
+      }`
+    })
+    .then((res) => {
+      console.log('primary vehicle info:',res.body.data.primaryVehicle)
+      expect(res.body.data.primaryVehicle).toBe(null)
+    })
+})
+

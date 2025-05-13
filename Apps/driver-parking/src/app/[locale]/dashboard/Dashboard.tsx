@@ -10,7 +10,7 @@ import TicketCard from "../ticket/card"
 import { Ticket } from "@/ticket"
 import { listUnpaid } from "../ticket/actions"
 import { Vehicle } from "@/register"
-import { getUserVehicles } from "../register/actions"
+import { getPrimaryVehicle } from "../register/actions"
 import { Permit } from "@/permit"
 import PermitListCard from "../permit/history/PermitListCard"
 
@@ -32,12 +32,12 @@ export default function Dashboard() {
     setName(window.sessionStorage.getItem('name'))
     const fetchData = async () => {
       const result = await listUnpaid()
-      const vehicles = await getUserVehicles()
+      const primaryVehicle = await getPrimaryVehicle()
       if (result) {
         setUnpaidTickets(result)
       }
-      if (vehicles) {
-        setVehicle(vehicles[0])
+      if (primaryVehicle) {
+        setVehicle(primaryVehicle)
       }
     }
     fetchData()
@@ -55,7 +55,7 @@ export default function Dashboard() {
     <Fragment>
       <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2 }}>
         <Typography variant="h4">{t('welcome')}</Typography>
-        <Typography variant="h4">{name}.</Typography>
+        <Typography variant="h4">{name}</Typography>
         <Typography variant="body1" sx={{ marginTop: 2 }}>
           {t('vehicle')}
         </Typography>

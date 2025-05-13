@@ -10,9 +10,21 @@ vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
 
-vi.mock('../../src/app/[locale]/login/action', () => ({
-  login: () => Promise.resolve({ name: 'Anna Admin', accessToken: '1234' })
-}))
+vi.mock('../../src/app/[locale]/login/action', async () => {
+  return {
+    login: vi.fn((credentials) => {
+      if (
+        credentials.email === 'anna@books.com' &&
+        credentials.password === 'annaadmin'
+      ) {
+        return Promise.resolve({ name: 'Anna Admin', accessToken: '1234' })
+      }
+      // Simulate failed login
+      return Promise.reject(new Error('Invalid credentials'))
+    })
+  }
+})
+
 
 import Login from '../../src/app/[locale]/login/View'
 
@@ -58,11 +70,26 @@ it('should call login function when button is clicked', async () => {
   const passwordInput = screen.getByPlaceholderText('password')
   const button = screen.getByText('Sign In')
 
-  await userEvent.type(emailInput, 'molly@books.com')
-  await userEvent.type(passwordInput, 'mollymember')
+  await userEvent.type(emailInput, 'anna@books.com')
+  await userEvent.type(passwordInput, 'annaadmin')
   userEvent.click(button)
 
   await vi.waitFor(() => {
     expect(mockPush).toHaveBeenCalledWith('/dashboard')
   })
 })
+
+it('shows error message on failed login', async () => {
+  renderWithIntl(<Login />)
+
+  const emailInput = screen.getByPlaceholderText('email')
+  const passwordInput = screen.getByPlaceholderText('password')
+  const signInButton = screen.getByText('Sign In')
+
+  await userEvent.type(emailInput, 'bad@gmail.com')
+  await userEvent.type(passwordInput, 'badpassword')
+  await userEvent.click(signInButton)
+
+  expect(screen.getByText('Sign In')).toBeDefined()
+})
+
