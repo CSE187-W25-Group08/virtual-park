@@ -7,7 +7,7 @@ import {
   Typography, 
   Box,
   Tooltip,
-  Button,
+  // Button,
 } from'@mui/material'
 
 export default function AppealsList() {
@@ -22,21 +22,24 @@ export default function AppealsList() {
     setAppealData();
   }, [])
 
-  const handleManageAppeal = async (ticket?: Ticket) => {
-    alert(`going to appeal of ${ticket?.id}`);
-  }
+  // const handleManageAppeal = async (ticket?: Ticket) => {
+  //   alert(`going to appeal of ${ticket?.id}`);
+  // }
   
   // based on MUI https://mui.com/material-ui/react-list/
   const columns: GridColDef[] = [
     {
-      field: 'lot',
-      headerName: 'Lot',
-      width: 150,
-      renderCell: (params) => params.value || 'N/A',
-    },
-    {
       field: 'issue',
       headerName: 'Issue Date',
+      width: 200,
+      renderCell: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleString() || 'Invalid date';
+      },
+    },
+    {
+      field: 'due',
+      headerName: 'Due Date',
       width: 200,
       renderCell: (params) => {
         const date = new Date(params.value);
@@ -73,23 +76,23 @@ export default function AppealsList() {
       width: 120,
       renderCell: (params) => `$${params.value.toFixed(2)}`,
     },
-    {
-      field: 'actions',
-      headerName: '',
-      width: 180,
-      sortable: false,
-      filterable: false,
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          color="primary"
-          size="small"
-          onClick={() => handleManageAppeal(params.row)}
-        >
-          Manage Appeal
-        </Button>
-      ),
-    },
+    // {
+    //   field: 'actions',
+    //   headerName: '',
+    //   width: 180,
+    //   sortable: false,
+    //   filterable: false,
+    //   renderCell: (params) => (
+    //     <Button
+    //       variant="outlined"
+    //       color="primary"
+    //       size="small"
+    //       onClick={() => handleManageAppeal(params.row)}
+    //     >
+    //       Manage Appeal
+    //     </Button>
+    //   ),
+    // },
   ];
   return (
     <Box>

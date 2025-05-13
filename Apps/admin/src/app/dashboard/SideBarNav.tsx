@@ -54,12 +54,12 @@ export default function SideBarNav() {
           sx={{ width: 36, height: 36 }}
         />
         <Box sx={{ mr: 'auto' }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
+          {/* <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
             Anna Admin
           </Typography>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
             anna@books.com
-          </Typography>
+          </Typography> */}
         </Box>
       </Stack>
     </Drawer>

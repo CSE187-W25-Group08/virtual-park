@@ -8,13 +8,17 @@ import {
   Button, 
   Box,
 } from'@mui/material'
-import { fetchDrivers, reactivateDriver, suspendDriver } from './action';
+import { 
+  fetchDrivers, 
+  // reactivateDriver, 
+  // suspendDriver,
+} from './action';
 import { Driver } from '@/driver';
 import { useRouter } from 'next/navigation'
 
 export default function DriversGrid() {
   const [drivers, setDrivers] = React.useState<Driver[]>([]);
-  const [suspendDisabled, setSuspendDisabled] = React.useState<Set<string>>(new Set());
+  // const [suspendDisabled, setSuspendDisabled] = React.useState<Set<string>>(new Set());
 
   const router = useRouter()
 
@@ -62,7 +66,7 @@ export default function DriversGrid() {
       width: 300,
       renderCell: (params) => (
         <Box>
-        <Button
+        {/* <Button
           variant="contained"
           color="error"
           size="small"
@@ -81,13 +85,13 @@ export default function DriversGrid() {
         sx={{marginRight: 1}}
       >
         Reactivate
-      </Button>
+      </Button> */}
         <Button
         variant="contained"
         color="info"
         size="small"
         onClick={() => handleOpenDriver(params.row)}
-        disabled={suspendDisabled.has(params.row?.email)}
+        // disabled={suspendDisabled.has(params.row?.email)}
       >
         Details
       </Button>
@@ -98,21 +102,21 @@ export default function DriversGrid() {
     },
   ];  
 
-  const handleSuspend = async (email?: string) => {
-    if (!email) return;
-    setSuspendDisabled((prev) => new Set([...prev, email]));
-    await suspendDriver(email);
-    console.log('Suspending user:', email);
-    alert(`Suspend functionality for ${email}`);
-  };
+  // const handleSuspend = async (email?: string) => {
+  //   if (!email) return;
+  //   setSuspendDisabled((prev) => new Set([...prev, email]));
+  //   await suspendDriver(email);
+  //   console.log('Suspending user:', email);
+  //   alert(`Suspend functionality for ${email}`);
+  // };
 
-  const handleReactivate = async (email?: string) => {
-    if (!email) return;
-    setSuspendDisabled((prev) => new Set([...prev].filter((e) => e !== email)));
-    await reactivateDriver(email);
-    console.log('Reactivating user:', email);
-    alert(`Reactivate functionality for ${email}`);
-  }
+  // const handleReactivate = async (email?: string) => {
+  //   if (!email) return;
+  //   setSuspendDisabled((prev) => new Set([...prev].filter((e) => e !== email)));
+  //   await reactivateDriver(email);
+  //   console.log('Reactivating user:', email);
+  //   alert(`Reactivate functionality for ${email}`);
+  // }
 
   const handleOpenDriver = async (driver?: Driver) => {
     router.push('/drivers/' + driver?.jwt)
