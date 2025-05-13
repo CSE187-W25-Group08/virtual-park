@@ -5,9 +5,6 @@ import {
   Stack,
   Avatar,
   Divider,
-  List,
-  ListItem,
-  ListItemText
 } from'@mui/material'
 import NavList from './NavList'
 export default function SideBarNav() {

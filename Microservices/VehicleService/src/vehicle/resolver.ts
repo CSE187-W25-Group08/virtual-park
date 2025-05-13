@@ -35,7 +35,7 @@ export class VehicleResolver {
   }
 
   @Authorized()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   @Query(() => Vehicle, { nullable: true })
   async primaryVehicle(@Ctx() request: Request): Promise<Vehicle|null> {
     return await new VehicleService().getPrimaryVehicle(request.user?.id)
