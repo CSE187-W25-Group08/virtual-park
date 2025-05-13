@@ -32,7 +32,7 @@ export default function Dashboard() {
     setName(window.sessionStorage.getItem('name'))
     const fetchData = async () => {
       const result = await listUnpaid()
-      const primaryVehicle = await getPrimaryVehicle() // change to primary vehicle
+      const primaryVehicle = await getPrimaryVehicle()
       if (result) {
         setUnpaidTickets(result)
       }

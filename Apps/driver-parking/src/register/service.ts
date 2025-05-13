@@ -102,7 +102,7 @@ export class RegisterService {
     })
   }
 
-  public async getPrimaryVehicle(cookie: string|undefined): Promise<Vehicle>  {
+  public async getPrimaryVehicle(cookie: string|undefined): Promise<Vehicle|undefined>  {
     return new Promise((resolve, reject) => {
       fetch('http://localhost:4020/graphql', {
         method: 'POST',
