@@ -40,6 +40,8 @@ jobs:
     # needs: [lint, build]
     steps:
       - uses: actions/checkout@v4
+      - run: npm instal
+      - run: npm run installs
       - run: npm run test
   
   deploy-docker:
