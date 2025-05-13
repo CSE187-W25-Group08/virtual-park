@@ -1,13 +1,13 @@
 services:
   app:
     container_name: app
+    image: virtual-park:latest
     env_file: .env
     build: .
     depends_on:
       - postgres
     ports:
       - "3000:3000"
-
 
   postgres:
     container_name: virtual-park-db
