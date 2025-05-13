@@ -28,7 +28,7 @@ export default function SideBarNav() {
       }}
     >
       {/* Top Content */}
-      <Box sx={{ p: 1.5 }}>
+      <Box sx={{ p: 3 }}>
         <Typography variant="h5">Dashboard &gt; Home</Typography>
       </Box>
 
