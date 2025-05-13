@@ -110,17 +110,17 @@ it('contains image', async () => {
   await screen.findByLabelText('image_e5fd7cb1-75b0-4d23-a7bc-361e2d0621da')
 })
 
-it('contains pay ticket button', async () => {
-  renderWithIntl(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
-  await screen.findByText('Pay Ticket')
-})
-it('Cicking pay ticket button changes ticket status to paid', async () => {
-  const mockPush = vi.fn()
-  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+// it('contains pay ticket button', async () => {
+//   renderWithIntl(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
+//   await screen.findByText('Pay Ticket')
+// })
+// it('Cicking pay ticket button changes ticket status to paid', async () => {
+//   const mockPush = vi.fn()
+//   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
   
-  renderWithIntl(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
-  const button = await screen.findByText('Pay Ticket')
-  fireEvent.click(button)
-  // screen.debug()
-  await screen.findByText('Paid')
-})
+//   renderWithIntl(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
+//   const button = await screen.findByText('Pay Ticket')
+//   fireEvent.click(button)
+//   // screen.debug()
+//   await screen.findByText('Paid')
+// })

@@ -70,17 +70,17 @@ it('renders the unpaid tickets section', async () => {
   await screen.getByText('Manage Tickets');
 });
 
-it('clicks "Buy Permit" button', async () => {
-  renderWithIntl(<Dashboard />);
+// it('clicks "Buy Permit" button', async () => {
+//   renderWithIntl(<Dashboard />);
 
-  const buyPermit = screen.getByText('Buy Permit');
+//   const buyPermit = screen.getByText('Buy Permit');
 
-  const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
-  fireEvent.click(buyPermit);
+//   const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
+//   fireEvent.click(buyPermit);
 
-  expect(alertMock).toHaveBeenCalledWith('You have bought a permit.');
-  alertMock.mockRestore();
-});
+//   expect(alertMock).toHaveBeenCalledWith('You have bought a permit.');
+//   alertMock.mockRestore();
+// });
 
 it('goes to ticket page when "Manage Tickets" is clicked', async () => {
   const mockPush = vi.fn();

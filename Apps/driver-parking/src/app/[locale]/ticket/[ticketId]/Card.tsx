@@ -145,9 +145,9 @@ export default function Card({ ticketId }: { ticketId: string }) {
                 <Typography color='success.dark'>{t('paid')}</Typography> : 
                 <Typography color='red'>{t('unpaid')}</Typography>}
   
-                {(!ticket?.paid && ticket?.appeal != "approved") && (
+                {/* {(!ticket?.paid && ticket?.appeal != "approved") && (
                   <Button variant="outlined" onClick={() => {handleClick()}}>{t('payTicket')}</Button>
-                )}
+                )} */}
               </Box>
             </ListItemText>
           </List>

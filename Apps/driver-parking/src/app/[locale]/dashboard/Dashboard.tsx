@@ -43,13 +43,13 @@ export default function Dashboard() {
     fetchData()
   }, [])
 
-  const buyPermit = () => {
-    alert(t('permitBought'))
-  }
+  // const buyPermit = () => {
+  //   alert(t('permitBought'))
+  // }
 
-  const payTickets = () => {
-    alert(`${t('ticketsPaid')}${unpaidTickets.reduce((acc, ticket) => acc + ticket.cost, 0)}`)
-  }
+  // const payTickets = () => {
+  //   alert(`${t('ticketsPaid')}${unpaidTickets.reduce((acc, ticket) => acc + ticket.cost, 0)}`)
+  // }
 
   return (
     <Fragment>
@@ -77,13 +77,13 @@ export default function Dashboard() {
             {t('noPermit')}
           </Typography>
         )}
-        <Button
+        {/* <Button
           variant="contained"
           sx={{ marginTop: 4 }}
           onClick={buyPermit}
         >
           {t('buyPermit')}
-        </Button>
+        </Button> */}
         <Divider sx={{ width: "100%", marginTop: 4 }}/>
       </Box>
       <Box sx={{display: 'flex', flexDirection: 'column', marginTop: 2 }}>
@@ -111,12 +111,12 @@ export default function Dashboard() {
             {unpaidTickets.map((ticket, index) => (
               <TicketCard key={index} ticket={ticket} />
             ))}
-            <Button
+            {/* <Button
               variant="contained"
               sx={{ marginTop: 2, marginLeft: 1 }}
               onClick={payTickets}>
               {t('payTickets')}
-            </Button>
+            </Button> */}
           </Box>
         )}
       </Box>
