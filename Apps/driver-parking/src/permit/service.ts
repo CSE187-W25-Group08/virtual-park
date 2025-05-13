@@ -1,4 +1,4 @@
-import {Permit} from '.'
+import {Permit, PermitType} from '.'
 
 export async function getPermitByDriver(cookie: string | undefined):Promise<Permit[]> {
   return new Promise((resolve, reject) => {
@@ -23,7 +23,7 @@ export async function getPermitByDriver(cookie: string | undefined):Promise<Perm
   })
 }
 
-export async function getPermitType(cookie: string | undefined):Promise<Permit[]> {
+export async function getPermitType(cookie: string | undefined):Promise<PermitType[]> {
   return new Promise((resolve, reject) => {
     fetch('http://localhost:4000/graphql', {
       method: 'POST',

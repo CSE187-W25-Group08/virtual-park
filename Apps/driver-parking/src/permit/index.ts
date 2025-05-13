@@ -6,6 +6,11 @@ export interface Permit {
     price: number
 }
 
+export interface PermitType {
+    type: string,
+    price: number
+}
+
 export interface PermitPurchase {
   purchased: (permit: Permit) => void
 }
