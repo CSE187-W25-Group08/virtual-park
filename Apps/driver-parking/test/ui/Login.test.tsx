@@ -20,7 +20,7 @@ vi.mock('../../src/app/[locale]/login/action', async () => {
         return Promise.resolve({ name: 'Anna Admin', accessToken: '1234' })
       }
       // Simulate failed login
-      return Promise.reject(new Error('Invalid credentials'))
+      return Promise.reject(undefined)
     })
   }
 })
