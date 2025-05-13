@@ -1,4 +1,4 @@
-import { it, afterEach, vi } from 'vitest'
+import { it, afterEach, vi, expect } from 'vitest'
 import { render, cleanup, screen } from '@testing-library/react'
 import { NextIntlClientProvider } from 'next-intl'
 
@@ -39,6 +39,13 @@ it('mocks PermitList component', async () => {
     issueDate: '2025-01-02',
     expDate: '2025-01-02',
     price: 6.14,
+  },
+  {
+    id: '3',
+    type: 'Disabled',
+    issueDate: '2025-01-03',
+    expDate: '2025-01-03',
+    price: 10.14,
   }]
   mockgetUserPermits.mockResolvedValueOnce(testPermits)
 

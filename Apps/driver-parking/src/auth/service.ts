@@ -1,32 +1,43 @@
 import { NewUser, Authenticated, Credentials } from './'
 
-export async function signupUser(user: NewUser): Promise<Authenticated> {
-  const response = await fetch('http://localhost:3010/api/v0/auth/signup', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user),
-  });
+export async function signupUser(user: NewUser): Promise<Authenticated | undefined> {
+  try {
+    const response = await fetch('http://localhost:3010/api/v0/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
+    });
 
-  if (response.status !== 201) {
-    throw new Error(response.statusText);
+    if (response.status !== 201) {
+      throw new Error(response.statusText);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Signup failed:', error);
+    return undefined;
   }
-
-  return await response.json();
 }
 
 
 export async function authenticate(credentials: Credentials): Promise<Authenticated | undefined> {
-  const response = await fetch('http://localhost:3010/api/v0/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(credentials),
-  });
+  try {
+    const response = await fetch('http://localhost:3010/api/v0/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials),
+    });
+    
+    if (response.status !== 200) {
+      throw new Error(response.statusText);
+    }
 
-  if (response.status !== 200) {
-    throw new Error(response.statusText);
+    return await response.json();
   }
-
-  return await response.json();
+  catch (error) {
+    console.error('Authentication failed:', error);
+    return undefined;
+  }
 }
 
 export async function check(cookie: string | undefined): Promise<void> {
@@ -47,5 +58,3 @@ export async function check(cookie: string | undefined): Promise<void> {
     return Promise.reject('Unauthorized');
   }
 }
-
-
