@@ -7,7 +7,7 @@ import Page from '../../src/app/[locale]/dashboard/page'
 import { dashboard as dashboardMessages } from '../../messages/en.json'
 import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import { ticket as ticketMessages } from '../../messages/en.json'
-import { getUserVehicles } from '../../src/app/[locale]/register/actions'
+import { getPrimaryVehicle } from '../../src/app/[locale]/register/actions'
 import { listUnpaid } from '@/app/[locale]/ticket/actions'
 
 vi.mock('next/navigation', () => ({
@@ -44,10 +44,10 @@ vi.mocked(listUnpaid).mockResolvedValue([
 ])
 
 vi.mock('../../src/app/[locale]/register/actions', () => ({
-  getUserVehicles: vi.fn(),
+  getPrimaryVehicle: vi.fn(),
 }))
 
-vi.mocked(getUserVehicles).mockResolvedValue([
+vi.mocked(getPrimaryVehicle).mockResolvedValue(
   {
     id: '1',
     licensePlate: 'ABC1234',
@@ -55,8 +55,7 @@ vi.mocked(getUserVehicles).mockResolvedValue([
     make: 'Honda',
     model: 'Pilot',
     color: 'Black',
-  }
-])
+  })
 
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
@@ -86,7 +85,7 @@ it('should fetch user\'s active vehicle', async () => {
         status: 200,
         json: () => Promise.resolve({
           data: {
-            getUserVehicles: [
+            getPrimaryVehicle: [
               {
                 id: '1',
                 licensePlate: 'ABC1234',

@@ -1,10 +1,9 @@
-import { it, afterEach, vi, expect } from 'vitest'
+import { it, afterEach, vi} from 'vitest'
 import { render, screen, cleanup} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { useRouter } from 'next/navigation'
 import TicketCollapsable from '../../src/app/drivers/[driverId]/ticket/Collapsable'
 import { Ticket } from '../../src/ticket'
-import { listAll } from '../../src/app/ticket/action'
+
+import * as TicketServiceModule from '../../src/ticket/service'
 
 
 afterEach(() => {
@@ -44,11 +43,15 @@ export const mockTickets: Ticket[] = [
 ]
 
 
-it('should render ticket collapsable', async () => {
-  vi.mock('../../src/app/ticket/action', () => ({
-    listAll: vi.fn(() => Promise.resolve(mockTickets))
-  }))
+  it('renders tickets on success', async () => {
+    vi.spyOn(TicketServiceModule, 'TicketService').mockImplementation(() => ({
+      getAllTicket: vi.fn().mockResolvedValue(mockTickets),
+      getPaidTicket: vi.fn(),
+      getUnpaidTicket: vi.fn(),
+      getActiveAppeals: vi.fn(),
+    }))
 
-  render(<TicketCollapsable driverId='doesntmatter'/>)
-  await screen.findByText('Test 1')
-})
+    render(<TicketCollapsable driverId="whatever" />)
+    await screen.findByText('Test 1')
+  })
+
