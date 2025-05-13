@@ -81,7 +81,7 @@ jobs:
           docker compose -f docker-compose.yaml build
           docker compose -f docker-compose.yaml push
           docker tag $IMAGE $LATEST
-          docker push $IMAGE
+          docker push $LATEST
 
   deploy:
     name: Deploy and Spin Up on EC2 Instance
