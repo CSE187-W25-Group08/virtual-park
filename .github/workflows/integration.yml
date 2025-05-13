@@ -40,7 +40,7 @@ jobs:
     # needs: [lint, build]
     steps:
       - uses: actions/checkout@v4
-      - run: echo "This would run the tests"
+      - run: npm run test
   
   deploy-docker:
     name: Build and Push Docker Image to GHCR
