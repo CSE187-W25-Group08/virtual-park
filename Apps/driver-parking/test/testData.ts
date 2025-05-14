@@ -22,7 +22,7 @@ export const paidList = [
     description: "Does not matter",
     due: "2025-04-25T23:59:59Z",
     issue: "2025-04-25T09:00:00Z",
-    violation: "Cannot park",
+    violation: "Unique Violation",
     image: "/images/tickets/t2.jpg",
     cost: 50.02,
     appeal: "null"
