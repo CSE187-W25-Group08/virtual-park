@@ -11,6 +11,7 @@ import {
 } from'@mui/material'
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -18,6 +19,7 @@ export default function NavList() {
   const listItems = [
     { text: 'Home', page: "/", icon: <HomeRoundedIcon /> },
     { text: 'Drivers', page: "/drivers", icon: <PeopleRoundedIcon /> },
+    { text: 'Lots', page: "/lots", icon: <LocalParkingIcon /> },
   ];
 
   const router = useRouter();

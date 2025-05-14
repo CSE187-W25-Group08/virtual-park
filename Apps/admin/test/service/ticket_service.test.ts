@@ -47,7 +47,7 @@ const mockTickets: Ticket[] = [
   }
 ];
 
-it("successfully fetches paid tickets from GraphQL API", async () => {
+it("successfully fetches all tickets from GraphQL API", async () => {
   vi.spyOn(global, "fetch").mockResolvedValueOnce({
     status: 200,
     json: async () => ({
