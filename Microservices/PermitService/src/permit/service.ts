@@ -48,9 +48,9 @@ export class PermitService {
       values: [driverID]
     }
     const result = await pool.query(query)
-    if (result.rowCount === 0) {
-      return null
-    }
+    // if (result.rowCount === 0) {
+    //   return null
+    // }
     return {
       id: result.rows[0].id,
       issueDate: result.rows[0].issue_date,
