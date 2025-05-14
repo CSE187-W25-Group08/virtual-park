@@ -5,6 +5,7 @@ import { useState, useEffect, Fragment } from "react"
 import { useRouter } from "next/navigation"
 import { Typography, Box, Button, Divider } from "@mui/material"
 import { useTranslations } from "next-intl"
+import Link from "next/link"
 
 import TicketCard from "../ticket/card"
 import { Ticket } from "@/ticket"
@@ -59,7 +60,12 @@ export default function Dashboard() {
           {t('vehicle')}
         </Typography>
         <Typography variant="body1">
-          {vehicle ? `${vehicle.make} ${vehicle.model} - ${vehicle.color} (${vehicle.licensePlate})` : t('noVehicle')}
+          {vehicle ? (`${vehicle.make} ${vehicle.model} - ${vehicle.color} (${vehicle.licensePlate})`) :
+          (
+            <>
+              {t('noVehicle')} <Link href="/register">{t('registerVehicle')}</Link>
+            </>
+          )}
         </Typography>
         <Divider sx={{ width: "100%", marginTop: 4 }}/>
         
