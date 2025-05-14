@@ -6,7 +6,7 @@
     "outputDirectory": "build",
     "specVersion": 3,
     "schemes": [ "http" ],
-    "basePath": "/api/v0/registrar",
+    "basePath": "/v0/registrar",
     "securityDefinitions": {
       "jwt": {
         "type": "http",

@@ -16,7 +16,15 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-app.use('/api/v0/registrar/docs', swaggerUi.serve, async (_req: ExRequest, res: ExResponse) => {
+app.get('/v0/registrar', (_req: ExRequest, res: ExResponse) => {
+  res.json({
+    message: 'The Virtual-Park Campus Registrar API is currently online',
+    version: 'v0',
+    docs: '/v0/registrar/docs'
+  })
+})
+
+app.use('/v0/registrar/docs', swaggerUi.serve, async (_req: ExRequest, res: ExResponse) => {
   res.send(
     swaggerUi.generateHTML(await import('../build/swagger.json'))
   )
@@ -24,7 +32,7 @@ app.use('/api/v0/registrar/docs', swaggerUi.serve, async (_req: ExRequest, res: 
 
 const router = Router()
 RegisterRoutes(router)
-app.use('/api/v0/registrar', router)
+app.use('/v0/registrar', router)
 
 const errorHandler: ErrorRequestHandler = (err, _req, res, _next: NextFunction) => {
   res.status(err.status).json( {

@@ -24,6 +24,14 @@ COPY Microservices/VehicleService/build/ /home/app/Microservices/VehicleService/
 COPY Microservices/VehicleService/package.json /home/app/Microservices/VehicleService/
 COPY Microservices/VehicleService/package-lock.json /home/app/Microservices/VehicleService/
 
+COPY APIs/CampusPolice/build/ /home/app/APIs/CampusPolice/build/
+COPY APIs/CampusPolice/package.json /home/app/APIs/CampusPolice/
+COPY APIs/CampusPolice/package-lock.json /home/app/APIs/CampusPolice/
+
+COPY APIs/Registrar/build/ /home/app/APIs/Registrar/build/
+COPY APIs/Registrar/package.json /home/app/APIs/Registrar/
+COPY APIs/Registrar/package-lock.json /home/app/APIs/Registrar/
+
 # NextJS Apps
 COPY Apps/admin/.next/ /home/app/Apps/admin/.next/
 COPY Apps/admin/package.json /home/app/Apps/admin/

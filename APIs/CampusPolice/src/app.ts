@@ -16,7 +16,16 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-app.use('/api/v0/police/docs', swaggerUi.serve, async (_req: ExRequest, res: ExResponse) => {
+app.get('/v0/police', (_req: ExRequest, res: ExResponse) => {
+  res.json({
+    message: 'The Virtual-Park Campus Police API is currently online',
+    version: 'v0',
+    docs: '/v0/police/docs'
+  })
+})
+
+
+app.use('/v0/police/docs', swaggerUi.serve, async (_req: ExRequest, res: ExResponse) => {
   res.send(
     swaggerUi.generateHTML(await import('../build/swagger.json'))
   )
@@ -24,7 +33,7 @@ app.use('/api/v0/police/docs', swaggerUi.serve, async (_req: ExRequest, res: ExR
 
 const router = Router()
 RegisterRoutes(router)
-app.use('/api/v0/police', router)
+app.use('/v0/police', router)
 
 const errorHandler: ErrorRequestHandler = (err, _req, res, _next: NextFunction) => {
   res.status(err.status).json( {
