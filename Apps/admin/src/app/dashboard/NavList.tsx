@@ -4,11 +4,14 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  ListItemButton
+  ListItemButton,
+  Box,
+  Divider,
+  Typography
 } from'@mui/material'
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 export default function NavList() {
@@ -19,27 +22,47 @@ export default function NavList() {
 
   const router = useRouter();
   const pathname = usePathname();
-  const currentIndex = listItems.findIndex(item => item.page === pathname);
-  const [selectedIndex, setSelectedIndex] = useState(currentIndex >= 0 ? currentIndex : 0);
+
   // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
+  const getIndexFromPath = () =>
+    listItems.findIndex(item =>
+      pathname === item.page || pathname.startsWith(item.page + "/")
+    );
+
+  const [selectedIndex, setSelectedIndex] = useState(getIndexFromPath());
+  useEffect(() => {
+    const index = getIndexFromPath();
+    if (index !== selectedIndex) {
+      setSelectedIndex(index);
+    }
+  }, [pathname]);
+
   const handleClick = (index: number, page: string) => {
     setSelectedIndex(index);
     router.push(page);
   };
+
+  const currentPageName = listItems[selectedIndex]?.text || "Unknown";
   // MUI example https://github.com/mui/material-ui/blob/v7.1.0/docs/data/material/getting-started/templates/dashboard/components/MenuContent.tsx
   return (
-    <List dense>
-      {listItems.map((item, index) => (
-        <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-          <ListItemButton
-            selected={index === selectedIndex}
-            onClick={() => handleClick(index, item.page)}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
+    <Box>
+      <Box sx={{ p: 3 }}>
+        <Typography variant="h5">Dashboard &gt; {currentPageName} </Typography>
+      </Box>
+      <Divider />
+      <List dense>
+        {listItems.map((item, index) => (
+          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              selected={index === selectedIndex}
+              onClick={() => handleClick(index, item.page)}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
 }

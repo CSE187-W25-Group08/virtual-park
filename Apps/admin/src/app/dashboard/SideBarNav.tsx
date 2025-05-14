@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import {
   Typography, 
   Box,
@@ -26,12 +26,6 @@ export default function SideBarNav() {
       }}
     >
       {/* Top Content */}
-      <Box sx={{ p: 3 }}>
-        <Typography variant="h5">Dashboard &gt; Home</Typography>
-      </Box>
-
-      <Divider />
-
       <NavList />
 
       <Divider />
@@ -48,12 +42,14 @@ export default function SideBarNav() {
           borderColor: 'divider',
         }}
       >
+      {typeof window !== 'undefined' && (
         <Avatar
           sizes="small"
           alt={window.sessionStorage.getItem('name') ?? 'Admin User'}
           src="/static/images/avatar/7.jpg"
           sx={{ width: 36, height: 36 }}
         />
+        )}
         <Box sx={{ mr: 'auto' }}>
           <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
             {window.sessionStorage.getItem('name')}
