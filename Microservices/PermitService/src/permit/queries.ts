@@ -31,3 +31,22 @@ WHERE data->>'license_plate' = '${carPlateNum}'$$
 ) AS v(driver uuid, license_plate text)
 ON dp.driverID = v.driver;
 `;
+
+export const getActivePermit = `
+SELECT 
+    dp.id AS id,
+    dp.data->>'issue_date' AS issue_date,
+    dp.data->>'exp_date' AS exp_date,
+    pt.data->>'type' AS type,
+    pt.data->>'price' AS price
+FROM 
+    driverPermit dp
+JOIN 
+    permitType pt ON dp.permitType = pt.id
+WHERE 
+    dp.driverID = $1
+AND
+    (dp.data->>'exp_date')::timestamp > NOW()
+AND
+    (dp.data->>'issue_date')::timestamp <= NOW()
+`;

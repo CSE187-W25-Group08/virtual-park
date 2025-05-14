@@ -54,6 +54,16 @@ INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
   )
 );
 
+INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
+  'df700d63-71a9-4447-918b-14448d2d751f',
+  'bea45ed8-aa83-4c49-a201-4625baa0e91a',
+  'c4bcb5ba-57f6-4d09-85ba-86fc729ce1e4',
+  jsonb_build_object(
+    'issue_date', '2024-09-21T08:00:00.000Z',
+    'exp_date', '2025-06-14T08:00:00.000Z'
+  )
+);
+
 /*
 SELECT 
   vinfo.license_plate,

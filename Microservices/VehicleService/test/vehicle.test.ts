@@ -7,12 +7,15 @@ import { app, bootstrap } from '../src/app'
 
 let server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
 
+const authserviceMock = vi.fn()
+
 vi.mock('../src/auth/service', () => {
   return {
     AuthService: class {
-      async check() {
-        return { id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54'}
-      }
+      check = authserviceMock
+      // async check() {
+        // return { id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54'}
+      // }
     }
   }
 })
@@ -29,6 +32,7 @@ afterAll(() => {
 })
 
 beforeEach(async () => {
+  authserviceMock.mockResolvedValue({id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54'})
   return db.reset()
 })
 
@@ -100,6 +104,28 @@ test('Returns vehicle by vehicle ID and authenticated user ID', async () => {
       expect(res.body.data.getVehicleById).toBeDefined()
     })
 })
+
+/*reference: https://jestjs.io/docs/mock-function-api#mockfnmockrejectedvaluevalue */
+test('Returns unauthorized error when auth service throws', async () => {
+  authserviceMock.mockRejectedValue(new Error('Authentication failed'))
+  
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer InvalidToken`)
+    .send({
+      query: `{
+        vehicle {
+          id
+          driver
+          licensePlate
+        }
+      }`
+    })
+    .then((res) => {
+      expect(res.body.errors).toBeDefined()
+    })
+})
+
 
 test('Member Registers a Vehicle', async () => {
   await supertest(server)

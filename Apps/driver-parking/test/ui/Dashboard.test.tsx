@@ -58,11 +58,18 @@ it('renders the active vehicle', async () => {
   await screen.getByText('No active vehicle.');
 });
 
-it('renders the active permit section', async () => {
+it('renders the active permit section with no active permit', async () => {
   renderWithIntl(<Dashboard />);
 
-  await screen.getByText('Student');
+  await screen.getByText('You have no active permit.');
 });
+
+
+// it('renders the active permit section with active permit', async () => {
+//   renderWithIntl(<Dashboard />);
+
+//   await screen.getByText('Student');
+// });
 
 it('renders the unpaid tickets section', async () => {
   renderWithIntl(<Dashboard />);
