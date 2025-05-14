@@ -33,11 +33,17 @@ export class AuthService {
     }
   }
   public async login(credentials: Credentials): Promise<Authenticated | undefined> {
-    const user = await db.verifyLogin(credentials);
-    if (user) {
-      return { name: user.name, accessToken: generateToken(user.id) };
-    } else {
-      return undefined
+    try {
+      const user = await db.verifyLogin(credentials);
+      if (user) {
+        return { name: user.name, accessToken: generateToken(user.id) };
+      } else {
+        return undefined
+      }
+    }
+    catch (err) {
+      console.log("login db error:", err);
+      return undefined;
     }
   }
 
