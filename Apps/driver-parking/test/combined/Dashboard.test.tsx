@@ -59,13 +59,7 @@ vi.mocked(getPrimaryVehicle).mockResolvedValue(
   })
 
 vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
-  getActivePermit: vi.fn().mockResolvedValue({
-    id: '1',
-    type: 'Student',
-    issueDate: '2025-01-01',
-    expDate: '2025-01-01',
-    price: 3.14,
-  }),
+  getActivePermit: vi.fn()
 }))
 
 vi.mocked(getActivePermit).mockResolvedValue(
