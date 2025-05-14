@@ -8,15 +8,19 @@ import {
   Tooltip,
   // Button,
 } from'@mui/material'
+import { getLots } from './action';
+import { Lot } from '../../lot';
 
 export default function LotList() {
-  const [lots, setLots] = React.useState<Ticket[]>([]);
+  const [lots, setLots] = React.useState<Lot[]>([]);
 
   React.useEffect(() => {
-    const setAppealData = async () => {
+    const setLotData = async () => {
+      const list = await getLots();
+      if (list) setLots(list);
       // console.log("in view", appeals);
     }
-    setAppealData();
+    setLotData();
   }, [])
 
   // const handleManageAppeal = async (ticket?: Ticket) => {
@@ -25,72 +29,91 @@ export default function LotList() {
   
   // based on MUI https://mui.com/material-ui/react-list/
   const columns: GridColDef[] = [
-    {
-      field: 'issue',
-      headerName: 'Issue Date',
-      width: 200,
-      renderCell: (params) => {
-        const date = new Date(params.value);
-        return date.toLocaleString() || 'Invalid date';
-      },
+  {
+    field: 'id',
+    headerName: 'Lot ID',
+    width: 150,
+  },
+  {
+    field: 'name',
+    headerName: 'Name',
+    width: 200,
+    renderCell: (params) => (
+      <Tooltip title={params.value}>
+        <Typography noWrap sx={{ maxWidth: 180 }}>
+          {params.value}
+        </Typography>
+      </Tooltip>
+    ),
+  },
+  {
+    field: 'zone',
+    headerName: 'Zone',
+    width: 100,
+  },
+  {
+    field: 'address',
+    headerName: 'Address',
+    width: 250,
+    renderCell: (params) => (
+      <Tooltip title={params.value}>
+        <Typography noWrap sx={{ maxWidth: 230 }}>
+          {params.value}
+        </Typography>
+      </Tooltip>
+    ),
+  },
+  {
+    field: 'latitude',
+    headerName: 'Latitude',
+    width: 130,
+  },
+  {
+    field: 'longitude',
+    headerName: 'Longitude',
+    width: 130,
+  },
+  {
+    field: 'capacity',
+    headerName: 'Capacity',
+    width: 110,
+  },
+  {
+    field: 'availableSpots',
+    headerName: 'Available Spots',
+    width: 150,
+  },
+  {
+    field: 'isActive',
+    headerName: 'Active',
+    width: 100,
+    renderCell: (params) => (params.value ? 'Yes' : 'No'),
+  },
+  {
+    field: 'type',
+    headerName: 'Type',
+    width: 120,
+  },
+  {
+    field: 'created',
+    headerName: 'Created At',
+    width: 200,
+    renderCell: (params) => {
+      const date = new Date(params.value);
+      return date.toLocaleString() || 'Invalid date';
     },
-    {
-      field: 'due',
-      headerName: 'Due Date',
-      width: 200,
-      renderCell: (params) => {
-        const date = new Date(params.value);
-        return date.toLocaleString() || 'Invalid date';
-      },
+  },
+  {
+    field: 'updated',
+    headerName: 'Updated At',
+    width: 200,
+    renderCell: (params) => {
+      const date = new Date(params.value);
+      return date.toLocaleString() || 'Invalid date';
     },
-    {
-      field: 'description',
-      headerName: 'Description',
-      width: 250,
-      renderCell: (params) => (
-        <Tooltip title={params.value}>
-          <Typography noWrap sx={{ maxWidth: 230 }}>
-            {params.value}
-          </Typography>
-        </Tooltip>
-      ),
-    },
-    {
-      field: 'violation',
-      headerName: 'Violation',
-      width: 200,
-      renderCell: (params) => (
-        <Tooltip title={params.value}>
-          <Typography noWrap sx={{ maxWidth: 180 }}>
-            {params.value}
-          </Typography>
-        </Tooltip>
-      ),
-    },
-    {
-      field: 'cost',
-      headerName: 'Cost',
-      width: 120,
-      renderCell: (params) => `$${params.value.toFixed(2)}`,
-    },
-    // {
-    //   field: 'actions',
-    //   headerName: '',
-    //   width: 180,
-    //   sortable: false,
-    //   filterable: false,
-    //   renderCell: (params) => (
-    //     <Button
-    //       variant="outlined"
-    //       color="primary"
-    //       size="small"
-    //       onClick={() => handleManageAppeal(params.row)}
-    //     >
-    //       Manage Appeal
-    //     </Button>
-    //   ),
-    // },
-  ];
+  },
+];
+  
   return (
     <Box>
       <Typography>Active Appeals</Typography>
