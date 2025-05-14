@@ -21,6 +21,7 @@ export class PermitResolver {
   ): Promise<PermitType[]> {
     return await new PermitService().getPermitType()
   }
+
   /* should Only allow officer to do that, and in the future, I might consider adding a member with the role of enforcement officer */
   @Authorized('enforcement')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -28,6 +29,14 @@ export class PermitResolver {
   async getPermitBycarPlate(  @Arg("input") carPlate: string
   ): Promise<PermitValid[]> {
     return await new PermitService().getPermitByCar(carPlate)
+  }
+
+  @Authorized()
+  @Query(() => Permit, { nullable: true })
+  async validPermit(
+    @Ctx() Request: Request
+  ): Promise<Permit | null> {
+    return await new PermitService().getValidPermit(Request.user?.id)
   }
 }
 

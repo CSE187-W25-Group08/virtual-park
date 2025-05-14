@@ -17,6 +17,7 @@ export class PermitService {
       price: result.price
     }))
   }
+
   public async getPermitType():Promise<PermitType[]> {
     const query = {
       text: queries.permitType,
@@ -28,6 +29,7 @@ export class PermitService {
       type: result.data.type
     }))
   }
+
   public async getPermitByCar(carPlateNum: string): Promise<PermitValid[]> {
     const query = queries.getPermitByVehiclePlateNum(carPlateNum)
     const {rows} = await pool.query(query)
@@ -38,5 +40,23 @@ export class PermitService {
       expDate: result.expDate,
       isValid: result.isValid,
     }))
+  }
+  
+  public async getValidPermit(driverID: string | undefined):Promise<Permit | null> {
+    const query = {
+      text: queries.getActivePermit,
+      values: [driverID]
+    }
+    const result = await pool.query(query)
+    if (result.rowCount === 0) {
+      return null
+    }
+    return {
+      id: result.rows[0].id,
+      issueDate: result.rows[0].issue_date,
+      expDate: result.rows[0].exp_date,
+      type: result.rows[0].type,
+      price: result.rows[0].price
+    }
   }
 }
