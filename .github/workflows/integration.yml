@@ -47,7 +47,6 @@ jobs:
   deploy-docker:
     name: Build and Push Docker Image to GHCR
     runs-on: ubuntu-latest
-    # needs: [lint, build, test]
     permissions:
       contents: read
       packages: write
@@ -60,31 +59,56 @@ jobs:
       - run: npm run installs
       - run: npm run build
 
-      # Generate the .env file
-      - name: Generating .env file
+      # Generate root .env file
+      - name: Generate root .env file
         run: |
-          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
+          echo "POSTGRES_DB=account" > .env
           echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
           echo "MASTER_SECRET=${{ secrets.MASTER_SECRET }}" >> .env
 
-      # Uses GH's container registry and GH generates a token for us
+      # Generate .env files for each Microservice
+      - name: Generate Microservice .env files
+        run: |
+          # AuthService
+          echo "POSTGRES_DB=account" > Microservices/AuthService/.env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> Microservices/AuthService/.env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> Microservices/AuthService/.env
+          echo "MASTER_SECRET=${{ secrets.MASTER_SECRET }}" >> Microservices/AuthService/.env
+
+          echo "POSTGRES_DB=vehicle" > Microservices/VehicleService/.env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> Microservices/VehicleService/.env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> Microservices/VehicleService/.env
+
+          echo "POSTGRES_DB=ticket" > Microservices/TicketService/.env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> Microservices/TicketService/.env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> Microservices/TicketService/.env
+
+          echo "POSTGRES_DB=permit" > Microservices/PermitService/.env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> Microservices/PermitService/.env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> Microservices/PermitService/.env
+
+      # Log in to GHCR
       - name: Log in to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
+      # Build and push Docker image
       - name: Build Tagged Docker Image
         run: |
           VERSION=${GITHUB_REF#refs/tags/}
           REPO_OWNER=$(echo $GITHUB_REPOSITORY_OWNER | tr '[:upper:]' '[:lower:]')
           IMAGE=ghcr.io/$REPO_OWNER/virtual-park:$VERSION
-          LATEST=ghcr.io/$REPO_OWNER/virtual-park:latest
-
-          docker compose -f docker-compose.yaml build
-          docker tag virtual-park:latest $IMAGE
-          docker tag virtual-park:latest $LATEST
-
-          # Push both tags
+          docker build . -t $IMAGE --platform linux/amd64
           docker push $IMAGE
+
+      # I had ChatGPT generate the lowercase conversion, which is why it failed the first time
+      - name: Tag and Push as Latest
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          REPO_OWNER=$(echo $GITHUB_REPOSITORY_OWNER | tr '[:upper:]' '[:lower:]')
+          IMAGE=ghcr.io/$REPO_OWNER/virtual-park:$VERSION
+          LATEST=ghcr.io/$REPO_OWNER/virtual-park:latest
+          docker tag $IMAGE $LATEST
           docker push $LATEST
 
   deploy:
