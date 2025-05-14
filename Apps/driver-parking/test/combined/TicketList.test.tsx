@@ -30,31 +30,6 @@ afterEach(() => {
   vi.clearAllMocks()
 })
 
-// https://mswjs.io/docs/network-behavior/graphql/
-export const handlers = [
-  graphql.query('paidTicket', () => {
-    return HttpResponse.json({
-      data: {
-        paidTicket: paidList,
-      },
-    })
-  }),
-  graphql.query('unpaidTicket', () => {
-    return HttpResponse.json({
-      data: {
-        unpaidTicket: unpaidList,
-      },
-    })
-  }),
-  graphql.query('appealedTicket', () => {
-    return HttpResponse.json({
-      data: {
-        appealedTicket: appealedList,
-      },
-    })
-  })
-]
-
 const renderWithIntl = (component: React.ReactElement) => {
   return render(
     <NextIntlClientProvider locale="en" messages={{ ticket: ticketMessages }}>
