@@ -1,9 +1,7 @@
-'use client'
-import Login from '../app/login/View'
 export default function Home() {
   return (
     <div>
-      <Login/>
+      <p>Welcome to the enforcement web</p>
     </div>
   );
 }
