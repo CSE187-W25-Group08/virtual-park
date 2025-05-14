@@ -66,7 +66,29 @@ test('retrieve all the permits belong to the specific user', async () => {
         console.error('GraphQL errors:', res.body.errors)
       }
       console.log('permit by user:', res.body.data)
-      expect(res.body.data.permitsByDriver.length).toEqual(2)
+      expect(res.body.data.permitsByDriver.length).toEqual(3)
+    })
+})
+
+test('retrieve the active permit belonging to the specific user', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `{
+        validPermit {
+          issueDate
+          expDate
+          type
+        }
+      }`
+    })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      console.log('permit by user:', res.body.data)
+      expect(res.body.data.validPermit).not.toBeNull()
     })
 })
 
@@ -95,7 +117,7 @@ test('retrieve the permit info based on the vehicle car plate', async () => {
         console.error('GraphQL errors:', res.body.errors)
       }
       console.log('permit by carPlate:', res.body.data)
-      expect(res.body.data.getPermitBycarPlate.length).toEqual(2)
+      expect(res.body.data.getPermitBycarPlate.length).toEqual(3)
     })
 })
 

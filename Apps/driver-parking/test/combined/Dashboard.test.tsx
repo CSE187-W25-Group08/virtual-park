@@ -5,7 +5,6 @@ import { NextIntlClientProvider } from 'next-intl'
 
 import Page from '../../src/app/[locale]/dashboard/page'
 import { dashboard as dashboardMessages } from '../../messages/en.json'
-import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import { ticket as ticketMessages } from '../../messages/en.json'
 import { getPrimaryVehicle } from '../../src/app/[locale]/register/actions'
 import { listUnpaid } from '@/app/[locale]/ticket/actions'
@@ -69,7 +68,7 @@ afterEach(() => {
 
 const renderWithIntl = (component: React.ReactElement) => {
   return render(
-    <NextIntlClientProvider locale="en" messages={{ permit_history: permitHistoryMessages, dashboard: dashboardMessages, ticket: ticketMessages }}>
+    <NextIntlClientProvider locale="en" messages={{ dashboard: dashboardMessages, ticket: ticketMessages }}>
       {component}
     </NextIntlClientProvider>
   )

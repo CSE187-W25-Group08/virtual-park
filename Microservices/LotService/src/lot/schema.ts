@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from 'type-graphql';
+import { InputType, Field, ID, ObjectType } from 'type-graphql';
 import { IsUUID, IsString, IsNumber, IsBoolean, IsDateString, IsLatitude, IsLongitude } from 'class-validator';
 
 @ObjectType()
@@ -87,4 +87,53 @@ export class DBLot {
 
   @Field(() => Lot)
   data!: Lot
+}
+
+
+
+@InputType()
+export class UpdateLotData {
+  @Field({ nullable: true })
+  @IsString()
+  name?: string;
+
+  @Field({ nullable: true })
+  @IsString()
+  zone?: string;
+
+  @Field({ nullable: true })
+  @IsString()
+  address?: string;
+
+  @Field({ nullable: true })
+  @IsLatitude()
+  latitude?: number;
+
+  @Field({ nullable: true })
+  @IsLongitude()
+  longitude?: number;
+
+  @Field({ nullable: true })
+  @IsNumber()
+  capacity?: number;
+
+  @Field({ nullable: true })
+  @IsNumber()
+  availableSpots?: number;
+
+  @Field({ nullable: true })
+  @IsBoolean()
+  isActive?: boolean;
+
+  @Field({ nullable: true })
+  @IsString()
+  type?: string;
+
+  @Field({ nullable: true })
+  @IsDateString()
+  created?: string;
+
+  @Field({ nullable: true })
+  @IsDateString()
+  updated?: string;
 }

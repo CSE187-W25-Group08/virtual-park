@@ -80,15 +80,49 @@ test("Update lot at id", async () => {
     .send({
       query: `
         mutation {
-          updateId(id: "${lotId}", name: "Dragon") {
+          putId(id: "${lotId}", data: {name: "Dragon", zone: "North"}) {
             id,
-            name
+            name,
+            zone, 
+            address,
           }
         }
       `,
     })
     .then((res) => {
-      expect(res.body.data.updateId[0].name).toBe("Dragon");
+      console.log(res.body.data.putId)
+      expect(res.body.data.putId.name).toBe("Dragon");
+
+    });
+
+
+});
+
+
+
+/*
+test("Update lot at nonexistant id", async () => {
+  const lotId = 'd5ad4c41-9510-4b6c-832c-2aaf99d27a96'
+
+
+    await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          putId(id: "${lotId}", data: {name: "Dragon", zone: "North"}) {
+            id,
+            name,
+            zone, 
+            address,
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.errors)
+      // expect(res.body.data.putId.name).toBe("Dragon");
 
     });
 

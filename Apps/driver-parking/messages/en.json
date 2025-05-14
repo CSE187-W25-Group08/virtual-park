@@ -94,6 +94,7 @@
     "welcome": "Welcome back,",
     "vehicle": "Active Vehicle:",
     "noVehicle": "No active vehicle.",
+    "registerVehicle": "Register",
     "permit": "Active Permit",
     "noPermit": "You have no active permit.",
     "buyPermit": "Buy Permit",

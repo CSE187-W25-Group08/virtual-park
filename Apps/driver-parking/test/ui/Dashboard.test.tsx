@@ -1,4 +1,4 @@
-import { it, afterEach, vi, expect} from 'vitest';
+import { it, afterEach, vi, expect, beforeEach } from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import Dashboard from '../../src/app/[locale]/dashboard/Dashboard';
 import { dashboard as dashboardMessages } from '../../messages/en.json';
 import { permit_history as permitHistoryMessages } from '../../messages/en.json';
+import { getActivePermit } from '../../src/app/[locale]/dashboard/actions';
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
@@ -16,7 +17,7 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
 }));
 
 vi.mock('../../src/app/[locale]/register/actions', () => ({
-  getUserVehicles: vi.fn(),
+  getPrimaryVehicle: vi.fn()
 }));
 
 vi.mock('next/headers', () => ({
@@ -26,6 +27,10 @@ vi.mock('next/headers', () => ({
     delete: vi.fn(),
   }),
 }));
+
+beforeEach(() => {
+  vi.stubGlobal('fetch', vi.fn());
+});
 
 afterEach(() => {
   cleanup();
@@ -52,16 +57,16 @@ it('renders the welcome message with the user name', async () => {
   await screen.getByText('Molly Member');
 });
 
-it('renders the active vehicle', async () => {
+it('renders the active vehicle with no active vehicle', async () => {
   renderWithIntl(<Dashboard />);
 
   await screen.getByText('No active vehicle.');
 });
 
-it('renders the active permit section', async () => {
+it('renders the active permit section with no active permit', async () => {
   renderWithIntl(<Dashboard />);
 
-  await screen.getByText('Student');
+  await screen.getByText('You have no active permit.');
 });
 
 it('renders the unpaid tickets section', async () => {
@@ -93,3 +98,43 @@ it('goes to ticket page when "Manage Tickets" is clicked', async () => {
   fireEvent.click(manageTickets);
   expect(mockPush).toHaveBeenCalledWith("/ticket");
 });
+
+it('renders active permit', async () => {
+  vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
+    getActivePermit: vi.fn()
+  }));
+
+  vi.mocked(getActivePermit).mockResolvedValue({
+    id: '1',
+    type: 'Student',
+    issueDate: '2025-01-01',
+    expDate: '2025-01-01',
+    price: 3.14,
+  });
+
+  vi.mocked(fetch).mockImplementation((url, options) => {
+    if (url?.toString().includes('/graphql')) {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getActivePermit: [
+              {
+                id: '1',
+                type: 'Student',
+                issueDate: '2025-01-01',
+                expDate: '2025-01-01',
+                price: 3.14,
+              }
+            ],
+          },
+        }),
+      } as Response)
+    }
+    return Promise.reject('Unknown fetch')
+  })
+
+  renderWithIntl(<Dashboard />)
+
+  await screen.findByText('Student')
+})

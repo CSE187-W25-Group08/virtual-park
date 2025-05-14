@@ -8,8 +8,8 @@ SELECT id, data
 FROM lot 
 `
 
-export const updateId =
+export const selectById =
 `
 SELECT id, data
-FROM lot 
+FROM lot  WHERE id = $1
 `

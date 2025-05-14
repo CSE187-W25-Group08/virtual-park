@@ -15,6 +15,7 @@
     "dev-ticket": "cd ../Microservices/TicketService && npm run dev",
     "dev-vehicle": "cd ../Microservices/VehicleService && npm run dev",
     "dev-permit": "cd ../Microservices/PermitService && npm run dev",
+    "dev-lot": "cd ../Microservices/LotService && npm run dev",
     "dev-app": "cd ../Apps/driver-parking && npm run dev",
     "dev-app-admin": "cd ../Apps/admin && npm run dev",
     "dev-app-enforcement": "cd ../Apps/enforcement && npm run dev",

@@ -5,6 +5,7 @@ import { useState, useEffect, Fragment } from "react"
 import { useRouter } from "next/navigation"
 import { Typography, Box, Button, Divider } from "@mui/material"
 import { useTranslations } from "next-intl"
+import Link from "next/link"
 
 import TicketCard from "../ticket/card"
 import { Ticket } from "@/ticket"
@@ -13,18 +14,13 @@ import { Vehicle } from "@/register"
 import { getPrimaryVehicle } from "../register/actions"
 import { Permit } from "@/permit"
 import PermitListCard from "../permit/history/PermitListCard"
+import { getActivePermit } from "../dashboard/actions"
 
 export default function Dashboard() {
   const [name, setName] = useState<string | null>(null)
   const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([])
   const [vehicle, setVehicle] = useState<Vehicle>()
-  const [activePermit] = useState<Permit | null>({
-    id: "1",
-    issueDate: "2024-09-21T08:00:00.000Z",
-    expDate: "2025-06-14T08:00:00.000Z",
-    type: "Student",
-    price: 3.14
-  })
+  const [activePermit, setActivePermit] = useState<Permit | null>(null)
   const router = useRouter()
   const t = useTranslations("dashboard")
 
@@ -33,11 +29,15 @@ export default function Dashboard() {
     const fetchData = async () => {
       const result = await listUnpaid()
       const primaryVehicle = await getPrimaryVehicle()
+      const activePermit = await getActivePermit()
       if (result) {
         setUnpaidTickets(result)
       }
       if (primaryVehicle) {
         setVehicle(primaryVehicle)
+      }
+      if (activePermit) {
+        setActivePermit(activePermit)
       }
     }
     fetchData()
@@ -60,7 +60,12 @@ export default function Dashboard() {
           {t('vehicle')}
         </Typography>
         <Typography variant="body1">
-          {vehicle ? `${vehicle.make} ${vehicle.model} - ${vehicle.color} (${vehicle.licensePlate})` : t('noVehicle')}
+          {vehicle ? (`${vehicle.make} ${vehicle.model} - ${vehicle.color} (${vehicle.licensePlate})`) :
+          (
+            <>
+              {t('noVehicle')} <Link href="/register">{t('registerVehicle')}</Link>
+            </>
+          )}
         </Typography>
         <Divider sx={{ width: "100%", marginTop: 4 }}/>
         

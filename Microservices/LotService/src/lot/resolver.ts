@@ -5,7 +5,7 @@ import {
   Authorized,
   Arg
 } from "type-graphql"
-import { Lot} from "./schema"
+import { Lot, UpdateLotData} from "./schema"
 import { LotService} from "./service"
 
 
@@ -22,8 +22,9 @@ export class LotResolver {
   @Mutation(returns => Lot)
   async putId(
     @Arg("id") id: string,
+    @Arg("data") data: UpdateLotData
   ): Promise<Lot> {
-    return await new LotService().updateId(id)
+    return await new LotService().updateId(id, data)
   }
 
 

@@ -1,8 +1,9 @@
 import { pool } from '../db'
-import { Lot, DBLot } from './schema';
+import { Lot, DBLot, UpdateLotData } from './schema';
 import * as queries from './queries'
 
 export class LotService {
+  //https://chatgpt.com/c/6823efbe-e604-800d-813e-326ffc8c611c for wack update
 
   private rowToLot = async (rows: DBLot[]) => {
     const lots = await Promise.all(rows.map(async (lot: DBLot) => {
@@ -35,13 +36,50 @@ export class LotService {
     return lots;
   }
 
-  public async updateId(lotId: string): Promise<Lot> {
+  /*
+  private async getById(id: string) : Promise<Lot> {
+    console.log(id);
     const query = {
-      text: queries.updateId,
-      values: [lotId]
+      text: queries.selectById,
+      values: [id]
     }
     const { rows } = await pool.query(query);
     const lots = await this.rowToLot(rows);
     return lots[0];
   }
+    */
+
+  public async updateId(lotId: string, data: UpdateLotData): Promise<Lot> {
+
+    // remove undefined values from data
+    const objectToFilter = Object.entries(data)
+    const filteredData = objectToFilter.filter(([, value]) => value !== undefined);
+
+    let jsonbSetSql = 'data';
+    const values = [lotId];
+
+    // recursively build the jsonb_set function
+    filteredData.forEach(([key, value], i) => {
+      const paramIndex = i + 2; 
+      jsonbSetSql = `jsonb_set(${jsonbSetSql}, '{${key}}', $${paramIndex}::jsonb)`;
+      values.push(JSON.stringify(value)); 
+    });
+
+    const queryText= 
+    `
+    UPDATE lot SET data = ${jsonbSetSql} WHERE id = $1 RETURNING id, data
+    `
+
+    const query = {
+      text: queryText,
+      values: values
+    }
+
+    const { rows } = await pool.query(query);
+    const lots = await this.rowToLot(rows);
+    return lots[0];
+
+  }
+
+
 }
