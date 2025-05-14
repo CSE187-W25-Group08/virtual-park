@@ -23,19 +23,19 @@ export async function createNewUser(signUpDetails: NewUser): Promise<User | unde
           'joindate', $4::text,
           'suspended', 'false'
         ))
-        RETURNING id, data->>'name' AS name;`,
+        RETURNING id, data->>'name' AS name, data->>'email' AS email;`,
     values: [signUpDetails.email, signUpDetails.password, signUpDetails.name, currentTimestamp]
   }
   const { rows } = await pool.query(signUp);
   if (rows.length === 1) {
-    return ({ name: rows[0].name, id: rows[0].id });
+    return ({ name: rows[0].name, id: rows[0].id, email: rows[0].email });
   }
 }
 
 export async function verifyLogin(credentials: Credentials): Promise<User | undefined> {
   const query = {
     text: `
-      SELECT data->>'name' AS name, id,
+      SELECT id, data->>'email' AS email, data->>'name' AS name,
       (crypt($2, data->>'pwhash') = data->>'pwhash') AS valid
       FROM member
       WHERE data->>'email' = $1
@@ -45,7 +45,7 @@ export async function verifyLogin(credentials: Credentials): Promise<User | unde
   };
   const { rows } = await pool.query(query);
   if (rows.length === 1 && rows[0].valid) {
-    return ({ name: rows[0].name, id: rows[0].id });
+    return ({ name: rows[0].name, id: rows[0].id, email: rows[0].email });
   } else {
     return undefined;
   }

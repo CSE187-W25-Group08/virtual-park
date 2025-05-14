@@ -17,6 +17,7 @@ export interface Credentials {
 }
 export interface User {
   name: string,
+  email?: string,
   id: midt
 }
 export interface CheckUser {
@@ -25,6 +26,7 @@ export interface CheckUser {
 }
 export interface Authenticated {
   name: string,
+  email?: string,
   accessToken: midt
 }
 export interface NewUser {

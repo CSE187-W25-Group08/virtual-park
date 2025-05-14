@@ -27,7 +27,7 @@ export class AuthService {
   public async signUp(signUpDetails: NewUser): Promise<Authenticated | undefined> {
     const newUser = await db.createNewUser(signUpDetails);
     if (newUser) {
-      return { name: newUser.name, accessToken: generateToken(newUser.id) };
+      return { name: newUser.name, email: newUser.email, accessToken: generateToken(newUser.id) };
     } else {
       return undefined
     }
@@ -36,7 +36,7 @@ export class AuthService {
     try {
       const user = await db.verifyLogin(credentials);
       if (user) {
-        return { name: user.name, accessToken: generateToken(user.id) };
+        return { name: user.name, email: user.email, accessToken: generateToken(user.id) };
       } else {
         return undefined
       }
