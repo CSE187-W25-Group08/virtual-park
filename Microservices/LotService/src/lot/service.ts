@@ -1,5 +1,5 @@
 import { pool } from '../db'
-import { Lot, DBLot, UpdateLotField, UpdateLotData } from './schema';
+import { Lot, DBLot, UpdateLotData } from './schema';
 import * as queries from './queries'
 
 export class LotService {
