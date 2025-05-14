@@ -1,6 +1,5 @@
 "use client"
 import * as React from 'react';
-import { Ticket } from '@/ticket';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {
   Typography, 
