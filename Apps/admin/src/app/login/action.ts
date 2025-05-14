@@ -23,3 +23,7 @@ export async function login(credential: Credentials): Promise<User | undefined> 
   }
   return undefined
 }
+
+export async function logout() {
+  (await cookies()).delete('session');
+}

@@ -37,6 +37,7 @@ export default function NavList() {
     if (index !== selectedIndex) {
       setSelectedIndex(index);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const handleClick = (index: number, page: string) => {
