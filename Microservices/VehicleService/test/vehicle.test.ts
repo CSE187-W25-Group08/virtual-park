@@ -11,7 +11,7 @@ vi.mock('../src/auth/service', () => {
   return {
     AuthService: class {
       async check() {
-        return { id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54' }
+        return { id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54'}
       }
     }
   }
@@ -59,6 +59,45 @@ test('Returns Member\'s Vehicles', async () => {
     })
     .then((res) => {
       expect(res.body.data.userVehicle.length).toEqual(2)
+    })
+})
+
+test('Returns vehicle by vehicle ID and authenticated user ID', async () => {
+  const vehiclesResponse = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `{
+        userVehicle
+        { id, driver, licensePlate, make, model, color }
+      }`
+    })
+  
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
+        query GetVehicle($id: String!) {
+          getVehicleById(id: $id) {
+            id
+            driver
+            licensePlate
+            make
+            model
+            color
+            active
+          }
+        }
+      `,
+      variables: {
+        id: vehiclesResponse.body.data.userVehicle[0].id
+      }
+    })
+    .then((res) => {
+      console.log('response errors:', res.body.errors)
+      console.log('get Vehicle info:', res.body.data)
+      expect(res.body.data.getVehicleById).toBeDefined()
     })
 })
 
@@ -155,28 +194,4 @@ test('user who has primary car', async () => {
 
 
 
-// test('user gets primary vehicle', async () => {
-//   const accessToken = await getAccessToken(molly.email, molly.password);
-//   const result = await supertest(server)
-//     .post('/graphql')
-//     .set('Authorization', `Bearer ${accessToken}`)
-//     .send({
-//       query: `{
-//         primaryVehicle {
-//           id
-//           driver
-//           licensePlate
-//           make
-//           model
-//           color
-//           active
-//         }
-//       }`
-//     });
-//   expect(result.body.data.primaryVehicle.licensePlate).toBe('TEST123');
-// });
-
-// function then(arg0: (res: any) => void) {
-//   throw new Error('Function not implemented.')
-// }
 

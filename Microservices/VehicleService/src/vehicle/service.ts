@@ -66,6 +66,8 @@ export class VehicleService {
   return vehicleObj;
   }
 
+/* reference: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing
+https://stackoverflow.com/questions/62913315/operator-in-typescript */
   public async getVehicleById(userId: string | undefined, vehicleId: string) {
     const query = {
       text: queries.getVehicleById,
@@ -81,7 +83,7 @@ export class VehicleService {
       'make': rows[0].data.make,
       'model': rows[0].data.model,
       'color': rows[0].data.color,
-      'active': rows[0].data.active
+      'active': rows[0].data.active ?? true
   }
   return vehicleObj;
   }
