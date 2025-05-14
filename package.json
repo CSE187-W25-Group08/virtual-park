@@ -21,7 +21,7 @@
     "install-enforcement-app": "cd Apps/enforcement && npm install",
     "install-police-api": "cd APIs/CampusPolice && npm install",
     "install-registrar-api": "cd APIs/Registrar && npm install",
-    "cis": "npm ci && npm run ci-auth && npm run ci-ticket && npm run ci-vehicle && npm run ci-permit && npm run ci-driver-app && npm run ci-admin-app && npm run ci-enforcement-app",
+    "cis": "npm ci && npm run ci-auth && npm run ci-ticket && npm run ci-vehicle && npm run ci-permit && npm run ci-driver-app && npm run ci-admin-app && npm run ci-enforcement-app && npm run ci-police-api && npm run ci-registrar-api",
     "ci-auth": "cd Microservices/AuthService && npm ci",
     "ci-ticket": "cd Microservices/TicketService && npm ci",
     "ci-vehicle": "cd Microservices/VehicleService && npm ci",
