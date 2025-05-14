@@ -51,7 +51,7 @@
     "build-enforcement-app": "cd Apps/enforcement && npm run build",
     "build-police-api": "cd APIs/CampusPolice && npm run build",
     "build-registrar-api": "cd APIs/Registrar && npm run build",
-    "start": "concurrently --kill-others \"npm run start-auth\" \"npm run start-ticket\" \"npm run start-vehicle\" \"npm run start-permit\" \"npm run start-driver-app\" \"npm run start-admin-app\" \"npm run start-enforcement-app\", \"npm run start-police-api\" \"npm run start-registrar-api\"",
+    "start": "concurrently --kill-others \"npm run start-auth\" \"npm run start-ticket\" \"npm run start-vehicle\" \"npm run start-permit\" \"npm run start-driver-app\" \"npm run start-admin-app\" \"npm run start-enforcement-app\" \"npm run start-police-api\" \"npm run start-registrar-api\"",
     "start-auth": "cd Microservices/AuthService && npm start",
     "start-ticket": "cd Microservices/TicketService && npm start",
     "start-vehicle": "cd Microservices/VehicleService && npm start",
