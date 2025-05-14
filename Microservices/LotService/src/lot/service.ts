@@ -38,7 +38,8 @@ export class LotService {
 
   public async updateId(lotId: string, data: UpdateLotData): Promise<Lot[]> {
     // remove undefined values from data
-    const filteredData = Object.entries(data).filter(([, value]) => value !== undefined);
+    const objectToFilter = Object.entries(data)
+    const filteredData = objectToFilter.filter(([, value]) => value !== undefined);
 
     let jsonbSetSql = 'data';
     const values = [lotId];
@@ -55,12 +56,10 @@ export class LotService {
     UPDATE lot SET data = ${jsonbSetSql} WHERE id = $1 RETURNING id, data
     `
 
-
     const query = {
       text: queryText,
       values: values
     }
-
 
     const { rows } = await pool.query(query);
     const lots = await this.rowToLot(rows);

@@ -40,17 +40,38 @@ test("Auth check throws error if unauthroized", async () => {
       }
     }
   });
-
+  let lotId = 'dummy'
   await supertest(server)
     .post("/graphql")
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
         query {
-          paidTicket {
-            violation
+          getAll {
+            id
+            name
           }
         }
+      `,
+    })
+    .then((res) => {
+      lotId = res.body.data.getAll[0].id
+    });
+
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          putId(id: "${lotId}", data: {name: "Dragon", zone: "North"}) {
+            id,
+            name,
+            zone, 
+            address,
+          }
+        }
+ 
       `,
     })
     .then((res) => {
