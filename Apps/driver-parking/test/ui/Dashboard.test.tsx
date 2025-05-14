@@ -19,6 +19,10 @@ vi.mock('../../src/app/[locale]/register/actions', () => ({
   getUserVehicles: vi.fn(),
 }));
 
+vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
+  getActivePermit: vi.fn(),
+}));
+
 vi.mock('next/headers', () => ({
   cookies: () => ({
     set: vi.fn(),
@@ -58,10 +62,10 @@ it('renders the active vehicle', async () => {
   await screen.getByText('No active vehicle.');
 });
 
-it('renders the active permit section', async () => {
+it('renders the active permit section with no active permit', async () => {
   renderWithIntl(<Dashboard />);
 
-  await screen.getByText('Student');
+  await screen.getByText('You have no active permit.');
 });
 
 it('renders the unpaid tickets section', async () => {

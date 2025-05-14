@@ -9,6 +9,7 @@ import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import { ticket as ticketMessages } from '../../messages/en.json'
 import { getPrimaryVehicle } from '../../src/app/[locale]/register/actions'
 import { listUnpaid } from '@/app/[locale]/ticket/actions'
+import { getActivePermit } from '@/app/[locale]/dashboard/actions'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -56,6 +57,26 @@ vi.mocked(getPrimaryVehicle).mockResolvedValue(
     model: 'Pilot',
     color: 'Black',
   })
+
+vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
+  getActivePermit: vi.fn().mockResolvedValue({
+    id: '1',
+    type: 'Student',
+    issueDate: '2025-01-01',
+    expDate: '2025-01-01',
+    price: 3.14,
+  }),
+}))
+
+vi.mocked(getActivePermit).mockResolvedValue(
+  {
+    id: '1',
+    type: 'Student',
+    issueDate: '2025-01-01',
+    expDate: '2025-01-01',
+    price: 3.14,
+  }
+)
 
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
@@ -148,3 +169,42 @@ it('should fetch user\'s unpaid tickets', async () => {
 
   // expect(alert).toHaveBeenCalledWith('All tickets paid. \nTotal: $50.02');
 })
+
+it('should fetch user\'s active permit', async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+
+  vi.mocked(fetch).mockImplementation((url, options) => {
+    if (url?.toString().includes('/graphql')) {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getActivePermit: [
+              {
+                id: '1',
+                type: 'Student',
+                issueDate: '2025-01-01',
+                expDate: '2025-01-01',
+                price: 3.14,
+              }
+            ],
+          },
+        }),
+      } as Response)
+    }
+    return Promise.reject('Unknown fetch')
+  })
+
+  renderWithIntl(<Page />)
+
+  await screen.findByText('Student')
+})
+
+// it('should call getActivePermit when rendering the Dashboard', async () => {
+//   const mockGetActivePermit = vi.mocked(getActivePermit);
+
+//   renderWithIntl(<Page />);
+
+//   expect(mockGetActivePermit).toHaveBeenCalled();
+// });
