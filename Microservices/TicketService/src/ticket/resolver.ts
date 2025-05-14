@@ -81,8 +81,8 @@ export class TicketResolver {
   @Authorized('admin')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => [Ticket])
-  async activeAppeals(): Promise<Ticket[]> {
-    return await new TicketService().getActiveAppeals()
+  async allUnpaidTickets(): Promise<Ticket[]> {
+    return await new TicketService().getAllUnpaidTickets()
   }
 
 }

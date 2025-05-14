@@ -103,9 +103,9 @@ export class TicketService {
     return tickets[0]
   }
 
-  public async getActiveAppeals(): Promise<Ticket[]> {
+  public async getAllUnpaidTickets(): Promise<Ticket[]> {
     const query = {
-      text: queries.activeAppeals,
+      text: queries.unpaidTickets,
     }
     const { rows } = await pool.query(query);
     const tickets = await this.rowToTicket(rows);

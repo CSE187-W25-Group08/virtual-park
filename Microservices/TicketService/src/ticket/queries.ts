@@ -79,13 +79,14 @@ export const updateAppealedTicket =
   SELECT id, driver, data FROM updated
   `
 
-export const activeAppeals =
+export const unpaidTickets =
   `
   SELECT id, driver, data
 
   FROM ticket
 
-  WHERE (data->>'appeal'::text = 'submitted'::text)
+  WHERE (data->>'paid'::text = 'false'::text)
+  AND (data->>'appeal'::text != 'approved'::text)
 
   ORDER BY data->>'due' ASC;
 `

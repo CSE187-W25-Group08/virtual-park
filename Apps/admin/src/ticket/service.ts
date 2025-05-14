@@ -73,7 +73,7 @@ export class TicketService {
     })
   }
 
-  public async getActiveAppeals(cookie: string | undefined): Promise<Ticket[]> {
+  public async getUnpaidTickets(cookie: string | undefined): Promise<Ticket[]> {
     return new Promise((resolve, reject) => {
       fetch('http://localhost:4010/graphql', {
         method: 'POST',
@@ -81,7 +81,7 @@ export class TicketService {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${cookie}`,
         },
-        body: JSON.stringify({ query: `{activeAppeals {id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal}}` }),
+        body: JSON.stringify({ query: `{allUnpaidTickets {id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal}}` }),
       })
         .then(response => {
           if (response.status != 200) {
@@ -91,7 +91,7 @@ export class TicketService {
         }
         )
         .then(json => {
-          resolve(json.data.activeAppeals)
+          resolve(json.data.allUnpaidTickets)
         })
         .catch(() => reject('Unauthorized'))
     })

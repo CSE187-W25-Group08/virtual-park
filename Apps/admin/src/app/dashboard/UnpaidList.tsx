@@ -1,7 +1,7 @@
 "use client"
 import * as React from 'react';
 import { Ticket } from '@/ticket';
-import {listAppeals} from './actions'
+import {listUnpaid} from './actions'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {
   Typography, 
@@ -10,14 +10,14 @@ import {
   // Button,
 } from'@mui/material'
 
-export default function AppealsList() {
-  const [appeals, setAppeals] = React.useState<Ticket[]>([]);
+export default function UnpaidList() {
+  const [unpaid, setUnpaid] = React.useState<Ticket[]>([]);
 
   React.useEffect(() => {
     const setAppealData = async () => {
-      const list = await listAppeals();
-      if (list) setAppeals(list);
-      // console.log("in view", appeals);
+      const list = await listUnpaid();
+      if (list) setUnpaid(list);
+      // console.log("in view", unpaid);
     }
     setAppealData();
   }, [])
@@ -71,6 +71,18 @@ export default function AppealsList() {
       ),
     },
     {
+      field: 'appeal',
+      headerName: 'Appeal',
+      width: 200,
+      renderCell: (params) => (
+        <Tooltip title={params.value}>
+          <Typography noWrap sx={{ maxWidth: 180 }}>
+            {(params.value == 'null') ? "none" : params.value}
+          </Typography>
+        </Tooltip>
+      ),
+    },
+    {
       field: 'cost',
       headerName: 'Cost',
       width: 120,
@@ -96,9 +108,9 @@ export default function AppealsList() {
   ];
   return (
     <Box>
-      <Typography>Active Appeals</Typography>
-      {(appeals && appeals.length != 0) ? <DataGrid
-        rows={appeals}
+      <Typography variant='h4' sx={{mb:4}}>Unpaid Tickets</Typography>
+      {(unpaid && unpaid.length != 0) ? <DataGrid
+        rows={unpaid}
         columns={columns}
         initialState={{
         pagination: { paginationModel: { pageSize: 10 } },
@@ -154,9 +166,9 @@ export default function AppealsList() {
             backgroundColor: '#e6f7ff',
           }
         }}
-        loading={appeals.length === 0}
+        loading={unpaid.length === 0}
       />
-      : <Typography>No Active Appeals</Typography>}
+      : <Typography>No Unpaid Tickets</Typography>}
     </Box>
   )
 }

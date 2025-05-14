@@ -1,4 +1,4 @@
-import AppealsList from './appealsList'
+import UnpaidList from './UnpaidList'
 import SideBarNav from './SideBarNav'
 import {
   Box,
@@ -20,7 +20,7 @@ export default function DashBoardView() {
           // alignItems:'center',
         }}
       >
-        <AppealsList />
+        <UnpaidList />
       </Box>
     </Box>
   )
