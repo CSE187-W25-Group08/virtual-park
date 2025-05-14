@@ -19,11 +19,11 @@ export class LotResolver {
 
   @Authorized('admin')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @Mutation(returns => [Lot])
+  @Mutation(returns => Lot)
   async putId(
     @Arg("id") id: string,
     @Arg("data") data: UpdateLotData
-  ): Promise<Lot[]> {
+  ): Promise<Lot> {
     return await new LotService().updateId(id, data)
   }
 

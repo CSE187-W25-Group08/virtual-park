@@ -36,7 +36,21 @@ export class LotService {
     return lots;
   }
 
-  public async updateId(lotId: string, data: UpdateLotData): Promise<Lot[]> {
+  /*
+  private async getById(id: string) : Promise<Lot> {
+    console.log(id);
+    const query = {
+      text: queries.selectById,
+      values: [id]
+    }
+    const { rows } = await pool.query(query);
+    const lots = await this.rowToLot(rows);
+    return lots[0];
+  }
+    */
+
+  public async updateId(lotId: string, data: UpdateLotData): Promise<Lot> {
+
     // remove undefined values from data
     const objectToFilter = Object.entries(data)
     const filteredData = objectToFilter.filter(([, value]) => value !== undefined);
@@ -63,7 +77,9 @@ export class LotService {
 
     const { rows } = await pool.query(query);
     const lots = await this.rowToLot(rows);
-    return lots;
+    return lots[0];
 
   }
+
+
 }
