@@ -90,9 +90,7 @@ test("Update lot at id", async () => {
       `,
     })
     .then((res) => {
-      console.log(res.body.data.putId)
       expect(res.body.data.putId.name).toBe("Dragon");
-
     });
 
 

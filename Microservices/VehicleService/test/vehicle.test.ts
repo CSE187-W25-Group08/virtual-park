@@ -99,8 +99,6 @@ test('Returns vehicle by vehicle ID and authenticated user ID', async () => {
       }
     })
     .then((res) => {
-      console.log('response errors:', res.body.errors)
-      console.log('get Vehicle info:', res.body.data)
       expect(res.body.data.getVehicleById).toBeDefined()
     })
 })
@@ -167,7 +165,6 @@ test('user who do no thave primary car', async () => {
       }`
     })
     .then((res) => {
-      console.log('primary vehicle info:',res.body.data.primaryVehicle)
       expect(res.body.data.primaryVehicle).toBe(null)
     })
 })
@@ -213,7 +210,6 @@ test('user who has primary car', async () => {
       }`
     })
     .then((res) => {
-      console.log('primary vehicle info:',res.body.data.primaryVehicle)
       expect(res.body.data.primaryVehicle.licensePlate).toBe("TEST123")
     })
 })
