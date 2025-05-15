@@ -1,6 +1,7 @@
 export interface Permit {
+  permitID: string
+  permitType: string,
   issueDate: string,
   expDate: string,
-  type: string,
-  price: number
+  isValid: boolean
 }
