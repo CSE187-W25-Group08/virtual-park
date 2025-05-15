@@ -7,11 +7,13 @@ import {
   Typography, 
   Box,
   Tooltip,
-  // Button,
+  Button,
 } from'@mui/material'
+import { useRouter } from 'next/navigation';
 
 export default function UnpaidList() {
   const [unpaid, setUnpaid] = React.useState<Ticket[]>([]);
+  const router = useRouter();
 
   React.useEffect(() => {
     const setAppealData = async () => {
@@ -22,9 +24,9 @@ export default function UnpaidList() {
     setAppealData();
   }, [])
 
-  // const handleManageAppeal = async (ticket?: Ticket) => {
-  //   alert(`going to appeal of ${ticket?.id}`);
-  // }
+    const handleManageTicket = async (ticket?: Ticket) => {
+      router.push(`ticket/${ticket?.id}`);
+    }
   
   // based on MUI https://mui.com/material-ui/react-list/
   const columns: GridColDef[] = [
@@ -88,23 +90,23 @@ export default function UnpaidList() {
       width: 120,
       renderCell: (params) => `$${params.value.toFixed(2)}`,
     },
-    // {
-    //   field: 'actions',
-    //   headerName: '',
-    //   width: 180,
-    //   sortable: false,
-    //   filterable: false,
-    //   renderCell: (params) => (
-    //     <Button
-    //       variant="outlined"
-    //       color="primary"
-    //       size="small"
-    //       onClick={() => handleManageAppeal(params.row)}
-    //     >
-    //       Manage Appeal
-    //     </Button>
-    //   ),
-    // },
+    {
+      field: 'actions',
+      headerName: '',
+      width: 180,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          onClick={() => handleManageTicket(params.row)}
+        >
+          Manage Ticket
+        </Button>
+      ),
+    },
   ];
   return (
     <Box>

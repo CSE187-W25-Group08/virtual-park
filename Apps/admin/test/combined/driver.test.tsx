@@ -6,10 +6,15 @@ import {http, HttpResponse} from 'msw';
 // https://chatgpt.com/g/g-p-6812f0a14ce48191b88ff0acaa65015c-virtual-park-app/c/6812f1f1-1608-8007-a132-0de188c60fc6
 
 // mock next.js stuff navigation and cookies
+const mockPush = vi.fn()
+const mockPathname = "/drivers/123";
+
 vi.mock('next/navigation', () => ({
-  useRouter: vi.fn(),
-  usePathname: vi.fn()
-}))
+  useRouter: () => ({
+    push: mockPush,
+  }),
+  usePathname: () => mockPathname,
+}));
 
 vi.mock('next/headers', () => ({
   cookies: () => ({
@@ -35,11 +40,8 @@ const testDriver = {
   joinDate: "Feb 17 2025",
 }
 import Page from '@/app/drivers/page'
-import {fetchDrivers} from '@/app/drivers/action';
-it('Displays list of drivers', async () => {
-  const mockPush = vi.fn()
-  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
 
+it('Displays list of drivers', async () => {
   vi.mocked(fetch).mockImplementation((url, options) => {
     if (url?.toString().includes('/drivers')) {
       return Promise.resolve({

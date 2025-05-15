@@ -1,19 +1,21 @@
 import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup, fireEvent} from '@testing-library/react'
-import { testAppeal } from '../MockData'
+import { testTicket } from '../MockData'
 import SideBarNav from '@/app/dashboard/SideBarNav'
+import { resolve } from 'path'
 
 const mockPush = vi.fn()
+const mockPathname = "/drivers/123";
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: mockPush,
   }),
-  usePathname: vi.fn(),
-}))
+  usePathname: () => mockPathname,
+}));
 
 vi.mock('../../src/app/dashboard/actions', () => ({
-  listAppeals: vi.fn(() => testAppeal),
+  listAppeals: vi.fn(() => testTicket),
 }))
 
 afterEach(() => {
