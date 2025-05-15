@@ -241,3 +241,42 @@ test("Get all unpaid tickets", async () => {
 
     });
 });
+
+test("Get spefic ticket with admin endpoint", async () => {
+  let ticketId;
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          allTicket {
+            id,
+            appeal
+          }
+        }
+      `
+    })
+    .then((res) => {
+      ticketId = res.body.data.allTicket[0].id;
+    })
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          getTicketInfo (ticketId: "${ticketId}") {
+            id,
+            vehicle,
+            lot,
+            appeal
+          }
+        }
+      `
+    })
+    .then((res) => {
+      console.log(res.body.errors);
+      expect(res.body.data.getTicketInfo.id).toEqual(ticketId);
+    });
+});

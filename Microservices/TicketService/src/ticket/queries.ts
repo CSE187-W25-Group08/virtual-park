@@ -90,3 +90,8 @@ export const unpaidTickets =
 
   ORDER BY data->>'due' ASC;
 `
+export const getSpeficTicket =
+  `
+  SELECT id, driver, data FROM ticket
+  WHERE (id::text = $1::text);
+`
