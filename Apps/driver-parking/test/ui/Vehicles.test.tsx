@@ -13,7 +13,8 @@ vi.spyOn(actions, 'registerVehicle').mockResolvedValue({
   make: 'Toyota',
   model: 'Corolla',
   color: 'Silver',
-  driver: 'some-driver-id'
+  driver: 'some-driver-id',
+  active: true,
 })
 
 afterEach(() => {
