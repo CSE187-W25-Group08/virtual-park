@@ -40,7 +40,7 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => {
   };
 });
 
-vi.mock('../../src/register/actions', () => {
+vi.mock('../../src/app/[locale]/register/actions', () => {
   return {
     getVehicleById: vi.fn(() =>
       Promise.resolve({
