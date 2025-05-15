@@ -68,9 +68,7 @@ export default function Vehicles() {
 
     try {
       const addedVehicle = await registerVehicle(newVehicle)
-      const removed = await updatePrimaryVehicle(addedVehicle)
-
-      console.log('added: ', addedVehicle.id);
+      await updatePrimaryVehicle(addedVehicle)
 
       // setVehicles(prev => [...prev, result])
       setVehicles(await getUserVehicles())
