@@ -4,7 +4,7 @@ import { Authenticated, Credentials } from './'
 
 export async function check(cookie: string | undefined): Promise<void> {
   return new Promise((resolve, reject) => {
-    fetch('http://localhost:3010/api/v0/auth/check?scope=adminonly', {
+    fetch('http://localhost:3010/api/v0/auth/check?scope=enforcement', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${cookie}`,
