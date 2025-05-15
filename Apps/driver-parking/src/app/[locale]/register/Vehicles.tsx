@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Box, Card, Typography, Button, TextField,
-  //  Switch, 
-  //  FormControlLabel 
+   Switch, 
+   FormControlLabel 
   } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
@@ -27,6 +27,9 @@ export default function Vehicles() {
     fetchData()
   }, []);
 
+  useEffect(() => {
+  }, [setVehicles, vehicles]);
+
   const emptyForm = {
     driver: '',
     licensePlate: '',
@@ -41,9 +44,9 @@ export default function Vehicles() {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // const handleToggle = () => {
-  //   setFormData(prev => ({ ...prev, isDefault: !prev.isDefault }));
-  // };
+  const handleToggle = () => {
+    setFormData(prev => ({ ...prev, isDefault: !prev.isDefault }));
+  };
 
   const isFormValid =
   // formData.driver.trim() &&
@@ -94,12 +97,28 @@ export default function Vehicles() {
                   <br />
                   ({vehicle.licensePlate})
                 </Typography>
-                {/* <Typography
-                  variant="body2"
-                  sx={{ color: 'primary.main', cursor: 'pointer' }}
-                >
-                  {t('edit')}
-                </Typography> */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  {vehicle.active && (
+                    <Typography
+                      variant="caption"
+                      sx={{ 
+                        backgroundColor: '#e0e0e0',
+                        borderRadius: '8px',
+                        px: 1,
+                        fontWeight: 500,
+                        fontSize: '0.75rem',
+                      }}
+                    >
+                      Default
+                    </Typography>
+                  )}
+                  <Typography
+                    variant="body2"
+                    sx={{ color: 'primary.main', cursor: 'pointer' }}
+                  >
+                    {t('edit')}
+                  </Typography>
+                </Box>
               </Box>
             </Box>
           ))}
@@ -162,11 +181,11 @@ export default function Vehicles() {
             onChange={handleChange}
             sx={{ mb: 2 }}
           />
-          {/* <FormControlLabel
+          {vehicles.length != 0 && (<FormControlLabel
             control={<Switch checked={formData.isDefault} onChange={handleToggle} />}
             label={t('default')}
             sx={{ mb: 2 }}
-          /> */}
+          />)}
 
           <Box display="flex" justifyContent="space-between">
             <Button onClick={() => {

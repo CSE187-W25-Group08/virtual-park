@@ -4,7 +4,8 @@ export interface Vehicle {
     driver: string,
     make: string,
     model: string,
-    color: string
+    color: string,
+    active: boolean
 }
 
 export interface VehicleForm {

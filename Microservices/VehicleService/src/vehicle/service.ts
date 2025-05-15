@@ -39,11 +39,11 @@ export class VehicleService {
         'make': data.make,
         'model': data.model,
         'color': data.color,
-        'active': rows[0].data.active
+        'active': data.active
       }
       return vehicleObj
     }))
-
+    
     return vehicles
   }
 
@@ -82,7 +82,7 @@ https://stackoverflow.com/questions/62913315/operator-in-typescript */
       'make': rows[0].data.make,
       'model': rows[0].data.model,
       'color': rows[0].data.color,
-      'active': rows[0].data.active ?? true
+      'active': rows[0].data.active
   }
   return vehicleObj;
   }
