@@ -25,7 +25,9 @@
     "unplugin-swc": "^1.5.2",
     "vite-plugin-eslint": "^1.8.1",
     "vite-ts-decorators": "^1.1.0",
-    "vitest": "*"
+    "vitest": "*",
+    "@types/cors": "^2.8.17"
+
   },
   "dependencies": {
     "class-validator": "^0.14.2",
@@ -37,7 +39,8 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.15.6",
     "reflect-metadata": "^0.2.2",
-    "type-graphql": "^2.0.0-rc.2"
+    "type-graphql": "^2.0.0-rc.2",
+    "cors": "^2.8.5"
   },
   "nodemonConfig": {
     "watch": [
