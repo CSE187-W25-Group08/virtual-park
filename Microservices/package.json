@@ -35,7 +35,7 @@
     "test-permit": "cd PermitService && npm run test",
     "test-ticket": "cd TicketService && npm run test",
     "test-vehicle": "cd VehicleService && npm run test",
-    "test": "npm run test-auth && npm run test-lot && npm run test-permit && npm run test-ticket && npm run test-vehicle && npm run test-lot"
+    "test": "npm run test-auth && npm run test-permit && npm run test-ticket && npm run test-vehicle && npm run test-lot"
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",
