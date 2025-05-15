@@ -154,7 +154,7 @@ test("Get all active appeals", async () => {
     .send({
       query: `
         query {
-          activeAppeals {
+          appealedTicket {
             violation,
             description
           }
@@ -162,7 +162,7 @@ test("Get all active appeals", async () => {
       `,
     })
     .then((res) => {
-      expect(res.body.data.activeAppeals[0].description).toEqual("a ticket you might want to appeal");
+      expect(res.body.data.appealedTicket[0].description).toEqual("a ticket you might want to appeal");
 
     });
 });
@@ -221,3 +221,23 @@ test('Update a ticket to be appealed', async () => {
       expect(res.body.data.appealedTicket.length).toEqual(initialAppealCount + 1)
     })
 })
+
+test("Get all unpaid tickets", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          allUnpaidTickets {
+            violation,
+            description
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      expect(res.body.data.allUnpaidTickets.length).toEqual(3);
+
+    });
+});
