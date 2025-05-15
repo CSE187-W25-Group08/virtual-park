@@ -11,11 +11,12 @@
     "package": "docker build . -t cte-linux-amd64 --platform linux/amd64 && docker save -o cte-linux-amd64.tar cte-linux-amd64",
     "containerised": "npm run build && npm run compose",
     "compose": "docker compose up --build",
-    "installs": "npm install && npm run install-auth && npm run install-ticket && npm run install-vehicle && npm run install-permit && npm run install-driver-app && npm run install-admin-app && npm run install-enforcement-app && npm run install-police-api && npm run install-registrar-api",
+    "installs": "npm install && npm run install-auth && npm run install-ticket && npm run install-vehicle && npm run install-permit && npm run install-lot && npm run install-driver-app && npm run install-admin-app && npm run install-enforcement-app && npm run install-police-api && npm run install-registrar-api",
     "install-auth": "cd Microservices/AuthService && npm install",
     "install-ticket": "cd Microservices/TicketService && npm install",
     "install-vehicle": "cd Microservices/VehicleService && npm install",
     "install-permit": "cd Microservices/PermitService && npm install",
+    "install-lot": "cd Microservices/LotService && npm install",
     "install-driver-app": "cd Apps/driver-parking && npm install",
     "install-admin-app": "cd Apps/admin && npm install",
     "install-enforcement-app": "cd Apps/enforcement && npm install",
@@ -63,6 +64,6 @@
     "start-registrar-api": "cd APIs/Registrar && npm start",
     "test-app": "cd Apps && npm run test",
     "test-services": "cd Microservices && npm run test",
-    "test": "npm run test-app && npm run test-services"
+    "test": "npm run test-services && npm run test-app"
   }
 }
