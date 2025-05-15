@@ -1,4 +1,4 @@
-export const testAppeal = {
+export const testTicket = {
   id: "a1b2c3d4",
   vehicle: "uuid",
   enforcer: "uuid",
