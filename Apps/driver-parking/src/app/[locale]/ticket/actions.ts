@@ -59,3 +59,12 @@ export async function setTicketPaid(id : string, paid: boolean): Promise<Ticket 
     return undefined;
   }
 }
+
+export async function setTicketAppealed(id : string, appeal: string): Promise<Ticket | undefined> {
+  try {
+    const cookie = (await cookies()).get("session")?.value;
+    return new TicketService().updateAppealedTicket(cookie, id, appeal)
+  } catch {
+    return undefined;
+  }
+}

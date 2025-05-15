@@ -9,8 +9,10 @@ import { useRouter } from 'next/navigation'
 import { useTranslations } from "next-intl";
 
 import { Ticket } from "@/ticket";
-import { getTicketById,
-    setTicketPaid 
+import {
+    getTicketById,
+    // setTicketPaid,
+    setTicketAppealed
   } from "../actions";
 import { Vehicle } from "@/register";
 import { getVehicleById } from "../../register/actions";
@@ -79,7 +81,11 @@ export default function Card({ ticketId }: { ticketId: string }) {
    */
 
   const handleClickAppeal = async () => {
-    console.log('You just appealed this ticket!')
+    const appealedTicket = await setTicketAppealed(ticketId, 'submitted')
+     if (appealedTicket) {
+       setTicket(appealedTicket)
+       router.push('/ticket')
+     }
   }
 
   const appealed = ticket?.appeal != "null"
