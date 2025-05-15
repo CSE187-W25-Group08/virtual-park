@@ -181,11 +181,11 @@ export default function Vehicles() {
             onChange={handleChange}
             sx={{ mb: 2 }}
           />
-          <FormControlLabel
+          {vehicles.length != 0 && (<FormControlLabel
             control={<Switch checked={formData.isDefault} onChange={handleToggle} />}
             label={t('default')}
             sx={{ mb: 2 }}
-          />
+          />)}
 
           <Box display="flex" justifyContent="space-between">
             <Button onClick={() => {
