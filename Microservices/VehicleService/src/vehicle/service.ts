@@ -74,7 +74,6 @@ https://stackoverflow.com/questions/62913315/operator-in-typescript */
       values: [userId, vehicleId]
     }
     const { rows } = await pool.query(query)
-    console.log(rows)
 
     const vehicleObj: Vehicle = {
       'id': rows[0].id,
@@ -94,7 +93,6 @@ https://stackoverflow.com/questions/62913315/operator-in-typescript */
       values: [userId]
     }
     const { rows } = await pool.query(query)
-    console.log('vehicle rows: ', rows.length)
     if (rows.length <= 0) {
       return null;
     } else {
@@ -108,7 +106,6 @@ https://stackoverflow.com/questions/62913315/operator-in-typescript */
         'active': rows[0].data.active
       }
   
-      console.log('vehicleObj: ', vehicleObj)
       return vehicleObj;
     }
   }
