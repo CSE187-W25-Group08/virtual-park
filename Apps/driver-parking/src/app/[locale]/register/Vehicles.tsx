@@ -7,7 +7,7 @@ import { Box, Card, Typography, Button, TextField,
 import { useTranslations } from 'next-intl';
 
 import {Vehicle,VehicleForm} from '../../../register'
-import { getUserVehicles, registerVehicle } from './actions'
+import { getUserVehicles, registerVehicle, updatePrimaryVehicle } from './actions'
 
 export default function Vehicles() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -67,7 +67,10 @@ export default function Vehicles() {
     };
 
     try {
-      await registerVehicle(newVehicle)
+      const addedVehicle = await registerVehicle(newVehicle)
+      const removed = await updatePrimaryVehicle(addedVehicle)
+
+      console.log('added: ', addedVehicle.id);
 
       // setVehicles(prev => [...prev, result])
       setVehicles(await getUserVehicles())

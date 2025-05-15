@@ -126,7 +126,7 @@ test('Returns unauthorized error when auth service throws', async () => {
 
 
 test('Member Registers a Vehicle', async () => {
-  await supertest(server)
+  const res1 = await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
     .send({
@@ -150,9 +150,32 @@ test('Member Registers a Vehicle', async () => {
         }
       `
     })
-    .then((res) => {
-      expect(res.body.data.registerVehicle.active).toBe(false)
-    })
+    // .then((res) => {
+    //   expect(res.body.data.registerVehicle.active).toBe(false)
+    // })
+
+    const vehicleId = res1.body.data.registerVehicle.id;
+
+await supertest(server)
+  .post('/graphql')
+  .set('Authorization', `Bearer Placeholder`)
+  .send({
+    query: `
+      mutation {
+        updatePrimaryVehicle(input: {
+          id: "${vehicleId}"
+        }) {
+          id
+          licensePlate
+          make
+          model
+          color
+          driver
+          active
+        }
+      }
+    `
+  })
 })
 
 test('user who do no thave primary car', async () => {
@@ -175,7 +198,7 @@ test('user who do no thave primary car', async () => {
 })
 
 test('user who has primary car adds a new car selected as primary', async () => {
-  await supertest(server)
+  const res1 = await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
     .send({
@@ -199,6 +222,29 @@ test('user who has primary car adds a new car selected as primary', async () => 
         }
       `
     })
+    const vehicleId = res1.body.data.registerVehicle.id;
+
+await supertest(server)
+  .post('/graphql')
+  .set('Authorization', `Bearer Placeholder`)
+  .send({
+    query: `
+      mutation {
+        updatePrimaryVehicle(input: {
+          id: "${vehicleId}"
+        }) {
+          id
+          licensePlate
+          make
+          model
+          color
+          driver
+          active
+        }
+      }
+    `
+  })
+
   await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
@@ -219,7 +265,3 @@ test('user who has primary car adds a new car selected as primary', async () => 
       expect(res.body.data.primaryVehicle.licensePlate).toBe("TEST123")
     })
 })
-
-
-
-

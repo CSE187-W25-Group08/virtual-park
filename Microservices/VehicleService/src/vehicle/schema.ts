@@ -50,3 +50,9 @@ export class RegisterVehicle {
   @Field()
   active!: boolean;
 }
+
+@InputType()
+export class VehicleIdInput {
+  @Field()
+  id!: string;
+}
