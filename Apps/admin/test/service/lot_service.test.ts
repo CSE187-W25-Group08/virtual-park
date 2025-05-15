@@ -1,6 +1,19 @@
 import { it, expect, vi} from "vitest";
-import { Lot } from "../../src/lot";
+import { Lot, UpdateLotData } from "../../src/lot";
 import { LotService } from "../../src/lot/service";
+const newLot: UpdateLotData = {
+  name: "Cool Parking",
+  zone: "A1",
+  address: "123 Main St, Springfield, CA",
+  latitude: 37.7749,
+  longitude: -122.4194,
+  capacity: 100,
+  availableSpots: 45,
+  isActive: true,
+  type: "public",
+  created: "2025-05-01T10:00:00Z",
+  updated: "2025-05-10T08:30:00Z"
+}
 
 const mockLots: Lot[] = [
   {
@@ -52,12 +65,12 @@ it("successfully fetches all lots from GraphQL API", async () => {
     status: 200,
     json: async () => ({
       data: {
-        getAll: mockLots
+        getAll: mockLots, putId: mockLots[0],
       }
     })
   } as Response);
 
-  const result = await new LotService().getLots("dummy");
+  const result = await new LotService().getLots();
 
   expect(result[0].id).toEqual("lot-001");
 });
@@ -67,11 +80,25 @@ it("Error on mock lots", async () => {
     status: 500,
     json: async () => ({
       data: {
-        getAll: mockLots
+        getAll: mockLots, putId: mockLots[0],
       }
     })
   } as Response);
 
-  await expect(new LotService().getLots("dummy")).rejects.toThrow('Unauthorized');
+  await expect(new LotService().getLots()).rejects.toThrow('Unauthorized');
 });
 
+
+it("successfully updates lots from GraphQL API", async () => {
+  vi.spyOn(global, "fetch").mockResolvedValueOnce({
+    status: 200,
+    json: async () => ({
+      data: {
+        getAll: mockLots, putId: mockLots[0],
+      }
+    })
+  } as Response);
+
+  const result = await new LotService().updateLots('lot-001', newLot);
+  expect(result.id).toEqual("lot-001");
+});
