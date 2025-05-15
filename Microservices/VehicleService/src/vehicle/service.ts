@@ -50,7 +50,7 @@ export class VehicleService {
   public async registerVehicle(userId: string | undefined, input: RegisterVehicle) {
     const query = {
       text: queries.registerVehicle,
-      values: [userId, input.licensePlate, input.make, input.model, input.color, true]
+      values: [userId, input.licensePlate, input.make, input.model, input.color, input.active]
     }
     const { rows } = await pool.query(query)
 
@@ -108,5 +108,26 @@ https://stackoverflow.com/questions/62913315/operator-in-typescript */
   
       return vehicleObj;
     }
+  }
+
+  public async updatePrimaryVehicle(userId: string | undefined, vehicleId: string) {
+    const query = {
+      text: queries.updatePrimaryVehicle,
+      values: [userId, vehicleId]
+    }
+    const { rows } = await pool.query(query)
+
+ 
+    const vehicleObj: Vehicle = {
+      'id': rows[0].id,
+      'driver': rows[0].driver,
+      'licensePlate': rows[0].data.license_plate,
+      'make': rows[0].data.make,
+      'model': rows[0].data.model,
+      'color': rows[0].data.color,
+      'active': rows[0].data.active
+    }
+
+    return vehicleObj;
   }
 }

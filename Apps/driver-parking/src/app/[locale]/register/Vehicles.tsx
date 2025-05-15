@@ -7,7 +7,7 @@ import { Box, Card, Typography, Button, TextField,
 import { useTranslations } from 'next-intl';
 
 import {Vehicle,VehicleForm} from '../../../register'
-import { getUserVehicles, registerVehicle } from './actions'
+import { getUserVehicles, registerVehicle, updatePrimaryVehicle } from './actions'
 
 export default function Vehicles() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -62,13 +62,16 @@ export default function Vehicles() {
       make: formData.make,
       model: formData.model,
       licensePlate: formData.licensePlate,
-      color: formData.color
+      color: formData.color,
+      active: vehicles.length == 0 ? true : formData.isDefault
     };
 
     try {
-      const result = await registerVehicle(newVehicle)
+      const addedVehicle = await registerVehicle(newVehicle)
+      await updatePrimaryVehicle(addedVehicle)
 
-      setVehicles(prev => [...prev, result])
+      // setVehicles(prev => [...prev, result])
+      setVehicles(await getUserVehicles())
       setShowForm(false)
       setFormData(emptyForm)
     } catch (e) {

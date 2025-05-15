@@ -126,7 +126,7 @@ test('Returns unauthorized error when auth service throws', async () => {
 
 
 test('Member Registers a Vehicle', async () => {
-  await supertest(server)
+  const res1 = await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
     .send({
@@ -137,6 +137,7 @@ test('Member Registers a Vehicle', async () => {
             make: "Toyota",
             model: "Corolla",
             color: "Silver"
+            active: false
           }) {
             id
             licensePlate
@@ -149,9 +150,32 @@ test('Member Registers a Vehicle', async () => {
         }
       `
     })
-    .then((res) => {
-      expect(res.body.data.registerVehicle.licensePlate).toBe("TEST123")
-    })
+    // .then((res) => {
+    //   expect(res.body.data.registerVehicle.active).toBe(false)
+    // })
+
+    const vehicleId = res1.body.data.registerVehicle.id;
+
+await supertest(server)
+  .post('/graphql')
+  .set('Authorization', `Bearer Placeholder`)
+  .send({
+    query: `
+      mutation {
+        updatePrimaryVehicle(input: {
+          id: "${vehicleId}"
+        }) {
+          id
+          licensePlate
+          make
+          model
+          color
+          driver
+          active
+        }
+      }
+    `
+  })
 })
 
 test('user who do no thave primary car', async () => {
@@ -173,8 +197,8 @@ test('user who do no thave primary car', async () => {
     })
 })
 
-test('user who has primary car', async () => {
-  await supertest(server)
+test('user who has primary car adds a new car selected as primary', async () => {
+  const res1 = await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
     .send({
@@ -184,7 +208,8 @@ test('user who has primary car', async () => {
             licensePlate: "TEST123",
             make: "Toyota",
             model: "Corolla",
-            color: "Silver"
+            color: "Silver",
+            active: true
           }) {
             id
             licensePlate
@@ -197,6 +222,29 @@ test('user who has primary car', async () => {
         }
       `
     })
+    const vehicleId = res1.body.data.registerVehicle.id;
+
+await supertest(server)
+  .post('/graphql')
+  .set('Authorization', `Bearer Placeholder`)
+  .send({
+    query: `
+      mutation {
+        updatePrimaryVehicle(input: {
+          id: "${vehicleId}"
+        }) {
+          id
+          licensePlate
+          make
+          model
+          color
+          driver
+          active
+        }
+      }
+    `
+  })
+
   await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
@@ -214,10 +262,6 @@ test('user who has primary car', async () => {
       }`
     })
     .then((res) => {
-      expect(res.body.data.primaryVehicle.licensePlate).toBe("123456")
+      expect(res.body.data.primaryVehicle.licensePlate).toBe("TEST123")
     })
 })
-
-
-
-

@@ -1,5 +1,5 @@
 import { Authorized, Query, Mutation, Resolver, Ctx, Arg } from 'type-graphql'
-import { Vehicle, RegisterVehicle } from './schema'
+import { Vehicle, RegisterVehicle, VehicleIdInput } from './schema'
 import { Request } from "express"
 import { VehicleService } from './service'
 
@@ -39,5 +39,15 @@ export class VehicleResolver {
   @Query(() => Vehicle, { nullable: true })
   async primaryVehicle(@Ctx() request: Request): Promise<Vehicle | null> {
     return await new VehicleService().getPrimaryVehicle(request.user?.id)
+  }
+
+  @Authorized()
+  @Mutation(() => Vehicle, { nullable: true })
+  async updatePrimaryVehicle(@Ctx() request: Request, @Arg("input") input: VehicleIdInput): Promise<Vehicle | null> {
+    const addedVehicle = await new VehicleService().getVehicleById(request.user?.id, input.id)
+    if (addedVehicle.active) {
+      return await new VehicleService().updatePrimaryVehicle(request.user?.id, input.id)
+    } 
+    return null;
   }
 }

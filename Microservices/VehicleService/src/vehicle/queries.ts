@@ -50,3 +50,14 @@ WHERE
   driver = $1
   AND data->>'active' = 'true';
 `;
+
+export const updatePrimaryVehicle = `
+UPDATE
+  vehicle
+SET
+  data = jsonb_set(data, '{active}', 'false')
+WHERE
+  driver = $1
+  AND id != $2
+  AND data->>'active' = 'true';
+`;
