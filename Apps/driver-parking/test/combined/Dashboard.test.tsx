@@ -54,6 +54,7 @@ vi.mocked(getPrimaryVehicle).mockResolvedValue(
     make: 'Honda',
     model: 'Pilot',
     color: 'Black',
+    active: true,
   })
 
 beforeEach(() => {
