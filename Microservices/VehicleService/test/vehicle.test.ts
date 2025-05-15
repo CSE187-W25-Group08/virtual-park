@@ -47,7 +47,7 @@ test('Returns all vehicles', async () => {
       }`
     })
     .then((res) => {
-      expect(res.body.data.vehicle.length).toEqual(4)
+      expect(res.body.data.vehicle.length).toEqual(5)
     })
 })
 
@@ -58,7 +58,7 @@ test('Returns Member\'s Vehicles', async () => {
     .send({
       query: `{
         userVehicle
-        { id, driver, licensePlate, make, model, color }
+        { id, driver, licensePlate, make, model, color, active }
       }`
     })
     .then((res) => {
@@ -73,7 +73,7 @@ test('Returns vehicle by vehicle ID and authenticated user ID', async () => {
     .send({
       query: `{
         userVehicle
-        { id, driver, licensePlate, make, model, color }
+        { id, driver, licensePlate, make, model, color, active }
       }`
     })
   
@@ -155,6 +155,10 @@ test('Member Registers a Vehicle', async () => {
 })
 
 test('user who do no thave primary car', async () => {
+  authserviceMock.mockResolvedValueOnce({
+    id: 'f7298bb9-a42a-410d-821e-5ef175d6e924'
+  });
+
   await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
@@ -210,7 +214,7 @@ test('user who has primary car', async () => {
       }`
     })
     .then((res) => {
-      expect(res.body.data.primaryVehicle.licensePlate).toBe("TEST123")
+      expect(res.body.data.primaryVehicle.licensePlate).toBe("123456")
     })
 })
 

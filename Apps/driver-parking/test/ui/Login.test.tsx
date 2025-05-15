@@ -5,25 +5,15 @@ import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 
 import { login as loginMessages } from '../../messages/en.json'
+import { login } from '../../src/app/[locale]/login/action'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
 
-vi.mock('../../src/app/[locale]/login/action', async () => {
-  return {
-    login: vi.fn((credentials) => {
-      if (
-        credentials.email === 'anna@books.com' &&
-        credentials.password === 'annaadmin'
-      ) {
-        return Promise.resolve({ name: 'Anna Admin', accessToken: '1234' })
-      }
-      // Simulate failed login
-      return Promise.reject(undefined)
-    })
-  }
-})
+vi.mock('../../src/app/[locale]/login/action', () => ({
+  login: vi.fn()
+}))
 
 
 import Login from '../../src/app/[locale]/login/View'
@@ -63,6 +53,10 @@ it('should call login function when button is clicked', async () => {
   const mockPush = vi.fn();
   
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+
+  vi.mocked(login).mockResolvedValue({
+  name: 'Anna Admin',
+})
   
   renderWithIntl(<Login />)
 
@@ -80,6 +74,8 @@ it('should call login function when button is clicked', async () => {
 })
 
 it('shows error message on failed login', async () => {
+  vi.mocked(login).mockResolvedValue(undefined)
+
   renderWithIntl(<Login />)
 
   const emailInput = screen.getByPlaceholderText('email')

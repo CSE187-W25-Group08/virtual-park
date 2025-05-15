@@ -10,7 +10,22 @@ VALUES (
     'license_plate', '1XXX000',
     'make', 'Jeep',
     'model', 'Trailhawk',
-    'color', 'cyan'
+    'color', 'cyan',
+    'active', true
+  )
+);
+
+-- no active...
+INSERT INTO vehicle(id, driver, data) 
+VALUES (
+  '93b15c24-3ad2-4ec9-8404-f50d8e357ace',
+  'f7298bb9-a42a-410d-821e-5ef175d6e924',
+  jsonb_build_object(
+    'license_plate', '5741',
+    'make', 'Make',
+    'model', 'Model',
+    'color', 'Blue',
+    'active', false
   )
 );
 
@@ -23,7 +38,8 @@ VALUES (
     'license_plate', '123456',
     'make', 'Honda',
     'model', 'Civic',
-    'color', 'Blue'
+    'color', 'Blue',
+    'active', true
   )
 );
 INSERT INTO vehicle(id, driver, data) 
@@ -34,7 +50,8 @@ VALUES (
     'license_plate', '789100',
     'make', 'Chevy',
     'model', 'Tahoe',
-    'color', 'Black'
+    'color', 'Black',
+    'active', false
   )
 );
 
@@ -45,7 +62,8 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'license_plate', '123BC4A',
     'make', 'Toyota',
     'model', 'Corolla',
-    'color', 'Silver'
+    'color', 'Silver',
+    'active', true
   )
 );
 ------------------------------------

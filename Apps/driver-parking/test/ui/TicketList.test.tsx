@@ -1,6 +1,7 @@
-import { it, afterEach, vi } from 'vitest'
+import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup, fireEvent} from '@testing-library/react'
 import { NextIntlClientProvider } from 'next-intl'
+import { useRouter } from 'next/navigation'
 
 import TicketList from '../../src/app/[locale]/ticket/list'
 import Page from '../../src/app/[locale]/ticket/page'
@@ -52,9 +53,13 @@ it('contains expired meter violation', async () => {
 })
 
 it('Clicks on ticket', async () => {
+  const mockPush = vi.fn();
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any);
+  
   renderWithIntl(<TicketList/>)
   const ticket = await screen.findByText('Cannot park');
   fireEvent.click(ticket)
+  expect(mockPush).toHaveBeenCalledWith('ticket/t4');
 })
 
 /*
