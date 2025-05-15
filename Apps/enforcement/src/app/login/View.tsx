@@ -12,6 +12,11 @@ import {
 } from '@mui/material'
 import { login } from './action'
 
+/*
+    'email','nick@books.com',
+    password:nickenforcement
+ */
+
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
   const router = useRouter()
