@@ -102,3 +102,16 @@ it("successfully updates lots from GraphQL API", async () => {
   const result = await new LotService().updateLots('lot-001', newLot);
   expect(result.id).toEqual("lot-001");
 });
+
+it("Error on mock putLotos for putid", async () => {
+  vi.spyOn(global, "fetch").mockResolvedValueOnce({
+    status: 500,
+    json: async () => ({
+      data: {
+        getAll: mockLots, putId: mockLots[0],
+      }
+    })
+  } as Response);
+
+  await expect(new LotService().updateLots('lot-001', mockLots[0])).rejects.toThrow('Unauthorized');
+});
