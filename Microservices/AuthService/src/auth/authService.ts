@@ -42,7 +42,6 @@ export class AuthService {
       }
     }
     catch (err) {
-      console.log("login db error:", err);
       return undefined;
     }
   }
