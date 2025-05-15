@@ -124,3 +124,8 @@ it('contains image', async () => {
 //   // screen.debug()
 //   await screen.findByText('Paid')
 // })
+
+it('Contains button to Appeal Ticket', async () => {
+  renderWithIntl(<TicketCard ticketId={'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'} />)
+  await screen.findByText('Appeal Ticket')
+})
