@@ -76,7 +76,8 @@ export class RegisterService {
                 licensePlate: "${vehicle.licensePlate}",
                 make: "${vehicle.make}",
                 model: "${vehicle.model}",
-                color: "${vehicle.color}"
+                color: "${vehicle.color}",
+                active: ${vehicle.active}
               }) {
                 id
                 licensePlate
@@ -84,6 +85,7 @@ export class RegisterService {
                 model
                 color
                 driver
+                active
               }
             }
           `

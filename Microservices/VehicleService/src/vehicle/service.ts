@@ -50,7 +50,7 @@ export class VehicleService {
   public async registerVehicle(userId: string | undefined, input: RegisterVehicle) {
     const query = {
       text: queries.registerVehicle,
-      values: [userId, input.licensePlate, input.make, input.model, input.color, true]
+      values: [userId, input.licensePlate, input.make, input.model, input.color, input.active]
     }
     const { rows } = await pool.query(query)
 

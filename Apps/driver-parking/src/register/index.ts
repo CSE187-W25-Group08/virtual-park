@@ -12,5 +12,6 @@ export interface VehicleForm {
     licensePlate: string,
     make: string,
     model: string,
-    color: string
+    color: string,
+    active: boolean
 }

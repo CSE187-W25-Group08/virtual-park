@@ -62,13 +62,15 @@ export default function Vehicles() {
       make: formData.make,
       model: formData.model,
       licensePlate: formData.licensePlate,
-      color: formData.color
+      color: formData.color,
+      active: vehicles.length == 0 ? true : formData.isDefault
     };
 
     try {
-      const result = await registerVehicle(newVehicle)
+      await registerVehicle(newVehicle)
 
-      setVehicles(prev => [...prev, result])
+      // setVehicles(prev => [...prev, result])
+      setVehicles(await getUserVehicles())
       setShowForm(false)
       setFormData(emptyForm)
     } catch (e) {

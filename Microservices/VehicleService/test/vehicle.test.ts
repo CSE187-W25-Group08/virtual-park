@@ -137,6 +137,7 @@ test('Member Registers a Vehicle', async () => {
             make: "Toyota",
             model: "Corolla",
             color: "Silver"
+            active: false
           }) {
             id
             licensePlate
@@ -150,7 +151,7 @@ test('Member Registers a Vehicle', async () => {
       `
     })
     .then((res) => {
-      expect(res.body.data.registerVehicle.licensePlate).toBe("TEST123")
+      expect(res.body.data.registerVehicle.active).toBe(false)
     })
 })
 
@@ -173,7 +174,7 @@ test('user who do no thave primary car', async () => {
     })
 })
 
-test('user who has primary car', async () => {
+test('user who has primary car adds a new car selected as primary', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
@@ -184,7 +185,8 @@ test('user who has primary car', async () => {
             licensePlate: "TEST123",
             make: "Toyota",
             model: "Corolla",
-            color: "Silver"
+            color: "Silver",
+            active: true
           }) {
             id
             licensePlate
@@ -214,7 +216,7 @@ test('user who has primary car', async () => {
       }`
     })
     .then((res) => {
-      expect(res.body.data.primaryVehicle.licensePlate).toBe("123456")
+      expect(res.body.data.primaryVehicle.licensePlate).toBe("TEST123")
     })
 })
 

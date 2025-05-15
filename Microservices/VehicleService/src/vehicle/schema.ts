@@ -28,7 +28,7 @@ export class Vehicle {
   model!: string
   @Field()
   color!: string
-  @Field({defaultValue: true})
+  @Field()
   active!: boolean;
 }
 
@@ -47,6 +47,6 @@ export class RegisterVehicle {
 
   @Field()
   color!: string
-  @Field({defaultValue: true})
+  @Field()
   active!: boolean;
 }
