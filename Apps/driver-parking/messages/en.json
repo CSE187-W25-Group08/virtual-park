@@ -35,7 +35,8 @@
     "expires": "Expiry Date: ",
     "student": "Student",
     "staff": "Staff",
-    "disabled": "Disabled"
+    "disabled": "Disabled",
+    "timeLeft": "Time Remaining:"
   },
   "purchase_permit": {
     "student": "Student",

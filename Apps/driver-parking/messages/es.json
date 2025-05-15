@@ -35,7 +35,8 @@
     "expires": "Fecha de caducidad: ",
     "student": "Estudiante",
     "staff": "Personal",
-    "disabled": "Discapacitado"
+    "disabled": "Discapacitado",
+    "timeLeft": "Tiempo restante:"
   },
   "purchase_permit": {
     "student": "Estudiante",

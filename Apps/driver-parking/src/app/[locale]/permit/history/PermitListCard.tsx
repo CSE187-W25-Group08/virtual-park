@@ -20,6 +20,7 @@ const PermitListCard = ({permit}: {permit: Permit}) => {
     permitType = t('disabled')
   }
 
+
   return (
     <ListItem disablePadding>
       <Card sx={{ width: '100%', marginTop: '20px', borderRadius: 3, boxShadow: 2, border: '1px solid #ccc', p: 2 }}>
@@ -33,8 +34,11 @@ const PermitListCard = ({permit}: {permit: Permit}) => {
           <Typography variant="body2" color="text.secondary" align="center" gutterBottom>
             {t('issued')}{timeFormatter(permit.issueDate)}
           </Typography>
-          <Typography variant="body2" color="text.secondary" align="center">
+          <Typography variant="body2" color="text.secondary" align="center" gutterBottom>
             {t('expires')}{timeFormatter(permit.expDate)}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" align="center">
+            {t('timeLeft')} {timeRemaining(permit.expDate)}
           </Typography>
         </CardContent>
       </Card>
@@ -55,6 +59,28 @@ function timeFormatter(date: string) {
     hour12: false,
   })
   return `${dateStr} at ${timeStr}`
+}
+
+function timeRemaining(date: string) {
+  const dateObj = new Date(date)
+  const now = new Date()
+  const diff = dateObj.getTime() - now.getTime()
+
+  let days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+
+  if (days < 0) {
+    days = 0
+  }
+  if (hours < 0) {
+    hours = 0
+  }
+  if (minutes < 0) {
+    minutes = 0
+  }
+
+  return `${days}d:${hours}h:${minutes}m`
 }
 
 PermitListCard.propTypes = {

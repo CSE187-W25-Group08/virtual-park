@@ -23,7 +23,6 @@ export default function TicketCard({ticket} : {ticket: Ticket}) {
   };
 
   const handleClick = (ticketId: string) => {
-    console.log(ticketId);
     router.push('ticket/' + ticketId)
 
   }

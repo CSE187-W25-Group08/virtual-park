@@ -43,7 +43,6 @@ test('Get all permitType', async () => {
       }`
     })
     .then((res) => {
-      console.log('dataPermit type:', res.body.data)
       expect(res.body.data.PermitType.length).toEqual(3)
 
     })
@@ -65,7 +64,6 @@ test('retrieve all the permits belong to the specific user', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      console.log('permit by user:', res.body.data)
       expect(res.body.data.permitsByDriver.length).toEqual(3)
     })
 })
@@ -87,7 +85,6 @@ test('retrieve the active permit belonging to the specific user', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      console.log('permit by user:', res.body.data)
       expect(res.body.data.validPermit).not.toBeNull()
     })
 })
@@ -116,7 +113,6 @@ test('retrieve the permit info based on the vehicle car plate', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      console.log('permit by carPlate:', res.body.data)
       expect(res.body.data.getPermitBycarPlate.length).toEqual(3)
     })
 })
@@ -145,7 +141,6 @@ test('should return empty array with not exist car plate number', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      console.log('permit by carPlate:', res.body.data)
       expect(res.body.data.getPermitBycarPlate.length).toEqual(0)
     })
 })
