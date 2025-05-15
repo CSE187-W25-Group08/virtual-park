@@ -33,21 +33,25 @@ export async function createNewUser(signUpDetails: NewUser): Promise<User | unde
 }
 
 export async function verifyLogin(credentials: Credentials): Promise<User | undefined> {
-  const query = {
-    text: `
-      SELECT id, data->>'email' AS email, data->>'name' AS name,
-      (crypt($2, data->>'pwhash') = data->>'pwhash') AS valid
-      FROM member
-      WHERE data->>'email' = $1
-      AND (data->>'suspended' IS NULL OR data->>'suspended' != 'true');
-    `,
-    values: [credentials.email, credentials.password],
-  };
-  const { rows } = await pool.query(query);
-  if (rows.length === 1 && rows[0].valid) {
-    return ({ name: rows[0].name, id: rows[0].id, email: rows[0].email });
-  } else {
-    return undefined;
+  try {
+    const query = {
+      text: `
+        SELECT id, data->>'email' AS email, data->>'name' AS name,
+        (crypt($2, data->>'pwhash') = data->>'pwhash') AS valid
+        FROM member
+        WHERE data->>'email' = $1
+        AND (data->>'suspended' IS NULL OR data->>'suspended' != 'true');
+      `,
+      values: [credentials.email, credentials.password],
+    };
+    const { rows } = await pool.query(query);
+    if (rows.length === 1 && rows[0].valid) {
+      return ({ name: rows[0].name, id: rows[0].id, email: rows[0].email });
+    } else {
+      return undefined;
+    }
+  } catch (err) {
+    console.log('auth db err', err)
   }
 }
 
