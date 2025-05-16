@@ -81,7 +81,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
    */
 
   const handleClickAppeal = async () => {
-    const appealedTicket = await setTicketAppealed(ticketId, 'submitted')
+    const appealedTicket = await setTicketAppealed(ticketId, 'submitted', '')
      if (appealedTicket) {
        setTicket(appealedTicket)
        router.push('/ticket')
