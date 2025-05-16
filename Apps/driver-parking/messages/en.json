@@ -87,6 +87,8 @@
     "unpaid": "Unpaid",
     "payTicket": "Pay Ticket",
     "appealTicket": "Appeal Ticket",
+    "appealReason": "Reason for Appeal",
+    "appealPlaceholder": "Explain your reason for appeal",
     "loading": "Loading",
     "viewTicket": "View Ticket"
   },
@@ -105,5 +107,10 @@
     "manageTickets": "Manage Tickets",
     "unpaidTickets": "You have {count} unpaid tickets.",
     "payTickets": "Pay Tickets"
+  },
+  "labels": {
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "clear": "Clear"
   }
 }
