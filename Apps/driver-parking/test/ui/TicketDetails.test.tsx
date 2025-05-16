@@ -7,7 +7,11 @@ import TicketCard from '../../src/app/[locale]/ticket/[ticketId]/Card';
 import TicketDetails from '../../src/app/[locale]/ticket/[ticketId]/page';
 import View from '../../src/app/[locale]/ticket/[ticketId]/View'
 
-import { ticket_details as ticketDetailsMessages } from '../../messages/en.json'
+import {
+  ticket_details as ticketDetailsMessages,
+  labels as labelsMessages,
+} from '../../messages/en.json'
+import userEvent from '@testing-library/user-event';
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -76,7 +80,7 @@ afterEach(() => {
 
 const renderWithIntl = (component: React.ReactElement) => {
   return render(
-    <NextIntlClientProvider locale="en" messages={{ ticket_details: ticketDetailsMessages }}>
+    <NextIntlClientProvider locale="en" messages={{ ticket_details: ticketDetailsMessages, labels: labelsMessages }}>
       {component}
     </NextIntlClientProvider>
   )
@@ -138,12 +142,43 @@ it('Contains button to Appeal Ticket', async () => {
   await screen.findByText('Appeal Ticket')
 })
 
-it('Sets ticket appeal status to submitted after clicking Appeal Ticket', async () => {
+it('Ticket button renders modal', async () => {
+  renderWithIntl(<TicketCard ticketId={'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'} />)
+  const button = await screen.findByText('Appeal Ticket')
+  fireEvent.click(button)
+  await screen.findByLabelText('Reason for Appeal')
+})
+
+it('Can clear the text within the modal', async () => {
+  renderWithIntl(<TicketCard ticketId={'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'} />)
+  const button = await screen.findByText('Appeal Ticket')
+  fireEvent.click(button)
+  const appealField = await screen.findByLabelText('Reason for Appeal')
+  await userEvent.type(appealField, 'Fake Reason')
+  const clearButton = await screen.findByText('Clear')
+  fireEvent.click(clearButton)
+  await screen.findByLabelText('Reason for Appeal')
+})
+
+it('Closes the modal when pressing outside it', async () => {
+  renderWithIntl(<TicketCard ticketId={'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'} />)
+  const button = await screen.findByText('Appeal Ticket')
+  fireEvent.click(button)
+  await userEvent.keyboard('{Escape}')
+  const modalText = screen.queryByLabelText('Reason for Appeal')
+  expect(modalText).toBeNull()
+})
+
+it('Sets ticket appeal status to submitted after an appeal', async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
 
   renderWithIntl(<TicketCard ticketId={'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'} />)
   const button = await screen.findByText('Appeal Ticket')
   fireEvent.click(button)
+  const appealField = await screen.findByLabelText('Reason for Appeal')
+  await userEvent.type(appealField, 'Fake Reason')
+  const submitButton = await screen.findByText('Submit')
+  fireEvent.click(submitButton)
   await screen.findByText('submitted')
 })
