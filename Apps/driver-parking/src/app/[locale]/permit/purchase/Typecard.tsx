@@ -10,14 +10,6 @@ import { PermitType } from '../../../../permit/index'
 /* reference: https://www.typescriptlang.org/docs/handbook/functions.html */
 export default function PermitCard({permit}: { permit: PermitType }) {
   const t = useTranslations('purchase_permit')
-  let permitType = ''
-  if (permit.type === 'Student') {
-    permitType = t('student')
-  } else if (permit.type === 'Staff') {
-    permitType = t('staff')
-  } else if (permit.type === 'Disabled') {
-    permitType = t('disabled')
-  }
 
   // const purchaseHandler = () => {
   //   alert(`${t('purchased')} ${permitType} ($${permit.price})`)
@@ -29,7 +21,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
             <Typography>
-              {permitType}
+              {t(permit.type)}
             </Typography>
             <Typography>${permit.price}</Typography>
           </Box>
