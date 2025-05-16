@@ -20,6 +20,7 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => {
     enforcer: "E456",
     lot: "Lot B",
     paid: false,
+    appeal: 'null',
     description: "Does not matter",
     due: "2025-04-25T23:59:59Z",
     issue: "2025-04-25T09:00:00Z",
@@ -36,6 +37,13 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => {
         paid: true,
       };
       return Promise.resolve(mockTicket);
+    }),
+    setTicketAppealed: vi.fn(() => {
+      mockTicket = {
+        ...mockTicket,
+        appeal: 'submitted',
+      }
+      return Promise.resolve(mockTicket)
     })
   };
 });
@@ -124,3 +132,18 @@ it('contains image', async () => {
 //   // screen.debug()
 //   await screen.findByText('Paid')
 // })
+
+it('Contains button to Appeal Ticket', async () => {
+  renderWithIntl(<TicketCard ticketId={'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'} />)
+  await screen.findByText('Appeal Ticket')
+})
+
+it('Sets ticket appeal status to submitted after clicking Appeal Ticket', async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+
+  renderWithIntl(<TicketCard ticketId={'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'} />)
+  const button = await screen.findByText('Appeal Ticket')
+  fireEvent.click(button)
+  await screen.findByText('submitted')
+})

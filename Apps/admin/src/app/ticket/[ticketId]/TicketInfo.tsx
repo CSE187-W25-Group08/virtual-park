@@ -64,7 +64,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
             <Grid>
               <Typography variant="body2"><strong>Issued:</strong> {new Date(ticket.issue).toLocaleString()}</Typography>
               <Typography variant="body2"><strong>Due:</strong> {new Date(ticket.due).toLocaleDateString()}</Typography>
-              <Typography variant="body2"><strong>Cost:</strong> ${ticket.cost.toFixed(2)}</Typography>
+              <Typography variant="body2"><strong>Cost:</strong> ${ticket.cost}</Typography>
               <Typography variant="body2"><strong>Appeal:</strong> {ticket.appeal}</Typography>
             </Grid>
           </Grid>

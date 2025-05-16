@@ -63,6 +63,21 @@ export class AuthController extends Controller {
     }
   }
 
+  @Get('enforcementCheck')
+  @Security("jwt")
+  @Response('401', 'Unauthorized')
+  public async enforcementCheck(
+    @Request() request: Express.Request,
+    @Query() scope?: string
+  ): Promise<SessionUser | undefined> {
+    const user = request.user as SessionUser;
+    if (scope === 'enforcementonly' && !user.roles?.includes('enforcement')) {
+      this.setStatus(401);
+    } else {
+      return user;
+    }
+  }
+
   @Get('drivers')
   @Security("jwt", ["admin"])
   @Response('401', 'Unauthorized')

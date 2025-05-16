@@ -4,13 +4,15 @@ import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
 import { Box, Typography} from "@mui/material";
-// import Button from "@mui/material/Button";
-// import { useRouter } from 'next/navigation'
+import Button from "@mui/material/Button";
+import { useRouter } from 'next/navigation'
 import { useTranslations } from "next-intl";
 
 import { Ticket } from "@/ticket";
-import { getTicketById,
-  //  setTicketPaid 
+import {
+    getTicketById,
+    // setTicketPaid,
+    setTicketAppealed
   } from "../actions";
 import { Vehicle } from "@/register";
 import { getVehicleById } from "../../register/actions";
@@ -19,8 +21,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
   const t = useTranslations("ticket_details");
-
-  // const router = useRouter()
+  const router = useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,13 +69,24 @@ export default function Card({ ticketId }: { ticketId: string }) {
       return `${datePart} at ${timeString}`;
     }
   };
-  // const handleClick = async () => {
-  //   const newTicket = await setTicketPaid(ticketId, true);
-  //   if (newTicket) {
-  //     setTicket(newTicket);
-  //     router.push('/ticket');
-  //   }
-  // };
+
+  /*
+  const handleClickPaid = async () => {
+     const newTicket = await setTicketPaid(ticketId, true);
+     if (newTicket) {
+       setTicket(newTicket);
+       router.push('/ticket');
+     }
+   };
+   */
+
+  const handleClickAppeal = async () => {
+    const appealedTicket = await setTicketAppealed(ticketId, 'submitted')
+     if (appealedTicket) {
+       setTicket(appealedTicket)
+       router.push('/ticket')
+     }
+  }
 
   const appealed = ticket?.appeal != "null"
 
@@ -147,9 +159,12 @@ export default function Card({ ticketId }: { ticketId: string }) {
                 <Typography color='success.dark'>{t('paid')}</Typography> : 
                 <Typography color='red'>{t('unpaid')}</Typography>}
   
-                {/* {(!ticket?.paid && ticket?.appeal != "approved") && (
-                  <Button variant="outlined" onClick={() => {handleClick()}}>{t('payTicket')}</Button>
-                )} */}
+                {(!ticket?.paid && ticket?.appeal != "approved") && (
+                  <Box sx={{display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 1}}>
+                    {/*<Button variant="outlined" onClick={() => {handleClickPaid()}}>{t('payTicket')}</Button>*/}
+                    <Button variant="outlined" onClick={() => {handleClickAppeal()}}>{t('appealTicket')}</Button>
+                  </Box>
+                )} 
               </Box>
             </ListItemText>
           </List>

@@ -121,4 +121,15 @@ export class TicketService {
     const tickets = await this.rowToTicket(rows);
     return tickets;
   }
+
+  public async getTicketInfo(ticketId: string): Promise<Ticket | undefined> {
+    const query = {
+      text: queries.getSpeficTicket,
+      values: [ticketId]
+    }
+
+    const { rows } = await pool.query(query);
+    const tickets = await this.rowToTicket(rows);
+    return tickets[0];
+  }
 }

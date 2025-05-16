@@ -85,4 +85,10 @@ export class TicketResolver {
     return await new TicketService().getAllUnpaidTickets()
   }
 
+  @Authorized('admin')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(returns => Ticket)
+  async getTicketInfo(@Arg('ticketId') id: string): Promise<Ticket | undefined> {
+    return await new TicketService().getTicketInfo(id)
+  }
 }
