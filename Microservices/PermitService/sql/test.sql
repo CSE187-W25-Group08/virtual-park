@@ -1,22 +1,33 @@
 -- Dummy line
-INSERT INTO permitType (data) VALUES (
+INSERT INTO permitType (id, data) VALUES (
+  '9b968eea-9abe-457c-ae79-1b128074f683',
   jsonb_build_object(
-    'price', 3.14,
-    'type', 'Student'
+    'price', 5,
+    'type', 'Daily'
   )
 );
 
-INSERT INTO permitType (data) VALUES (
+INSERT INTO permitType (id, data) VALUES (
+  '8616e7a7-bd6e-45e2-9809-ed22c727a6da',
   jsonb_build_object(
-    'price', 6.14,
-    'type', 'Staff'
+    'price', 27,
+    'type', 'Week'
   )
 );
 
-INSERT INTO permitType (data) VALUES (
+INSERT INTO permitType (id, data) VALUES (
+  '7acb1a82-c27a-4440-ace7-6d47add695dd',
   jsonb_build_object(
-    'price', 10.14,
-    'type', 'Disabled'
+    'price', 90,
+    'type', 'Month'
+  )
+);
+
+INSERT INTO permitType (id, data) VALUES (
+  '5ed85022-ec19-4e22-aff8-9a98feddeea9',
+  jsonb_build_object(
+    'price', 515.95,
+    'type', 'Year'
   )
 );
 
@@ -26,10 +37,10 @@ SELECT
   id,
   jsonb_build_object(
     'issue_date', '2025-03-05T08:00:00.000Z',
-    'exp_date', '2025-03-05T09:00:00.000Z'
+    'exp_date', '2025-03-06T08:00:00.000Z'
   )
 FROM permitType
-WHERE data->>'type' = 'Student';
+WHERE data->>'type' = 'Daily';
 
 
 INSERT INTO driverPermit (driverID, permitType, data) 
@@ -38,10 +49,10 @@ SELECT
   id,
   jsonb_build_object(
     'issue_date', '2025-03-06T08:00:00.000Z',
-    'exp_date', '2025-03-06T09:00:00.000Z'
+    'exp_date', '2025-03-07T08:00:00.000Z'
   )
 FROM permitType
-WHERE data->>'type' = 'Staff';
+WHERE data->>'type' = 'Daily';
 
 INSERT INTO driverPermit (driverID, permitType, data)
 SELECT
@@ -52,7 +63,7 @@ SELECT
     'exp_date', '2025-06-14T08:00:00.000Z'
   )
 FROM permitType
-WHERE data->>'type' = 'Student';
+WHERE data->>'type' = 'Year';
 
 
 -- SELECT

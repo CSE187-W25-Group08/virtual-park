@@ -43,7 +43,7 @@ test('Get all permitType', async () => {
       }`
     })
     .then((res) => {
-      expect(res.body.data.PermitType.length).toEqual(3)
+      expect(res.body.data.PermitType.length).toEqual(4)
 
     })
 })

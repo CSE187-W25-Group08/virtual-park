@@ -33,9 +33,10 @@
     "title": "Purchase History",
     "issued": "Issue Date: ",
     "expires": "Expiry Date: ",
-    "student": "Student",
-    "staff": "Staff",
-    "disabled": "Disabled",
+    "Daily": "Daily",
+    "Week": "Week",
+    "Month": "Month",
+    "Year": "Year",
     "timeLeft": "Time Remaining:"
   },
   "purchase_permit": {
