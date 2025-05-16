@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import { useRouter } from 'next/navigation'
 import { useTranslations } from "next-intl";
 
+import AppealModal from './AppealModal';
 import { Ticket } from "@/ticket";
 import {
     getTicketById,
@@ -20,6 +21,7 @@ import { getVehicleById } from "../../register/actions";
 export default function Card({ ticketId }: { ticketId: string }) {
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
+  const [appealModalOpen, setAppealModalOpen] = useState(false);
   const t = useTranslations("ticket_details");
   const router = useRouter()
 
@@ -80,12 +82,21 @@ export default function Card({ ticketId }: { ticketId: string }) {
    };
    */
 
-  const handleClickAppeal = async () => {
-    const appealedTicket = await setTicketAppealed(ticketId, 'submitted', '')
-     if (appealedTicket) {
-       setTicket(appealedTicket)
-       router.push('/ticket')
-     }
+  const handleOpenAppealModal = () => {
+    setAppealModalOpen(true);
+  }
+
+  const handleCloseAppealModal = () => {
+    setAppealModalOpen(false);
+  }
+
+  const handleSubmitAppeal = async (appealReason: string) => {
+    const appealedTicket = await setTicketAppealed(ticketId, 'submitted', appealReason)
+    if (appealedTicket) {
+      setTicket(appealedTicket)
+      handleCloseAppealModal()
+      router.push('/ticket')
+    }
   }
 
   const appealed = ticket?.appeal != "null"
@@ -162,9 +173,16 @@ export default function Card({ ticketId }: { ticketId: string }) {
                 {(!ticket?.paid && ticket?.appeal != "approved") && (
                   <Box sx={{display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 1}}>
                     {/*<Button variant="outlined" onClick={() => {handleClickPaid()}}>{t('payTicket')}</Button>*/}
-                    <Button variant="outlined" onClick={() => {handleClickAppeal()}}>{t('appealTicket')}</Button>
+                    <Button variant="outlined" onClick={() => {handleOpenAppealModal()}}>
+                      {t('appealTicket')}
+                    </Button>
                   </Box>
                 )} 
+                <AppealModal
+                  open={appealModalOpen}
+                  onClose={handleCloseAppealModal}
+                  onSubmit={handleSubmitAppeal}
+                />
               </Box>
             </ListItemText>
           </List>
