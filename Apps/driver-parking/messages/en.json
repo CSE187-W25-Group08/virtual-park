@@ -39,9 +39,6 @@
     "timeLeft": "Time Remaining:"
   },
   "purchase_permit": {
-    "Student": "Student",
-    "Staff": "Staff",
-    "Disabled": "Disabled",
     "Daily": "Daily",
     "Week": "Week",
     "Month": "Month",
