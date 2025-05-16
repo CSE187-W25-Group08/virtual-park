@@ -7,10 +7,11 @@ import { Box, Card, Typography, Button, TextField,
 import { useTranslations } from 'next-intl';
 
 import {Vehicle,VehicleForm} from '../../../register'
-import { getUserVehicles, registerVehicle, updatePrimaryVehicle } from './actions'
+import { getUserVehicles, registerVehicle, updatePrimaryVehicle, editVehicle } from './actions'
 
 export default function Vehicles() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState('');
   const t = useTranslations('vehicle')
@@ -38,7 +39,17 @@ export default function Vehicles() {
     color: '',
     isDefault: false,
   };
+
   const [formData, setFormData] = useState(emptyForm);
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
+  const [selectedIsActive, setSelectedIsActive] = useState(false);
+
+  const handleEdit = (vehicle: Vehicle) => {
+    setShowEditForm(true)
+
+    setSelectedVehicle(vehicle)
+    setSelectedIsActive(vehicle.active)
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -48,13 +59,27 @@ export default function Vehicles() {
     setFormData(prev => ({ ...prev, isDefault: !prev.isDefault }));
   };
 
-  const isFormValid =
-  // formData.driver.trim() &&
-  formData.licensePlate.trim() &&
-  formData.make.trim() &&
-  formData.model.trim() &&
-  formData.color.trim();
+  const isFormValid = (
+  licensePlate?: string,
+  make?: string,
+  model?: string,
+  color?: string
+): boolean => {
+  return (
+    !!licensePlate?.trim() &&
+    !!make?.trim() &&
+    !!model?.trim() &&
+    !!color?.trim()
+  );
+};
 
+
+  const handleEditSubmit = async () => {
+    const result = await editVehicle(selectedVehicle)
+    await updatePrimaryVehicle(result)
+    setShowEditForm(false)
+    setVehicles(await getUserVehicles())
+  }
 
   // register a new vehicle
   const handleSubmit = async () => {
@@ -81,7 +106,7 @@ export default function Vehicles() {
 
   return (
     <Card sx={{ p: 2, border: '1px solid #ccc', width: 325 }}>
-      {!showForm ? (
+      {!showForm && !showEditForm ? (
         <>
         <Typography variant="h6" sx={{ mb: 2 }}>{t('title')}</Typography>
           {vehicles.map((vehicle, index) => (
@@ -118,6 +143,7 @@ export default function Vehicles() {
                   <Typography
                     variant="body2"
                     sx={{ color: 'primary.main', cursor: 'pointer' }}
+                    onClick={() => handleEdit(vehicle)}
                   >
                     {t('edit')}
                   </Typography>
@@ -136,18 +162,77 @@ export default function Vehicles() {
           </Button>
           <div>{error}</div>
         </>
-      ) : (
+      ) : (showEditForm && !showForm ? (
         <>
-        <Typography variant="h6" sx={{ mb: 2 }}>{t('addTitle')}</Typography>
-          {/* <TextField
+        <Typography variant="h6" sx={{ mb: 2 }}>EDIT</Typography>
+          <TextField
             required
-            label="Driver"
-            name="driver"
+            label={t('licensePlate')}
+            name="licensePlate"
             fullWidth
-            value={formData.driver}
-            onChange={handleChange}
+            value={selectedVehicle?.licensePlate}
+            onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, licensePlate: e.target.value }))}
             sx={{ mb: 2 }}
-          /> */}
+          />
+          <TextField
+            required
+            label={t('make')}
+            name="make"
+            fullWidth
+            value={selectedVehicle?.make}
+            onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, make: e.target.value }))}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            required
+            label={t('model')}
+            name="model"
+            fullWidth
+            value={selectedVehicle?.model}
+            onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, model: e.target.value }))}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            required
+            label={t('color')}
+            name="color"
+            fullWidth
+            value={selectedVehicle?.color}
+            onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, color: e.target.value }))}
+            sx={{ mb: 2 }}
+          />
+          {!selectedIsActive && (<FormControlLabel
+            control={<Switch
+                      checked={selectedVehicle?.active}
+                      onChange={(e) =>
+                      setSelectedVehicle((prev) =>
+                        prev ? { ...prev, active: e.target.checked } : prev
+                      )
+                    }
+                      />}
+            label={t('default')}
+            sx={{ mb: 2 }}
+          />)}
+
+          <Box display="flex" justifyContent="space-between">
+            <Button onClick={() => {
+                    setShowEditForm(false);
+                    setFormData(emptyForm);
+                }}
+            >
+              {t('cancel')}
+            </Button>
+            <Button variant="contained"
+              onClick={handleEditSubmit}
+              disabled={!isFormValid(selectedVehicle?.licensePlate, selectedVehicle?.make, selectedVehicle?.model, selectedVehicle?.color)}
+            >
+              {t('save')}
+            </Button>
+          </Box>
+        </>
+      ) : 
+      <>
+        <Typography variant="h6" sx={{ mb: 2 }}>{t('addTitle')}</Typography>
           <TextField
             required
             label={t('licensePlate')}
@@ -198,7 +283,12 @@ export default function Vehicles() {
             >
               {t('cancel')}
             </Button>
-            <Button variant="contained" onClick={handleSubmit} disabled={!isFormValid}>{t('save')}</Button>
+            <Button variant="contained"
+              onClick={handleSubmit}
+              disabled={!isFormValid(formData.licensePlate, formData.make, formData.model, formData.color)}
+            >
+              {t('save')}
+            </Button>
           </Box>
         </>
       )}

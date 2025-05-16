@@ -56,3 +56,9 @@ export class VehicleIdInput {
   @Field()
   id!: string;
 }
+
+@InputType()
+export class EditVehicleInput extends RegisterVehicle {
+  @Field()
+  id!: string;
+}
