@@ -72,7 +72,10 @@ export const updateAppealedTicket =
   `
   WITH updated AS (
     UPDATE ticket
-    SET data = jsonb_set(data, '{appeal}', $2::jsonb)
+    SET data = jsonb_set(
+      jsonb_set(data, '{appeal}', $2::jsonb),
+      '{appealReason}', $3::jsonb
+    )
     WHERE id = $1
     RETURNING *
   )

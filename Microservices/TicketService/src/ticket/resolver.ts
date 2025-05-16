@@ -73,9 +73,10 @@ export class TicketResolver {
   @Mutation(returns => Ticket)
   async setTicketAppealed(
     @Arg('id') id: string,
-    @Arg('appealStatus') newAppealStatus: string
+    @Arg('appealStatus') newAppealStatus: string,
+    @Arg('appealReason') appealReason: string
   ): Promise<Ticket> {
-    return await new TicketService().setAppealStatus(id, newAppealStatus)
+    return await new TicketService().setAppealStatus(id, newAppealStatus, appealReason)
   }
 
   @Authorized('admin')
