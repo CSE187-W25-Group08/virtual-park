@@ -17,7 +17,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   
   return (
     <ListItem disablePadding>
-      <Card sx={{ p: 2, border: 'solid', width: '100%' }}>
+      <Card sx={{ p: 2, border: 'solid', width: '100%', mb: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
             <Typography>
