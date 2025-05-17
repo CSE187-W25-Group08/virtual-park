@@ -27,16 +27,20 @@ const renderWithIntl = (component: React.ReactElement) => {
 
 it('mocks Typelist component', async () => {
   const types = [{
-    type: 'Student',
-    price: 3.14
+    type: 'Daily',
+    price: 5
   },
   {
-    type: 'Staff',
-    price: 6.14
+    type: 'Week',
+    price: 27
   },
   {
-    type: 'Disabled',
-    price: 10.14
+    type: 'Month',
+    price: 90
+  },
+  {
+    type: 'Year',
+    price: 515.95
   }]
   mockPermitTypes.mockResolvedValueOnce(types)
 

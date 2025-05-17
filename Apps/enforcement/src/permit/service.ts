@@ -1,6 +1,6 @@
-import {Permit} from '.'
+import {Permit} from './index'
 
-export async function getPermitByCarPlate(cookie: string | undefined):Promise<Permit[]> {
+export async function getPermitByPlate(cookie: string | undefined, carplate: string): Promise<Permit[]> {
   return new Promise((resolve, reject) => {
     fetch('http://localhost:4000/graphql', {
       method: 'POST',
@@ -8,16 +8,37 @@ export async function getPermitByCarPlate(cookie: string | undefined):Promise<Pe
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${cookie}`,
       },
-      body: JSON.stringify({query: `{getPermitBycarPlate {permitID, permitType, issueDate, expDate, isValid}}`}),
+      body: JSON.stringify({
+        query: `
+          query GetPermitByCar($input: String!) {
+            getPermitBycarPlate(input: $input) {
+              permitID
+              permitType
+              issueDate
+              expDate
+              isValid
+            }
+          }
+        `,
+        variables: {
+          input: carplate,
+        },
+      }),
     })
-    .then(response => { 
-      if (response.status != 200) {
+    .then(response => {
+      if (response.status !== 200) {
         reject('Unauthorized')
+        return
       }
-      return response.json()} 
-    )
+      return response.json()
+    })
     .then(json => {
-      resolve(json.data.permitsByDriver)
+      console.log('content inside the json file', json)
+      if (json.errors) {
+        reject(json.errors)
+      } else {
+        resolve(json.data.getPermitBycarPlate)
+      }
     })
     .catch((error) => reject(error))
   })

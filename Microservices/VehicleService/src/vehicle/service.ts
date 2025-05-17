@@ -1,5 +1,5 @@
 import { pool } from '../db'
-import { Vehicle, RegisterVehicle } from './schema'
+import { Vehicle, RegisterVehicle, EditVehicleInput } from './schema'
 import * as queries from './queries'
 
 export class VehicleService {
@@ -126,6 +126,27 @@ https://stackoverflow.com/questions/62913315/operator-in-typescript */
       'model': rows[0].data.model,
       'color': rows[0].data.color,
       'active': rows[0].data.active
+    }
+
+    return vehicleObj;
+  }
+
+  public async editVehicle(userId: string | undefined, input: EditVehicleInput) {
+    const query = {
+      text: queries.editVehicle,
+      values: [userId, input?.id, input?.licensePlate, input?.make, input?.model, input?.color, input?.active]
+    }
+
+    const { rows } = await pool.query(query)
+
+    const vehicleObj: Vehicle = {
+      id: rows[0].id,
+      driver: rows[0].driver,
+      licensePlate: rows[0].data.license_plate,
+      make: rows[0].data.make,
+      model: rows[0].data.model,
+      color: rows[0].data.color,
+      active: rows[0].data.active
     }
 
     return vehicleObj;

@@ -50,8 +50,8 @@ it('renders permit types returned from permitTypes()', async () => {
           data: {
             PermitType: [
               {
-                type: 'Student',
-                price: 3.14
+                type: 'Daily',
+                price: 5
               }
             ]
           },
@@ -61,7 +61,7 @@ it('renders permit types returned from permitTypes()', async () => {
     return Promise.reject('Unknown fetch')
   })
   renderWithIntl(<TypePage />)
-  await screen.findByText('Student')
+  await screen.findByText('Daily')
   // const purchaseButton = await screen.findByLabelText('Purchase Student Permit')
   // await userEvent.click(purchaseButton)
   // expect(alert).toHaveBeenCalledWith('Purchased: Student ($3.14)')

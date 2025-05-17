@@ -1,5 +1,5 @@
 import { Authorized, Query, Mutation, Resolver, Ctx, Arg } from 'type-graphql'
-import { Vehicle, RegisterVehicle, VehicleIdInput } from './schema'
+import { Vehicle, RegisterVehicle, VehicleIdInput, EditVehicleInput } from './schema'
 import { Request } from "express"
 import { VehicleService } from './service'
 
@@ -28,14 +28,12 @@ export class VehicleResolver {
   }
 
   @Authorized()
-
   @Mutation(() => Vehicle)
   async registerVehicle(@Ctx() request: Request, @Arg("input") input: RegisterVehicle): Promise<Vehicle> {
     return await new VehicleService().registerVehicle(request.user?.id, input)
   }
 
   @Authorized()
-
   @Query(() => Vehicle, { nullable: true })
   async primaryVehicle(@Ctx() request: Request): Promise<Vehicle | null> {
     return await new VehicleService().getPrimaryVehicle(request.user?.id)
@@ -49,5 +47,11 @@ export class VehicleResolver {
       return await new VehicleService().updatePrimaryVehicle(request.user?.id, input.id)
     } 
     return null;
+  }
+
+  @Authorized()
+  @Mutation(() => Vehicle)
+  async editVehicle(@Ctx() request: Request, @Arg("input") input: EditVehicleInput): Promise<Vehicle> {
+    return await new VehicleService().editVehicle(request.user?.id, input)
   }
 }

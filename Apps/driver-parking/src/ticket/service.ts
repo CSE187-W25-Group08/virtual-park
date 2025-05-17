@@ -128,7 +128,7 @@ export class TicketService {
     })
   }
 
-  public async updateAppealedTicket(cookie: string | undefined, ticketId: string, appealed: string): Promise<Ticket> {
+  public async updateAppealedTicket(cookie: string | undefined, ticketId: string, appealed: string, appealReason: string): Promise<Ticket> {
     return new Promise((resolve, reject) => {
       fetch('http://localhost:4010/graphql', {
         method: 'POST',
@@ -139,8 +139,8 @@ export class TicketService {
         body: JSON.stringify({
           query: `
             mutation {
-              setTicketAppealed(id: "${ticketId}", appealStatus: "${appealed}") {
-                id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal
+              setTicketAppealed(id: "${ticketId}", appealStatus: "${appealed}", appealReason: "${appealReason}") {
+                id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal, appealReason
               }
             }
           `

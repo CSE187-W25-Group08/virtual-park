@@ -13,7 +13,11 @@ SELECT
   id, data
 FROM
   vehicle
-WHERE driver::text = $1::text;
+WHERE 
+  driver::text = $1::text
+ORDER BY
+  (data->>'active')::boolean DESC,
+  data->>'license_plate' ASC;
 `;
 
 export const registerVehicle = `
@@ -60,4 +64,19 @@ WHERE
   driver = $1
   AND id != $2
   AND data->>'active' = 'true';
+`;
+
+export const editVehicle = `
+UPDATE
+  vehicle
+SET 
+  data = jsonb_build_object(
+    'license_plate', $3::text,
+    'make', $4::text,
+    'model', $5::text,
+    'color', $6::text,
+    'active', $7::boolean
+)
+WHERE driver = $1 AND id = $2
+RETURNING id, driver, data;
 `;

@@ -33,15 +33,17 @@
     "title": "Historial de compras",
     "issued": "Fecha de emisión: ",
     "expires": "Fecha de caducidad: ",
-    "student": "Estudiante",
-    "staff": "Personal",
-    "disabled": "Discapacitado",
+    "Daily": "Diario",
+    "Week": "Semana",
+    "Month": "Mes",
+    "Year": "Año",
     "timeLeft": "Tiempo restante:"
   },
   "purchase_permit": {
-    "student": "Estudiante",
-    "staff": "Personal",
-    "disabled": "Discapacitado",
+    "Daily": "Diario",
+    "Week": "Semana",
+    "Month": "Mes",
+    "Year": "Año",
     "purchase": "Comprar",
     "purchased": "Comprado:"
   },
@@ -87,6 +89,8 @@
     "unpaid": "No pagado",
     "payTicket": "Pagar multa",
     "appealTicket": "Apelar multa",
+    "appealReason": "Razón de la apelación",
+    "appealDescription": "Descripción de la apelación",
     "loading": "Cargando",
     "viewTicket": "Ver multa"
   },
@@ -105,6 +109,10 @@
     "manageTickets": "Gestionar multas",
     "unpaidTickets": "Tienes {count} multas pendientes.",
     "payTickets": "Pagar multas"
-
+  },
+  "labels": {
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "clear": "Borrar"
   }
 }

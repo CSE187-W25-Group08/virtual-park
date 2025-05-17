@@ -178,7 +178,8 @@ test('Update a ticket to be appealed', async () => {
         query {
           allTicket {
             id,
-            appeal
+            appeal,
+            appealReason
           }
         }
       `
@@ -196,9 +197,10 @@ test('Update a ticket to be appealed', async () => {
     .send({
       query: `
         mutation {
-          setTicketAppealed(id: "${unappealedTicketId}", appealStatus: "submitted") {
+          setTicketAppealed(id: "${unappealedTicketId}", appealStatus: "submitted", appealReason: "I DISAGREE") {
             id,
-            appeal
+            appeal,
+            appealReason
           }
         }
       `
@@ -212,7 +214,8 @@ test('Update a ticket to be appealed', async () => {
         query {
           appealedTicket {
             id,
-            appeal
+            appeal,
+            appealReason
           }
         }
       `

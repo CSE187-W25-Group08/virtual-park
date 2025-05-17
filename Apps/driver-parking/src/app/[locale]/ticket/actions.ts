@@ -60,10 +60,10 @@ export async function setTicketPaid(id : string, paid: boolean): Promise<Ticket 
   }
 }
 
-export async function setTicketAppealed(id : string, appeal: string): Promise<Ticket | undefined> {
+export async function setTicketAppealed(id : string, appeal: string, appealReason: string): Promise<Ticket | undefined> {
   try {
     const cookie = (await cookies()).get("session")?.value;
-    return new TicketService().updateAppealedTicket(cookie, id, appeal)
+    return new TicketService().updateAppealedTicket(cookie, id, appeal, appealReason)
   } catch {
     return undefined;
   }

@@ -29,3 +29,8 @@ export async function updatePrimaryVehicle(vehicle: Vehicle) : Promise<Vehicle> 
   const cookie = (await cookies()).get('session')?.value
   return new RegisterService().updatePrimaryVehicle(cookie, vehicle)
 }
+
+export async function editVehicle(vehicle: Vehicle | null) : Promise<Vehicle> {
+  const cookie = (await cookies()).get('session')?.value
+  return new RegisterService().editVehicle(cookie, vehicle)
+}

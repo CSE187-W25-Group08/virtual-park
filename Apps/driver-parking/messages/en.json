@@ -33,15 +33,17 @@
     "title": "Purchase History",
     "issued": "Issue Date: ",
     "expires": "Expiry Date: ",
-    "student": "Student",
-    "staff": "Staff",
-    "disabled": "Disabled",
+    "Daily": "Daily",
+    "Week": "Week",
+    "Month": "Month",
+    "Year": "Year",
     "timeLeft": "Time Remaining:"
   },
   "purchase_permit": {
-    "student": "Student",
-    "staff": "Staff",
-    "disabled": "Disabled",
+    "Daily": "Daily",
+    "Week": "Week",
+    "Month": "Month",
+    "Year": "Year",
     "purchase": "Purchase",
     "purchased": "Purchased:"
   },
@@ -87,6 +89,8 @@
     "unpaid": "Unpaid",
     "payTicket": "Pay Ticket",
     "appealTicket": "Appeal Ticket",
+    "appealReason": "Reason for Appeal",
+    "appealPlaceholder": "Explain your reason for appeal",
     "loading": "Loading",
     "viewTicket": "View Ticket"
   },
@@ -105,5 +109,10 @@
     "manageTickets": "Manage Tickets",
     "unpaidTickets": "You have {count} unpaid tickets.",
     "payTickets": "Pay Tickets"
+  },
+  "labels": {
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "clear": "Clear"
   }
 }

@@ -265,3 +265,48 @@ await supertest(server)
       expect(res.body.data.primaryVehicle.licensePlate).toBe("TEST123")
     })
 })
+
+test('Edits a vehicle', async () => {
+  let vehicle;
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `{
+        userVehicle
+        { id, driver, licensePlate, make, model, color, active }
+      }`
+    })
+    .then((res) => {
+      vehicle = res.body.data.userVehicle[0]
+    })
+
+    await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
+        mutation {
+          editVehicle(input: {
+            id: "${vehicle.id}"
+            licensePlate: "newplate",
+            make: "${vehicle.make}",
+            model: "${vehicle.model}",
+            color: "${vehicle.color}"
+            active: ${vehicle.active}
+          }) {
+            id
+            licensePlate
+            make
+            model
+            color
+            driver
+            active
+          }
+        }
+      `
+    })
+    .then((res) => {
+      expect(res.body.data.editVehicle.licensePlate).toEqual("newplate")
+    })
+  })
