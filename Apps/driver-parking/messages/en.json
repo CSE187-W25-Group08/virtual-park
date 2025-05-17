@@ -7,10 +7,10 @@
     "spanish": "󠁢🇪🇸 Spanish"
   },
   "landing": {
-    "signup": "SIGN UP",
-    "login": "LOGIN",
+    "signup": "Sign Up",
+    "login": "Login",
     "welcome": "Welcome to Virtual-Park!",
-    "logout": "LOG OUT"
+    "logout": "Log out"
   },
   "signup": {
     "createAccount": "Create an Account",
