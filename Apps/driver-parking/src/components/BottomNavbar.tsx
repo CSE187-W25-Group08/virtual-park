@@ -6,13 +6,14 @@ import IconButton from '@mui/material/IconButton'
 import LogoutIcon from '@mui/icons-material/Logout'
 import HomeIcon from '@mui/icons-material/Home'
 import Typography from '@mui/material/Typography'
-
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import { logout } from '@/app/[locale]/login/action'
 
 export default function BottomNavbar() {
   const router = useRouter()
+  const t = useTranslations('navbar')
 
   const handleLogout = async () => {
     await logout()
@@ -46,7 +47,7 @@ export default function BottomNavbar() {
           }}>
           <HomeIcon />
           <Typography variant="caption" sx={{ marginTop: '4px' }}>
-            Home
+            {t('home')}
           </Typography>
         </IconButton>
         <IconButton
@@ -62,7 +63,7 @@ export default function BottomNavbar() {
           }}>
           <LogoutIcon />
           <Typography variant="caption" sx={{ marginTop: '4px' }}>
-            Logout
+            {t('logout')}
           </Typography>
         </IconButton>
       </Toolbar>

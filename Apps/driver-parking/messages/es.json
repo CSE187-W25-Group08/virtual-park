@@ -114,5 +114,9 @@
     "cancel": "Cancelar",
     "submit": "Enviar",
     "clear": "Borrar"
+  },
+  "navbar": {
+    "home": "Inicio",
+    "logout": "Cerrar sesión"
   }
 }

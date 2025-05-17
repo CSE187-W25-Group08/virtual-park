@@ -114,5 +114,9 @@
     "cancel": "Cancel",
     "submit": "Submit",
     "clear": "Clear"
+  },
+  "navbar": {
+    "home": "Home",
+    "logout": "Logout"
   }
 }
