@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "title": "Virtual Park"
+  },
+  "common": {
+    "english": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 English",
+    "spanish": "󠁢🇪🇸 Spanish"
+  },
+  "landing": {
+    "signup": "SIGN UP",
+    "login": "LOGIN",
+    "welcome": "Welcome to Virtual-Park!",
+    "logout": "LOG OUT"
+  },
+  "signup": {
+    "createAccount": "Create an Account",
+    "email": "email ",
+    "name": "name ",
+    "password": "password ",
+    "signup": "sign up",
+    "accountExist": "Already have an account? ",
+    "login": "Login",
+    "emailTaken": "Email already taken"
+  },
+  "login": {
+    "title": "Welcome to Virtual-Park!",
+    "email": "email",
+    "password": "password",
+    "signin": "Sign In",
+    "error": "Incorrect login credentials, please try again"
+  },
+  "permit_history": {
+    "title": "Purchase History",
+    "issued": "Issue Date: ",
+    "expires": "Expiry Date: ",
+    "student": "Student",
+    "staff": "Staff",
+    "disabled": "Disabled",
+    "timeLeft": "Time Remaining:"
+  },
+  "purchase_permit": {
+    "student": "Student",
+    "staff": "Staff",
+    "disabled": "Disabled",
+    "purchase": "Purchase",
+    "purchased": "Purchased:"
+  },
+  "vehicle": {
+    "title": "Vehicles",
+    "register": "+ Register Vehicle",
+    "edit": "Edit",
+    "addTitle": "Register Vehicle",
+    "licensePlate": "License Plate",
+    "color": "Color",
+    "make": "Make",
+    "model": "Model",
+    "default": "Default Vehicle",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "ticket": {
+    "accepted": "Accepted",
+    "submitted": "Submitted",
+    "rejected": "Appeal Rejected",
+    "issueDate": "Issue Date",
+    "datePaid": "Date Paid",
+    "status": "Status",
+    "noTickets": "No current violations on file.",
+    "unpaid": "🔴 Unpaid Violations",
+    "paid": "🟢 Paid Violations",
+    "appeal": "🟡 Appealed Violations"
+  },
+  "ticket_details": {
+    "violation": "Violation:",
+    "description": "Description:",
+    "licensePlate": "License Plate:",
+    "issued": "Issued:",
+    "due": "Due:",
+    "cost": "Cost:",
+    "appealStatus": "Appeal Status:",
+    "submitted": "submitted",
+    "approved": "approved",
+    "rejected": "rejected",
+    "today": "Today at",
+    "yesterday": "Yesterday at",
+    "paid": "Paid",
+    "unpaid": "Unpaid",
+    "payTicket": "Pay Ticket",
+    "appealTicket": "Appeal Ticket",
+    "loading": "Loading",
+    "viewTicket": "View Ticket"
+  },
+  "dashboard": {
+    "permitBought": "You have bought a permit.",
+    "ticketsPaid": "All tickets paid. \nTotal: $",
+    "welcome": "Welcome back,",
+    "vehicle": "Active Vehicle:",
+    "noVehicle": "No active vehicle.",
+    "registerVehicle": "Register",
+    "permit": "Active Permit",
+    "noPermit": "You have no active permit.",
+    "buyPermit": "Buy Permit",
+    "tickets": "Tickets",
+    "noTickets": "You have no unpaid tickets.",
+    "manageTickets": "Manage Tickets",
+    "unpaidTickets": "You have {count} unpaid tickets.",
+    "payTickets": "Pay Tickets"
+  }
+}
