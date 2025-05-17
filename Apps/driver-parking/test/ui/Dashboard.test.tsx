@@ -106,10 +106,10 @@ it('renders active permit', async () => {
 
   vi.mocked(getActivePermit).mockResolvedValue({
     id: '1',
-    type: 'Student',
+    type: 'Daily',
     issueDate: '2025-01-01',
     expDate: '2025-01-01',
-    price: 3.14,
+    price: 5,
   });
 
   vi.mocked(fetch).mockImplementation((url, options) => {
@@ -121,10 +121,10 @@ it('renders active permit', async () => {
             getActivePermit: [
               {
                 id: '1',
-                type: 'Student',
+                type: 'Daily',
                 issueDate: '2025-01-01',
                 expDate: '2025-01-01',
-                price: 3.14,
+                price: 5,
               }
             ],
           },
@@ -136,5 +136,5 @@ it('renders active permit', async () => {
 
   renderWithIntl(<Dashboard />)
 
-  await screen.findByText('Student')
+  await screen.findByText('Daily')
 })

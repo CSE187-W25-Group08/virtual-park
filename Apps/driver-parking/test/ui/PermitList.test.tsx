@@ -28,28 +28,35 @@ const renderWithIntl = (component: React.ReactElement) => {
 it('mocks PermitList component', async () => {
   const testPermits = [{
     id: '1',
-    type: 'Student',
+    type: 'Daily',
     issueDate: '2025-01-01',
     expDate: '2025-01-01',
-    price: 3.14,
+    price: 5,
   },
   {
     id: '2',
-    type: 'Staff',
+    type: 'Week',
     issueDate: '2025-01-02',
-    expDate: '2025-01-02',
-    price: 6.14,
+    expDate: '2025-01-08',
+    price: 27,
   },
   {
     id: '3',
-    type: 'Disabled',
+    type: 'Month',
     issueDate: '2025-01-03',
-    expDate: '2025-01-03',
-    price: 10.14,
+    expDate: '2025-02-03',
+    price: 90,
+  },
+  {
+    id: '4',
+    type: 'Year',
+    issueDate: '2025-01-04',
+    expDate: '2026-01-04',
+    price: 515.95,
   }]
   mockgetUserPermits.mockResolvedValueOnce(testPermits)
 
   renderWithIntl(<PermitList />)
 
-  await screen.findByText('Student')
+  await screen.findByText('Daily')
 })

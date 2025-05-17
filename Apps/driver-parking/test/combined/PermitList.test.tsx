@@ -49,17 +49,17 @@ it('should fetch user\'s purchased permits', async () => {
             permitsByDriver: [
               {
                 id: '1',
-                type: 'Student',
+                type: 'Daily',
                 issueDate: '2025-01-01',
                 expDate: '2025-01-01',
-                price: 3.14,
+                price: 5,
               },
               {
                 id: '2',
-                type: 'Staff',
+                type: 'Week',
                 issueDate: '2025-02-01',
-                expDate: '2025-02-01',
-                price: 6.14,
+                expDate: '2025-02-07',
+                price: 27,
               },
             ],
           },
@@ -71,7 +71,7 @@ it('should fetch user\'s purchased permits', async () => {
 
   renderWithIntl(<PurchaseHistoryPage />)
 
-  await screen.findByText('Student')
+  await screen.findByText('Daily')
 })
 
 /* reference: https://web.dev/learn/testing/get-started/component-testing */
