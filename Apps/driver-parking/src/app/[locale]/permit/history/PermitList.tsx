@@ -23,7 +23,7 @@ export default function PermitList() {
   }, [])
 
   return (
-    <Box>
+    <Box sx={{mb: 10}}>
       <Typography variant="h4" color="text.primary" align="center" sx={{marginTop: '20px'}}>
         {t('title')}
       </Typography>
