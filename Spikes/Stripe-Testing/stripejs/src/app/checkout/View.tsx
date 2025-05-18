@@ -3,13 +3,17 @@
 
 import {
   Box,
+  Paper,
+  Typography,
 } from'@mui/material';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { loadStripe} from '@stripe/stripe-js';
+import { Elements } from "@stripe/react-stripe-js";
 
-const publicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-const stripePromise: Promise<Stripe | null> = publicKey
-  ? loadStripe(publicKey)
-  : Promise.resolve(null);
+if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined) {
+  throw new Error('Missing STRIPE_PUBLISHABLE_KEY in environment variables');
+}
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 
 export default function CheckoutView() {
@@ -23,9 +27,22 @@ export default function CheckoutView() {
       await stripe.redirectToCheckout({ sessionId: session.id });
     }
   };
+
+
+  const amount = 2.20
   return (
   <Box sx={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center' }}>
-    <button onClick={handleCheckout}>Checkout</button>
+    <Paper  sx={{ padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Typography>User</Typography>
+      <Typography>Has requested ${amount}</Typography>
+      <button onClick={handleCheckout}>Checkout</button>
+    </Paper>
+
+
+    <Elements stripe={stripePromise}>Test</Elements>
+
+
+
   </Box>
   );
 

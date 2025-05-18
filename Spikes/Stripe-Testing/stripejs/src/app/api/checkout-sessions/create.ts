@@ -1,9 +1,14 @@
 import Stripe from "stripe";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-10-16",
-});
+
+
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+if (!stripeSecretKey) {
+  throw new Error("Missing STRIPE_SECRET_KEY in environment variables");
+}
+
+const stripe = new Stripe(stripeSecretKey);
 
 //https://www.pedroalonso.net/blog/stripe-checkout-nextjs/
 export default async function handler(
