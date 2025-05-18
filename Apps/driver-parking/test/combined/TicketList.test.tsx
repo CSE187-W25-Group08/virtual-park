@@ -77,5 +77,5 @@ it('Renders Page', async () => {
   }) as any
   renderWithIntl(<Page/>)
   const meterTickets = await screen.findAllByText('Expired meter');
-  expect(meterTickets.length).toEqual(2);
+  expect(meterTickets.length).toEqual(1);
 })

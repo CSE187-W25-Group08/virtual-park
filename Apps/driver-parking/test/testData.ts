@@ -36,7 +36,7 @@ export const paidList = [
     description: "Does not matter",
     due: "2025-04-25T23:59:59Z",
     issue: "2025-04-25T09:00:00Z",
-    violation: "Expired meter",
+    violation: "Expired meter again",
     image: "/images/tickets/t2.jpg",
     cost: 50.02,
     appeal: "rejected"
@@ -53,7 +53,7 @@ export const unpaidList = [
     description: "Does not matter",
     due: "2025-04-25T23:59:59Z",
     issue: "2025-04-25T09:00:00Z",
-    violation: "dab",
+    violation: "Did not pay",
     image: "/images/tickets/t2.jpg",
     cost: 50.02,
     appeal: "null"
@@ -76,3 +76,18 @@ export const appealedList = [
     appeal: "approved"
   }
 ];
+
+export const testTicket = {
+  id: "t3",
+  vehicle: "XYZ5678",
+  enforcer: "E456",
+  lot: "Lot B",
+  paid: false,
+  description: "Does not matter",
+  due: "2025-04-25T23:59:59Z",
+  issue: "2025-04-25T09:00:00Z",
+  violation: "Did not pay",
+  image: "/images/tickets/t2.jpg",
+  cost: 50.02,
+  appeal: "null"
+}
