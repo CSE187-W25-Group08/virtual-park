@@ -56,9 +56,9 @@ it('should call login and redirect on valid credentials', async () => {
   await userEvent.type(screen.getByPlaceholderText('Password'), 'nickenforcement')
   await userEvent.click(screen.getByText('Sign in'))
 
-  // await vi.waitFor(() => {
-  //   expect(mockPush).toHaveBeenCalledWith('/')
-  // })
+  await vi.waitFor(() => {
+    expect(mockPush).toHaveBeenCalledWith('/')
+  })
 })
 
 it('Login denies invalid credentials', async () => {
