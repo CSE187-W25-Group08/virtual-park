@@ -98,11 +98,11 @@ it("should fetch user's permits by plate", async () => {
 // })
 
 /* reference: https://web.dev/learn/testing/get-started/component-testing */
-// it('getdriverpermit rejects and return authorized error', async () => {
-//   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
-//     status: 401,
-//     json: () => Promise.resolve({}),
-//   } as Response))
+it('getpermitBycarplate rejects and return authorized error', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+    status: 401,
+    json: () => Promise.resolve({}),
+  } as Response))
 
-//   await expect(getPermitByDriver('invalidCookie')).rejects.toBe('Unauthorized')
-// })
+  await expect(getPermitByPlate('invalidCookie', 'abc12')).rejects.toBe('Unauthorized')
+})
