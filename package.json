@@ -69,5 +69,9 @@
     "test-app": "cd Apps && npm run test",
     "test-services": "cd Microservices && npm run test",
     "test": "npm run test-services && npm run test-app"
+  },
+  "dependencies": {
+    "@stripe/stripe-js": "^7.3.0",
+    "stripe": "^18.1.0"
   }
 }
