@@ -1,6 +1,6 @@
 import { it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest, NextResponse } from 'next/server';
-import middleware from '../src/middleware';
+import middleware from '../../src/middleware';
 
 global.fetch = vi.fn();
 
