@@ -30,7 +30,7 @@ const renderWithIntl = (component: React.ReactElement) => {
   )
 }
 
-it('redirects to Dashboard', async () => {
+it('redirects to /dashboard', async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
 
@@ -38,6 +38,36 @@ it('redirects to Dashboard', async () => {
   const home = screen.getByLabelText('Home Button');
   fireEvent.click(home)
   expect(mockPush).toHaveBeenCalledWith('/dashboard')
+})
+
+it('redirects to /register', async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+
+  renderWithIntl(<BottomNavbar />)
+  const vehicles = screen.getByLabelText('Vehicles Button');
+  fireEvent.click(vehicles)
+  expect(mockPush).toHaveBeenCalledWith('/register')
+})
+
+it('redirects to permit/purchase', async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+
+  renderWithIntl(<BottomNavbar />)
+  const purchase = screen.getByLabelText('Purchase Button');
+  fireEvent.click(purchase)
+  expect(mockPush).toHaveBeenCalledWith('/permit/purchase')
+})
+
+it('redirects to /ticket', async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+
+  renderWithIntl(<BottomNavbar />)
+  const renew = screen.getByLabelText('Ticket Button');
+  fireEvent.click(renew)
+  expect(mockPush).toHaveBeenCalledWith('/ticket')
 })
 
 it('logs out', async () => {

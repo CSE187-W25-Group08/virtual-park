@@ -117,6 +117,9 @@
   },
   "navbar": {
     "home": "Inicio",
-    "logout": "Salir"
+    "logout": "Salir",
+    "vehicles": "Vehículos",
+    "purchase": "Comprar",
+    "tickets": "Multas"
   }
 }

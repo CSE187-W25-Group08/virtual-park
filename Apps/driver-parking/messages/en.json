@@ -117,6 +117,9 @@
   },
   "navbar": {
     "home": "Home",
-    "logout": "Logout"
+    "logout": "Logout",
+    "vehicles": "Vehicles",
+    "purchase": "Purchase",
+    "tickets": "Tickets"
   }
 }
