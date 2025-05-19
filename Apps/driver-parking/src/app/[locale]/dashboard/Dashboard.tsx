@@ -52,8 +52,8 @@ export default function Dashboard() {
   // }
 
   return (
-    <Fragment>
-      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2 }}>
+    <Box sx={{mb: 10}}>
+      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
         <Typography variant="h4">{t('welcome')}</Typography>
         <Typography variant="h4">{name}</Typography>
         <Typography variant="body1" sx={{ marginTop: 2 }}>
@@ -125,6 +125,6 @@ export default function Dashboard() {
           </Box>
         )}
       </Box>
-    </Fragment>
+    </Box>
   )
 }

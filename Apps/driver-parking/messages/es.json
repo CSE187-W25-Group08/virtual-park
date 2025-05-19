@@ -7,26 +7,26 @@
     "spanish": "🇪🇸 Español"
   },
   "landing": {
-    "signup": "REGISTRARSE",
-    "login": "INICIAR SESIÓN",
+    "signup": "Registrarse",
+    "login": "Entrar",
     "welcome": "Bienvenido a Virtual-Park!",
-    "logout": "CERRAR SESIÓN"
+    "logout": "Salir"
   },
   "signup": {
     "createAccount": "Crear una cuenta",
     "email": "Correo electrónico ",
     "name": "Nombre ",
     "password": "Contraseña ",
-    "signup": "REGISTRARSE",
+    "signup": "Registrarse",
     "accountExist": "¿Ya tienes una cuenta?",
-    "login": "Iniciar sesión",
+    "login": "Entrar",
     "emailTaken": "El correo electrónico ya está en uso"
   },
   "login": {
     "title": "Bienvenido a Virtual-Park!",
     "email": "Correo electrónico",
     "password": "Contraseña",
-    "signin": "Iniciar sesión",
+    "signin": "Entrar",
     "error": "Credenciales de inicio de sesión incorrectas, por favor inténtelo de nuevo"
   },
   "permit_history": {
@@ -114,5 +114,12 @@
     "cancel": "Cancelar",
     "submit": "Enviar",
     "clear": "Borrar"
+  },
+  "navbar": {
+    "home": "Inicio",
+    "logout": "Salir",
+    "vehicles": "Vehículos",
+    "purchase": "Comprar",
+    "tickets": "Multas"
   }
 }

@@ -89,3 +89,15 @@ AS vinfo(driverID UUID, license_plate TEXT)
 ON dp.driverID = vinfo.driverID
 WHERE vinfo.license_plate = '123BC4A';
 */
+
+-- SELECT dp.id AS "permitID", pt.data->>'type' AS "permitType", dp.data->>'issue_date' AS "issueDate",
+-- dp.data->>'exp_date' AS "expDate", (dp.data->>'exp_date')::timestamp > NOW() AS "isValid", v.driver AS "driverID",
+-- v.id AS "vehicleID"
+-- FROM driverpermit dp
+-- JOIN permittype pt ON dp.permitType = pt.id
+-- JOIN dblink('dbname=vehicle user=postgres',
+-- $$SELECT id, driver::uuid, data->>'license_plate' AS license_plate
+-- FROM vehicle
+-- WHERE data->>'license_plate' = '123BC4A'$$
+-- ) AS v(id uuid, driver uuid, license_plate text)
+-- ON dp.driverID = v.driver;

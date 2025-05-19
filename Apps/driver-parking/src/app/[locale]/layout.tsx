@@ -3,7 +3,8 @@ import { getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { notFound} from 'next/navigation';
 
-import Navbar from '../../components/Navbar'
+import Navbar from '../../components/Navbar';
+import BottomNavbar from '../../components/BottomNavbar';
 import { Toolbar } from '@mui/material';
 
 import { cookies } from 'next/headers';
@@ -44,6 +45,7 @@ export default async function LocaleLayout({
             <>
               <Navbar locale={locale} />
               <Toolbar />
+              <BottomNavbar />
             </>
           )}
           <main>{children}</main>

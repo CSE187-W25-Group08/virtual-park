@@ -1,0 +1,2 @@
+# Virtual-Park: Admin App
+This directory is a full-stack web application for for users who are admins that wish to administrate the drivers, parking enforcement, tickets, etc. Other user types such as parking enforcment who would issue tickets will have their own app elsewhere.

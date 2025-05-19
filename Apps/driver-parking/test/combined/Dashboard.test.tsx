@@ -38,7 +38,8 @@ vi.mocked(listUnpaid).mockResolvedValue([
     violation: "dab",
     image: "/images/tickets/t2.jpg",
     cost: 50.02,
-    appeal: "null"
+    appeal: "null",
+    appealReason: "i did nothing wrong"
   }
 ])
 

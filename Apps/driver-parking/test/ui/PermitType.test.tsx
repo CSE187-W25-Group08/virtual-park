@@ -46,5 +46,5 @@ it('mocks Typelist component', async () => {
 
   renderWithIntl(<Typelist />)
 
-  await screen.findByText('Student')
+  await screen.findByText('Daily')
 })

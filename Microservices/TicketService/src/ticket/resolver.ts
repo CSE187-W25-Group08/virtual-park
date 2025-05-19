@@ -92,4 +92,21 @@ export class TicketResolver {
   async getTicketInfo(@Arg('ticketId') id: string): Promise<Ticket | undefined> {
     return await new TicketService().getTicketInfo(id)
   }
+  @Authorized('enforcement')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Mutation(returns => Ticket)
+  async ticketIssue (
+    @Arg("driverID") driverID: string,
+    @Arg("vehicleID") vehicleID: string,
+    @Arg("lot") lot: string,
+    @Arg("paid") paid: boolean,
+    @Arg("description") description: string,
+    @Arg("violation") violation: string,
+    @Arg("image") image: string,
+    @Arg("cost") cost: number,
+    @Ctx() request: Request
+  ): Promise<Ticket> {
+    // const enforcementID = request.user?.id
+    return await new TicketService().issueTickets(driverID, vehicleID, request.user?.id, lot, paid, description, violation, image, cost)
+  }
 }
