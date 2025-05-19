@@ -151,13 +151,13 @@ export class TicketService {
   public async issueTickets(
     driverId: string,
     vehicleID: string,
-    enforcementID: string,
+    enforcementID: string|undefined,
     lot: string,
-    paid: string,
+    paid: boolean,
     description: string,
     violation: string,
     image: string,
-    cost: string
+    cost: number
   ): Promise<Ticket> {
     const query = {
       text: queries.issueTicket,
