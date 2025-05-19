@@ -61,7 +61,7 @@ const renderWithIntl = (component: React.ReactElement) => {
 it('should log out user when clicking logout button', async () => {
   renderWithIntl(<HomePage />);
 
-  const logoutButton = screen.getByText('LOG OUT');
+  const logoutButton = screen.getByText('Log out');
   await userEvent.click(logoutButton);
 
 
