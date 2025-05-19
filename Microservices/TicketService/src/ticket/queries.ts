@@ -98,3 +98,25 @@ export const getSpeficTicket =
   SELECT id, driver, data FROM ticket
   WHERE (id::text = $1::text);
 `
+
+export const issueTicket = 
+`
+INSERT INTO ticket(driver, data) 
+VALUES (
+  $1,
+  jsonb_build_object(
+    'vehicle', $2,
+    'enforcer', $3,
+    'lot', $4,
+    'paid', $5,
+    'description', $6,
+    'due', (NOW() + INTERVAL '24 hours')::text,
+    'issue', NOW()::text,
+    'violation', $7,
+    'image', $8,
+    'cost', $9,
+    'appeal', 'null'
+  )
+)
+RETURNING id, driver, data;
+`;

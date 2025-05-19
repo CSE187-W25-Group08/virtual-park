@@ -148,4 +148,34 @@ export class TicketService {
     const tickets = await this.rowToTicket(rows)
     return tickets[0]
   }
+  public async issueTickets(
+    driverId: string,
+    vehicleID: string,
+    enforcementID: string,
+    lot: string,
+    paid: string,
+    description: string,
+    violation: string,
+    image: string,
+    cost: string
+  ): Promise<Ticket> {
+    const query = {
+      text: queries.issueTicket,
+      values: [
+        driverId,
+        vehicleID,
+        enforcementID,
+        lot,
+        paid,
+        description,
+        violation,
+        image,
+        cost
+      ],
+    }
+
+    const { rows } = await pool.query(query)
+    const tickets = await this.rowToTicket(rows)
+    return tickets[0]
+  }
 }
