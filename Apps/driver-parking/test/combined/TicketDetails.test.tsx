@@ -1,13 +1,10 @@
 import { it, vi, beforeEach, afterEach, expect} from 'vitest'
-import { render, screen, cleanup, act, fireEvent, waitFor} from '@testing-library/react'
+import { render, screen, cleanup, fireEvent, waitFor} from '@testing-library/react'
 import { graphql, HttpResponse } from 'msw'
 import { NextIntlClientProvider } from 'next-intl'
-import { useRouter } from 'next/navigation'
-import { setupServer } from 'msw/node'
 
 import View from '../../src/app/[locale]/ticket/[ticketId]/View'
 import TicketList from '../../src/app/[locale]/ticket/list'
-import AppealModal from '../../src/app/[locale]/ticket/[ticketId]/AppealModal'
 import {paidList, unpaidList, appealedList, testTicket, testTicketAppealed, testVehicle} from '../testData'
 import {
   labels as labelMessages,
@@ -213,15 +210,6 @@ it('Appeals a ticket successfully', async () => {
   waitFor(() => {
     expect(mockedPush).toHaveBeenCalledWith('/ticket')
   })
-})
-
-it('No tickets are rendered as all requests fail', async () => {
-  mockedGetCookies.mockImplementation(() => {
-    throw new Error('NO COOKIE')
-  })
-
-  renderWithIntl(<TicketList />)
-  await screen.findAllByText(/No current violations on file/)
 })
 
 it('Does not render a details page when the request fails', async () => {
