@@ -103,20 +103,21 @@ export const issueTicket =
 `
 INSERT INTO ticket(driver, data) 
 VALUES (
-  $1,
+  $1::uuid,
   jsonb_build_object(
-    'vehicle', $2,
-    'enforcer', $3,
-    'lot', $4,
-    'paid', $5,
-    'description', $6,
+    'vehicle', $2::text,
+    'enforcer', $3::text,
+    'lot', $4::text,
+    'paid', $5::boolean,
+    'description', $6::text,
     'due', (NOW() + INTERVAL '24 hours')::text,
     'issue', NOW()::text,
-    'violation', $7,
-    'image', $8,
-    'cost', $9,
+    'violation', $7::text,
+    'image', $8::text,
+    'cost', $9::numeric,
     'appeal', 'null'
   )
 )
 RETURNING id, driver, data;
 `;
+

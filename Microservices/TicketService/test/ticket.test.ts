@@ -283,3 +283,61 @@ test("Get spefic ticket with admin endpoint", async () => {
       expect(res.body.data.getTicketInfo.id).toEqual(ticketId);
     });
 });
+
+test("Issue a new ticket", async () => {
+  const testTicketData = {
+    driverID: "5f3a9c2d-8b45-4e87-a130-9cf85df72b1a",
+    vehicleID: "7de23f18-c56b-42d1-b8a9-3e4f8c2d1a5b",
+    lot: "c72e1459-5b52-41f2-b731-15c7c981e8b0",
+    paid: false,
+    description: "no valid permit exist",
+    violation: "No permit",
+    image: 'https://krcrtv.com/resources/media2/16x9/full/1015/center/80/6918a95f-2801-4fa8-b65f-51c46a5395a5-large16x9_crash.jpg',
+    cost: 50,
+  };
+
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation IssueTicket(
+          $driverID: String!,
+          $vehicleID: String!,
+          $lot: String!,
+          $paid: Boolean!,
+          $description: String!,
+          $violation: String!,
+          $image: String!,
+          $cost: Float!
+        ) {
+          ticketIssue(
+            driverID: $driverID,
+            vehicleID: $vehicleID,
+            lot: $lot,
+            paid: $paid,
+            description: $description,
+            violation: $violation,
+            image: $image,
+            cost: $cost
+          ) {
+            id
+            vehicle
+            enforcer
+            lot
+            paid
+            description
+            violation
+            image
+            cost
+            appeal
+          }
+        }
+      `,
+      variables: testTicketData
+    })
+    .then((res) => {
+      console.log('the details of the ticketissue:', res.body.data.ticketIssue)
+      expect(res.body.data.ticketIssue).toBeDefined();
+    });
+});
