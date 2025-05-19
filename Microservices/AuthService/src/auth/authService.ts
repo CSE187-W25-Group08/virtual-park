@@ -12,6 +12,7 @@ import * as jwt from "jsonwebtoken"
 import * as db from './db'
 import { midt, UUID, SessionUser } from '../types'
 import { Credentials, Authenticated, NewUser, Driver } from '.'
+import { OAuth2Client } from 'google-auth-library';
 
 // https://chat.deepseek.com/a/chat/s/b44e480a-f720-4b4e-b923-ac03aa7f7fc6
 const JWT_SECRET = process.env.MASTER_SECRET
@@ -43,6 +44,40 @@ export class AuthService {
     }
     catch (err) {
       console.log("login db error:", err);
+      return undefined;
+    }
+  }
+
+  public async loginWithGoogle(token: string): Promise<Authenticated | undefined> {
+    const client = new OAuth2Client();
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID, // Optional but recommended
+      });
+
+      const payload = ticket.getPayload();
+      if (!payload || !payload.email || !payload.name) {
+        return undefined;
+      }
+
+      // Check if the user exists, or create them
+      let user = await db.getUserByEmail(payload.email);
+      if (!user) {
+        user = await db.createNewUser({
+          name: payload.name,
+          email: payload.email,
+          password: undefined // Not used for Google accounts
+        });
+      }
+
+      return {
+        name: user.name,
+        email: user.email,
+        accessToken: generateToken(user.id)
+      };
+    } catch (err) {
+      console.error('Google token verification failed', err);
       return undefined;
     }
   }
