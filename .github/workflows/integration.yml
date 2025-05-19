@@ -58,6 +58,7 @@ jobs:
           node-version: "lts/*"
       - run: npm install
       - run: npm run installs
+      # Verify the build
       - run: npm run build
 
       # Log in to GHCR
