@@ -222,3 +222,13 @@ it('No tickets are rendered as all requests fail', async () => {
   renderWithIntl(<TicketList />)
   await screen.findAllByText(/No current violations on file/)
 })
+
+it('Does not render a details page when the request fails', async () => {
+  mockedGetCookies.mockImplementation(() => {
+    throw new Error('NO COOKIE')
+  })
+
+  renderWithIntl(<View ticketId={'t3'}/>)
+  await screen.findByText(/View Ticket/)
+  expect(screen.queryByText(/Appeal Ticket/)).toBeNull()
+})
