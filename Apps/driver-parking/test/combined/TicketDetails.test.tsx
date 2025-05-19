@@ -7,6 +7,7 @@ import { setupServer } from 'msw/node'
 
 import View from '../../src/app/[locale]/ticket/[ticketId]/View'
 import TicketList from '../../src/app/[locale]/ticket/list'
+import AppealModal from '../../src/app/[locale]/ticket/[ticketId]/AppealModal'
 import {paidList, unpaidList, appealedList, testTicket, testTicketAppealed, testVehicle} from '../testData'
 import {
   labels as labelMessages,
@@ -231,4 +232,51 @@ it('Does not render a details page when the request fails', async () => {
   renderWithIntl(<View ticketId={'t3'}/>)
   await screen.findByText(/View Ticket/)
   expect(screen.queryByText(/Appeal Ticket/)).toBeNull()
+})
+
+it('Cannot appeal the ticket when the request fails', async () => {
+  // From ChatGPT, will add link later
+  let cookieCallCount = 0
+  mockedGetCookies.mockImplementation(() => {
+    cookieCallCount++
+    if (cookieCallCount < 3) {
+      return { value: 'mock-session-token' }
+    }
+
+    throw new Error('NO COOKIE')
+  })
+
+  vi.stubGlobal('fetch', vi.fn((url, options) => {
+    const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
+    const query = body.query || '';
+
+    if (query.includes('ticketId')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({ data: { ticketId: testTicket } }),
+      });
+    }
+
+    if (query.includes('getVehicleById')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({ data: { getVehicleById: testVehicle } }),
+      });
+    }
+
+    return Promise.reject(new Error('Unhandled GraphQL query'));
+  }));
+
+  renderWithIntl(<View ticketId={'t3'}/>)
+  await screen.findByText('Appeal Ticket')
+  fireEvent.click(screen.getByText('Appeal Ticket'))
+  const appealField = await screen.findByLabelText('Reason for Appeal')
+  await userEvent.type(appealField, 'That\'s not me')
+  const submitButton = await screen.findByText('Submit')
+  fireEvent.click(submitButton)
+  waitFor(() => {
+    expect(mockedPush).not.toHaveBeenCalledWith('/ticket')
+  })
 })
