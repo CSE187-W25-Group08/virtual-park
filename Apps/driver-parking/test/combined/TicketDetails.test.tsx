@@ -22,10 +22,11 @@ vi.mock('next/navigation', () => ({
   })
 }))
 
+const mockedGetCookies = vi.fn()
 vi.mock('next/headers', () => ({
   cookies: () => ({
     set: vi.fn(),
-    get: vi.fn(() => ({ value: 'mock-session-token' })),
+    get: mockedGetCookies,
     delete: vi.fn(),
   }),
 }))
@@ -98,6 +99,8 @@ const renderWithIntl = (component: React.ReactElement) => {
 }
 
 it('Renders list of tickets', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+
   vi.stubGlobal('fetch', vi.fn((url, options) => {
     const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
     const query = body.query || '';
@@ -136,6 +139,8 @@ it('Renders list of tickets', async () => {
 })
 
 it('Renders ticket details page', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+
   vi.stubGlobal('fetch', vi.fn((url, options) => {
     const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
     const query = body.query || '';
@@ -161,10 +166,11 @@ it('Renders ticket details page', async () => {
 
   renderWithIntl(<View ticketId={'t3'}/>)
   await screen.findByText(/Did not pay/)
-  // screen.debug()
 })
 
 it('Appeals a ticket successfully', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+
   vi.stubGlobal('fetch', vi.fn((url, options) => {
     const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
     const query = body.query || '';
@@ -206,4 +212,13 @@ it('Appeals a ticket successfully', async () => {
   waitFor(() => {
     expect(mockedPush).toHaveBeenCalledWith('/ticket')
   })
+})
+
+it('No tickets are rendered as all requests fail', async () => {
+  mockedGetCookies.mockImplementation(() => {
+    throw new Error('NO COOKIE')
+  })
+
+  renderWithIntl(<TicketList />)
+  await screen.findAllByText(/No current violations on file/)
 })
