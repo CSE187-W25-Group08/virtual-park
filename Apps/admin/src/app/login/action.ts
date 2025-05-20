@@ -19,7 +19,7 @@ export async function login(credential: Credentials): Promise<User | undefined> 
       sameSite: 'lax',
       path: '/',
     })
-    return { name: user.name, email: user.email }
+    return { name: user.name }
   }
   return undefined
 }

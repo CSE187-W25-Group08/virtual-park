@@ -32,7 +32,6 @@ export default function LoginView() {
     if (authenticated) {
       setFailedLogin(false);
       window.sessionStorage.setItem('name', authenticated.name)
-      window.sessionStorage.setItem('email', authenticated.email)
       router.push('/')
     } else {
       setFailedLogin(true);

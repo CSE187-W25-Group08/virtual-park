@@ -5,8 +5,7 @@ export interface Authenticated {
 }
 
 export interface User {
-  name: string,
-  email: string
+  name: string
 }
 
 export interface Credentials {

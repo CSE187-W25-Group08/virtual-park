@@ -62,9 +62,6 @@ export default function SideBarNav() {
           <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
             {window.sessionStorage.getItem('name')}
           </Typography>
-          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            {window.sessionStorage.getItem('email')}
-          </Typography>
         </Box>
         <IconButton onClick={() => handleLogout()}>
           <LogoutIcon />
