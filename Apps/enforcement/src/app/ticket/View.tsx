@@ -46,7 +46,8 @@ export default function TicketView({
   }, [driverID, vehicleID])
   
   const lotOptions = [
-    { id: 'lot1', name: 'North Parking Lot' },
+    { id: 'lot1', name: 'Area 51 Lot' },
+    { id: 'lot2', name: 'Lot 101' }
   ]
   {/* reference: https://www.meje.dev/blog/handle-change-in-ts */}
   const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +57,7 @@ export default function TicketView({
       [name]: value
     });
   };
-
+  {/* reference: https://mui.com/material-ui/api/select/ */}
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
     const { name, value } = event.target;
     setTicketInfo({

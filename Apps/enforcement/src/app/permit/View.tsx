@@ -90,7 +90,7 @@ export default function PermitView() {
           {'Search'}
         </Button>
       </Box>
-      
+      {/* reference: https://mui.com/material-ui/react-alert/ */}
       {ticketSuccess && (
         <Alert severity="success" sx={{mb: 3}}>
           {ticketSuccess}
