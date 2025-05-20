@@ -24,7 +24,7 @@
     "typeRoots": ["./src/types", "./node_modules/@types"]
   },
 
-  "include": ["src", "test"],
+  "include": ["src"],
 
   "exclude": [
     "vite.config.ts"
