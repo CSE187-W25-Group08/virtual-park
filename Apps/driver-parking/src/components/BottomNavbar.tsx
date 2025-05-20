@@ -3,7 +3,6 @@
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
-import LogoutIcon from '@mui/icons-material/Logout'
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import ReceiptIcon from '@mui/icons-material/Receipt'
@@ -12,17 +11,11 @@ import Typography from '@mui/material/Typography'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
-import { logout } from '@/app/[locale]/login/action'
+import BottomMenu from './BottomMenu'
 
 export default function BottomNavbar() {
   const router = useRouter()
   const t = useTranslations('navbar')
-
-  const handleLogout = async () => {
-    await logout()
-    window.sessionStorage.clear()
-    router.push('/')
-  }
 
   return (
     <AppBar
@@ -87,20 +80,7 @@ export default function BottomNavbar() {
             {t('tickets')}
           </Typography>
         </IconButton>
-        <IconButton
-          edge='end'
-          color='inherit'
-          aria-label='Logout Button'
-          onClick={handleLogout}
-          sx={{
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}>
-          <LogoutIcon />
-          <Typography variant="caption" sx={{ marginTop: '4px' }}>
-            {t('logout')}
-          </Typography>
-        </IconButton>
+        <BottomMenu />
       </Toolbar>
     </AppBar>
   )

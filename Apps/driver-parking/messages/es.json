@@ -120,6 +120,8 @@
     "logout": "Salir",
     "vehicles": "Vehículos",
     "purchase": "Comprar",
-    "tickets": "Multas"
+    "tickets": "Multas",
+    "permitHistory": "Historial de permisos",
+    "more": "Más"
   }
 }
