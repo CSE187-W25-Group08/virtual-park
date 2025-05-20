@@ -36,3 +36,31 @@ export class CheckoutSessionResponse {
     this.url = url;
   }
 }
+
+
+@ObjectType()
+export class CheckoutSession {
+  @Field()
+  id: string;
+
+  @Field(() => String, { nullable: true })
+  payment_status?: string;
+
+  @Field(() => String, { nullable: true })
+  customer_email?: string | null;
+
+  @Field(() => Int, { nullable: true })
+  amount_total?: number | null;
+
+  constructor(
+    id: string,
+    payment_status?: string,
+    customer_email?: string | null,
+    amount_total?: number | null
+  ) {
+    this.id = id;
+    this.payment_status = payment_status;
+    this.customer_email = customer_email;
+    this.amount_total = amount_total;
+  }
+}
