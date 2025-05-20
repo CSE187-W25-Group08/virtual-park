@@ -177,7 +177,7 @@ export default function TicketView({
             type="number"
             fullWidth
             required
-            value={ticketInfo.cost}
+            value={ticketInfo.cost || 0}
             onChange={handleNumberInputChange}
           />
         </Stack>
