@@ -1,3 +1,3 @@
-import { StripeResolver } from './ticket/resolver'
+import { StripeResolver } from './stripe/resolver'
 
 export const resolvers = [StripeResolver] as const
