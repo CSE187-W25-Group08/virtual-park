@@ -46,8 +46,8 @@ export default function TicketView({
   }, [driverID, vehicleID])
   
   const lotOptions = [
-    { id: 'lot1', name: 'Area 51 Lot' },
-    { id: 'lot2', name: 'Lot 101' }
+    {  name: 'Area 51 Lot' },
+    { name: 'Lot 101' }
   ]
   {/* reference: https://www.meje.dev/blog/handle-change-in-ts */}
   const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -125,7 +125,7 @@ export default function TicketView({
           <input type="hidden" name="driverID" value={ticketInfo.driverID} />
           <input type="hidden" name="vehicleID" value={ticketInfo.vehicleID} />
           <FormControl fullWidth required>
-            <InputLabel id="lot-select-label">Parking Lot</InputLabel>
+            <InputLabel id="lotSelection">Parking Lot</InputLabel>
             <Select
               labelId="lotLabel"
               name="lot"
@@ -134,7 +134,7 @@ export default function TicketView({
               onChange={handleSelectChange}
             >
               {lotOptions.map(lot => (
-                <MenuItem key={lot.id} value={lot.id}>{lot.name}</MenuItem>
+                <MenuItem key={lot.name} value={lot.name}>{lot.name}</MenuItem>
               ))}
             </Select>
           </FormControl>
