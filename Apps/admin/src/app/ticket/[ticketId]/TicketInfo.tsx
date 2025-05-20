@@ -38,34 +38,30 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
     }
   
     return (
-      <Card sx={{ maxWidth: 800, mx: "auto", mt: 4 }}>
+      <Card sx={{ maxWidth: '60%', mx: "auto", mt: 4 }}>
         <CardMedia
           component="img"
           height="300"
           image={ticket.image}
           alt="Violation image"
         />
-        <CardContent>
-          <Typography variant="h5" gutterBottom>
+        <CardContent sx={{p:5}}>
+          <Typography variant="h4" gutterBottom>
             Violation: {ticket.violation}
           </Typography>
   
-          <Typography variant="body1" color="text.secondary" mb={2}>
+          <Typography variant="h6" color="text.secondary" mb={2}>
             {ticket.description}
           </Typography>
   
-          <Grid container spacing={2}>
+          <Grid container spacing={5}>
             <Grid>
-              <Typography variant="body2"><strong>Ticket ID:</strong> {ticket.id}</Typography>
-              <Typography variant="body2"><strong>Vehicle:</strong> {ticket.vehicle}</Typography>
-              <Typography variant="body2"><strong>Enforcer:</strong> {ticket.enforcer}</Typography>
-              <Typography variant="body2"><strong>Lot:</strong> {ticket.lot}</Typography>
+            <Typography variant="h6"><strong>Issued:</strong> {new Date(ticket.issue).toLocaleString()}</Typography>
+              <Typography variant="h6"><strong>Lot:</strong> {ticket.lot}</Typography>
             </Grid>
             <Grid>
-              <Typography variant="body2"><strong>Issued:</strong> {new Date(ticket.issue).toLocaleString()}</Typography>
-              <Typography variant="body2"><strong>Due:</strong> {new Date(ticket.due).toLocaleDateString()}</Typography>
-              <Typography variant="body2"><strong>Cost:</strong> ${ticket.cost}</Typography>
-              <Typography variant="body2"><strong>Appeal:</strong> {ticket.appeal}</Typography>
+              <Typography variant="h6"><strong>Due:</strong> {new Date(ticket.due).toLocaleDateString()}</Typography>
+              <Typography variant="h6"><strong>Cost:</strong> ${ticket.cost}</Typography>
             </Grid>
           </Grid>
   

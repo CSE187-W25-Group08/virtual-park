@@ -1,6 +1,7 @@
 "use server"
 import { Ticket } from "../../ticket";
 import { TicketService } from "../../ticket/service";
+import { LotService } from "../../lot/service";
 import { cookies } from 'next/headers'
 export async function listAll(jwt: string): Promise<Ticket[]> {
   return new TicketService().getAllTicket(jwt)
@@ -25,19 +26,10 @@ export async function getTicketDetails(ticketId: string): Promise<Ticket> {
   // };
   // return testTicket;
 }
-/*
-export async function listPaid(jwt: string): Promise<Ticket[] | undefined> {
+export async function getLot(id: string): Promise<string> {
   try {
-    return new TicketService().getPaidTicket(jwt)
+    return new LotService().getLotById(id);
   } catch {
-    return [];
+    return "unknown lot"
   }
 }
-export async function listUnpaid(jwt: string): Promise<Ticket[] | undefined> {
-  try {
-    return new TicketService().getUnpaidTicket(jwt)
-  } catch {
-    return [];
-  }
-}
-  */

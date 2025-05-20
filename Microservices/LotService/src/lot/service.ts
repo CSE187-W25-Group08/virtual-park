@@ -36,9 +36,8 @@ export class LotService {
     return lots;
   }
 
-  /*
-  private async getById(id: string) : Promise<Lot> {
-    console.log(id);
+
+  public async getById(id: string): Promise<Lot> {
     const query = {
       text: queries.selectById,
       values: [id]
@@ -47,7 +46,6 @@ export class LotService {
     const lots = await this.rowToLot(rows);
     return lots[0];
   }
-    */
 
   public async updateId(lotId: string, data: UpdateLotData): Promise<Lot> {
 
@@ -60,13 +58,13 @@ export class LotService {
 
     // recursively build the jsonb_set function
     filteredData.forEach(([key, value], i) => {
-      const paramIndex = i + 2; 
+      const paramIndex = i + 2;
       jsonbSetSql = `jsonb_set(${jsonbSetSql}, '{${key}}', $${paramIndex}::jsonb)`;
-      values.push(JSON.stringify(value)); 
+      values.push(JSON.stringify(value));
     });
 
-    const queryText= 
-    `
+    const queryText =
+      `
     UPDATE lot SET data = ${jsonbSetSql} WHERE id = $1 RETURNING id, data
     `
 

@@ -10,7 +10,8 @@ export interface Ticket {
   violation: string,
   image: string,
   cost: number,
-  appeal: string
+  appeal: string,
+  appealReason?: string
 }
 
 export interface TicketId {

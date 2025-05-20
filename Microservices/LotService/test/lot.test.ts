@@ -38,7 +38,6 @@ const accessToken = 'Placeholder before authenticated implementation'
 test("Gets all lots", async () => {
   await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
         query {
@@ -74,7 +73,7 @@ test("Update lot at id", async () => {
     });
 
 
-    await supertest(server)
+  await supertest(server)
     .post("/graphql")
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
@@ -97,6 +96,34 @@ test("Update lot at id", async () => {
 });
 
 
+test("Get lot by id", async () => {
+  let lotid
+  let lotName
+  await supertest(server)
+    .post("/graphql")
+    .send({
+      query: `
+        query {
+          getAll {
+            id
+            name
+          }
+        }
+      `,
+    })
+    .then((res) => {
+      lotid = res.body.data.getAll[0].id;
+      lotName = res.body.data.getAll[0].name
+    });
+  await supertest(server)
+    .post("/graphql")
+    .send({
+      query: `{getLotById(id: "${lotid}") {name}}`,
+    })
+    .then((res) => {
+      expect(res.body.data.getLotById.name).toBe(lotName);
+    });
+});
 
 /*
 test("Update lot at nonexistant id", async () => {

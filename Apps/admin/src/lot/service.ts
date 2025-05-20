@@ -32,7 +32,7 @@ export class LotService {
           // Escape double quotes and backslashes inside strings
           const escaped = value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
           return `${key}: "${escaped}"`;
-        }  else {
+        } else {
           return `${key}: ${value}`;
         }
       })
@@ -51,7 +51,8 @@ export class LotService {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: `mutation {
+        body: JSON.stringify({
+          query: `mutation {
           putId(id: "${lotId}", data: ${jsonString}) {
             id,
             name,
@@ -71,6 +72,26 @@ export class LotService {
           resolve(json.data.putId)
         })
         .catch(() => reject('Unauthorized'))
+    })
+  }
+
+  public async getLotById(id: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      fetch('http://localhost:4040/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: `{getLotById(id: "${id}") {name}}` }),
+      })
+        .then(response => {
+          return response.json()
+        }
+        )
+        .then(json => {
+          resolve(json.data.getLotById)
+        })
+        .catch(() => reject('Unknown Lot'))
     })
   }
 }

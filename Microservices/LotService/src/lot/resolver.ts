@@ -5,8 +5,8 @@ import {
   Authorized,
   Arg
 } from "type-graphql"
-import { Lot, UpdateLotData} from "./schema"
-import { LotService} from "./service"
+import { Lot, UpdateLotData } from "./schema"
+import { LotService } from "./service"
 
 
 @Resolver()
@@ -25,6 +25,11 @@ export class LotResolver {
     @Arg("data") data: UpdateLotData
   ): Promise<Lot> {
     return await new LotService().updateId(id, data)
+  }
+
+  @Query(returns => Lot)
+  async getLotById(@Arg("id") id: string): Promise<Lot> {
+    return await new LotService().getById(id);
   }
 
 

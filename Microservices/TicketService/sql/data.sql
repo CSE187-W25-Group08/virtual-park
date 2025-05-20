@@ -83,7 +83,7 @@ VALUES (
 --   1. null
 --   2. submitted
 --   3. rejected
---   4. approved
+--   4. approved;
 
 INSERT INTO ticket(id, driver, data)
 VALUES (
