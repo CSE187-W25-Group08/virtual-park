@@ -164,7 +164,7 @@ export default function TicketView({
           
           <TextField
             name="image"
-            label="Evidence Image URL"
+            label="ViolationImage"
             fullWidth
             value={ticketInfo.image}
             onChange={handleTextInputChange}
@@ -173,7 +173,7 @@ export default function TicketView({
           
           <TextField
             name="cost"
-            label="Fine Amount"
+            label="Fine"
             type="number"
             fullWidth
             required
