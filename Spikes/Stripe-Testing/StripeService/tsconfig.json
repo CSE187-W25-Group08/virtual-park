@@ -19,14 +19,14 @@
 
     "baseUrl": "./",
     "resolveJsonModule": true,
-    "removeComments": true,
+    "removeComments": true,        
 
-    "typeRoots": ["./src/types", "./node_modules/@types"]
+    "typeRoots": ["./src/types", "./node_modules/@types"] 
   },
 
   "include": ["src"],
 
   "exclude": [
-    "vite.config.ts"
-  ]
+    "vite.config.ts",
+  ],
 }
