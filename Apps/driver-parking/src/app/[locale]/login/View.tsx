@@ -13,7 +13,7 @@ import {
   TextField,
   Alert
 } from '@mui/material'
-import { login } from './action'
+import { login, loginWithGoogle } from './action'
 
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
@@ -32,8 +32,13 @@ export default function LoginView() {
     setCredentials(u)
   }
 
-  const handleClick = async () => {
-    const authenticated = await login(credentials)
+  const handleClick = async (googleCred? : string) => {
+    let authenticated;
+    if (googleCred) {
+      authenticated = await loginWithGoogle(googleCred);
+    } else {
+      authenticated = await login(credentials)
+    }
     if (authenticated) {
       setFailedLogin(false)
       window.sessionStorage.setItem('name', authenticated.name)
@@ -42,7 +47,7 @@ export default function LoginView() {
       setFailedLogin(true)
     }
   }
-
+  
   return (
     <Container
       maxWidth="xs"
@@ -75,26 +80,11 @@ export default function LoginView() {
         >
         <GoogleLogin
           onSuccess={async (credentialResponse) => {
-            if (!credentialResponse.credential) return;
-            const res = await fetch('http://localhost:3010/api/v0/auth/google-login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ token: credentialResponse.credential })
-            });
-
-            if (res.ok) {
-              const data = await res.json();
-              console.log("data", data)
-              window.sessionStorage.setItem('name', data.name);
-              router.push('/dashboard');
-            } else {
-              setFailedLogin(true);
+            if (credentialResponse.credential) {
+              await handleClick(credentialResponse.credential);
             }
           }}
           onError={() => {
-            console.log('Google Login Failed');
             setFailedLogin(true);
           }}
         />
@@ -145,7 +135,7 @@ export default function LoginView() {
         >
           <Button
             variant="contained"
-            onClick={handleClick}
+            onClick={() => handleClick()}
           >
             {t('signin')}
           </Button>
