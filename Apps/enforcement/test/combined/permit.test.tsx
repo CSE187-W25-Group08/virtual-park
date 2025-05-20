@@ -66,36 +66,41 @@ it("should fetch user's permits by plate", async () => {
   await userEvent.click(screen.getByText('Search'))
   await screen.findByText('Student')
 })
-// it('should fetch user\'s purchased permits', async () => {
-//   const mockPush = vi.fn()
-//   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
 
-//   vi.mocked(fetch).mockImplementation((url, options) => {
-//     if (url?.toString().includes('/graphql')) {
-//       return Promise.resolve({
-//         status: 200,
-//         json: () => Promise.resolve({
-//           data: {
-//             permitsByDriver: [
-//               {
-//                 id: '1',
-//                 type: 'Daily',
-//                 issueDate: '2025-01-01',
-//                 expDate: '2025-01-01',
-//                 price: 5,
-//               },
-//             ],
-//           },
-//         }),
-//       } as Response)
-//     }
-//     return Promise.reject('Unknown fetch')
-//   })
+it("should show an error saying carplate should be enter", async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(fetch).mockImplementation((url, options) => {
+    if (
+      url === 'http://localhost:4000/graphql' 
+    ) {
+      return Promise.resolve({
+        status: 200,
+        json: () =>
+          Promise.resolve({
+            data: {
+              getPermitBycarPlate: [
+                {
+                  permitID: '123',
+                  permitType: 'Student',
+                  issueDate: '2025-05-01',
+                  expDate: '2025-06-01',
+                  isValid: true
+                }
+              ]
+            }
+          }),
+      } as Response)
+    }
 
-//   render(<PermitPage />)
+    return Promise.reject(new Error('Unknown fetch'))
+  })
 
-//   await screen.findByText('Daily')
-// })
+  render(<PermitPage />)
+
+  await userEvent.click(screen.getByText('Search'))
+  await screen.findByText('Please enter a car plate number')
+})
 
 /* reference: https://web.dev/learn/testing/get-started/component-testing */
 it('getpermitBycarplate rejects and return authorized error', async () => {
