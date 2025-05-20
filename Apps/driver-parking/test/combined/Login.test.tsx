@@ -3,7 +3,7 @@ import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { login as loginMessages } from '../../messages/en.json'
 import Page from '../../src/app/[locale]/login/page'
 // https://chatgpt.com/g/g-p-6812f0a14ce48191b88ff0acaa65015c-virtual-park-app/c/6812f1f1-1608-8007-a132-0de188c60fc6
@@ -33,7 +33,9 @@ afterEach(() => {
 const renderWithIntl = (component: React.ReactElement) => {
   return render(
     <NextIntlClientProvider locale="en" messages={{ login: loginMessages }}>
-      {component}
+       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+        {component}
+       </GoogleOAuthProvider>
     </NextIntlClientProvider>
   )
 }
