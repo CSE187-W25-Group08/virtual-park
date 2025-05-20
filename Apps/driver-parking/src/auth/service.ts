@@ -49,7 +49,7 @@ export async function googleAuthenticate(credential: string): Promise<Authentica
     body: JSON.stringify({ token: credential })
   });
 
-  if (res.ok) {
+  if (res.status == 200) {
     const data = await res.json();
     return data;
   } else {

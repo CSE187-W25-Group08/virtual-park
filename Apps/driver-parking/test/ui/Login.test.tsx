@@ -6,7 +6,6 @@ import { NextIntlClientProvider } from 'next-intl'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { login as loginMessages } from '../../messages/en.json'
 import { login } from '../../src/app/[locale]/login/action'
-
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
