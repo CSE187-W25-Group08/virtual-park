@@ -11,19 +11,32 @@ import {
     List,
     ListItem,
     ListItemButton,
-    ListItemText
+    ListItemText,
+    useMediaQuery
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+import {logout} from '@/app/[locale]/login/action';
 
 
 export default function Navbar({ locale }: { locale: string }) {
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => setOpen(!open);
+    const isMobile = useMediaQuery('(max-width:600px)');
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        await logout();
+        window.sessionStorage.clear();
+        router.push('/');
+    };
   return (
     <>
         <AppBar>
             <Toolbar>
+              {!isMobile && (
                 <IconButton
                 edge="start"
                 color="inherit"
@@ -33,6 +46,8 @@ export default function Navbar({ locale }: { locale: string }) {
                 >
                     <MenuIcon />
                 </IconButton>
+              )}
+                
 
                 <Typography variant="h6" component="div">
                     Virtual Park
@@ -48,7 +63,7 @@ export default function Navbar({ locale }: { locale: string }) {
               { label: 'Register Car', path: '/register' },
               { label: 'View Tickets', path: '/ticket' },
               { label: 'Purchase Permit', path: '/permit/purchase' },
-              { label: 'Permit History', path: '/permit/history' },
+              { label: 'Permit History', path: '/permit/history' }
             ].map(({ label, path }) => (
               <Link key={label} href={`/${locale}${path}`} passHref legacyBehavior>
                 <ListItem disablePadding>
@@ -58,6 +73,11 @@ export default function Navbar({ locale }: { locale: string }) {
                 </ListItem>
               </Link>
             ))}
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleLogout}>
+                <ListItemText primary="Logout" />
+              </ListItemButton>
+            </ListItem>
           </List>
         </Box>
       </Drawer>

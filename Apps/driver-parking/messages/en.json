@@ -120,6 +120,8 @@
     "logout": "Logout",
     "vehicles": "Vehicles",
     "purchase": "Purchase",
-    "tickets": "Tickets"
+    "tickets": "Tickets",
+    "permitHistory": "Permit History",
+    "more": "More"
   }
 }
