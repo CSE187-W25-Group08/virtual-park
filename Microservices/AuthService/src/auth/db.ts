@@ -2,6 +2,18 @@ import { Credentials, User, CheckUser, NewUser, Driver } from '.';
 import { pool } from '../db';
 import { generateToken } from './authService';
 
+export async function getUserByEmail(email: string): Promise<User | undefined> {
+  const getUser = {
+    text: `
+      SELECT id, data->>'name' AS name, data->>'email' AS email FROM member
+      WHERE data->>'email' = $1::text;`,
+    values: [email],
+  }
+  const { rows } = await pool.query(getUser);
+  if (rows.length === 1) {
+    return ({ name: rows[0].name, id: rows[0].id, email: rows[0].email });
+  }
+}
 export async function createNewUser(signUpDetails: NewUser): Promise<User | undefined> {
   const emailUniqueCheck = {
     text: `SELECT * FROM member

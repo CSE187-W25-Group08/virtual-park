@@ -3,10 +3,9 @@ import { render, screen, cleanup} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { login as loginMessages } from '../../messages/en.json'
 import { login } from '../../src/app/[locale]/login/action'
-
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
@@ -27,7 +26,9 @@ afterEach(() => {
 const renderWithIntl = (component: React.ReactElement) => {
   return render(
     <NextIntlClientProvider locale="en" messages={{ login: loginMessages }}>
-      {component}
+      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+        {component}
+      </GoogleOAuthProvider>
     </NextIntlClientProvider>
   )
 }

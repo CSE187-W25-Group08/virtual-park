@@ -4,6 +4,7 @@ import React from 'react'
 import { useState,ChangeEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from "next-intl";
+import { GoogleLogin } from '@react-oauth/google'
 import { 
   Container, 
   Typography, 
@@ -12,7 +13,7 @@ import {
   TextField,
   Alert
 } from '@mui/material'
-import { login } from './action'
+import { login, loginWithGoogle } from './action'
 
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
@@ -31,8 +32,13 @@ export default function LoginView() {
     setCredentials(u)
   }
 
-  const handleClick = async () => {
-    const authenticated = await login(credentials)
+  const handleClick = async (googleCred? : string) => {
+    let authenticated;
+    if (googleCred) {
+      authenticated = await loginWithGoogle(googleCred);
+    } else {
+      authenticated = await login(credentials)
+    }
     if (authenticated) {
       setFailedLogin(false)
       window.sessionStorage.setItem('name', authenticated.name)
@@ -41,7 +47,7 @@ export default function LoginView() {
       setFailedLogin(true)
     }
   }
-
+  
   return (
     <Container
       maxWidth="xs"
@@ -64,7 +70,25 @@ export default function LoginView() {
         <Typography variant="h5">
           {t('title')}
         </Typography>
-        
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mt: 2,
+          }}
+        >
+        <GoogleLogin
+          onSuccess={async (credentialResponse) => {
+            if (credentialResponse.credential) {
+              await handleClick(credentialResponse.credential);
+            }
+          }}
+          onError={() => {
+            setFailedLogin(true);
+          }}
+        />
+      </Box>
         <Box
           sx={{
             display: 'flex',
@@ -111,7 +135,7 @@ export default function LoginView() {
         >
           <Button
             variant="contained"
-            onClick={handleClick}
+            onClick={() => handleClick()}
           >
             {t('signin')}
           </Button>

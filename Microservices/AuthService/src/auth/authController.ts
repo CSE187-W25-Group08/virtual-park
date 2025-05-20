@@ -48,6 +48,14 @@ export class AuthController extends Controller {
       })
   }
 
+  @Post('google-login')
+  @Response('401', 'Unauthorised')
+  public async googleLogin(@Body() body: { token: string }): Promise<Authenticated | undefined> {
+    const user = await new AuthService().loginWithGoogle(body.token);
+    if (!user) this.setStatus(401);
+    return user;
+  }
+
   @Get('check')
   @Security("jwt")
   @Response('401', 'Unauthorized')
@@ -92,7 +100,7 @@ export class AuthController extends Controller {
   public async suspend(
     @Body() body: { email: string },
   ): Promise<void> {
-    const {email} = body;
+    const { email } = body;
     await new AuthService().suspendDriver(email);
   }
 
@@ -102,7 +110,7 @@ export class AuthController extends Controller {
   public async reactivate(
     @Body() body: { email: string },
   ): Promise<void> {
-    const {email} = body;
+    const { email } = body;
     await new AuthService().reactivateDriver(email);
   }
 

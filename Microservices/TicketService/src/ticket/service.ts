@@ -151,7 +151,7 @@ export class TicketService {
   public async issueTickets(
     driverId: string,
     vehicleID: string,
-    enforcementID: string|undefined,
+    enforcer: string|undefined,
     lot: string,
     paid: boolean,
     description: string,
@@ -164,7 +164,7 @@ export class TicketService {
       values: [
         driverId,
         vehicleID,
-        enforcementID,
+        enforcer,
         lot,
         paid,
         description,

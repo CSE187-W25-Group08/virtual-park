@@ -32,7 +32,7 @@ export interface Authenticated {
 export interface NewUser {
   name: string,
   email: email,
-  password: string
+  password?: string
 }
 
 export interface Driver {

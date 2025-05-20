@@ -45,7 +45,9 @@ export class PermitType {
 
 @ObjectType()
 export class PermitValid {
-  constructor(permitID: string, permitType: string, issueDate: string, expDate: string, isValid: boolean) {
+  constructor( driverID: string, vehicleID: string, permitID: string, permitType: string, issueDate: string, expDate: string, isValid: boolean) {
+    this.driverID = driverID
+    this.vehicleID = vehicleID
     this.permitID = permitID
     this.permitType = permitType
     this.issueDate = issueDate
@@ -56,6 +58,14 @@ export class PermitValid {
   @Field(() => ID)
   @IsUUID()
   permitID!: string
+
+  @Field(() => ID)
+  @IsUUID()
+  driverID!: string
+
+  @Field(() => ID)
+  @IsUUID()
+  vehicleID!: string
 
   @Field()
   permitType!: string;

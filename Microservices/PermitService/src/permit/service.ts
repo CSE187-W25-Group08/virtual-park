@@ -34,6 +34,8 @@ export class PermitService {
     const query = queries.getPermitByVehiclePlateNum(carPlateNum)
     const {rows} = await pool.query(query)
     return rows.map(result => ({
+      driverID: result.driverID,
+      vehicleID: result.vehicleID,
       permitID: result.permitID,
       permitType: result.permitType,
       issueDate: result.issueDate,
