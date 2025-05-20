@@ -4,6 +4,7 @@ import React from 'react'
 import { useState,ChangeEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from "next-intl";
+import { GoogleLogin } from '@react-oauth/google'
 import { 
   Container, 
   Typography, 
@@ -64,7 +65,40 @@ export default function LoginView() {
         <Typography variant="h5">
           {t('title')}
         </Typography>
-        
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mt: 2,
+          }}
+        >
+        <GoogleLogin
+          onSuccess={async (credentialResponse) => {
+            if (!credentialResponse.credential) return;
+            const res = await fetch('http://localhost:3010/api/v0/auth/google-login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ token: credentialResponse.credential })
+            });
+
+            if (res.ok) {
+              const data = await res.json();
+              console.log("data", data)
+              window.sessionStorage.setItem('name', data.name);
+              router.push('/dashboard');
+            } else {
+              setFailedLogin(true);
+            }
+          }}
+          onError={() => {
+            console.log('Google Login Failed');
+            setFailedLogin(true);
+          }}
+        />
+      </Box>
         <Box
           sx={{
             display: 'flex',

@@ -2,7 +2,7 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { notFound} from 'next/navigation';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import Navbar from '../../components/Navbar';
 import BottomNavbar from '../../components/BottomNavbar';
 import { Toolbar } from '@mui/material';
@@ -40,16 +40,18 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
+      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
         <NextIntlClientProvider locale={locale}>
-          {isLoggedIn && (
-            <>
-              <Navbar locale={locale} />
-              <Toolbar />
-              <BottomNavbar />
-            </>
-          )}
-          <main>{children}</main>
-        </NextIntlClientProvider>
+            {isLoggedIn && (
+              <>
+                <Navbar locale={locale} />
+                <Toolbar />
+                <BottomNavbar />
+              </>
+            )}
+            <main>{children}</main>
+          </NextIntlClientProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

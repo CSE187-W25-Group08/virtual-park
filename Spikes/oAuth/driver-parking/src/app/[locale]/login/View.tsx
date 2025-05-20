@@ -76,7 +76,6 @@ export default function LoginView() {
         <GoogleLogin
           onSuccess={async (credentialResponse) => {
             if (!credentialResponse.credential) return;
-            console.log(credentialResponse.credential);
             const res = await fetch('http://localhost:3010/api/v0/auth/google-login', {
               method: 'POST',
               headers: {
@@ -87,6 +86,7 @@ export default function LoginView() {
 
             if (res.ok) {
               const data = await res.json();
+              console.log("data", data)
               window.sessionStorage.setItem('name', data.name);
               router.push('/dashboard');
             } else {

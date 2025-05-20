@@ -26,6 +26,9 @@ export function generateToken(userId: UUID, text = ''): midt {
 
 export class AuthService {
   public async signUp(signUpDetails: NewUser): Promise<Authenticated | undefined> {
+    if (!signUpDetails.password) {
+      return undefined
+    }
     const newUser = await db.createNewUser(signUpDetails);
     if (newUser) {
       return { name: newUser.name, email: newUser.email, accessToken: generateToken(newUser.id) };
@@ -60,7 +63,7 @@ export class AuthService {
       if (!payload || !payload.email || !payload.name) {
         return undefined;
       }
-
+      console.log("payload", payload)
       // Check if the user exists, or create them
       let user = await db.getUserByEmail(payload.email);
       if (!user) {
@@ -70,11 +73,10 @@ export class AuthService {
           password: undefined // Not used for Google accounts
         });
       }
-
       return {
-        name: user.name,
-        email: user.email,
-        accessToken: generateToken(user.id)
+        name: user!.name,
+        email: user!.email,
+        accessToken: generateToken(user!.id)
       };
     } catch (err) {
       console.error('Google token verification failed', err);
