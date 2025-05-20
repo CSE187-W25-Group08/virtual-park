@@ -51,7 +51,6 @@ export class AuthController extends Controller {
   @Post('google-login')
   @Response('401', 'Unauthorised')
   public async googleLogin(@Body() body: { token: string }): Promise<Authenticated | undefined> {
-    console.log('google login called');
     const user = await new AuthService().loginWithGoogle(body.token);
     if (!user) this.setStatus(401);
     return user;

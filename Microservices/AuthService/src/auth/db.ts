@@ -5,7 +5,7 @@ import { generateToken } from './authService';
 export async function getUserByEmail(email: string): Promise<User | undefined> {
   const getUser = {
     text: `
-      SELECT * FROM member
+      SELECT id, data->>'name' AS name, data->>'email' AS email FROM member
       WHERE data->>'email' = $1::text;`,
     values: [email],
   }

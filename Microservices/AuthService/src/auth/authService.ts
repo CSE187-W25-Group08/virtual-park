@@ -56,21 +56,19 @@ export class AuthService {
     try {
       const ticket = await client.verifyIdToken({
         idToken: token,
-        audience: process.env.GOOGLE_CLIENT_ID, // Optional but recommended
+        audience: process.env.GOOGLE_CLIENT_ID,
       });
 
       const payload = ticket.getPayload();
       if (!payload || !payload.email || !payload.name) {
         return undefined;
       }
-      console.log("payload", payload)
-      // Check if the user exists, or create them
       let user = await db.getUserByEmail(payload.email);
       if (!user) {
         user = await db.createNewUser({
           name: payload.name,
           email: payload.email,
-          password: undefined // Not used for Google accounts
+          password: undefined
         });
       }
       return {
