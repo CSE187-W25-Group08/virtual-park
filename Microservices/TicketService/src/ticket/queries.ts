@@ -99,6 +99,7 @@ export const getSpeficTicket =
   WHERE (id::text = $1::text);
 `
 
+
 export const issueTicket = 
 `
 INSERT INTO ticket(driver, data) 
@@ -118,6 +119,6 @@ VALUES (
     'appeal', 'null'
   )
 )
-RETURNING id, driver, data;
+RETURNING id, data;
 `;
 
