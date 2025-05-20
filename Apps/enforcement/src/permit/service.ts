@@ -17,6 +17,8 @@ export async function getPermitByPlate(cookie: string | undefined, carplate: str
               issueDate
               expDate
               isValid
+              driverID
+              vehicleID
             }
           }
         `,
@@ -55,13 +57,14 @@ export async function issueTicketForVehicle(
   paid: boolean
 ): Promise<Ticket> {
   return new Promise((resolve, reject) => {
-    fetch('http://localhost:4000/graphql', {
+    fetch('http://localhost:4010/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${cookie}`,
       },
       body: JSON.stringify({
+        operationName: "IssueTicket",
         query: `
           mutation IssueTicket(
             $driverID: String!,
@@ -113,18 +116,15 @@ export async function issueTicketForVehicle(
     })
     .then(response => {
       if (response.status !== 200) {
-        reject('Unauthorized or server error: ' + response.status)
-        return
+        return response.text().then(text => {
+          throw new Error(`Server error: ${response.status} - ${text}`);
+        });
       }
-      return response.json()
+      return response.json();
     })
     .then(json => {
-      console.log('Ticket issue response:', json)
-      if (json.errors) {
-        reject(json.errors)
-      } else {
-        resolve(json.data.ticketIssue)
-      }
+      console.log('Ticket issue response:', json);
+      return resolve(json.data.ticketIssue);
     })
     .catch((error) => reject(error))
   })

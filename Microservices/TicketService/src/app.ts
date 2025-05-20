@@ -29,6 +29,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 async function bootstrap() {
+  console.log("Building schema...");
   const schema = await buildSchema({
     resolvers: resolvers,
     validate: true, 
@@ -38,6 +39,7 @@ async function bootstrap() {
       sortedSchema: true, 
     }
   })
+  console.log("Schema built successfully!");
   app.use(
     "/graphql",
     createHandler({

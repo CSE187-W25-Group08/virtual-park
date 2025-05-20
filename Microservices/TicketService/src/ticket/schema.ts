@@ -41,7 +41,8 @@ export class Ticket {
   vehicle!: string;
 
   @Field()
-  enforcer!: string;
+  enforcer: string;
+
   @Field()
   lot!: string;
 
@@ -84,3 +85,5 @@ export class DBTicket {
   @Field(() => Ticket)
   data!: Ticket
 }
+
+
