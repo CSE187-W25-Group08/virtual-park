@@ -1,21 +1,40 @@
-import { it, afterEach, vi, expect } from 'vitest'
+import { it, afterEach, vi, expect, beforeAll, beforeEach } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 
 import BottomNavbar from '../../src/components/BottomNavbar'
-import { logout } from '../../src/app/[locale]/login/action'
 import { navbar as navbarMessages } from '../../messages/en.json'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
 
-vi.mock('../../src/app/[locale]/login/action', () => ({
-  logout: vi.fn()
-}))
+beforeAll(() => {
+  window.resizeTo = function resizeTo(width, height) {
+    Object.assign(this, {
+      innerWidth: width,
+      innerHeight: height,
+      outerWidth: width,
+      outerHeight: height,
+    }).dispatchEvent(new this.Event('resize'))
+  }
 
-const mockLogout = logout as ReturnType<typeof vi.fn>
+  window.matchMedia = (query) => ({
+    matches: query.includes(`${window.innerWidth}`) || window.innerWidth <= 600,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  });
+})
+
+beforeEach(() => {
+  window.resizeTo(375, 667)
+})
 
 afterEach(() => {
   cleanup()
@@ -68,14 +87,4 @@ it('redirects to /ticket', async () => {
   const renew = screen.getByLabelText('Ticket Button');
   fireEvent.click(renew)
   expect(mockPush).toHaveBeenCalledWith('/ticket')
-})
-
-it('logs out', async () => {
-  const mockPush = vi.fn()
-  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
-  renderWithIntl(<BottomNavbar />)
-  const logout = screen.getByLabelText('Logout Button');
-  fireEvent.click(logout)
-  expect(mockLogout).toHaveBeenCalled()
 })
