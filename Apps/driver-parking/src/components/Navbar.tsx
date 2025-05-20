@@ -11,7 +11,8 @@ import {
     List,
     ListItem,
     ListItemButton,
-    ListItemText
+    ListItemText,
+    useMediaQuery
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';
@@ -20,10 +21,12 @@ import Link from 'next/link';
 export default function Navbar({ locale }: { locale: string }) {
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => setOpen(!open);
+    const isMobile = useMediaQuery('(max-width:600px)');
   return (
     <>
         <AppBar>
             <Toolbar>
+              {!isMobile && (
                 <IconButton
                 edge="start"
                 color="inherit"
@@ -33,6 +36,8 @@ export default function Navbar({ locale }: { locale: string }) {
                 >
                     <MenuIcon />
                 </IconButton>
+              )}
+                
 
                 <Typography variant="h6" component="div">
                     Virtual Park
