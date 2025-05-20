@@ -27,7 +27,7 @@ export async function authenticate(credentials: Credentials): Promise<Authentica
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
     });
-    
+
     if (response.status !== 200) {
       throw new Error(response.statusText);
     }
@@ -36,6 +36,23 @@ export async function authenticate(credentials: Credentials): Promise<Authentica
   }
   catch (error) {
     console.error('Authentication failed:', error);
+    return undefined;
+  }
+}
+
+export async function googleAuthenticate(credential: string): Promise<Authenticated | undefined> {
+  const res = await fetch('http://localhost:3010/api/v0/auth/google-login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ token: credential })
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    return data;
+  } else {
     return undefined;
   }
 }

@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers'
 
 import { Credentials, User } from '../../../auth'
-import { authenticate } from '../../../auth/service'
+import { authenticate, googleAuthenticate } from '../../../auth/service'
 
 export async function login(credential: Credentials): Promise<User | undefined> {
   const user = await authenticate(credential)
@@ -46,15 +46,3 @@ export async function logout() {
   const cookieStore = await cookies()
   cookieStore.delete('session')
 }
-// const res = await fetch('http://localhost:3010/api/v0/auth/google-login', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json'
-//   },
-//   body: JSON.stringify({ token: credential })
-// });
-
-// if (res.ok) {
-//   const data = await res.json();
-//   window.sessionStorage.setItem('name', data.name);
-// }
