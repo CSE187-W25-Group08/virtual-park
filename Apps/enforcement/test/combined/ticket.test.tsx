@@ -148,8 +148,7 @@ it("issue ticket successfully", async () => {
   
   const issueButton = within(dialog).getByText('Issue Ticket')
   await userEvent.click(issueButton)
-  // await screen.findByText('Failed to issue ticket')
-  await screen.findByText('Ticket 1234 issued successfully')
+  await screen.findByText('Ticket issued successfully')
 })
 
 it("failed to issue ticket", async () => {

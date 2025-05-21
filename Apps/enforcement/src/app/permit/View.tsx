@@ -64,6 +64,7 @@ export default function PermitView() {
   const handleTicketError = (errorMessage: string) => {
     setError(errorMessage)
   }
+  const noPermitError = error === 'No permits found for this vehicle'
   
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
@@ -103,17 +104,16 @@ export default function PermitView() {
         </Alert>
       )}
       
-      {carPlate && (
+      {permits.length > 0 && (
         <Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="h6">
-              {permits.length > 0 ? `Permits for ${carPlate}` : `No permits for ${carPlate}`}
+              {`Permits for ${carPlate}`}
             </Typography>
             <Button
               variant="contained"
               color="error"
               onClick={ticketDialogHandler}
-              // disabled={!carPlate} 
             >
               Issue Ticket
             </Button>
@@ -161,6 +161,21 @@ export default function PermitView() {
           )}
         </Box>
       )}
+      {noPermitError && (
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <Typography variant="h6">
+            Permit not exist for carPlate: {carPlate}
+          </Typography>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={ticketDialogHandler}
+          >
+            Issue Ticket
+          </Button>
+        </Box>
+      )}
+
       
       {ticketDialog && (
         <TicketView
