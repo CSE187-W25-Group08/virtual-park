@@ -96,7 +96,8 @@ export class TicketResolver {
   @Authorized('enforcement')
   @Mutation(() => Ticket)
   async ticketIssue(
-    @Arg("driverID") driverID: string,
+    // @Arg("driverID") driverID: string | null,
+    @Arg("driverID", () => String, { nullable: true }) driverID: string | null,
     @Arg("vehicleID") vehicleID: string,
     @Arg("lot") lot: string,
     @Arg("paid") paid: boolean,

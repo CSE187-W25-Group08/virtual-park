@@ -37,8 +37,8 @@ export class Ticket {
   @IsUUID()
   id!: string;
 
-  @Field()
-  vehicle!: string;
+  @Field({nullable:true})
+  vehicle?: string;
 
   @Field()
   enforcer: string;
