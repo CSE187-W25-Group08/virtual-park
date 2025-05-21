@@ -1,7 +1,6 @@
 import { Query, Resolver, Mutation, Int, Arg } from "type-graphql";
 import {
-  CheckoutSession,
-  CheckoutSessionResponse,
+  PaymentIntentResponse,
   StripeConfig,
 } from "./schema";
 import Stripe from "stripe";
@@ -42,52 +41,27 @@ export class StripeResolver {
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @Query((returns) => StripeConfig)
-  async checkoutSession(
-    @Arg("sessionId") sessionId: string
-  ): Promise<CheckoutSession> {
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
-    if (!session) {
-      throw Error();
-    }
-    return session;
-  }
 
-  /*
-mutation {
-  createCheckoutSession(quantity: 1) {
-    id
-    url
-  }
-}
-  */
-  @Mutation(() => CheckoutSessionResponse)
-  async createCheckoutSession(
-    @Arg("quantity", () => Int) quantity: number
-  ): Promise<CheckoutSessionResponse> {
-    const envPrice = process.env.PRICE;
-    if (!envPrice) {
-      throw Error();
-    }
 
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      line_items: [
-        {
-          price: envPrice,
-          quantity,
-        },
-      ],
-      success_url: `${process.env.DOMAIN}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.DOMAIN}/canceled.html`,
+  @Mutation(() => PaymentIntentResponse)
+  async createPaymentIntent(
+    @Arg("amount", () => Int) amount: number
+  ): Promise<PaymentIntentResponse> {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: "usd",
+      automatic_payment_methods: { enabled: true },
     });
-    const sessionUrl = session.url;
-    if (!sessionUrl) {
-      throw Error();
+    const client_secret = paymentIntent.client_secret
+
+    if (!client_secret) {
+      throw Error()
     }
 
-    return new CheckoutSessionResponse(session.id, sessionUrl);
+    return {
+      clientSecret: client_secret,
+    };
   }
+
 
 }

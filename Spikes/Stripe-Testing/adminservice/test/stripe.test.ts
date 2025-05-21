@@ -61,14 +61,14 @@ test("User can create stripe checkout session", async () => {
     .send({
       query: `
       mutation {
-          createCheckoutSession(quantity: 1) {
-          id
-          url
+          createPaymentIntent(amount: 5555) {
+          clientSecret
         }
       }
       `,
     })
     .then((res) => {
-      expect(res.body.data.createCheckoutSession.id).toBeTruthy()
+      console.log(res.body)
+      expect(res.body.data.createPaymentIntent.clientSecret).toBeTruthy()
     });
 });

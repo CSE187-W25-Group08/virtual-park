@@ -6,7 +6,6 @@ import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js"
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -14,7 +13,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     return Math.round(amount * factor);
   };
 
-  // payment session
+  // payment session resets after changing amount
   useEffect(() => {
     fetch("../api/create-payment-intent", {
       method: "POST",

@@ -43,10 +43,6 @@ export default function DashBoardView() {
         <CheckoutPage amount = {amount}/>
 
 
-
-
-
-
       </Elements>
     </Box>
   )
