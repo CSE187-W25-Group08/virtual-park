@@ -1,0 +1,2 @@
+# Virtual-Park: Admin App
+This directory is a full-stack web application for users who are parking enforcement that wish to monitor the parking situation of the campus, issue tickets to those illegal parking.
