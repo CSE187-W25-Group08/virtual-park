@@ -25,7 +25,7 @@ VALUES (
   'a1f3e1b4-7b3e-4fc5-8e25-2de98cf0e9a2',
   '03845709-4d40-45fe-9e51-11789f6f209a',
   jsonb_build_object(
-    'vehicle', 'd9f4c709-34a9-42b5-91a0-dadf51c559ef',
+    'vehicle', 'a642d881-af5d-46be-a5c8-8fe979979bbd',
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
     'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
     'paid', false,

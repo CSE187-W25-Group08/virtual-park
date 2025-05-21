@@ -5,6 +5,7 @@ import {getTicketDetails,
     rejectAppeal
   } from '../action'
 import {useState, useEffect} from 'react'
+import { useRouter } from 'next/navigation';
 import {
   Card,
   CardContent,
@@ -14,13 +15,14 @@ import {
   Chip,
   Box,
   CircularProgress,
-  Button
+  Button,
+  IconButton
 } from "@mui/material";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 export default function TicketInfo({ ticketId }: { ticketId: string }) {
-  
     const [ticket, setTicket] = useState<Ticket>();
-
+    const router = useRouter();
     useEffect(() => {
       const fetchData = async () => {
         const result = await getTicketDetails(ticketId);
@@ -44,6 +46,10 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
       if (new_ticket) {
         setTicket(new_ticket);
       }
+    }
+
+    const routeBack = () => {
+      router.push('/')
     }
 
     // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
@@ -71,11 +77,14 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
     return (
       <>
         <Card sx={{ maxWidth: '60%', mx: "auto", mt: 4, p:3}}>
+            <IconButton onClick={() => routeBack()}>
+              <ArrowBackIosNewIcon sx={{color:'black'}} />
+            </IconButton>
           <Box
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          px={3}
+          // px={3}
           py={2}
           borderBottom="1px solid #eee"
         >
@@ -124,7 +133,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
             </Grid>
           </CardContent>
         </Card>
-        {ticket.appeal && (
+        {(ticket.appeal && ticket.appeal != 'null') && (
           <Box
             sx={{
               maxWidth: '60%',
