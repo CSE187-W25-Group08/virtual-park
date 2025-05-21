@@ -1,30 +1,29 @@
-import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 
-if (!stripeSecretKey) {
-  throw Error();
-}
-
-
-const stripe = new Stripe(stripeSecretKey)
-
-export function POST(request: NextRequest): Promise<NextResponse> {
+export async function getClientSecretService(amount: number):Promise<string> {
   return new Promise((resolve, reject) => {
-    request.json()
-      .then(({ amount }) => {
-        return stripe.paymentIntents.create({
-          amount: amount,
-          currency: "usd",
-          automatic_payment_methods: { enabled: true },
-        });
-      })
-      .then((paymentIntent) => {
-        resolve(NextResponse.json({ clientSecret: paymentIntent.client_secret }));
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-}
+    fetch('http://localhost:4010/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({query: `      
+        mutation {
+          createPaymentIntent(amount: ${amount}) {
+          clientSecret
+        }
+      }`}),
+    })
+    .then(response => { 
+      if (response.status != 200) {
+        return reject('Meow')
+      }
 
+      return response.json()} 
+    )
+    .then(json => {
+      console.log(json)
+      resolve(json.data.createPaymentIntent)
+    })
+    .catch((error) => reject(error))
+  })
+}

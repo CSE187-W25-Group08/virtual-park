@@ -47,6 +47,8 @@ export class StripeResolver {
   async createPaymentIntent(
     @Arg("amount", () => Int) amount: number
   ): Promise<PaymentIntentResponse> {
+
+    console.log('createPaymentIntent called with amount:', amount);
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: "usd",

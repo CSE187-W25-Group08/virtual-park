@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
+import { getClientSecretAction } from "../stripe/action";
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
@@ -15,14 +16,17 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
 
   // payment session resets after changing amount
   useEffect(() => {
-    fetch("../api/create-payment-intent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ amount: convertToSubCurrency(amount) }),
-    }).then((res) => res.json())
-    .then((data) => setClientSecret(data.clientSecret));
+      const setClient = async () => {
+
+        const amountToCents = convertToSubCurrency(amount)
+        const client = await getClientSecretAction(amountToCents);
+        if (client) {
+          setClientSecret(client)
+        }
+    };
+
+    setClient()
+
   }, [amount]);
 
   return (
