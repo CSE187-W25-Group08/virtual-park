@@ -1,4 +1,4 @@
-import { Credentials, User, CheckUser, NewUser, Driver } from '.';
+import { Credentials, User, CheckUser, NewUser, Driver, NewEnforcement, Enforcement } from '.';
 import { pool } from '../db';
 import { generateToken } from './authService';
 
@@ -37,6 +37,39 @@ export async function createNewUser(signUpDetails: NewUser): Promise<User | unde
         ))
         RETURNING id, data->>'name' AS name, data->>'email' AS email;`,
     values: [signUpDetails.email, signUpDetails.password, signUpDetails.name, currentTimestamp]
+  }
+  const { rows } = await pool.query(signUp);
+  if (rows.length === 1) {
+    return ({ name: rows[0].name, id: rows[0].id, email: rows[0].email });
+  }
+}
+
+export async function createNewEnforcementOfficer(details: NewEnforcement): Promise<User | undefined> {
+  const emailUniqueCheck = {
+    text: `SELECT * FROM member
+    WHERE data->>'email' = $1::text;`,
+    values: [details.email],
+  }
+  const check = await pool.query(emailUniqueCheck);
+  if (check.rows.length > 0) {
+    return undefined;
+  }
+  const currentTimestamp = new Date().toISOString();
+  const signUp = {
+    text: `
+      INSERT INTO member (data) VALUES (jsonb_build_object(
+          'email', $1::text,
+          'pwhash', crypt($2, gen_salt('bf')),
+          'name', $3::text,
+          'roles', jsonb_build_array('enforcement')::text,
+          'suspended', 'false',
+          'officer_details', jsonb_build_object(
+            'enforcementId', $4::text,
+            'hired', $5::text
+          )
+        ))
+        RETURNING id, data->>'name' AS name, data->>'email' AS email;`,
+    values: [details.email, details.password, details.name, details.enforcementId, currentTimestamp]
   }
   const { rows } = await pool.query(signUp);
   if (rows.length === 1) {
@@ -98,6 +131,28 @@ export async function fetchDrivers(): Promise<Driver[]> {
     email: row.email,
     joinDate: new Date(row.joindate).toDateString()
   }))
+}
+
+export async function fetchEnforcement(): Promise<Enforcement[]> {
+  const query = {
+    text: `
+      SELECT
+        data->>'name' AS name, data->>'email' AS email, data->'officer_details'->>'hired' AS hired, data->'officer_details'->>'enforcementId' AS id
+      FROM
+        member
+      WHERE
+        data->>'roles'::text = '["enforcement"]';
+    `
+  }
+  const { rows } = await pool.query(query)
+  return rows.map((row) => {
+    return {
+      name: row.name,
+      email: row.email,
+      enforcementId: row.id,
+      hireDate: new Date(row.hired).toDateString()
+    }
+  })
 }
 
 export async function suspendAccount(email: string): Promise<void> {
