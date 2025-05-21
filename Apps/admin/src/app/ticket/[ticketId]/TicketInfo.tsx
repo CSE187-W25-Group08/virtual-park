@@ -53,7 +53,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
   
     return (
       <>
-        <Card sx={{ maxWidth: '60%', mx: "auto", mt: 4 }}>
+        <Card sx={{ maxWidth: '60%', mx: "auto", mt: 4, p:3}}>
           <Box
           display="flex"
           justifyContent="space-between"
@@ -65,6 +65,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
           <Typography variant="h4">
             License Plate: {ticket.vehicle}
           </Typography>
+          <Box>
           <Chip
             label={`Appeal: ${!ticket.appeal || ticket.appeal == "null" ? "None" : ticket.appeal}`}
             variant="filled"
@@ -77,6 +78,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
             variant="filled"
             sx={{ fontSize: '1rem', px: 2, py: 1 }}
           />
+          </Box>
         </Box>
           <CardMedia
             component="img"

@@ -27,31 +27,39 @@ export class VehicleResolver {
     return await new VehicleService().getUserVehicles(request.user?.id)
   }
 
-  @Authorized()
+  @Authorized("driver")
   @Mutation(() => Vehicle)
   async registerVehicle(@Ctx() request: Request, @Arg("input") input: RegisterVehicle): Promise<Vehicle> {
     return await new VehicleService().registerVehicle(request.user?.id, input)
   }
 
-  @Authorized()
+  @Authorized("driver")
   @Query(() => Vehicle, { nullable: true })
   async primaryVehicle(@Ctx() request: Request): Promise<Vehicle | null> {
     return await new VehicleService().getPrimaryVehicle(request.user?.id)
   }
 
-  @Authorized()
+  @Authorized("driver")
   @Mutation(() => Vehicle, { nullable: true })
   async updatePrimaryVehicle(@Ctx() request: Request, @Arg("input") input: VehicleIdInput): Promise<Vehicle | null> {
     const addedVehicle = await new VehicleService().getVehicleById(request.user?.id, input.id)
     if (addedVehicle.active) {
       return await new VehicleService().updatePrimaryVehicle(request.user?.id, input.id)
-    } 
+    }
     return null;
   }
 
-  @Authorized()
+  @Authorized("driver")
   @Mutation(() => Vehicle)
   async editVehicle(@Ctx() request: Request, @Arg("input") input: EditVehicleInput): Promise<Vehicle> {
     return await new VehicleService().editVehicle(request.user?.id, input)
   }
+
+  @Authorized("admin")
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(returns => Vehicle)
+  async getAnyVehicleById(@Arg("id") id: string): Promise<Vehicle> {
+    return await new VehicleService().getVehicleByIdAdmin(id)
+  }
 }
+
