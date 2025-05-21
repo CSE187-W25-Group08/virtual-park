@@ -107,7 +107,7 @@ export class TicketService {
         },
         body: JSON.stringify({
           query: `{getTicketInfo (ticketId: "${ticketId}")
-          {id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal}}` }),
+          {id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal, appealReason}}` }),
       })
         .then(response => {
           if (response.status != 200) {
