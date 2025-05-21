@@ -325,3 +325,18 @@ test('Get enforcement officers', async () => {
         expect(res.body.length).toEqual(1)
       })
 })
+
+test('Must be an admin to fetch enforcement officers', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+
+  await supertest(server)
+    .get('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(401)
+})
