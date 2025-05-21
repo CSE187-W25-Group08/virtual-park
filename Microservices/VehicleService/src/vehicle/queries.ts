@@ -45,6 +45,15 @@ WHERE
 AND id = $2;
 `;
 
+export const getVehicleByIdAdmin = `
+SELECT
+  id, driver, data
+FROM
+  vehicle
+WHERE id = $1;
+`;
+
+
 export const getPrimaryVehicle = `
 SELECT
   id, driver, data

@@ -19,7 +19,7 @@ export class TicketService {
           violation: data.violation,
           image: data.image,
           cost: data.cost,
-          appeal: data.appeal,
+          appeal: data.appeal || 'null',
           appealReason: data.appealReason || "",
         }
         return ticketObj
@@ -134,6 +134,7 @@ export class TicketService {
     }
 
     const { rows } = await pool.query(query)
+    console.log("num tickets", rows.length);
     const tickets = await this.rowToTicket(rows)
     return tickets
   }
@@ -151,7 +152,7 @@ export class TicketService {
   public async issueTickets(
     driverId: string,
     vehicleID: string,
-    enforcer: string|undefined,
+    enforcer: string | undefined,
     lot: string,
     paid: boolean,
     description: string,
