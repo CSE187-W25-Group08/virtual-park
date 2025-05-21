@@ -37,7 +37,7 @@ export class AuthController extends Controller {
   @Post('enforcement')
   @Security("jwt", ["admin"])
   @Response('401', 'Unauthorized')
-  @Response('409', 'Email already associated with a driver')
+  @Response('409', 'Email already associated with an enforcement officer')
   @SuccessResponse('201', 'Account Created')
   public async signUpEnforcement(
     @Body() enforcementDetails: NewEnforcement,

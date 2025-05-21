@@ -286,3 +286,25 @@ test('Don\'t let non-admins create enforcement officer accounts', async () => {
     .send(edna)
     .expect(401)
 })
+
+test('Cannot create the same enforcement officer twice', async () => {
+  let accessToken
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+
+  await supertest(server)
+    .post('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send(edna)
+    .expect(201)
+  
+  await supertest(server)
+    .post('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send(edna)
+    .expect(409)
+})

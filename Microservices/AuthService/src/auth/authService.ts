@@ -37,9 +37,6 @@ export class AuthService {
     }
   }
   public async signUpEnforcement(signUpDetails: NewEnforcement): Promise<Authenticated | undefined> {
-    if (!signUpDetails.password) {
-      return undefined
-    }
     const newEnforcement = await db.createNewEnforcementOfficer(signUpDetails);
     if (newEnforcement) {
       return { name: newEnforcement.name, email: newEnforcement.email, accessToken: generateToken(newEnforcement.id) };
