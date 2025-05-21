@@ -62,6 +62,7 @@ export default function PermitView() {
   }
   
   const handleTicketError = (errorMessage: string) => {
+    setTicketDialog(false)
     setError(errorMessage)
   }
   const noPermitError = error === 'No permits found for this vehicle'
@@ -90,7 +91,7 @@ export default function PermitView() {
           {'Search'}
         </Button>
       </Box>
-      {/* refernece:  {/* reference: https://mui.com/material-ui/react-alert/ */}
+      {/* reference: https://mui.com/material-ui/react-alert/ */}
        {/* reference: https://mui.com/material-ui/react-table/ */}
       {ticketSuccess && (
         <Alert severity="success" sx={{mb: 3}}>

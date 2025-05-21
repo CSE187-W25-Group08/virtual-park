@@ -77,7 +77,7 @@ export default function TicketView({
   const handleSubmitTicket = async () => {
     try {
       if (!ticketInfo.lot || !ticketInfo.violation || !ticketInfo.description) {
-        error('Please fill in all required fields')
+        error('Please fill in all required fields *')
         return
       }
       const ticket = await issueTicketForCar(
