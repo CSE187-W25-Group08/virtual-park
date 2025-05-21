@@ -8,7 +8,7 @@ VALUES (
   jsonb_build_object(
     'vehicle', 'f2169fe8-16ae-4c3c-b4e4-4b9c243b9ce3',
     'enforcer', 'bc83ae1d-1009-410a-bd28-8cb067bd40c3',
-    'lot', 'f6d8425d-eccf-474a-bfed-c126eb7d00e2',
+    'lot', 'b2c31885-f40b-4a01-9735-904fd5c5a7bd',
     'paid', true,
     'description', 'Huge rubber duckey',
     'due', '2025-05-10T12:00:00Z',
@@ -27,7 +27,7 @@ VALUES (
   jsonb_build_object(
     'vehicle', 'd9f4c709-34a9-42b5-91a0-dadf51c559ef',
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
-    'lot', 'c72e1459-5b52-41f2-b731-15c7c981e8b0',
+    'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
     'paid', false,
     'description', 'Driver also sucks',
     'due', '2025-05-15T12:00:00Z',
@@ -39,7 +39,6 @@ VALUES (
   )
 );
 
--- molly 2 tickets
 INSERT INTO ticket(id, driver, data)
 VALUES (
   '4b14a022-8e94-43a6-b607-2d8269431326',
@@ -47,7 +46,7 @@ VALUES (
   jsonb_build_object(
     'vehicle', '18fa94fc-4783-42df-a904-7ec17efadca5',
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
-    'lot', 'c72e1459-5b52-41f2-b731-15c7c981e8b0',
+        'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
     'paid', false,
     'description', 'Molly cant park',
     'due', '2025-05-15T12:00:00Z',
@@ -66,7 +65,7 @@ VALUES (
   jsonb_build_object(
     'vehicle', '18fa94fc-4783-42df-a904-7ec17efadca5',
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
-    'lot', 'c72e1459-5b52-41f2-b731-15c7c981e8b0',
+        'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
     'paid', false,
     'description', 'Molly cant park again',
     'due', '2025-05-15T12:00:00Z',
@@ -78,13 +77,6 @@ VALUES (
   )
 );
 
--- molly 1 ticket appealed, 1 ticket appeal approved
--- appeal field:
---   1. null
---   2. submitted
---   3. rejected
---   4. approved;
-
 INSERT INTO ticket(id, driver, data)
 VALUES (
   '58a43482-2f12-4b38-9b2a-aae693e8c52c',
@@ -92,7 +84,7 @@ VALUES (
   jsonb_build_object(
     'vehicle', '18fa94fc-4783-42df-a904-7ec17efadca5',
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
-    'lot', 'c72e1459-5b52-41f2-b731-15c7c981e8b0',
+        'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
     'paid', false,
     'description', 'Molly cant park again',
     'due', '2025-05-15T12:00:00Z',
@@ -111,7 +103,7 @@ VALUES (
   jsonb_build_object(
     'vehicle', '18fa94fc-4783-42df-a904-7ec17efadca5',
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
-    'lot', 'c72e1459-5b52-41f2-b731-15c7c981e8b0',
+        'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
     'paid', false,
     'description', 'Lol Molly',
     'due', '2025-05-15T12:00:00Z',
@@ -130,7 +122,7 @@ VALUES (
   jsonb_build_object(
     'vehicle', '18fa94fc-4783-42df-a904-7ec17efadca5',
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
-    'lot', 'c72e1459-5b52-41f2-b731-15c7c981e8b0',
+        'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
     'paid', false,
     'description', 'Lol Molly',
     'due', '2025-05-15T12:00:00Z',
@@ -148,7 +140,7 @@ VALUES (
   jsonb_build_object(
     'vehicle', '18fa94fc-4783-42df-a904-7ec17efadca5',
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
-    'lot', 'c72e1459-5b52-41f2-b731-15c7c981e8b0',
+        'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
     'paid', false,
     'description', 'Crashed and burned',
     'due', '2025-05-15T12:00:00Z',

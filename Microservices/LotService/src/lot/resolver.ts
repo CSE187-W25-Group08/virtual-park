@@ -29,6 +29,7 @@ export class LotResolver {
 
   @Query(returns => Lot)
   async getLotById(@Arg("id") id: string): Promise<Lot> {
+    console.log("resovler called")
     return await new LotService().getById(id);
   }
 
