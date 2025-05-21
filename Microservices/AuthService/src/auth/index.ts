@@ -48,3 +48,10 @@ export interface NewEnforcement {
   email: email,
   password: string,
 }
+
+export interface Enforcement {
+  name: string,
+  enforcementId: string,
+  email: email,
+  hireDate: string,
+}

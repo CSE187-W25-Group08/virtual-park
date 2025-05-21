@@ -1,4 +1,4 @@
-import { Credentials, User, CheckUser, NewUser, Driver, NewEnforcement } from '.';
+import { Credentials, User, CheckUser, NewUser, Driver, NewEnforcement, Enforcement } from '.';
 import { pool } from '../db';
 import { generateToken } from './authService';
 
@@ -131,6 +131,28 @@ export async function fetchDrivers(): Promise<Driver[]> {
     email: row.email,
     joinDate: new Date(row.joindate).toDateString()
   }))
+}
+
+export async function fetchEnforcement(): Promise<Enforcement[]> {
+  const query = {
+    text: `
+      SELECT
+        data->>'name' AS name, data->>'email' AS email, data->'officer_details'->>'hired' AS hired, data->'officer_details'->>'enforcementId' AS id
+      FROM
+        member
+      WHERE
+        data->>'roles'::text = '["enforcement"]';
+    `
+  }
+  const { rows } = await pool.query(query)
+  return rows.map((row) => {
+    return {
+      name: row.name,
+      email: row.email,
+      enforcementId: row.id,
+      hireDate: new Date(row.hired).toDateString()
+    }
+  })
 }
 
 export async function suspendAccount(email: string): Promise<void> {

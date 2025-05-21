@@ -11,7 +11,7 @@
 import * as jwt from "jsonwebtoken"
 import * as db from './db'
 import { midt, UUID, SessionUser } from '../types'
-import { Credentials, Authenticated, NewUser, Driver, NewEnforcement } from '.'
+import { Credentials, Authenticated, NewUser, Driver, NewEnforcement, Enforcement } from '.'
 import { OAuth2Client } from 'google-auth-library';
 
 // https://chat.deepseek.com/a/chat/s/b44e480a-f720-4b4e-b923-ac03aa7f7fc6
@@ -96,6 +96,10 @@ export class AuthService {
 
   public async getDrivers(): Promise<Driver[]> {
     return await db.fetchDrivers();
+  }
+
+  public async getEnforcementOfficers(): Promise<Enforcement[]> {
+    return await db.fetchEnforcement();
   }
 
   public async suspendDriver(email: string): Promise<void> {

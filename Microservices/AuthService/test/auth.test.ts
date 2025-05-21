@@ -1,4 +1,4 @@
-import { test, beforeAll, afterAll, beforeEach } from 'vitest'
+import { test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
 
@@ -307,4 +307,21 @@ test('Cannot create the same enforcement officer twice', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send(edna)
     .expect(409)
+})
+
+test('Get enforcement officers', async () => {
+  let accessToken
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+
+    await supertest(server)
+      .get('/api/v0/auth/enforcement')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .then((res) => {
+        expect(res.body.length).toEqual(1)
+      })
 })
