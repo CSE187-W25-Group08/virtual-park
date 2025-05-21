@@ -123,3 +123,13 @@ VALUES (
 RETURNING id, data;
 `;
 
+export const respondAppeal =
+  `
+  WITH updated AS (
+    UPDATE ticket
+    SET data = jsonb_set(data, '{appeal}', $2::jsonb)
+    WHERE id = $1
+    RETURNING *
+  )
+  SELECT id, driver, data FROM UPDATED
+  `
