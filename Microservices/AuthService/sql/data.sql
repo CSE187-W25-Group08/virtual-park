@@ -452,6 +452,10 @@ VALUES (
     'email','nick@books.com',
     'name','nick enforcement',
     'pwhash',crypt('nickenforcement',gen_salt('bf')),
-    'roles','["enforcement"]'
+    'roles','["enforcement"]',
+    'officer_details', jsonb_build_object(
+      'badge_number', '12345-SCPEO',
+      'hired', '2020-06-15T12:00:00+00:00'
+    )
   )
 );
