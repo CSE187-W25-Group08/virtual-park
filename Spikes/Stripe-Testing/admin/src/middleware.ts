@@ -9,7 +9,7 @@ export default async function middleware(req: NextRequest) {
       const cookie = req.cookies.get('session')?.value;
       await check(cookie)
     } catch {
-      return NextResponse.redirect(new URL('/', req.nextUrl))
+      //return NextResponse.redirect(new URL('/', req.nextUrl))
     }
   }
   return NextResponse.next()

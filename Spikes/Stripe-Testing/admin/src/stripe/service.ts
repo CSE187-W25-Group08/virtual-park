@@ -22,7 +22,7 @@ export async function getClientSecretService(amount: number):Promise<string> {
     )
     .then(json => {
       console.log(json)
-      resolve(json.data.createPaymentIntent)
+      resolve(json.data.createPaymentIntent.clientSecret)
     })
     .catch((error) => reject(error))
   })
