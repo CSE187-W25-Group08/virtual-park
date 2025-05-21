@@ -118,6 +118,19 @@ export class TicketService {
     return tickets[0]
   }
 
+  public async respondToAppeal(ticketId: string, decision: string): Promise<Ticket> {
+    const query = {
+      text: queries.respondAppeal,
+      values: [
+        ticketId,
+        JSON.stringify(decision),
+      ],
+    }
+    const { rows } = await pool.query(query)
+    const tickets = await this.rowToTicket(rows)
+    return tickets[0]
+  }
+
   public async getAllUnpaidTickets(): Promise<Ticket[]> {
     const query = {
       text: queries.unpaidTickets,

@@ -29,7 +29,7 @@
     "dev-vehicle": "cd VehicleService && npm run dev",
     "dev-permit": "cd PermitService && npm run dev",
     "dev-lot": "cd LotService && npm run dev",
-    "dev": "concurrently \"npm run dev-auth\" \"npm run dev-ticket\" \"npm run dev-vehicle\" \"npm run dev-permit\"",
+    "dev": "concurrently \"npm run dev-auth\" \"npm run dev-ticket\" \"npm run dev-vehicle\" \"npm run dev-permit\" \"npm run dev-lot\"",
     "test-auth": "cd AuthService && npm run test",
     "test-lot": "cd LotService && npm run test",
     "test-permit": "cd PermitService && npm run test",
