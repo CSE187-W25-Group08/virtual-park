@@ -131,7 +131,6 @@ export default function TicketView({
               name="lot"
               value={ticketInfo.lot}
               onChange={handleSelectChange}
-              aria-label='Parking Lot'
             >
               {lotOptions.map(lot => (
                 <MenuItem key={lot.name} value={lot.name} aria-label={lot.name}>{lot.name}</MenuItem>
@@ -164,7 +163,7 @@ export default function TicketView({
           
           <TextField
             name="image"
-            label="ViolationImage"
+            label="Violation Image"
             fullWidth
             value={ticketInfo.image}
             onChange={handleTextInputChange}

@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "title": "Parque Virtual"
+  },
+  "common": {
+    "english": "🏴󠁧󠁢󠁥󠁮Anglais",
+    "spanish": "🇪🇸 Español"
+  },
+  "landing": {
+    "signup": "Registrarse",
+    "login": "Entrar",
+    "welcome": "Bienvenido a Virtual-Park!",
+    "logout": "Salir"
+  },
+  "signup": {
+    "createAccount": "Crear una cuenta",
+    "email": "Correo electrónico ",
+    "name": "Nombre ",
+    "password": "Contraseña ",
+    "signup": "Registrarse",
+    "accountExist": "¿Ya tienes una cuenta?",
+    "login": "Entrar",
+    "emailTaken": "El correo electrónico ya está en uso"
+  },
+  "login": {
+    "title": "Bienvenido a Virtual-Park!",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "signin": "Entrar",
+    "error": "Credenciales de inicio de sesión incorrectas, por favor inténtelo de nuevo"
+  },
+  "permit_history": {
+    "title": "Historial de compras",
+    "issued": "Fecha de emisión: ",
+    "expires": "Fecha de caducidad: ",
+    "Daily": "Diario",
+    "Week": "Semana",
+    "Month": "Mes",
+    "Year": "Año",
+    "timeLeft": "Tiempo restante:"
+  },
+  "purchase_permit": {
+    "Daily": "Diario",
+    "Week": "Semana",
+    "Month": "Mes",
+    "Year": "Año",
+    "purchase": "Comprar",
+    "purchased": "Comprado:"
+  },
+  "vehicle": {
+    "title": "Vehículos",
+    "register": "+ Registrar vehículo",
+    "edit": "Editar",
+    "addTitle": "Registrar vehículo",
+    "licensePlate": "Número de matrícula",
+    "color": "Color",
+    "make": "Marca",
+    "model": "Modelo",
+    "default": "Vehículo predeterminado",
+    "cancel": "Cancelar",
+    "save": "Guardar"
+  },
+  "ticket": {
+    "accepted": "Aceptado",
+    "submitted": "Enviado",
+    "rejected": "Apelación rechazada",
+    "issueDate": "Fecha de emisión",
+    "datePaid": "Fecha de pago",
+    "status": "Estado",
+    "noTickets": "No hay infracciones actuales en el archivo.",
+    "unpaid": "🔴 Violaciones no pagadas",
+    "paid": "🟢 Violaciones pagadas",
+    "appeal": "🟡 Violaciones apeladas"
+  },
+  "ticket_details": {
+    "violation": "Infracción:",
+    "description": "Descripción:",
+    "licensePlate": "Número de matrícula:",
+    "issued": "Emitido:",
+    "due": "Vencido:",
+    "cost": "Costo:",
+    "appealStatus": "Estado de apelación:",
+    "submitted": "enviado",
+    "approved": "aprobado",
+    "rejected": "rechazado",
+    "today": "Hoy a",
+    "yesterday": "Ayer a",
+    "paid": "Pagado",
+    "unpaid": "No pagado",
+    "payTicket": "Pagar multa",
+    "appealTicket": "Apelar multa",
+    "appealReason": "Razón de la apelación",
+    "appealDescription": "Descripción de la apelación",
+    "loading": "Cargando",
+    "viewTicket": "Ver multa"
+  },
+  "dashboard": {
+    "permitBought": "Has comprado un permiso.",
+    "ticketsPaid": "Todas las multas pagadas. \nTotal: $",
+    "welcome": "Bienvenido de nuevo,",
+    "vehicle": "Vehículo activo:",
+    "noVehicle": "No hay vehículo activo.",
+    "registerVehicle": "Registrar",
+    "permit": "Permiso activo",
+    "noPermit": "No tienes un permiso activo.",
+    "buyPermit": "Comprar permiso",
+    "tickets": "Multas",
+    "noTickets": "No tienes multas pendientes",
+    "manageTickets": "Gestionar multas",
+    "unpaidTickets": "Tienes {count} multas pendientes.",
+    "payTickets": "Pagar multas"
+  },
+  "labels": {
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "clear": "Borrar"
+  },
+  "navbar": {
+    "home": "Inicio",
+    "logout": "Salir",
+    "vehicles": "Vehículos",
+    "purchase": "Comprar",
+    "tickets": "Multas",
+    "permitHistory": "Historial de permisos",
+    "more": "Más"
+  }
+}
