@@ -1,5 +1,9 @@
 import { Query, Resolver, Mutation, Int, Arg } from "type-graphql";
-import { CheckoutSession, CheckoutSessionResponse, StripeConfig } from "./schema";
+import {
+  CheckoutSession,
+  CheckoutSessionResponse,
+  StripeConfig,
+} from "./schema";
 import Stripe from "stripe";
 
 const stripeSecret = process.env.STRIPE_SECRET_KEY;
@@ -40,12 +44,14 @@ export class StripeResolver {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query((returns) => StripeConfig)
-    async checkoutSession(@Arg('sessionId') sessionId: string): Promise<CheckoutSession> {
-      const session = await stripe.checkout.sessions.retrieve(sessionId);
-      if (!session) {
-        throw Error();
-      }
-      return session;
+  async checkoutSession(
+    @Arg("sessionId") sessionId: string
+  ): Promise<CheckoutSession> {
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (!session) {
+      throw Error();
+    }
+    return session;
   }
 
   /*
@@ -60,11 +66,9 @@ mutation {
   async createCheckoutSession(
     @Arg("quantity", () => Int) quantity: number
   ): Promise<CheckoutSessionResponse> {
-
-
     const envPrice = process.env.PRICE;
     if (!envPrice) {
-      throw Error()
+      throw Error();
     }
 
     const session = await stripe.checkout.sessions.create({
