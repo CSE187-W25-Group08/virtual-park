@@ -46,3 +46,19 @@ async function getVehiclePLate(cookie: string | undefined, id: string): Promise<
     return "unregisted vehicle"
   }
 }
+
+export async function approveAppeal(ticketId: string): Promise<Ticket> {
+  const cookie = (await cookies()).get('session')?.value;
+  const ticket = await new TicketService().approveAppeal(cookie, ticketId);
+  ticket.lot = await getLotName(ticket.lot);
+  ticket.vehicle = await getVehiclePLate(cookie, ticket.vehicle)
+  return ticket;
+}
+
+export async function rejectAppeal(ticketId: string): Promise<Ticket> {
+  const cookie = (await cookies()).get('session')?.value;
+  const ticket = await new TicketService().rejectAppeal(cookie, ticketId);
+  ticket.lot = await getLotName(ticket.lot);
+  ticket.vehicle = await getVehiclePLate(cookie, ticket.vehicle)
+  return ticket;
+}

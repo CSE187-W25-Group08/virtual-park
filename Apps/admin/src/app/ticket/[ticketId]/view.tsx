@@ -2,7 +2,6 @@ import SideBarNav from '../../dashboard/SideBarNav'
 import TicketInfo from './TicketInfo'
 import {
   Box,
-  Typography
 } from'@mui/material'
 export default function TicketView({ ticketId }: { ticketId: string }) {
   return (

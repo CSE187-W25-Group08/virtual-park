@@ -1,6 +1,9 @@
 "use client"
 import { Ticket } from '@/ticket';
-import {getTicketDetails} from '../action'
+import {getTicketDetails,
+   approveAppeal,
+    rejectAppeal
+  } from '../action'
 import {useState, useEffect} from 'react'
 import {
   Card,
@@ -28,6 +31,20 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
       fetchData();
   
     }, [ticketId])
+
+    const handleApproveAppeal = async (ticektId : string) => {
+      const new_ticket = await approveAppeal(ticektId);
+      if (new_ticket) {
+        setTicket(new_ticket);
+      }
+    }
+
+    const handleRejectAppeal = async (ticektId : string) => {
+      const new_ticket = await rejectAppeal(ticektId);
+      if (new_ticket) {
+        setTicket(new_ticket);
+      }
+    }
 
     // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
     const getAppealChipColor = (appeal: string | null) => {
@@ -107,7 +124,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
             </Grid>
           </CardContent>
         </Card>
-        {ticket.appealReason && (
+        {ticket.appeal && (
           <Box
             sx={{
               maxWidth: '60%',
@@ -128,10 +145,10 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
 
             {ticket.appeal === "submitted" && (
               <Box display="flex" gap={2}>
-                <Button variant="contained" color="success">
+                <Button variant="contained" color="success" onClick={() => handleApproveAppeal(ticket.id)}>
                   Approve Appeal
                 </Button>
-                <Button variant="outlined" color="error">
+                <Button variant="outlined" color="error" onClick={() => handleRejectAppeal(ticket.id)}>
                   Reject Appeal
                 </Button>
               </Box>

@@ -119,7 +119,10 @@ export class TicketService {
         .then(json => {
           resolve(json.data.getTicketInfo)
         })
-        .catch(() => reject('Unauthorized'))
+        .catch((err) => {
+          console.error('Fetch error:', err);
+          reject('Unknown Lot');
+        });
     })
   }
 
@@ -145,7 +148,10 @@ export class TicketService {
         .then(json => {
           resolve(json.data.approveAppeal)
         })
-        .catch(() => reject('Unauthorized'))
+        .catch((err) => {
+          console.error('Fetch error:', err);
+          reject('Unknown Lot');
+        });
     })
   }
 
@@ -171,7 +177,10 @@ export class TicketService {
         .then(json => {
           resolve(json.data.rejectAppeal)
         })
-        .catch(() => reject('Unauthorized'))
+        .catch((err) => {
+          console.error('Fetch error:', err);
+          reject('Unknown Lot');
+        });
     })
   }
 }
