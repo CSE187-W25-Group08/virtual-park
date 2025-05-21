@@ -9,7 +9,9 @@ export async function listAll(jwt: string): Promise<Ticket[]> {
 
 export async function getTicketDetails(ticketId: string): Promise<Ticket> {
   const cookie = (await cookies()).get('session')?.value;
-  return await new TicketService().getTicketInfo(cookie, ticketId);
+  const ticket = await new TicketService().getTicketInfo(cookie, ticketId);
+  ticket.lot = await getLotName(ticket.lot);
+  return ticket;
   // const testTicket = {
   //   id: "a1b2c3d4",
   //   vehicle: "uuid",
@@ -25,8 +27,9 @@ export async function getTicketDetails(ticketId: string): Promise<Ticket> {
   //   appeal: "submitted"
   // };
   // return testTicket;
+
 }
-export async function getLot(id: string): Promise<string> {
+async function getLotName(id: string): Promise<string> {
   try {
     return new LotService().getLotById(id);
   } catch {
