@@ -82,16 +82,22 @@ export class LotService {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: `{getLotById(id: "${id}") {name}}` }),
+        body: JSON.stringify({
+          query: `{ getLotById(id: "${id}") { name } }`,
+        }),
       })
-        .then(response => {
-          return response.json()
-        }
-        )
+        .then(response => response.json())
         .then(json => {
-          resolve(json.data.getLotById)
+          if (!json?.data?.getLotById) {
+            return reject('Unknown Lot');
+          }
+          resolve(json.data.getLotById.name);
         })
-        .catch(() => reject('Unknown Lot'))
-    })
+        .catch((err) => {
+          console.error('Fetch error:', err);
+          reject('Unknown Lot');
+        });
+    });
   }
+
 }

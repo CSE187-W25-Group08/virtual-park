@@ -17,14 +17,9 @@ export default function LotList() {
     const setLotData = async () => {
       const list = await getLots();
       if (list) setLots(list);
-      // console.log("in view", appeals);
     }
     setLotData();
   }, [])
-
-  // const handleManageAppeal = async (ticket?: Ticket) => {
-  //   alert(`going to appeal of ${ticket?.id}`);
-  // }
   
   // based on MUI https://mui.com/material-ui/react-list/
   const columns: GridColDef[] = [
@@ -115,7 +110,7 @@ export default function LotList() {
   
   return (
     <Box>
-      <Typography>Active Appeals</Typography>
+      <Typography>Parking Lots</Typography>
       {(lots && lots.length != 0) ? <DataGrid
         rows={lots}
         columns={columns}
@@ -175,7 +170,7 @@ export default function LotList() {
         }}
         loading={lots.length === 0}
       />
-      : <Typography>No Active Appeals</Typography>}
+      : <Typography>No Parking Lots</Typography>}
     </Box>
   )
 }
