@@ -11,7 +11,7 @@
 import * as jwt from "jsonwebtoken"
 import * as db from './db'
 import { midt, UUID, SessionUser } from '../types'
-import { Credentials, Authenticated, NewUser, Driver } from '.'
+import { Credentials, Authenticated, NewUser, Driver, NewEnforcement } from '.'
 import { OAuth2Client } from 'google-auth-library';
 
 // https://chat.deepseek.com/a/chat/s/b44e480a-f720-4b4e-b923-ac03aa7f7fc6
@@ -32,6 +32,17 @@ export class AuthService {
     const newUser = await db.createNewUser(signUpDetails);
     if (newUser) {
       return { name: newUser.name, email: newUser.email, accessToken: generateToken(newUser.id) };
+    } else {
+      return undefined
+    }
+  }
+  public async signUpEnforcement(signUpDetails: NewEnforcement): Promise<Authenticated | undefined> {
+    if (!signUpDetails.password) {
+      return undefined
+    }
+    const newEnforcement = await db.createNewEnforcementOfficer(signUpDetails);
+    if (newEnforcement) {
+      return { name: newEnforcement.name, email: newEnforcement.email, accessToken: generateToken(newEnforcement.id) };
     } else {
       return undefined
     }
@@ -70,11 +81,15 @@ export class AuthService {
           email: payload.email,
           password: undefined
         });
+        if (!user) {
+          console.error('Failed to create new user');
+          return undefined;
+        }
       }
       return {
-        name: user!.name,
-        email: user!.email,
-        accessToken: generateToken(user!.id)
+        name: user.name,
+        email: user.email,
+        accessToken: generateToken(user.id)
       };
     } catch (err) {
       console.error('Google token verification failed', err);

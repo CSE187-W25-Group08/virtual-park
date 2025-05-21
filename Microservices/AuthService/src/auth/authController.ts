@@ -12,7 +12,7 @@ import {
   Query
 } from 'tsoa'
 
-import { Credentials, Authenticated, NewUser, Driver } from '.'
+import { Credentials, Authenticated, NewUser, Driver, NewEnforcement } from '.'
 import { AuthService } from './authService'
 import { SessionUser } from '../types'
 
@@ -26,6 +26,21 @@ export class AuthController extends Controller {
     @Body() newUserInfo: NewUser,
   ): Promise<Authenticated | undefined> {
     return new AuthService().signUp(newUserInfo)
+      .then(async (user: Authenticated | undefined): Promise<Authenticated | undefined> => {
+        if (!user) {
+          this.setStatus(409)
+        }
+        return user
+      })
+  }
+
+  @Post('enforcement')
+  @Response('409', 'Email already associated with a driver')
+  @SuccessResponse('201', 'Account Created')
+  public async signUpEnforcement(
+    @Body() enforcementDetails: NewEnforcement,
+  ): Promise<Authenticated | undefined> {
+    return new AuthService().signUpEnforcement(enforcementDetails)
       .then(async (user: Authenticated | undefined): Promise<Authenticated | undefined> => {
         if (!user) {
           this.setStatus(409)

@@ -41,3 +41,10 @@ export interface Driver {
   jwt: midt,
   joinDate: string,
 }
+
+export interface NewEnforcement {
+  name: string,
+  enforcementId: string,
+  email: email,
+  password: string,
+}

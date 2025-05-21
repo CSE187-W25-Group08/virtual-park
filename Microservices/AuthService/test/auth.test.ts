@@ -44,6 +44,13 @@ const tommy = {
   name: "Tommy Timekeeper",
 }
 
+const edna = {
+  email: 'edma@enforcement.com',
+  password: 'ednaenforcement',
+  name: "Edna Enforcer",
+  enforcementId: 'ABC-1234',
+}
+
 export const badJWT = "7m#pK9@L!2xQ$5vR%8sT^1wU&3yV*6zW(4aX)9bY_0cZ+dA=eB-fC/gD|hEiF]jG[kH{lI}mJ~nK`oL'pM,qN.rO/sP0tQ1uR2vS3wT4xU5yV6zW7aX8bY9cZ0dA1eB2fC3gD4hE5iF6jG7kH8lI9mJ0nK1oL2pM3qN4rO5sP6tQ7uR8vS9wT"
 export const badIdJWT = generateToken('483a70c3-7d24-4b45-bcc2-1589e624a483')
 
@@ -247,4 +254,19 @@ test('Reactivate driver tommy', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({ email: tommy.email })
     .expect(204)
+})
+
+test('Create new enforcement officer', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .post('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send(edna)
+    .expect(201)
 })
