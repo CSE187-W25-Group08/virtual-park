@@ -38,13 +38,11 @@ export class LotService {
 
 
   public async getById(id: string): Promise<Lot> {
-    console.log("service callsed with ", id)
     const query = {
       text: queries.selectById,
       values: [id]
     }
     const { rows } = await pool.query(query);
-    console.log(rows);
     const lots = await this.rowToLot(rows);
     return lots[0];
   }
