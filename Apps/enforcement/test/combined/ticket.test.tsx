@@ -11,6 +11,8 @@ import userEvent from '@testing-library/user-event'
 import PermitPage from '../../src/app/permit/page'
 import { getPermitByPlate } from '../../src/permit/service'
 
+
+
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
@@ -22,6 +24,13 @@ vi.mock('next/headers', () => ({
     delete: vi.fn(),
   }),
 }))
+// vi.mock('next/headers', () => ({
+//   cookies: () => ({
+//     get: vi.fn().mockReturnValue({ value: 'test-session-cookie' }),
+//     set: vi.fn(),
+//     delete: vi.fn(),
+//   }),
+// }))
 
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
@@ -37,44 +46,7 @@ it("issue ticket button test", async () => {
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
   vi.mocked(fetch).mockImplementation((url, options) => {
     if (
-      url === 'http://localhost:4000/graphql' 
-    ) {
-      return Promise.resolve({
-        status: 200,
-        json: () =>
-          Promise.resolve({
-            data: {
-              getPermitBycarPlate: [
-                {
-                  permitID: '123',
-                  permitType: 'Student',
-                  issueDate: '2025-05-01',
-                  expDate: '2025-06-01',
-                  isValid: true
-                }
-              ]
-            }
-          }),
-      } as Response)
-    }
-
-    return Promise.reject(new Error('Unknown fetch'))
-  })
-
-  render(<PermitPage />)
-
-  await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '123ABC')
-  await userEvent.click(screen.getByText('Search'))
-  await userEvent.click(screen.getByText('Issue Ticket'))
-   await screen.findByText('Issue Parking Ticket')
-})
-
-it("issue ticket button test", async () => {
-  const mockPush = vi.fn()
-  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-  vi.mocked(fetch).mockImplementation((url, options) => {
-    if (
-      url === 'http://localhost:4000/graphql' 
+      url === 'http://localhost:4000/graphql'
     ) {
       return Promise.resolve({
         status: 200,
@@ -106,6 +78,7 @@ it("issue ticket button test", async () => {
   await screen.findByText('Issue Parking Ticket')
 })
 
+
 it("issue ticket successfully", async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
@@ -113,6 +86,7 @@ it("issue ticket successfully", async () => {
     if (
       url === 'http://localhost:4000/graphql' 
     ) {
+      console.log('fetch called with permit:', url, options)
       return Promise.resolve({
         status: 200,
         json: () =>
@@ -131,6 +105,30 @@ it("issue ticket successfully", async () => {
           }),
       } as Response)
     }
+
+    if (url === 'http://localhost:4010/graphql') {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            ticketIssue: {
+              id: '1234',
+              driverID: '1222',
+              enforcer: '1111',
+              lot: 'lot 101',
+              paid: false,
+              description: 'no permit',
+              due: '4/20/2025',
+              issue: '5/20/2025',
+              violation: 'no permit',
+              image: 'car.jpg',
+              cost: 12,
+            }
+          }
+        }),
+      } as Response)
+    }
+
 
     return Promise.reject(new Error('Unknown fetch'))
   })
@@ -157,4 +155,6 @@ it("issue ticket successfully", async () => {
   
   const issueButton = within(dialog).getByText('Issue Ticket')
   await userEvent.click(issueButton)
+  // await screen.findByText('Failed to issue ticket')
+  await screen.findByText('Ticket 1234 issued successfully')
 })
