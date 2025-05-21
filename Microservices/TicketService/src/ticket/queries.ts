@@ -85,14 +85,15 @@ export const updateAppealedTicket =
 export const unpaidTickets =
   `
   SELECT id, driver, data
-
   FROM ticket
-
-  WHERE (data->>'paid'::text = 'false'::text)
-  AND (data->>'appeal'::text != 'approved'::text)
-
+  WHERE (data->>'paid')::text = 'false'
+    AND (
+      data->>'appeal' IS NULL
+      OR data->>'appeal' != 'approved'
+    )
   ORDER BY data->>'due' ASC;
-`
+`;
+
 export const getSpeficTicket =
   `
   SELECT id, driver, data FROM ticket
@@ -100,8 +101,8 @@ export const getSpeficTicket =
 `
 
 
-export const issueTicket = 
-`
+export const issueTicket =
+  `
 INSERT INTO ticket(driver, data) 
 VALUES (
   $1::uuid,

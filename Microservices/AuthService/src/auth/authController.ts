@@ -12,7 +12,7 @@ import {
   Query
 } from 'tsoa'
 
-import { Credentials, Authenticated, NewUser, Driver } from '.'
+import { Credentials, Authenticated, NewUser, Driver, NewEnforcement, Enforcement } from '.'
 import { AuthService } from './authService'
 import { SessionUser } from '../types'
 
@@ -84,6 +84,31 @@ export class AuthController extends Controller {
     } else {
       return user;
     }
+  }
+
+  @Post('enforcement')
+  @Security("jwt", ["admin"])
+  @Response('401', 'Unauthorized')
+  @Response('409', 'Email already associated with an enforcement officer')
+  @SuccessResponse('201', 'Account Created')
+  public async signUpEnforcement(
+    @Body() enforcementDetails: NewEnforcement,
+  ): Promise<Authenticated | undefined> {
+    return new AuthService().signUpEnforcement(enforcementDetails)
+      .then(async (user: Authenticated | undefined): Promise<Authenticated | undefined> => {
+        if (!user) {
+          this.setStatus(409)
+        }
+        return user
+      })
+  }
+
+  @Get('enforcement')
+  @Security("jwt", ["admin"])
+  @Response('401', 'Unauthorized')
+  public async enforcement(): Promise<Enforcement[]> {
+    const enforcement = await new AuthService().getEnforcementOfficers()
+    return enforcement
   }
 
   @Get('drivers')

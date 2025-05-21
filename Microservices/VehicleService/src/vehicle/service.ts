@@ -43,7 +43,7 @@ export class VehicleService {
       }
       return vehicleObj
     }))
-    
+
     return vehicles
   }
 
@@ -62,12 +62,12 @@ export class VehicleService {
       'model': rows[0].data.model,
       'color': rows[0].data.color,
       'active': rows[0].data.active
-  }
-  return vehicleObj;
+    }
+    return vehicleObj;
   }
 
-/* reference: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing
-https://stackoverflow.com/questions/62913315/operator-in-typescript */
+  /* reference: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing
+  https://stackoverflow.com/questions/62913315/operator-in-typescript */
   public async getVehicleById(userId: string | undefined, vehicleId: string) {
     const query = {
       text: queries.getVehicleById,
@@ -83,10 +83,28 @@ https://stackoverflow.com/questions/62913315/operator-in-typescript */
       'model': rows[0].data.model,
       'color': rows[0].data.color,
       'active': rows[0].data.active
-  }
-  return vehicleObj;
+    }
+    return vehicleObj;
   }
 
+  public async getVehicleByIdAdmin(vehicleId: string) {
+    const query = {
+      text: queries.getVehicleByIdAdmin,
+      values: [vehicleId]
+    }
+    const { rows } = await pool.query(query)
+
+    const vehicleObj: Vehicle = {
+      'id': rows[0].id,
+      'driver': rows[0].driver,
+      'licensePlate': rows[0].data.license_plate,
+      'make': rows[0].data.make,
+      'model': rows[0].data.model,
+      'color': rows[0].data.color,
+      'active': rows[0].data.active
+    }
+    return vehicleObj;
+  }
   public async getPrimaryVehicle(userId: string | undefined) {
     const query = {
       text: queries.getPrimaryVehicle,
@@ -105,7 +123,7 @@ https://stackoverflow.com/questions/62913315/operator-in-typescript */
         'color': rows[0].data.color,
         'active': rows[0].data.active
       }
-  
+
       return vehicleObj;
     }
   }
@@ -117,7 +135,7 @@ https://stackoverflow.com/questions/62913315/operator-in-typescript */
     }
     const { rows } = await pool.query(query)
 
- 
+
     const vehicleObj: Vehicle = {
       'id': rows[0].id,
       'driver': rows[0].driver,

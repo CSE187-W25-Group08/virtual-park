@@ -2,6 +2,7 @@
 import { Ticket } from "../../ticket";
 import { TicketService } from "../../ticket/service";
 import { LotService } from "../../lot/service";
+import { VehicleService } from "../../vehicle/service";
 import { cookies } from 'next/headers'
 export async function listAll(jwt: string): Promise<Ticket[]> {
   return new TicketService().getAllTicket(jwt)
@@ -11,6 +12,7 @@ export async function getTicketDetails(ticketId: string): Promise<Ticket> {
   const cookie = (await cookies()).get('session')?.value;
   const ticket = await new TicketService().getTicketInfo(cookie, ticketId);
   ticket.lot = await getLotName(ticket.lot);
+  ticket.vehicle = await getVehiclePLate(cookie, ticket.vehicle)
   return ticket;
   // const testTicket = {
   //   id: "a1b2c3d4",
@@ -34,5 +36,13 @@ async function getLotName(id: string): Promise<string> {
     return new LotService().getLotById(id);
   } catch {
     return "unknown lot"
+  }
+}
+
+async function getVehiclePLate(cookie: string | undefined, id: string): Promise<string> {
+  try {
+    return new VehicleService().getVehiclePlate(cookie, id);
+  } catch {
+    return "unregisted vehicle"
   }
 }

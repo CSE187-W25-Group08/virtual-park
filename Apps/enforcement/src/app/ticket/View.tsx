@@ -125,16 +125,15 @@ export default function TicketView({
           <input type="hidden" name="driverID" value={ticketInfo.driverID} />
           <input type="hidden" name="vehicleID" value={ticketInfo.vehicleID} />
           <FormControl fullWidth required>
-            <InputLabel id="lotSelection">Parking Lot</InputLabel>
+            <InputLabel id = 'lotSelection'>Parking Lot</InputLabel>
             <Select
-              labelId="lotLabel"
+              labelId = 'lotSelection'
               name="lot"
               value={ticketInfo.lot}
-              label="Parking Lot"
               onChange={handleSelectChange}
             >
               {lotOptions.map(lot => (
-                <MenuItem key={lot.name} value={lot.name}>{lot.name}</MenuItem>
+                <MenuItem key={lot.name} value={lot.name} aria-label={lot.name}>{lot.name}</MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -164,7 +163,7 @@ export default function TicketView({
           
           <TextField
             name="image"
-            label="ViolationImage"
+            label="Violation Image"
             fullWidth
             value={ticketInfo.image}
             onChange={handleTextInputChange}

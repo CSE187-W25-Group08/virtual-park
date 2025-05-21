@@ -138,3 +138,39 @@ it("should show an permit found for the vehicle error", async () => {
   await userEvent.click(screen.getByText('Search'))
   await screen.findByText('No permits found for this vehicle')
 })
+
+
+it("should show red row color when the permit is invalid", async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(fetch).mockImplementation((url, options) => {
+    if (
+      url === 'http://localhost:4000/graphql' 
+    ) {
+      return Promise.resolve({
+        status: 200,
+        json: () =>
+          Promise.resolve({
+            data: {
+              getPermitBycarPlate: [
+                {
+                  permitID: '123',
+                  permitType: 'Student',
+                  issueDate: '2025-05-01',
+                  expDate: '2025-06-01',
+                  isValid: false
+                }
+              ]
+            }
+          }),
+      } as Response)
+    }
+
+    return Promise.reject(new Error('Unknown fetch'))
+  })
+
+  render(<PermitPage />)
+
+  await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '123ABC')
+  await userEvent.click(screen.getByText('Search'))
+})

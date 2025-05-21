@@ -1,4 +1,4 @@
-import { test, beforeAll, afterAll, beforeEach } from 'vitest'
+import { test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
 
@@ -42,6 +42,13 @@ const tommy = {
   email: "tommy@books.com",
   password: "tommytimekeeper",
   name: "Tommy Timekeeper",
+}
+
+const edna = {
+  email: 'edma@enforcement.com',
+  password: 'ednaenforcement',
+  name: "Edna Enforcer",
+  enforcementId: 'ABC-1234',
 }
 
 export const badJWT = "7m#pK9@L!2xQ$5vR%8sT^1wU&3yV*6zW(4aX)9bY_0cZ+dA=eB-fC/gD|hEiF]jG[kH{lI}mJ~nK`oL'pM,qN.rO/sP0tQ1uR2vS3wT4xU5yV6zW7aX8bY9cZ0dA1eB2fC3gD4hE5iF6jG7kH8lI9mJ0nK1oL2pM3qN4rO5sP6tQ7uR8vS9wT"
@@ -247,4 +254,89 @@ test('Reactivate driver tommy', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({ email: tommy.email })
     .expect(204)
+})
+
+test('Create new enforcement officer', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .post('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send(edna)
+    .expect(201)
+})
+
+test('Don\'t let non-admins create enforcement officer accounts', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+
+  await supertest(server)
+    .post('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send(edna)
+    .expect(401)
+})
+
+test('Cannot create the same enforcement officer twice', async () => {
+  let accessToken
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+
+  await supertest(server)
+    .post('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send(edna)
+    .expect(201)
+  
+  await supertest(server)
+    .post('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send(edna)
+    .expect(409)
+})
+
+test('Get enforcement officers', async () => {
+  let accessToken
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+
+    await supertest(server)
+      .get('/api/v0/auth/enforcement')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .then((res) => {
+        expect(res.body.length).toEqual(1)
+      })
+})
+
+test('Must be an admin to fetch enforcement officers', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+
+  await supertest(server)
+    .get('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(401)
 })
