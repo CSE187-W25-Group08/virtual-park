@@ -34,15 +34,15 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
   
     }, [ticketId])
 
-    const handleApproveAppeal = async (ticektId : string) => {
-      const new_ticket = await approveAppeal(ticektId);
+    const handleApproveAppeal = async (ticketId : string) => {
+      const new_ticket = await approveAppeal(ticketId);
       if (new_ticket) {
         setTicket(new_ticket);
       }
     }
 
-    const handleRejectAppeal = async (ticektId : string) => {
-      const new_ticket = await rejectAppeal(ticektId);
+    const handleRejectAppeal = async (ticketId : string) => {
+      const new_ticket = await rejectAppeal(ticketId);
       if (new_ticket) {
         setTicket(new_ticket);
       }
@@ -93,6 +93,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
           </Typography>
           <Box>
           <Chip
+            // aria-label = {`${!ticket.appeal || ticket.appeal == "null" ? "None" : ticket.appeal}`}
             label={`Appeal: ${!ticket.appeal || ticket.appeal == "null" ? "None" : ticket.appeal}`}
             variant="filled"
             color={getAppealChipColor(ticket.appeal)}
@@ -154,12 +155,8 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
 
             {ticket.appeal === "submitted" && (
               <Box display="flex" gap={2}>
-                <Button variant="contained" color="success" onClick={() => handleApproveAppeal(ticket.id)}>
-                  Approve Appeal
-                </Button>
-                <Button variant="outlined" color="error" onClick={() => handleRejectAppeal(ticket.id)}>
-                  Reject Appeal
-                </Button>
+                <Button variant="contained" color="success" onClick={() => handleApproveAppeal(ticket.id)}>Approve Appeal</Button>
+                <Button variant="outlined" color="error" onClick={() => handleRejectAppeal(ticket.id)}>Reject Appeal</Button>
               </Box>
             )}
           </Box>
