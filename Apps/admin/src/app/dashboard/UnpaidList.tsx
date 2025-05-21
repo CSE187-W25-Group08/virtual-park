@@ -79,7 +79,7 @@ export default function UnpaidList() {
       renderCell: (params) => (
         <Tooltip title={params.value}>
           <Typography noWrap sx={{ maxWidth: 180 }}>
-            {(params.value == 'null') ? "none" : params.value}
+            {(!params.value || params.value == 'null') ? "none" : params.value}
           </Typography>
         </Tooltip>
       ),
