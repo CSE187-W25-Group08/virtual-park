@@ -24,13 +24,6 @@ vi.mock('next/headers', () => ({
     delete: vi.fn(),
   }),
 }))
-// vi.mock('next/headers', () => ({
-//   cookies: () => ({
-//     get: vi.fn().mockReturnValue({ value: 'test-session-cookie' }),
-//     set: vi.fn(),
-//     delete: vi.fn(),
-//   }),
-// }))
 
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
@@ -157,4 +150,68 @@ it("issue ticket successfully", async () => {
   await userEvent.click(issueButton)
   // await screen.findByText('Failed to issue ticket')
   await screen.findByText('Ticket 1234 issued successfully')
+})
+
+it("failed to issue ticket", async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(fetch).mockImplementation((url, options) => {
+    if (
+      url === 'http://localhost:4000/graphql' 
+    ) {
+      console.log('fetch called with permit:', url, options)
+      return Promise.resolve({
+        status: 200,
+        json: () =>
+          Promise.resolve({
+            data: {
+              getPermitBycarPlate: [
+                {
+                  permitID: '123',
+                  permitType: 'Student',
+                  issueDate: '2025-05-01',
+                  expDate: '2025-06-01',
+                  isValid: true
+                }
+              ]
+            }
+          }),
+      } as Response)
+    }
+
+    if (url === 'http://localhost:4010/graphql') {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({ data: { ticketIssue: null } })
+      } as Response)
+    }
+
+
+    return Promise.reject(new Error('Unknown fetch'))
+  })
+
+  render(<PermitPage />)
+
+  await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '123ABC')
+  await userEvent.click(screen.getByText('Search'))
+  await userEvent.click(screen.getByText('Issue Ticket'))
+  /* https://testing-library.com/docs/dom-testing-library/api-within/ */
+  const dialog = screen.getByRole('dialog')
+  console.log(prettyDOM(dialog)) 
+  const lotSelect = within(dialog).getByRole('combobox')
+  await userEvent.click(lotSelect)
+  
+  const lotOption = await screen.findByText('Area 51 Lot')
+  await userEvent.click(lotOption)
+  
+  const violation = screen.getByPlaceholderText('Permit expired?')
+  await userEvent.type(violation, 'Expired Permit')
+  
+  const description = screen.getByPlaceholderText('Provide details about the violation')
+  await userEvent.type(description, 'no valid permit')
+  
+  const issueButton = within(dialog).getByText('Issue Ticket')
+  await userEvent.click(issueButton)
+  await screen.findByText('Failed to issue ticket')
+  // await screen.findByText('Ticket 1234 issued successfully')
 })
