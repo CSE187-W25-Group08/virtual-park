@@ -270,3 +270,19 @@ test('Create new enforcement officer', async () => {
     .send(edna)
     .expect(201)
 })
+
+test('Don\'t let non-admins create enforcement officer accounts', async () => {
+  let accessToken;
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+
+  await supertest(server)
+    .post('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send(edna)
+    .expect(401)
+})
