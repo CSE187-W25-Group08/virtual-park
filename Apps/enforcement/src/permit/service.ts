@@ -47,7 +47,7 @@ export async function getPermitByPlate(cookie: string | undefined, carplate: str
 
 export async function issueTicketForVehicle(
   cookie: string | undefined,
-  driverID: string,
+  driverID: string | null,
   vehicleID: string,
   lot: string,
   description: string,
@@ -67,7 +67,7 @@ export async function issueTicketForVehicle(
         operationName: "IssueTicket",
         query: `
           mutation IssueTicket(
-            $driverID: String!,
+            $driverID: String,
             $vehicleID: String!,
             $lot: String!,
             $paid: Boolean!,
@@ -103,7 +103,7 @@ export async function issueTicketForVehicle(
           }
         `,
         variables: {
-          driverID,
+          driverID: driverID || null,
           vehicleID,
           lot,
           paid,

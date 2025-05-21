@@ -11,7 +11,7 @@ export interface Permit {
 
 export interface Ticket {
     id: string,
-    vehicle: string,
+    vehicle: string | '',
     enforcer: string,
     lot: string,
     paid: boolean,
@@ -26,8 +26,8 @@ export interface Ticket {
 }
 
 export interface TicketInfo {
-  driverID: string;
-  vehicleID: string;
+  driverID: string | '';
+  vehicleID: string | '';
   lot: string;
   description: string;
   violation: string;
@@ -38,8 +38,8 @@ export interface TicketInfo {
 export interface TicketViewProps {
   open: boolean;
   close: () => void;
-  driverID: string;
-  vehicleID: string;
+  driverID: string | '';
+  vehicleID: string | '';
   success: (ticketId: string) => void;
   error: (errorMessage: string) => void;
 }

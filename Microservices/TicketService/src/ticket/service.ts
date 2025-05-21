@@ -163,7 +163,7 @@ export class TicketService {
     return tickets[0]
   }
   public async issueTickets(
-    driverId: string,
+    driverId: string | null,
     vehicleID: string,
     enforcer: string | undefined,
     lot: string,
