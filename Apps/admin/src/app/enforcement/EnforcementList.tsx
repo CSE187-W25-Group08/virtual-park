@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
 
 import { Enforcement, NewEnforcement } from '../../enforcement'
-import { getEnforcement } from './actions'
+import { createEnforcement, getEnforcement } from './actions'
 import CreationModal from './CreationModal'
 
 export default function EnforcementList() {
@@ -33,13 +33,12 @@ export default function EnforcementList() {
   }
 
   const handleSubmitCreation = async (details: NewEnforcement) => {
-    const alertText = `
-      Name: ${details.name}
-      Enforcement ID: ${details.enforcementId}
-      Email: ${details.email}
-      Password: ${details.password}
-    `
-    alert(alertText)
+    const newEnforcer = await createEnforcement(details)
+    if (newEnforcer) {
+      setEnforcementList((prev) => [...prev, newEnforcer])
+    } else {
+      alert('Failed to create new enforcement officer')
+    }
   }
 
   const columns: GridColDef[] = [

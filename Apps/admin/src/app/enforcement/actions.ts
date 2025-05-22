@@ -1,9 +1,14 @@
 'use server'
-import { Enforcement } from '../../enforcement'
-import { getEnforcementOfficers } from '../../enforcement/service'
+import { Enforcement, NewEnforcement } from '../../enforcement'
+import { getEnforcementOfficers, createEnforcementOfficer } from '../../enforcement/service'
 import { cookies } from 'next/headers'
 
 export async function getEnforcement(): Promise<Enforcement[]> {
   const cookie = (await cookies()).get('session')?.value
   return await getEnforcementOfficers(cookie)
+}
+
+export async function createEnforcement(details: NewEnforcement): Promise<Enforcement> {
+  const cookie = (await cookies()).get('session')?.value
+  return await createEnforcementOfficer(cookie, details)
 }
