@@ -39,6 +39,7 @@ export class AuthService {
   public async signUpEnforcement(signUpDetails: NewEnforcement): Promise<Enforcement | undefined> {
     const newEnforcement = await db.createNewEnforcementOfficer(signUpDetails);
     if (newEnforcement) {
+      console.log(newEnforcement)
       return { name: newEnforcement.name, enforcementId: newEnforcement.enforcementId, email: newEnforcement.email, hireDate: newEnforcement.hireDate };
     } else {
       return undefined

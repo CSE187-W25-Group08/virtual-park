@@ -69,13 +69,14 @@ export async function createNewEnforcementOfficer(details: NewEnforcement): Prom
           )
         ))
         RETURNING
-          data->>'name' AS name, data->>'email' AS email, data->'officer_details'->>'enforcementId' AS id, data->'officer_details'->>'hired' AS hireDate;
+          data->>'name' AS name, data->>'email' AS email, data->'officer_details'->>'enforcementId' AS id, data->'officer_details'->>'hired' AS hired;
       `,
     values: [details.email, details.password, details.name, details.enforcementId, currentTimestamp]
   }
   const { rows } = await pool.query(signUp);
   if (rows.length === 1) {
-    return ({ name: rows[0].name, enforcementId: rows[0].id, email: rows[0].email, hireDate: rows[0].hired });
+    console.log(rows)
+    return ({ name: rows[0].name, enforcementId: rows[0].id, email: rows[0].email, hireDate: new Date(rows[0].hired).toDateString() });
   }
 }
 

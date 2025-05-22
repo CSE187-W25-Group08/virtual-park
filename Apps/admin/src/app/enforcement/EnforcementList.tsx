@@ -35,6 +35,7 @@ export default function EnforcementList() {
   const handleSubmitCreation = async (details: NewEnforcement) => {
     const newEnforcer = await createEnforcement(details)
     if (newEnforcer) {
+      console.log(newEnforcer)
       setEnforcementList((prev) => [...prev, newEnforcer])
     } else {
       alert('Failed to create new enforcement officer')
@@ -82,14 +83,11 @@ export default function EnforcementList() {
       ),
     },
     {
-      field: 'hired',
-      headerName: 'Date Hired',
+      field: 'hireDate',
+      headerName: 'Account Created',
       width: 200,
       flex: 1,
-      renderCell: (params) => {
-        const date = new Date(params.value)
-        return date.toLocaleString() || 'Invalid date'
-      },
+      renderCell: (params) => params.value || 'Unknown date',
     },
   ]
   return (
