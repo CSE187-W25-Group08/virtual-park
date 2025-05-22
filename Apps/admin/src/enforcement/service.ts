@@ -2,7 +2,7 @@ import { Enforcement } from '.'
 
 export async function getEnforcementOfficers(cookie: string | undefined): Promise<Enforcement[]> {
   return new Promise((resolve, reject) => {
-    fetch('http:://localhost:3010/auth/enforcement', {
+    fetch('http://localhost:3010/api/v0/auth/enforcement', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer: ${cookie}`,

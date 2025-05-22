@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react'
-import { useState, ChangeEvent } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { DataGrid, GridColDef, GridFooter } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -10,28 +10,27 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
 
-const testData = [
-  {
-    id: 1,
-    name: 'Officer 1',
-    email: 'officer1@taps.ucsc',
-    hired: '2020-06-15T12:00:00+00:00',
-  },
-  {
-    id: 2,
-    name: 'Officer 2',
-    email: 'officer2@taps.ucsc',
-    hired: '2020-06-15T12:00:00+00:00',
-  },
-]
+import { Enforcement } from '../../enforcement'
+import { getEnforcement } from './actions'
 
 export default function EnforcementList() {
+  const [enforcementList, setEnforcementList] = useState<Enforcement[]>([])
   const [modalOpen, setModalOpen] = useState(false)
   const [name, setName] = useState('')
   const [enforcementId, setEnforcementId] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+
+  useEffect(() => {
+    const fetchEnforcement = async () => {
+      const data = await getEnforcement()
+      if (data) {
+        setEnforcementList(data)
+      }
+    }
+    fetchEnforcement()
+  }, [])
 
   const isFormValid = () => {
     return (
@@ -115,7 +114,7 @@ export default function EnforcementList() {
       ),
     },
     {
-      field: 'id',
+      field: 'enforcementId',
       headerName: 'Enforcment ID',
       width: 200,
       flex: 1,
@@ -156,9 +155,9 @@ export default function EnforcementList() {
       <Typography variant="h4" sx={{ mb: 4 }}>
         Enforcement Officers
       </Typography>
-      {testData && testData.length != 0 ? (
+      {enforcementList && enforcementList.length != 0 ? (
         <DataGrid
-          rows={testData}
+          rows={enforcementList}
           columns={columns}
           initialState={{
             pagination: { paginationModel: { pageSize: 10 } },
@@ -208,7 +207,7 @@ export default function EnforcementList() {
               backgroundColor: '#e6f7ff',
             },
           }}
-          loading={testData.length === 0}
+          loading={enforcementList.length === 0}
         />
       ) : (
         <Typography>No Active Enforcement Officers</Typography>
