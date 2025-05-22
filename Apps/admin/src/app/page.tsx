@@ -1,8 +1,8 @@
-import DashBoardView from "./dashboard/view"
+import DashboardView from "./dashboard/DashboardView"
 export default function DashBoard() {
   return (
     <>
-      <DashBoardView />
+      <DashboardView />
     </>
   )
 }
