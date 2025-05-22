@@ -42,6 +42,12 @@ beforeEach(() => {
     key: vi.fn(),
     length: 0
   });
+
+  // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
+  vi.stubGlobal('location', {
+    ...window.location,
+    reload: vi.fn(),
+  });
 });
 
 
