@@ -128,7 +128,7 @@ export default function TicketView({
           <FormControl fullWidth required>
             <InputLabel id = 'lotSelection'>Parking Lot</InputLabel>
             <Select
-              labelId = 'lotSelection'
+              labelId = 'lotSelection (Required)'
               name="lot"
               value={ticketInfo.lot}
               onChange={handleSelectChange}
@@ -142,7 +142,7 @@ export default function TicketView({
           {/* I should have the permit type api call here */}
           <TextField
             name="violation"
-            label="Violation Type"
+            label="Violation Type (Required)"
             fullWidth
             required
             value={ticketInfo.violation}
@@ -152,7 +152,7 @@ export default function TicketView({
           
           <TextField
             name="description"
-            label="Description"
+            label="Description (Required)"
             fullWidth
             required
             multiline
@@ -173,7 +173,7 @@ export default function TicketView({
           
           <TextField
             name="cost"
-            label="Fine"
+            label="Fine (Required)"
             type="number"
             fullWidth
             required
