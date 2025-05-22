@@ -1,7 +1,7 @@
 import { vi, test, beforeAll, afterAll, expect, afterEach } from "vitest";
 import * as http from "http";
 import supertest from "supertest";
-import * as db from './db'
+// import * as db from './db'
 import { app, bootstrap } from "../src/app";
 import { AuthService } from "../src/auth/service";
 
@@ -13,7 +13,7 @@ let server: http.Server<
 beforeAll(async () => {
   server = http.createServer(app);
   server.listen();
-  await db.reset()
+  //await db.reset()
   await bootstrap();
 });
 
@@ -22,7 +22,7 @@ afterEach(() => {
 })
 
 afterAll(() => {
-  db.shutdown()
+  //db.shutdown()
   server.close();
 });
 
@@ -46,11 +46,11 @@ test("Auth check throws error if unauthroized", async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-        query {
-          paidTicket {
-            violation
-          }
+      mutation {
+          createPaymentIntent(amount: 5555) {
+          clientSecret
         }
+      }
       `,
     })
     .then((res) => {

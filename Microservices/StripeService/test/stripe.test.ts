@@ -34,25 +34,6 @@ vi.mock('../src/auth/service', () => {
 
 const accessToken = 'Placeholder before authenticated implementation'
 
-test("User can retrieve stripe config", async () => {
-  await supertest(server)
-    .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
-    .send({
-      query: `
-      query {
-          config {
-          publicKey
-          unitAmount
-          currency
-        }
-      }
-      `,
-    })
-    .then((res) => {
-      expect(res.body.data.config.publicKey).toBeTruthy()
-    });
-});
 
 test("User can create stripe checkout session", async () => {
   await supertest(server)
@@ -70,5 +51,26 @@ test("User can create stripe checkout session", async () => {
     .then((res) => {
       console.log(res.body)
       expect(res.body.data.createPaymentIntent.clientSecret).toBeTruthy()
+    });
+});
+
+test("Throws if STRIPE_SECRET_KEY is missing", async () => {
+  delete process.env.STRIPE_SECRET_KEY; // simulate missing key
+
+  await supertest(server)
+    .post("/graphql")
+    .set("Authorization", "Bearer " + accessToken)
+    .send({
+      query: `
+        mutation {
+          createPaymentIntent(amount: 5555) {
+            clientSecret
+          }
+        }
+      `,
+    })
+    .expect(200)
+    .then((res) => {
+      expect(res.body.errors).toBeDefined(); // error path hit
     });
 });

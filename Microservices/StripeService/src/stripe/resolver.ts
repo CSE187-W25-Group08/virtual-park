@@ -1,19 +1,19 @@
-import { Query, Resolver, Mutation, Int, Arg } from "type-graphql";
+import { Authorized, Query, Resolver, Mutation, Int, Arg } from "type-graphql";
 import {
   PaymentIntentResponse,
-  StripeConfig,
+  //StripeConfig,
 } from "./schema";
 import Stripe from "stripe";
 
-const stripeSecret = process.env.STRIPE_SECRET_KEY;
-if (!stripeSecret) {
-  throw Error();
-}
-const stripe = new Stripe(stripeSecret);
 
 @Resolver()
 export class StripeResolver {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(() => String)
+  dummy(): string {
+    return "OK";
+  }
+  /*
   @Query((returns) => StripeConfig)
   async config(): Promise<StripeConfig> {
     if (!stripe) {
@@ -40,13 +40,20 @@ export class StripeResolver {
       currency: price.currency,
     };
   }
+    */
 
 
 
+  @Authorized('driver')
   @Mutation(() => PaymentIntentResponse)
   async createPaymentIntent(
     @Arg("amount", () => Int) amount: number
   ): Promise<PaymentIntentResponse> {
+    const stripeSecret = process.env.STRIPE_SECRET_KEY;
+    if (!stripeSecret) {
+      throw Error();
+    }
+    const stripe = new Stripe(stripeSecret);
 
     console.log('createPaymentIntent called with amount:', amount);
     const paymentIntent = await stripe.paymentIntents.create({
