@@ -17,7 +17,7 @@ import {
   TableBody,
   Alert
 } from '@mui/material'
-import { getpermitByPlateNum } from './action'
+import { getpermitByPlateNum, googleVision } from './action'
 import { Permit } from '../../permit/index'
 import TicketView from '../ticket/View'
 
@@ -65,6 +65,44 @@ export default function PermitView() {
     setTicketDialog(false)
     setError(errorMessage)
   }
+
+  const handleOCR = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setError(null)
+    setTicketSuccess(null)
+
+    try {
+      const base64 = await toBase64(file)
+      const plate = await googleVision(base64)
+
+      setCarPlate(plate)
+      // const permitInfo = await getpermitByPlateNum(plate)
+      // setPermits(permitInfo)
+
+      // if (permitInfo.length === 0) {
+      //   setError(`No permits found for detected plate: ${plate}`)
+      // }
+    } catch (err) {
+      console.error(err)
+      setError('Failed to recognize license plate')
+    }
+  }
+
+  const toBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        const result = reader.result as string
+        const base64 = result.split(',')[1]
+        resolve(base64)
+      }
+      reader.onerror = reject
+    })
+  }
+
   const noPermitError = error === 'No permits found for this vehicle'
   
   return (
@@ -91,6 +129,20 @@ export default function PermitView() {
           {'Search'}
         </Button>
       </Box>
+
+      <input
+          type="file"
+          accept="image/*"
+          id="upload-photo"
+          hidden
+          onChange={handleOCR}
+        />
+        <label htmlFor="upload-photo">
+          <Button variant="outlined" component="span" sx={{ height: 50 }}>
+            Upload Image
+          </Button>
+        </label>
+
       {/* reference: https://mui.com/material-ui/react-alert/ */}
        {/* reference: https://mui.com/material-ui/react-table/ */}
       {ticketSuccess && (
