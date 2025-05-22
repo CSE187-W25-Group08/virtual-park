@@ -12,9 +12,17 @@ COPY Microservices/AuthService/build/ /home/app/Microservices/AuthService/build/
 COPY Microservices/AuthService/package.json /home/app/Microservices/AuthService/
 COPY Microservices/AuthService/package-lock.json /home/app/Microservices/AuthService/
 
+COPY Microservices/OCRService/build/ /home/app/Microservices/OCRService/build/
+COPY Microservices/OCRService/package.json /home/app/Microservices/OCRService/
+COPY Microservices/OCRService/package-lock.json /home/app/Microservices/OCRService/
+
 COPY Microservices/PermitService/build/ /home/app/Microservices/PermitService/build/
 COPY Microservices/PermitService/package.json /home/app/Microservices/PermitService/
 COPY Microservices/PermitService/package-lock.json /home/app/Microservices/PermitService/
+
+COPY Microservices/StripeService/build/ /home/app/Microservices/StripeService/build/
+COPY Microservices/StripeService/package.json /home/app/Microservices/StripeService/
+COPY Microservices/StripeService/package-lock.json /home/app/Microservices/StripeService/
 
 COPY Microservices/TicketService/build/ /home/app/Microservices/TicketService/build/
 COPY Microservices/TicketService/package.json /home/app/Microservices/TicketService/
