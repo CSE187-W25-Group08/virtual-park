@@ -115,7 +115,7 @@
     "submit": "Submit",
     "clear": "Clear"
   },
-  "navbar": {
+  "bottom_navbar": {
     "home": "Home",
     "logout": "Logout",
     "vehicles": "Vehicles",
@@ -123,5 +123,13 @@
     "tickets": "Tickets",
     "permitHistory": "Permit History",
     "more": "More"
+  },
+  "top_navbar": {
+    "dashboard": "Dashboard",
+    "logout": "Logout",
+    "vehicles": "Vehicles",
+    "purchase": "Purchase Permit",
+    "tickets": "Tickets",
+    "permitHistory": "Permit History"
   }
 }
