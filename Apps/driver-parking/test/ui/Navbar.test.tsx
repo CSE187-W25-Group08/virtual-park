@@ -42,9 +42,6 @@ it('Menu Button Exists', async () => {
 })
 
 it('redirects to /dashboard', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)
@@ -54,9 +51,6 @@ it('redirects to /dashboard', async () => {
 })
 
 it('redirects to /permit/history', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)
@@ -66,9 +60,6 @@ it('redirects to /permit/history', async () => {
 })
 
 it('redirects to /register', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)
@@ -78,9 +69,6 @@ it('redirects to /register', async () => {
 })
 
 it('redirects to /permit/purchase', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)
@@ -90,9 +78,6 @@ it('redirects to /permit/purchase', async () => {
 })
 
 it('redirects to /ticket', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)

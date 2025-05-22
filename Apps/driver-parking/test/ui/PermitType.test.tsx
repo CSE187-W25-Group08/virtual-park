@@ -25,6 +25,15 @@ const renderWithIntl = (component: React.ReactElement) => {
   )
 }
 
+const mockPush = vi.fn();
+vi.mock('next/navigation', () => {
+  return {
+    useRouter: () => ({
+      push: mockPush,
+    }),
+  };
+});
+
 it('mocks Typelist component', async () => {
   const types = [{
     type: 'Daily',
