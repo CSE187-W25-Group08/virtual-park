@@ -20,16 +20,16 @@ export class Vehicle {
   @MinLength(1)
   @MaxLength(8)
   licensePlate!: string
-  @Field()
-  driver!: string
-  @Field()
-  make!: string
-  @Field()
-  model!: string
-  @Field()
-  color!: string
-  @Field()
-  active!: boolean;
+  @Field({nullable:true})
+  driver?: string
+  @Field({nullable:true})
+  make?: string
+  @Field({nullable:true})
+  model?: string
+  @Field({nullable:true})
+  color?: string
+  @Field({nullable:true})
+  active?: boolean;
 }
 
 @InputType()

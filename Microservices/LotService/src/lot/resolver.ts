@@ -27,6 +27,7 @@ export class LotResolver {
     return await new LotService().updateId(id, data)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => Lot)
   async getLotById(@Arg("id") id: string): Promise<Lot> {
     return await new LotService().getById(id);

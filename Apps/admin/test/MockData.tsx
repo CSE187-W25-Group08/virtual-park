@@ -10,5 +10,23 @@ export const testTicket = {
   violation: "Improper Parking - Line Violation",
   image: "/images/violations/violation123.jpg",
   cost: 45.00,
-  appeal: "submitted"
+  appeal: "submitted",
+  appealReason: "test appeal reason"
 };
+
+export const testEnforcer = {
+  name: 'Edna Enforcer',
+  enforcementId: 'EEE-1234',
+  email: 'edna@enforcement.com',
+  hireDate: 'May 1 2025'
+}
+
+export const testEnforcers = [
+  testEnforcer,
+  {
+    name: 'Peter Patrol',
+    enforcementId: 'NYC-212',
+    email: 'peter@enforcement.com',
+    hireDate: 'August 10 2001'
+  }
+]

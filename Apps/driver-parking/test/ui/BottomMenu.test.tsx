@@ -5,11 +5,16 @@ import { NextIntlClientProvider } from 'next-intl'
 
 import BottomMenu from '../../src/components/BottomMenu'
 import {logout} from '../../src/app/[locale]/login/action'
-import { navbar as navbarMessages } from '../../messages/en.json'
+import { bottom_navbar as navbarMessages } from '../../messages/en.json'
 
-vi.mock('next/navigation', () => ({
-  useRouter: vi.fn()
-}))
+const mockPush = vi.fn();
+vi.mock('next/navigation', () => {
+  return {
+    useRouter: () => ({
+      push: mockPush,
+    }),
+  };
+});
 
 vi.mock('../../src/app/[locale]/login/action', () => ({
   logout: vi.fn()
@@ -24,7 +29,7 @@ afterEach(() => {
 
 const renderWithIntl = (component: React.ReactElement) => {
   return render(
-    <NextIntlClientProvider locale="en" messages={{ navbar: navbarMessages }}>
+    <NextIntlClientProvider locale="en" messages={{ bottom_navbar: navbarMessages }}>
       {component}
     </NextIntlClientProvider>
   )
@@ -37,9 +42,6 @@ it('Menu Button Exists', async () => {
 })
 
 it('redirects to /permit/history', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<BottomMenu />)
     const menuButton = screen.getByLabelText('Bottom Menu')
     fireEvent.click(menuButton)

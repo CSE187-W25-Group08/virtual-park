@@ -1,4 +1,4 @@
-import DriverDetailsView from "./view";
+import DriverDetailsView from "./View";
 // For npm build 
 // https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
 // type Params = Promise<{ params: TicketId }>

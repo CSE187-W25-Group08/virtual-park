@@ -15,7 +15,7 @@ import {
   InputLabel,
   Stack,
 } from '@mui/material'
-import {TicketViewProps, TicketInfo } from '../../permit/index'
+import {TicketViewProps, TicketInfo } from '../../ticket/index'
 import {issueTicketForCar} from './action'
 
 
@@ -77,7 +77,7 @@ export default function TicketView({
   const handleSubmitTicket = async () => {
     try {
       if (!ticketInfo.lot || !ticketInfo.violation || !ticketInfo.description) {
-        error('Please fill in all required fields')
+        error('Please fill in all required fields *')
         return
       }
       const ticket = await issueTicketForCar(
@@ -95,6 +95,7 @@ export default function TicketView({
       resetDialog()
       
     } catch (err) {
+      console.log(err)
       error(`Failed to issue ticket`)
     }
   }

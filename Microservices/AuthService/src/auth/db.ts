@@ -44,7 +44,7 @@ export async function createNewUser(signUpDetails: NewUser): Promise<User | unde
   }
 }
 
-export async function createNewEnforcementOfficer(details: NewEnforcement): Promise<User | undefined> {
+export async function createNewEnforcementOfficer(details: NewEnforcement): Promise<Enforcement | undefined> {
   const emailUniqueCheck = {
     text: `SELECT * FROM member
     WHERE data->>'email' = $1::text;`,
@@ -68,12 +68,15 @@ export async function createNewEnforcementOfficer(details: NewEnforcement): Prom
             'hired', $5::text
           )
         ))
-        RETURNING id, data->>'name' AS name, data->>'email' AS email;`,
+        RETURNING
+          data->>'name' AS name, data->>'email' AS email, data->'officer_details'->>'enforcementId' AS id, data->'officer_details'->>'hired' AS hired;
+      `,
     values: [details.email, details.password, details.name, details.enforcementId, currentTimestamp]
   }
   const { rows } = await pool.query(signUp);
   if (rows.length === 1) {
-    return ({ name: rows[0].name, id: rows[0].id, email: rows[0].email });
+    console.log(rows)
+    return ({ name: rows[0].name, enforcementId: rows[0].id, email: rows[0].email, hireDate: new Date(rows[0].hired).toDateString() });
   }
 }
 

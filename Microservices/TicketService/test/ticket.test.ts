@@ -279,7 +279,6 @@ test("Get spefic ticket with admin endpoint", async () => {
       `
     })
     .then((res) => {
-      console.log(res.body.errors);
       expect(res.body.data.getTicketInfo.id).toEqual(ticketId);
     });
 });
@@ -339,5 +338,79 @@ test("Issue a new ticket", async () => {
     .then((res) => {
       console.log('the details of the ticketissue:', res.body.data.ticketIssue)
       expect(res.body.data.ticketIssue).toBeDefined();
+    });
+});
+
+test("Approve ticket appeal with admin endpoint", async () => {
+  let ticketId;
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          allTicket {
+            id,
+            appeal
+          }
+        }
+      `
+    })
+    .then((res) => {
+      ticketId = res.body.data.allTicket[0].id;
+    })
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation { approveAppeal (id: "${ticketId}") {
+            id,
+            vehicle,
+            lot,
+            appeal
+          }
+        }
+      `
+    })
+    .then((res) => {
+      expect(res.body.data.approveAppeal.appeal).toEqual("approved");
+    });
+});
+
+test("Reject ticket appeal with admin endpoint", async () => {
+  let ticketId;
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          allTicket {
+            id,
+            appeal
+          }
+        }
+      `
+    })
+    .then((res) => {
+      ticketId = res.body.data.allTicket[0].id;
+    })
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+      mutation { rejectAppeal (id: "${ticketId}") {
+            id,
+            vehicle,
+            lot,
+            appeal
+          }
+        }
+      `
+    })
+    .then((res) => {
+      expect(res.body.data.rejectAppeal.appeal).toEqual("rejected");
     });
 });

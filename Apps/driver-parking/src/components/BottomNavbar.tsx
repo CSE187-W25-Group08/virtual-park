@@ -16,7 +16,7 @@ import BottomMenu from './BottomMenu'
 
 export default function BottomNavbar() {
   const router = useRouter()
-  const t = useTranslations('navbar')
+  const t = useTranslations('bottom_navbar')
   const isMobile = useMediaQuery('(max-width:600px)')
 
   return (

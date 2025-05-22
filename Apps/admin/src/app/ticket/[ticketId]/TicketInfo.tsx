@@ -1,7 +1,11 @@
 "use client"
 import { Ticket } from '@/ticket';
-import {getTicketDetails} from '../action'
+import {getTicketDetails,
+   approveAppeal,
+    rejectAppeal
+  } from '../action'
 import {useState, useEffect} from 'react'
+import { useRouter } from 'next/navigation';
 import {
   Card,
   CardContent,
@@ -11,13 +15,14 @@ import {
   Chip,
   Box,
   CircularProgress,
-  Button
+  Button,
+  IconButton
 } from "@mui/material";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 export default function TicketInfo({ ticketId }: { ticketId: string }) {
-  
     const [ticket, setTicket] = useState<Ticket>();
-
+    const router = useRouter();
     useEffect(() => {
       const fetchData = async () => {
         const result = await getTicketDetails(ticketId);
@@ -28,6 +33,24 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
       fetchData();
   
     }, [ticketId])
+
+    const handleApproveAppeal = async (ticketId : string) => {
+      const new_ticket = await approveAppeal(ticketId);
+      if (new_ticket) {
+        setTicket(new_ticket);
+      }
+    }
+
+    const handleRejectAppeal = async (ticketId : string) => {
+      const new_ticket = await rejectAppeal(ticketId);
+      if (new_ticket) {
+        setTicket(new_ticket);
+      }
+    }
+
+    const routeBack = () => {
+      router.push('/')
+    }
 
     // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
     const getAppealChipColor = (appeal: string | null) => {
@@ -54,11 +77,14 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
     return (
       <>
         <Card sx={{ maxWidth: '60%', mx: "auto", mt: 4, p:3}}>
+            <IconButton onClick={() => routeBack()}>
+              <ArrowBackIosNewIcon sx={{color:'black'}} />
+            </IconButton>
           <Box
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          px={3}
+          // px={3}
           py={2}
           borderBottom="1px solid #eee"
         >
@@ -67,6 +93,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
           </Typography>
           <Box>
           <Chip
+            // aria-label = {`${!ticket.appeal || ticket.appeal == "null" ? "None" : ticket.appeal}`}
             label={`Appeal: ${!ticket.appeal || ticket.appeal == "null" ? "None" : ticket.appeal}`}
             variant="filled"
             color={getAppealChipColor(ticket.appeal)}
@@ -107,7 +134,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
             </Grid>
           </CardContent>
         </Card>
-        {ticket.appealReason && (
+        {(ticket.appeal && ticket.appeal != 'null') && (
           <Box
             sx={{
               maxWidth: '60%',
@@ -128,12 +155,8 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
 
             {ticket.appeal === "submitted" && (
               <Box display="flex" gap={2}>
-                <Button variant="contained" color="success">
-                  Approve Appeal
-                </Button>
-                <Button variant="outlined" color="error">
-                  Reject Appeal
-                </Button>
+                <Button variant="contained" color="success" onClick={() => handleApproveAppeal(ticket.id)}>Approve Appeal</Button>
+                <Button variant="outlined" color="error" onClick={() => handleRejectAppeal(ticket.id)}>Reject Appeal</Button>
               </Box>
             )}
           </Box>

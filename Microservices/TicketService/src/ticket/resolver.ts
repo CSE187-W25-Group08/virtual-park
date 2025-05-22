@@ -68,7 +68,7 @@ export class TicketResolver {
     return await new TicketService().setPaid(id, newPaidValue)
   }
 
-  @Authorized()
+  @Authorized('driver')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation(returns => Ticket)
   async setTicketAppealed(
@@ -93,10 +93,25 @@ export class TicketResolver {
     return await new TicketService().getTicketInfo(id)
   }
 
+  @Authorized('admin')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Mutation(returns => Ticket)
+  async approveAppeal(@Arg('id') id: string): Promise<Ticket> {
+    return await new TicketService().respondToAppeal(id, "approved")
+  }
+
+  @Authorized('admin')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Mutation(returns => Ticket)
+  async rejectAppeal(@Arg('id') id: string): Promise<Ticket> {
+    return await new TicketService().respondToAppeal(id, "rejected")
+  }
+
   @Authorized('enforcement')
   @Mutation(() => Ticket)
   async ticketIssue(
-    @Arg("driverID") driverID: string,
+    // @Arg("driverID") driverID: string | null,
+    @Arg("driverID", () => String, { nullable: true }) driverID: string | null,
     @Arg("vehicleID") vehicleID: string,
     @Arg("lot") lot: string,
     @Arg("paid") paid: boolean,
@@ -107,8 +122,8 @@ export class TicketResolver {
     @Ctx() request: Request
   ): Promise<Ticket> {
     return await new TicketService().issueTickets(
-      driverID, vehicleID, request.user?.id, 
-      lot, paid, description, violation, 
+      driverID, vehicleID, request.user?.id,
+      lot, paid, description, violation,
       image, cost
     );
   }
