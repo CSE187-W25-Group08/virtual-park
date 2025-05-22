@@ -17,7 +17,7 @@ vi.mock('next/navigation', () => ({
 vi.mock('next/headers', () => ({
   cookies: () => ({
     set: vi.fn(),
-    get: vi.fn(),
+    get: vi.fn().mockReturnValue({value: 'session-cookie'}),
     delete: vi.fn(),
   }),
 }))
