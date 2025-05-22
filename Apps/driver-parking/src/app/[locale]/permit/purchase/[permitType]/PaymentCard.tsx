@@ -74,7 +74,7 @@ const CheckoutCard = ({ amount }: { amount: number }) => {
       {clientSecret && <PaymentElement/>}
       {errorMessage && <div>{errorMessage}</div>}
 
-      <Button disabled = {!stripe || loading}>Pay</Button>
+      <button disabled = {!stripe || loading}>Pay</button>
     </form>
 
 

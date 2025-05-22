@@ -59,6 +59,9 @@ export default function View({ permitType }: { permitType: string }) {
             mode: "payment",
             amount: convertToSubCurrency(price), // will be cents
             currency: "usd",
+            appearance: {
+                theme: 'flat'
+            }
           }}
         >
           <CheckoutCard amount={price} />
