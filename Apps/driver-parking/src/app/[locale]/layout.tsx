@@ -44,7 +44,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale}>
             {isLoggedIn && (
               <>
-                <Navbar locale={locale} />
+                <Navbar />
                 <Toolbar />
                 <BottomNavbar />
               </>
