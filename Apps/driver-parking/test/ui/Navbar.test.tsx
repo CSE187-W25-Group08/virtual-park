@@ -5,9 +5,14 @@ import { useRouter } from 'next/navigation'
 import Navbar from '../../src/components/Navbar'
 import {logout} from '../../src/app/[locale]/login/action'
 
-vi.mock('next/navigation', () => ({
-  useRouter: vi.fn()
-}))
+const mockPush = vi.fn();
+vi.mock('next/navigation', () => {
+  return {
+    useRouter: () => ({
+      push: mockPush,
+    }),
+  };
+});
 
 vi.mock('../../src/app/[locale]/login/action', () => ({
   logout: vi.fn()
