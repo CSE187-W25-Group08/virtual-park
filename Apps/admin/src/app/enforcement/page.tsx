@@ -1,6 +1,6 @@
 import EnforcementView from "./View";
 
-export default function Lot() {
+export default function Enforcement() {
   return (
     <EnforcementView />
   );

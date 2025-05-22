@@ -35,7 +35,6 @@ export default function EnforcementList() {
   const handleSubmitCreation = async (details: NewEnforcement) => {
     const newEnforcer = await createEnforcement(details)
     if (newEnforcer) {
-      console.log(newEnforcer)
       setEnforcementList((prev) => [...prev, newEnforcer])
     } else {
       alert('Failed to create new enforcement officer')
