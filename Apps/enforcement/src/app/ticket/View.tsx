@@ -95,6 +95,7 @@ export default function TicketView({
       resetDialog()
       
     } catch (err) {
+      console.log(err)
       error(`Failed to issue ticket`)
     }
   }
