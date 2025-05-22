@@ -44,13 +44,15 @@ export default function View({ permitType }: { permitType: string }) {
           >
             <ArrowBackIcon />
           </IconButton>
-          <Typography>test</Typography>
+          <Typography>Go Back</Typography>
         </Toolbar>
       </AppBar>
 
-      <Box sx={{ mt: 8, px: 2 }}>
-        <Typography>{permitType}</Typography>
-        <Typography>${price}</Typography>
+      <Box sx={{ mt: 4, px: 2 }}>
+        <Box sx = {{display: "flex", justifyContent: "space-between"}}>
+        <Typography variant="h5">{permitType} Permit</Typography>
+        <Typography variant="h5">${price}</Typography>
+        </Box>
         <Elements
           stripe={stripePromise}
           options={{

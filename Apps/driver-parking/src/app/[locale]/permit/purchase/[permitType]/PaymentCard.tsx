@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import { getClientSecretAction } from "../../../stripe/action";
+import Alert from '@mui/material/Alert';
+import { Box, Button, Typography } from "@mui/material";
 
 const CheckoutCard = ({ amount }: { amount: number }) => {
 
@@ -64,7 +66,7 @@ const CheckoutCard = ({ amount }: { amount: number }) => {
   }
 
   if (!clientSecret || !stripe || !elements) {
-    return <div>Nothing is loaded yet</div>
+    return <Alert severity="warning">Nothing is loaded yet</Alert>
   }
 
   return (
@@ -72,7 +74,7 @@ const CheckoutCard = ({ amount }: { amount: number }) => {
       {clientSecret && <PaymentElement/>}
       {errorMessage && <div>{errorMessage}</div>}
 
-      <button disabled = {!stripe || loading}>Pay</button>
+      <Button disabled = {!stripe || loading}>Pay</Button>
     </form>
 
 
