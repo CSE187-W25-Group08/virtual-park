@@ -115,7 +115,7 @@
     "submit": "Enviar",
     "clear": "Borrar"
   },
-  "navbar": {
+  "bottom_navbar": {
     "home": "Inicio",
     "logout": "Salir",
     "vehicles": "Vehículos",
@@ -123,5 +123,13 @@
     "tickets": "Multas",
     "permitHistory": "Historial de permisos",
     "more": "Más"
+  },
+  "top_navbar": {
+    "dashboard": "Tablero",
+    "logout": "Salir",
+    "vehicles": "Vehículos",
+    "purchase": "Comprar permiso",
+    "tickets": "Multas",
+    "permitHistory": "Historial de permisos"
   }
 }

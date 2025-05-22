@@ -22,7 +22,7 @@ export default function BottomMenu() {
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => setOpen(!open);
     const router = useRouter();
-    const t = useTranslations('navbar');
+    const t = useTranslations('bottom_navbar');
 
     const handleLogout = async () => {
         await logout();

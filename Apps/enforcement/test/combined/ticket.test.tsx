@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event'
 // import PurchaseHistoryPage from '../../src/app/[locale]/permit/history/page'
 // import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import PermitPage from '../../src/app/permit/page'
-import { getPermitByPlate } from '../../src/permit/service'
+import { getPermitByPlate, issueTicketForVehicle } from '../../src/permit/service'
 
 
 
@@ -20,7 +20,7 @@ vi.mock('next/navigation', () => ({
 vi.mock('next/headers', () => ({
   cookies: () => ({
     set: vi.fn(),
-    get: vi.fn(),
+    get: vi.fn().mockReturnValue({value: 'session-cookie'}),
     delete: vi.fn(),
   }),
 }))
@@ -32,6 +32,25 @@ beforeEach(() => {
 afterEach(() => {
   cleanup()
   vi.clearAllMocks()
+})
+
+it('issueTicketForVehicle caused authorized reject when non 200 status code return', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+    status: 201,
+    json: () => Promise.resolve({}),
+  } as Response))
+
+  await expect(issueTicketForVehicle(
+    'invalidCookie',
+    'driverId',
+    'vehicleId',
+    'lotA',
+    'Parking violation',
+    'No permit',
+    'parking.jpg',
+    15.00,
+    false
+  )).rejects.toBe('Unauthorized')
 })
 
 it("issue ticket button test", async () => {
@@ -222,12 +241,12 @@ it("not all the required fields get filled out in the ticket ", async () => {
   const violation = screen.getByPlaceholderText('Permit expired?')
   await userEvent.type(violation, 'Expired Permit')
   
-  // const description = screen.getByPlaceholderText('Provide details about the violation')
-  // await userEvent.type(description, 'no valid permit')
+  const fine = screen.getByLabelText(/fine/i)
+  await userEvent.type(fine, '12')
   
   const issueButton = within(dialog).getByText('Issue Ticket')
   await userEvent.click(issueButton)
-  // await screen.findByText('Ticket issued successfully')
+  await screen.findByText('Please fill in all required fields *')
 })
 
 it("failed to issue ticket", async () => {
