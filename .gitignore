@@ -35,4 +35,3 @@ next-env.d.ts
 coverage
 
 OCRService/credentials/*.json
-*.json
