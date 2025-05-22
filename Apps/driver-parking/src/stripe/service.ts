@@ -1,10 +1,11 @@
 
-export async function getClientSecretService(amount: number):Promise<string> {
+export async function getClientSecretService(cookie: string | undefined, amount: number):Promise<string> {
   return new Promise((resolve, reject) => {
     fetch('http://localhost:4060/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookie}`,
       },
       body: JSON.stringify({query: `      
         mutation {
