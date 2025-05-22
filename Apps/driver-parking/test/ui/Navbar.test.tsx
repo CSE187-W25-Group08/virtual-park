@@ -7,9 +7,14 @@ import Navbar from '../../src/components/Navbar'
 import {logout} from '../../src/app/[locale]/login/action'
 import { top_navbar as navbarMessages } from '../../messages/en.json'
 
-vi.mock('next/navigation', () => ({
-  useRouter: vi.fn()
-}))
+const mockPush = vi.fn();
+vi.mock('next/navigation', () => {
+  return {
+    useRouter: () => ({
+      push: mockPush,
+    }),
+  };
+});
 
 vi.mock('../../src/app/[locale]/login/action', () => ({
   logout: vi.fn()
@@ -37,9 +42,6 @@ it('Menu Button Exists', async () => {
 })
 
 it('redirects to /dashboard', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)
@@ -49,9 +51,6 @@ it('redirects to /dashboard', async () => {
 })
 
 it('redirects to /permit/history', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)
@@ -61,9 +60,6 @@ it('redirects to /permit/history', async () => {
 })
 
 it('redirects to /register', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)
@@ -73,9 +69,6 @@ it('redirects to /register', async () => {
 })
 
 it('redirects to /permit/purchase', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)
@@ -85,9 +78,6 @@ it('redirects to /permit/purchase', async () => {
 })
 
 it('redirects to /ticket', async () => {
-    const mockPush = vi.fn()
-    vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)
