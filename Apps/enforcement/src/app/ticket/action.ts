@@ -3,8 +3,8 @@
 import { cookies } from 'next/headers'
 
 
-import {Ticket} from '../../permit'
-import {issueTicketForVehicle} from '../../permit/service'
+import {Ticket} from '../../ticket'
+import {issueTicketForVehicle} from '../../ticket/service'
 
 export async function issueTicketForCar(
   driverId: string,

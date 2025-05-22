@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event'
 // import PurchaseHistoryPage from '../../src/app/[locale]/permit/history/page'
 // import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import PermitPage from '../../src/app/permit/page'
-import { getPermitByPlate, issueTicketForVehicle } from '../../src/permit/service'
+import {issueTicketForVehicle } from '../../src/ticket/service'
 
 
 
