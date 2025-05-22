@@ -22,6 +22,7 @@ afterAll(() => {
   server.close()
 })
 
+// investiage db.reset() in CI pipeline
 beforeEach(async () => {
   await db.reset();
 })
@@ -301,7 +302,7 @@ test('Cannot create the same enforcement officer twice', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send(edna)
     .expect(201)
-  
+
   await supertest(server)
     .post('/api/v0/auth/enforcement')
     .set('Authorization', 'Bearer ' + accessToken)
@@ -318,12 +319,12 @@ test('Get enforcement officers', async () => {
       accessToken = res.body.accessToken
     })
 
-    await supertest(server)
-      .get('/api/v0/auth/enforcement')
-      .set('Authorization', 'Bearer ' + accessToken)
-      .then((res) => {
-        expect(res.body.length).toEqual(1)
-      })
+  await supertest(server)
+    .get('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .then((res) => {
+      expect(res.body.length).toEqual(1)
+    })
 })
 
 test('Must be an admin to fetch enforcement officers', async () => {
