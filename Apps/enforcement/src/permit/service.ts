@@ -35,11 +35,7 @@ export async function getPermitByPlate(cookie: string | undefined, carplate: str
       return response.json()
     })
     .then(json => {
-      if (json.errors) {
-        reject(json.errors)
-      } else {
-        resolve(json.data.getPermitBycarPlate)
-      }
+      resolve(json.data.getPermitBycarPlate)
     })
     .catch((error) => reject(error))
   })
