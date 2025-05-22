@@ -35,3 +35,4 @@ next-env.d.ts
 coverage
 
 Spikes/ALPR-Testing/OCRService/credentials/
+Microservices/OCRService/credentials/
