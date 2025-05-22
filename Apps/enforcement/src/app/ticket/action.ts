@@ -4,7 +4,9 @@ import { cookies } from 'next/headers'
 
 
 import {Ticket} from '../../ticket'
+import {Lot} from '../../lot'
 import {issueTicketForVehicle} from '../../ticket/service'
+import {getAllLots} from '../../lot/service'
 
 export async function issueTicketForCar(
   driverId: string,
@@ -28,4 +30,9 @@ export async function issueTicketForCar(
     cost,
     paid
   )
+}
+
+export async function getallLots(): Promise<Lot[]> {
+  const cookie = (await cookies()).get('session')?.value
+  return getAllLots(cookie)
 }

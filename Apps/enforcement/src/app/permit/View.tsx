@@ -17,7 +17,7 @@ import {
   TableBody,
   Alert
 } from '@mui/material'
-import { getpermitByPlateNum, googleVision } from './action'
+import { getpermitByPlateNum, googleVision} from './action'
 import { Permit } from '../../permit/index'
 import TicketView from '../ticket/View'
 

@@ -16,7 +16,8 @@ import {
   Stack,
 } from '@mui/material'
 import {TicketViewProps, TicketInfo } from '../../ticket/index'
-import {issueTicketForCar} from './action'
+import {issueTicketForCar, getallLots} from './action'
+import {Lot} from '../../lot/index'
 
 
 export default function TicketView({
@@ -36,6 +37,7 @@ export default function TicketView({
     image: '',
     cost: 0
   })
+  const [lotOptions, setLotOptions] = useState<Lot[]>([])
   
   React.useEffect(() => {
     setTicketInfo(prev => ({
@@ -44,11 +46,26 @@ export default function TicketView({
       vehicleID
     }))
   }, [driverID, vehicleID])
+
+  React.useEffect (() => {
+    if (open) {
+    loadLots()
+    }
+  }, [open])
+
+  const loadLots = async () => {
+    try {
+      const lots = await getallLots()
+      setLotOptions(lots)
+    } catch (err) {
+      error('Failed to load parking lots')
+      setLotOptions([])
+    }
+  }
   
-  const lotOptions = [
-    {  name: 'Area 51 Lot' },
-    { name: 'Lot 101' }
-  ]
+  // const lotOptions = [
+  //   {  name: 'Area 51 Lot' },
+  //   { name: 'Lot 101' }
   {/* reference: https://www.meje.dev/blog/handle-change-in-ts */}
   const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -133,7 +150,7 @@ export default function TicketView({
               value={ticketInfo.lot}
               onChange={handleSelectChange}
             >
-              {lotOptions.map(lot => (
+              {(lotOptions).map(lot => (
                 <MenuItem key={lot.name} value={lot.name} aria-label={lot.name}>{lot.name}</MenuItem>
               ))}
             </Select>
