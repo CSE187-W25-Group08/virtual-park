@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import { getClientSecretAction } from "../../../stripe/action";
 import Alert from '@mui/material/Alert';
-import { Box, Button, Typography } from "@mui/material";
 
 const CheckoutCard = ({ amount }: { amount: number }) => {
 

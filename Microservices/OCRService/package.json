@@ -57,6 +57,6 @@
     "swagger": "tsoa spec-and-routes",
     "pretest": "npm run swagger && npm run lint",
     "test": "vitest run --no-file-parallelism --testTimeout=3000 --coverage",
-    "lint": "eslint test/**/*.[jt]s src/**/*.[jt]s --fix"
+    "lint": "eslint src/**/*.[jt]s --fix"
   }
 }

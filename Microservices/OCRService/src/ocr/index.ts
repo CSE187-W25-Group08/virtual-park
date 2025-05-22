@@ -1,3 +1,3 @@
-export type OCRResult = {
+export interface OCRResult {
   licensePlate: string
 }

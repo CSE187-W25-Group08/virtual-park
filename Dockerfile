@@ -12,6 +12,10 @@ COPY Microservices/AuthService/build/ /home/app/Microservices/AuthService/build/
 COPY Microservices/AuthService/package.json /home/app/Microservices/AuthService/
 COPY Microservices/AuthService/package-lock.json /home/app/Microservices/AuthService/
 
+COPY Microservices/LotService/build/ /home/app/Microservices/LotService/build/
+COPY Microservices/LotService/package.json /home/app/Microservices/LotService/
+COPY Microservices/LotService/package-lock.json /home/app/Microservices/LotService/
+
 COPY Microservices/OCRService/build/ /home/app/Microservices/OCRService/build/
 COPY Microservices/OCRService/package.json /home/app/Microservices/OCRService/
 COPY Microservices/OCRService/package-lock.json /home/app/Microservices/OCRService/

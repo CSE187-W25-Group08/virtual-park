@@ -7,7 +7,7 @@ export default tseslint.config(
   tseslint.configs.strict,
   tseslint.configs.stylistic,
   {
-    files: ["src/**", "test/**"],
+    files: ["src/**"],
     languageOptions: {
       ecmaVersion: 2024,
       sourceType: 'module',

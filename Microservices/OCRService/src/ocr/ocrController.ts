@@ -1,6 +1,5 @@
 import { Controller, Post, Route, Tags, Body } from 'tsoa'
 import { processImage } from './ocrService'
-import { Express } from 'express'
 
 @Route('ocr')
 @Tags('OCR')

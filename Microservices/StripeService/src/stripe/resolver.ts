@@ -8,7 +8,7 @@ import Stripe from "stripe";
 
 @Resolver()
 export class StripeResolver {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   @Query(() => String)
   dummy(): string {
     return "OK";
