@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event'
 // import PurchaseHistoryPage from '../../src/app/[locale]/permit/history/page'
 // import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import PermitPage from '../../src/app/permit/page'
-import { getPermitByPlate } from '../../src/permit/service'
+import { getPermitByPlate, issueTicketForVehicle } from '../../src/permit/service'
 
 
 
@@ -32,6 +32,25 @@ beforeEach(() => {
 afterEach(() => {
   cleanup()
   vi.clearAllMocks()
+})
+
+it('issueTicketForVehicle caused authorized reject when non 200 status code return', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+    status: 201,
+    json: () => Promise.resolve({}),
+  } as Response))
+
+  await expect(issueTicketForVehicle(
+    'invalidCookie',
+    'driverId',
+    'vehicleId',
+    'lotA',
+    'Parking violation',
+    'No permit',
+    'parking.jpg',
+    15.00,
+    false
+  )).rejects.toBe('Unauthorized')
 })
 
 it("issue ticket button test", async () => {

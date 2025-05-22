@@ -115,12 +115,11 @@ export async function issueTicketForVehicle(
       }),
     })
     .then(response => {
-      if (response.status !== 200) {
-        return response.text().then(text => {
-          throw new Error(`Server error: ${response.status} - ${text}`);
-        });
+      if (response.status != 200) {
+        reject('Unauthorized')
+        return
       }
-      return response.json();
+      return response.json()
     })
     .then(json => {
       console.log('Ticket issue response:', json);
