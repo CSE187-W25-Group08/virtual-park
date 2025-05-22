@@ -36,10 +36,10 @@ export class AuthService {
       return undefined
     }
   }
-  public async signUpEnforcement(signUpDetails: NewEnforcement): Promise<Authenticated | undefined> {
+  public async signUpEnforcement(signUpDetails: NewEnforcement): Promise<Enforcement | undefined> {
     const newEnforcement = await db.createNewEnforcementOfficer(signUpDetails);
     if (newEnforcement) {
-      return { name: newEnforcement.name, email: newEnforcement.email, accessToken: generateToken(newEnforcement.id) };
+      return { name: newEnforcement.name, enforcementId: newEnforcement.enforcementId, email: newEnforcement.email, hireDate: newEnforcement.hireDate };
     } else {
       return undefined
     }

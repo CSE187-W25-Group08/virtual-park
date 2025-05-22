@@ -93,9 +93,9 @@ export class AuthController extends Controller {
   @SuccessResponse('201', 'Account Created')
   public async signUpEnforcement(
     @Body() enforcementDetails: NewEnforcement,
-  ): Promise<Authenticated | undefined> {
+  ): Promise<Enforcement | undefined> {
     return new AuthService().signUpEnforcement(enforcementDetails)
-      .then(async (user: Authenticated | undefined): Promise<Authenticated | undefined> => {
+      .then(async (user: Enforcement | undefined): Promise<Enforcement | undefined> => {
         if (!user) {
           this.setStatus(409)
         }
