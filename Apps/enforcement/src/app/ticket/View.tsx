@@ -15,7 +15,7 @@ import {
   InputLabel,
   Stack,
 } from '@mui/material'
-import {TicketViewProps, TicketInfo } from '../../permit/index'
+import {TicketViewProps, TicketInfo } from '../../ticket/index'
 import {issueTicketForCar} from './action'
 
 
