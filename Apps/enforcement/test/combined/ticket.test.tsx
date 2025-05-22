@@ -78,6 +78,31 @@ it("issue ticket button test", async () => {
           }),
       } as Response)
     }
+    if (url === 'http://localhost:4040/graphql') {
+      return Promise.resolve({ 
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getAll: [
+              {
+                id: 'l1',
+                name: 'Area 51 Lot',
+                zone: 'A',
+                address: '123 Desert Rd',
+                latitude: 0,
+                longitude: 0,
+                capacity: 100,
+                availableSpots: 42,
+                isActive: true,
+                type: 'public',
+                created: '2025-01-01T00:00:00Z',
+                updated: '2025-01-02T00:00:00Z',
+              },
+            ]
+          }
+        }),
+      } as Response)
+    }
 
     return Promise.reject(new Error('Unknown fetch'))
   })
@@ -140,8 +165,31 @@ it("issue ticket successfully", async () => {
         }),
       } as Response)
     }
-
-
+    if (url === 'http://localhost:4040/graphql') {
+      return Promise.resolve({ 
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getAll: [
+              {
+                id: 'l1',
+                name: 'Area 51 Lot',
+                zone: 'A',
+                address: '123 Desert Rd',
+                latitude: 0,
+                longitude: 0,
+                capacity: 100,
+                availableSpots: 42,
+                isActive: true,
+                type: 'public',
+                created: '2025-01-01T00:00:00Z',
+                updated: '2025-01-02T00:00:00Z',
+              },
+            ]
+          }
+        }),
+      } as Response)
+    }
     return Promise.reject(new Error('Unknown fetch'))
   })
 
@@ -219,8 +267,31 @@ it("not all the required fields get filled out in the ticket ", async () => {
         }),
       } as Response)
     }
-
-
+    if (url === 'http://localhost:4040/graphql') {
+      return Promise.resolve({ 
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getAll: [
+              {
+                id: 'l1',
+                name: 'Area 51 Lot',
+                zone: 'A',
+                address: '123 Desert Rd',
+                latitude: 0,
+                longitude: 0,
+                capacity: 100,
+                availableSpots: 42,
+                isActive: true,
+                type: 'public',
+                created: '2025-01-01T00:00:00Z',
+                updated: '2025-01-02T00:00:00Z',
+              },
+            ]
+          }
+        }),
+      } as Response)
+    }
     return Promise.reject(new Error('Unknown fetch'))
   })
 
@@ -283,7 +354,31 @@ it("failed to issue ticket", async () => {
       } as Response)
     }
 
-
+    if (url === 'http://localhost:4040/graphql') {
+      return Promise.resolve({ 
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getAll: [
+              {
+                id: 'l1',
+                name: 'Area 51 Lot',
+                zone: 'A',
+                address: '123 Desert Rd',
+                latitude: 0,
+                longitude: 0,
+                capacity: 100,
+                availableSpots: 42,
+                isActive: true,
+                type: 'public',
+                created: '2025-01-01T00:00:00Z',
+                updated: '2025-01-02T00:00:00Z',
+              },
+            ]
+          }
+        }),
+      } as Response)
+    }
     return Promise.reject(new Error('Unknown fetch'))
   })
 
