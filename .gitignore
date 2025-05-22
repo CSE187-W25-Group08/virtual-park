@@ -34,4 +34,5 @@ next-env.d.ts
 
 coverage
 
-OCRService/credentials/*.json
+Spikes/ALPR-Testing/OCRService/credentials/
+Microservices/OCRService/credentials/
