@@ -1,9 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Badge, Box, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import { useTranslations } from "next-intl";
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import TicketCard from "./card";
 import { Ticket } from "../../../ticket";
 import { listPaid, listUnpaid, listAppealed } from "./actions";
@@ -67,6 +70,10 @@ export default function TicketList() {
           {unpaidTicket.length <= 0 ?
             <Typography sx={{mt: 7}}>{t('noTickets')}</Typography> : (
             <>
+
+            <Badge badgeContent={unpaidTicket.length}>
+              <SentimentVeryDissatisfiedIcon/>
+            </Badge>
               {TableHeader(t('unpaid'), "unpaid")}
               {unpaidTicket.map((ticket, index) => (
                 <TicketCard key={index} ticket={ticket} />
@@ -76,6 +83,9 @@ export default function TicketList() {
 
           {paidTicketList.length > 0 && (
             <>
+            <Badge badgeContent={paidTicketList.length}>
+              <EmojiEmotionsIcon/>
+            </Badge>
               {TableHeader(t('paid'), "paid")}
               {paidTicketList.map((ticket, index) => (
                 <TicketCard key={index} ticket={ticket} />
@@ -85,6 +95,9 @@ export default function TicketList() {
 
           {appealedTickets.length > 0 && (
             <>
+            <Badge badgeContent={appealedTickets.length}>
+              <SentimentDissatisfiedIcon/>
+            </Badge>
               {TableHeader(t('appeal'), "appeal")}
               {appealedTickets.map((ticket, index) => (
                 <TicketCard key={index} ticket={ticket} />

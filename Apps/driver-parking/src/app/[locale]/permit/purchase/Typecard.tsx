@@ -36,7 +36,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
           {/* <Button variant="contained" aria-label={`Purchase ${permitType} Permit`} color="primary" onClick={purchaseHandler}>
             {t('purchase')}
           </Button> */}
-          <Button onClick={() => handleClick()}>Test</Button>
+          <Button onClick={() => handleClick()}>Pay for Permit</Button>
         </Box>
       </Card>
     </ListItem>
