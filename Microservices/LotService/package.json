@@ -1,8 +1,8 @@
 {
-  "name": "ticket-service",
+  "name": "lot-service",
   "version": "1.0.0",
-  "description": "Micro service ticket service",
-  "author": "Jin Le",
+  "description": "Micro service lot service",
+  "author": "Harisson",
   "license": "UNLICENSED",
   "repository": "none",
   "devDependencies": {
