@@ -148,7 +148,6 @@ export class TicketService {
     }
 
     const { rows } = await pool.query(query)
-    console.log("num tickets", rows.length);
     const tickets = await this.rowToTicket(rows)
     return tickets
   }
