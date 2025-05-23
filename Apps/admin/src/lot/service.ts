@@ -8,7 +8,26 @@ export class LotService {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: `{getAll {id, name, zone, address, latitude, longitude, capacity, availableSpots, isActive, type, created, updated}}` }),
+        body: JSON.stringify({
+          query: `
+          query getallLots {
+            getAll {
+              id
+              name
+              zone
+              address
+              latitude
+              longitude
+              capacity
+              availableSpots
+              isActive
+              type
+              created
+              updated
+            }
+          }
+        `,
+        }),
       })
         .then(response => {
           if (response.status != 200) {
@@ -86,8 +105,8 @@ export class LotService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query: `{ getLotById(id: "${id}") { name } }`,
-        }),
+          query: `query getLot { getLotById(id: "${id}") { name } }`,
+        })
       })
         .then(response => response.json())
         .then(json => {
