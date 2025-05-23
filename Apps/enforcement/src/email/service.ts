@@ -10,8 +10,8 @@ export async function sendTicketNotification(email: string, name: string, ticket
     key: process.env.MAILGUN_API_KEY || "API_KEY",
   });
   try {
-    const data = await mg.messages.create("tba@email.com", {
-      from: "Virtual Park <tba@email.com>",
+    const data = await mg.messages.create("virtual-park.net", {
+      from: "Virtual Park Enforcement <postmaster@virtual-park.net>",
       to: [`${name} <${email}>`],
       subject: "New Ticket",
       text: `You have been issued a new ticket. Here are the details:\n

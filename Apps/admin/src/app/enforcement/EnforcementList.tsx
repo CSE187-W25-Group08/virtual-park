@@ -37,7 +37,7 @@ export default function EnforcementList() {
     if (newEnforcer) {
       setEnforcementList((prev) => [...prev, newEnforcer])
     } else {
-      alert('Failed to create new enforcement officer')
+      alert('Enforcement officer account already exists')
     }
   }
 
