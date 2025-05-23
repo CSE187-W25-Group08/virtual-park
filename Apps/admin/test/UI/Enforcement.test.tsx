@@ -1,13 +1,19 @@
 import { afterEach, expect, it, vi } from 'vitest'
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
-import { testEnforcers } from '../MockData'
+import { newEnforcer, testEnforcers } from '../MockData'
 import Page from '@/app/enforcement/page'
 import EnforcementList from '@/app/enforcement/EnforcementList'
-import userEvent from '@testing-library/user-event'
+import CreationModal from '@/app/enforcement/CreationModal'
 
 const mockPush = vi.fn()
 const mockPathname = "/enforcement"
+
+afterEach(() => {
+  cleanup()
+  vi.restoreAllMocks()
+})
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -17,13 +23,14 @@ vi.mock('next/navigation', () => ({
 }));
 
 vi.mock('../../src/app/enforcement/actions', () => ({
-  getEnforcement: vi.fn(() => testEnforcers),
+  getEnforcement: vi.fn(),
+  createEnforcement: vi.fn(),
 }))
 
-afterEach(() => {
-  cleanup()
-  vi.restoreAllMocks()
-})
+import { getEnforcement, createEnforcement } from '../../src/app/enforcement/actions'
+
+const mockedGetEnforcement = vi.mocked(getEnforcement, { partial: true })
+const mockedCreateEnforcement = vi.mocked(createEnforcement, { partial: true })
 
 it('Renders', async () => {
   render(<Page />)
@@ -31,12 +38,14 @@ it('Renders', async () => {
 })
 
 it('Renders the list of enforcement officers', async () => {
+  mockedGetEnforcement.mockResolvedValue(testEnforcers)
   render(<EnforcementList />)
   await screen.findByText('Edna Enforcer')
   await screen.findByText('Peter Patrol')
 })
 
 it('Opens the creation modal', async () => {
+  mockedGetEnforcement.mockResolvedValue(testEnforcers)
   render(<EnforcementList />)
   await screen.findByText('Edna Enforcer')
   const addButton = await screen.findByText(/Add new enforcement officer/)
@@ -45,6 +54,7 @@ it('Opens the creation modal', async () => {
 })
 
 it('Closes the creation modal when clicking away from it', async () => {
+  mockedGetEnforcement.mockResolvedValue(testEnforcers)
   render(<EnforcementList />)
   await screen.findByText('Edna Enforcer')
   const addButton = await screen.findByText(/Add new enforcement officer/)
@@ -53,4 +63,30 @@ it('Closes the creation modal when clicking away from it', async () => {
   await userEvent.keyboard(`{Escape}`) 
   const submit = screen.queryByText('Submit')
   expect(submit).toBeNull()
+})
+
+it('Calls createEnforcement with the correct details', async () => {
+  render(
+    <CreationModal
+      open={true}
+      onClose={vi.fn()}
+      onSubmit={mockedCreateEnforcement}
+    />
+  )
+
+  const nameInput = await screen.findByLabelText(/New Officer Name/)
+  const idInput = await screen.findByLabelText(/New Officer ID/)
+  const emailInput = await screen.findByLabelText(/New Officer Email/)
+  const passwordInput = await screen.findByLabelText(/Set Password/)
+  const confirmInput = await screen.findByLabelText(/Confirm Password/)
+  await userEvent.type(nameInput, newEnforcer.name)
+  await userEvent.type(idInput, newEnforcer.enforcementId)
+  await userEvent.type(emailInput, newEnforcer.email)
+  await userEvent.type(passwordInput, newEnforcer.password)
+  await userEvent.type(confirmInput, newEnforcer.password)
+
+  fireEvent.click(screen.getByText('Submit'))
+  waitFor(() => {
+    expect(mockedCreateEnforcement).toHaveBeenCalledWith(newEnforcer)
+  })
 })

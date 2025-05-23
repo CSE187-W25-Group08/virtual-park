@@ -105,7 +105,7 @@ export default function CreationModal({ open, onClose, onSubmit }: CreationModal
         <TextField
           fullWidth
           required
-          label="Officer Name"
+          label="New Officer Name"
           value={name}
           onChange={handleNameInput}
           sx={{ mb: 2 }}
@@ -113,7 +113,7 @@ export default function CreationModal({ open, onClose, onSubmit }: CreationModal
         <TextField
           fullWidth
           required
-          label="Officer ID"
+          label="New Officer ID"
           value={enforcementId}
           onChange={handleEnforcementIdInput}
           sx={{ mb: 2 }}
@@ -122,7 +122,7 @@ export default function CreationModal({ open, onClose, onSubmit }: CreationModal
           fullWidth
           required
           type="email"
-          label="Officer Email"
+          label="New Officer Email"
           value={email}
           onChange={handleEmailInput}
           error={email !== '' && !isEmailFormatted(email)}
@@ -137,7 +137,7 @@ export default function CreationModal({ open, onClose, onSubmit }: CreationModal
           fullWidth
           required
           type="password"
-          label="Password"
+          label="Set Password"
           value={password}
           onChange={handlePasswordInput}
           sx={{ mb: 2 }}

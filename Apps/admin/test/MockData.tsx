@@ -21,6 +21,14 @@ export const testEnforcer = {
   hireDate: 'May 1 2025'
 }
 
+export const newEnforcer = {
+  name: 'Seika Stopper',
+  enforcementId: 'TOK-1234',
+  email: 'seika@enforcement.com',
+  hireDate: 'March 20 2025',
+  password: 'seikastopper'
+}
+
 export const testEnforcers = [
   testEnforcer,
   {
