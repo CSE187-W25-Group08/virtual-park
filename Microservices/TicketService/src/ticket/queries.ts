@@ -133,3 +133,18 @@ export const respondAppeal =
   )
   SELECT id, driver, data FROM UPDATED
   `
+
+export const respondAppealApproved =
+  `
+  WITH updated AS (
+    UPDATE ticket
+    SET data = 
+    jsonb_set(
+      jsonb_set(data, '{appeal}', $2::jsonb),
+      '{cost}', '10.00':: jsonb
+    )
+    WHERE id = $1
+    RETURNING *
+  )
+  SELECT id, driver, data FROM UPDATED
+  `
