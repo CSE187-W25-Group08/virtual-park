@@ -23,9 +23,9 @@ export async function getEnforcementOfficers(cookie: string | undefined): Promis
   })
 }
 
-export async function createEnforcementOfficer(cookie: string | undefined, details: NewEnforcement): Promise<Enforcement> {
-  return new Promise((resolve, reject) => {
-    fetch('http://localhost:3010/api/v0/auth/enforcement', {
+export async function createEnforcementOfficer(cookie: string | undefined, details: NewEnforcement): Promise<Enforcement | undefined> {
+  try {
+    const res = await fetch('http://localhost:3010/api/v0/auth/enforcement', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,17 +33,14 @@ export async function createEnforcementOfficer(cookie: string | undefined, detai
       },
       body: JSON.stringify(details),
     })
-    .then(res => {
-      if (res.status != 201) {
-        reject('Unauthorized')
-      }
-      return res.json()
-    })
-    .then((json) => {
-      resolve(json)
-    })
-    .catch((err) => {
-      reject(err)
-    })
-  })
+
+    if (res.status != 201) {
+      throw new Error(res.statusText)
+    }
+
+    return await res.json()
+  } catch (err) {
+    console.error('Creation failed:', err)
+    return undefined
+  }
 }

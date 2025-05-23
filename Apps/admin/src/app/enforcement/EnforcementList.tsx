@@ -35,6 +35,7 @@ export default function EnforcementList() {
   const handleSubmitCreation = async (details: NewEnforcement) => {
     const newEnforcer = await createEnforcement(details)
     if (newEnforcer) {
+      handleCloseCreationModal()
       setEnforcementList((prev) => [...prev, newEnforcer])
     } else {
       alert('Enforcement officer account already exists')

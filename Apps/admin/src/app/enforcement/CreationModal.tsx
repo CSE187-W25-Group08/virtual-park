@@ -48,7 +48,6 @@ export default function CreationModal({ open, onClose, onSubmit }: CreationModal
     setEmail('')
     setPassword('')
     setConfirmPassword('')
-    onClose()
   }
 
   const handleClose = () => {
