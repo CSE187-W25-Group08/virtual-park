@@ -119,9 +119,9 @@ export class TicketService {
   }
 
   public async respondToAppeal(ticketId: string, decision: string): Promise<Ticket> {
-    const sql = (decision == "approved") ? queries.respondAppealApproved : queries.respondAppeal
+    const query_sql = (decision == "approved") ? queries.respondAppealApproved : queries.respondAppeal
     const query = {
-      text: queries.respondAppeal,
+      text: query_sql,
       values: [
         ticketId,
         JSON.stringify(decision),

@@ -20,7 +20,10 @@ export class LotService {
         .then(json => {
           resolve(json.data.getAll)
         })
-        .catch(() => reject('Unauthorized'))
+        .catch((err) => {
+          console.error('Fetch error:', err);
+          reject('Unknown Lot');
+        });
     })
   }
 
