@@ -54,13 +54,8 @@ export default function TicketView({
   }, [open])
 
   const loadLots = async () => {
-    try {
-      const lots = await getallLots()
-      setLotOptions(lots)
-    } catch (err) {
-      error('Failed to load parking lots')
-      setLotOptions([])
-    }
+    const lots = await getallLots()
+    setLotOptions(lots)
   }
   
   // const lotOptions = [

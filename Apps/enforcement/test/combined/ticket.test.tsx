@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event'
 // import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import PermitPage from '../../src/app/permit/page'
 import {issueTicketForVehicle } from '../../src/ticket/service'
+import {getAllLots } from '../../src/lot/service'
 
 
 
@@ -50,6 +51,17 @@ it('issueTicketForVehicle caused authorized reject when non 200 status code retu
     'parking.jpg',
     15.00,
     false
+  )).rejects.toBe('Unauthorized')
+})
+
+it('getallLot caused authorized reject when non 200 status code return', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+    status: 201,
+    json: () => Promise.resolve({}),
+  } as Response))
+
+  await expect(getAllLots(
+    'invalidCookie'
   )).rejects.toBe('Unauthorized')
 })
 
