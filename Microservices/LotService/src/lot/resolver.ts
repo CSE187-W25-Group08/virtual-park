@@ -14,6 +14,7 @@ export class LotResolver {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => [Lot])
   async getAll(): Promise<Lot[]> {
+    console.log("get all lots resolver called")
     return await new LotService().getAll()
   }
 
@@ -30,6 +31,7 @@ export class LotResolver {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => Lot)
   async getLotById(@Arg("id") id: string): Promise<Lot> {
+    console.log("get lot by id resolver called")
     return await new LotService().getById(id);
   }
 
