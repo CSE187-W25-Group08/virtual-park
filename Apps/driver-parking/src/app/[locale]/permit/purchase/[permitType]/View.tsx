@@ -67,6 +67,8 @@ export default function View({ permitType }: { permitType: string }) {
           <CheckoutCard amount={price} />
         </Elements>
       </Box>
+                <Toolbar>
+        </Toolbar>
     </React.Fragment>
   );
 }
