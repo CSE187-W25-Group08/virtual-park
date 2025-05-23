@@ -8,7 +8,12 @@ export async function getEnforcement(): Promise<Enforcement[]> {
   return await getEnforcementOfficers(cookie)
 }
 
-export async function createEnforcement(details: NewEnforcement): Promise<Enforcement> {
+export async function createEnforcement(details: NewEnforcement): Promise<Enforcement | undefined> {
   const cookie = (await cookies()).get('session')?.value
-  return await createEnforcementOfficer(cookie, details)
+  const newOfficer = await createEnforcementOfficer(cookie, details)
+  if (newOfficer) {
+    return newOfficer
+  }
+
+  return undefined
 }

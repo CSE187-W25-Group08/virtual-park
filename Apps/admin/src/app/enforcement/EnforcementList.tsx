@@ -35,6 +35,7 @@ export default function EnforcementList() {
   const handleSubmitCreation = async (details: NewEnforcement) => {
     const newEnforcer = await createEnforcement(details)
     if (newEnforcer) {
+      handleCloseCreationModal()
       setEnforcementList((prev) => [...prev, newEnforcer])
     } else {
       alert('Enforcement officer account already exists')
@@ -86,7 +87,7 @@ export default function EnforcementList() {
       headerName: 'Account Created',
       width: 200,
       flex: 1,
-      renderCell: (params) => params.value || 'Unknown date',
+      renderCell: (params) => params.value,
     },
   ]
   return (

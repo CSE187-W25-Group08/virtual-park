@@ -12,7 +12,8 @@ const mockPathname = "/enforcement"
 
 afterEach(() => {
   cleanup()
-  vi.restoreAllMocks()
+  vi.clearAllMocks()
+  vi.resetAllMocks()
 })
 
 vi.mock('next/navigation', () => ({
@@ -65,12 +66,12 @@ it('Closes the creation modal when clicking away from it', async () => {
   expect(submit).toBeNull()
 })
 
-it('Calls createEnforcement with the correct details', async () => {
+it('Clears the filled in text', async () => {
   render(
-    <CreationModal
+    <CreationModal 
       open={true}
       onClose={vi.fn()}
-      onSubmit={mockedCreateEnforcement}
+      onSubmit={vi.fn()}
     />
   )
 
@@ -85,8 +86,69 @@ it('Calls createEnforcement with the correct details', async () => {
   await userEvent.type(passwordInput, newEnforcer.password)
   await userEvent.type(confirmInput, newEnforcer.password)
 
+  fireEvent.click(screen.getByText('Clear'))
+
+  expect(screen.queryByText(newEnforcer.name)).toBeNull()
+})
+
+it('Calls createEnforcement with the correct details', async () => {
+  mockedGetEnforcement.mockResolvedValue(testEnforcers)
+  mockedCreateEnforcement.mockResolvedValue(newEnforcer)
+  render(<EnforcementList />)
+  let alertCalled = false
+  window.alert = () => (alertCalled = true)
+  await screen.findByText('Edna Enforcer')
+  const addButton = await screen.findByText(/Add new enforcement officer/)
+  fireEvent.click(addButton)
+  await screen.findByText('Submit')
+
+  const nameInput = await screen.findByLabelText(/New Officer Name/)
+  const idInput = await screen.findByLabelText(/New Officer ID/)
+  const emailInput = await screen.findByLabelText(/New Officer Email/)
+  const passwordInput = await screen.findByLabelText(/Set Password/)
+  const confirmInput = await screen.findByLabelText(/Confirm Password/)
+  await userEvent.type(nameInput, newEnforcer.name)
+  await userEvent.type(idInput, newEnforcer.enforcementId)
+  await userEvent.type(emailInput, newEnforcer.email)
+  await userEvent.type(passwordInput, newEnforcer.password)
+  await userEvent.type(confirmInput, newEnforcer.password)
+
   fireEvent.click(screen.getByText('Submit'))
-  waitFor(() => {
-    expect(mockedCreateEnforcement).toHaveBeenCalledWith(newEnforcer)
+  await waitFor(() => {
+    expect(mockedCreateEnforcement).toHaveBeenCalledWith({
+      name: newEnforcer.name,
+      enforcementId: newEnforcer.enforcementId,
+      email: newEnforcer.email,
+      password: newEnforcer.password
+    })
+  })
+})
+
+it('Pops up an alert when creating an existing officer account', async () => {
+  mockedGetEnforcement.mockResolvedValue(testEnforcers)
+  mockedCreateEnforcement.mockResolvedValue(undefined)
+
+  render(<EnforcementList />)
+  let alertCalled = false
+  window.alert = () => (alertCalled = true)
+  await screen.findByText('Edna Enforcer')
+  const addButton = await screen.findByText(/Add new enforcement officer/)
+  fireEvent.click(addButton)
+  await screen.findByText('Submit')
+
+  const nameInput = await screen.findByLabelText(/New Officer Name/)
+  const idInput = await screen.findByLabelText(/New Officer ID/)
+  const emailInput = await screen.findByLabelText(/New Officer Email/)
+  const passwordInput = await screen.findByLabelText(/Set Password/)
+  const confirmInput = await screen.findByLabelText(/Confirm Password/)
+  await userEvent.type(nameInput, newEnforcer.name)
+  await userEvent.type(idInput, newEnforcer.enforcementId)
+  await userEvent.type(emailInput, newEnforcer.email)
+  await userEvent.type(passwordInput, newEnforcer.password)
+  await userEvent.type(confirmInput, newEnforcer.password)
+
+  fireEvent.click(screen.getByText('Submit'))
+  await waitFor(() => {
+    expect(alertCalled).toBe(true)
   })
 })
