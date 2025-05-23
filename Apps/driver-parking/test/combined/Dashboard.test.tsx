@@ -1,12 +1,11 @@
-import { it, afterEach, vi, beforeEach, expect } from 'vitest' 
-import { render, screen, cleanup, fireEvent } from '@testing-library/react'
+import { it, afterEach, vi, beforeEach } from 'vitest' 
+import { render, screen, cleanup } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 
 import Page from '../../src/app/[locale]/dashboard/page'
 import { dashboard as dashboardMessages } from '../../messages/en.json'
 import { ticket as ticketMessages } from '../../messages/en.json'
-import { getPrimaryVehicle } from '../../src/app/[locale]/register/actions'
 import { listUnpaid } from '@/app/[locale]/ticket/actions'
 
 vi.mock('next/navigation', () => ({
@@ -43,21 +42,6 @@ vi.mocked(listUnpaid).mockResolvedValue([
   }
 ])
 
-vi.mock('../../src/app/[locale]/register/actions', () => ({
-  getPrimaryVehicle: vi.fn(),
-}))
-
-vi.mocked(getPrimaryVehicle).mockResolvedValue(
-  {
-    id: '1',
-    licensePlate: 'ABC1234',
-    driver: 'Molly Member',
-    make: 'Honda',
-    model: 'Pilot',
-    color: 'Black',
-    active: true,
-  })
-
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
   vi.stubGlobal('alert', vi.fn())
@@ -75,36 +59,6 @@ const renderWithIntl = (component: React.ReactElement) => {
     </NextIntlClientProvider>
   )
 }
-
-it('should fetch user\'s active vehicle', async () => {
-  const mockPush = vi.fn()
-  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-
-  vi.mocked(fetch).mockImplementation((url, options) => {
-    if (url?.toString().includes('/graphql')) {
-      return Promise.resolve({
-        status: 200,
-        json: () => Promise.resolve({
-          data: {
-            getPrimaryVehicle: [
-              {
-                id: '1',
-                licensePlate: 'ABC1234',
-                driver: 'Molly Member',
-                make: 'Honda',
-                model: 'Pilot',
-                color: 'Black',
-              }
-            ],
-          },
-        }),
-      } as Response)
-    }
-    return Promise.reject('Unknown fetch')
-  })
-  renderWithIntl(<Page />)
-  await screen.findByText('Honda Pilot - Black (ABC1234)')
-})
 
 it('should fetch user\'s unpaid tickets', async () => {
   const mockPush = vi.fn()

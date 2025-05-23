@@ -97,10 +97,6 @@
   "dashboard": {
     "permitBought": "Has comprado un permiso.",
     "ticketsPaid": "Todas las multas pagadas. \nTotal: $",
-    "welcome": "Bienvenido de nuevo,",
-    "vehicle": "Vehículo activo:",
-    "noVehicle": "No hay vehículo activo.",
-    "registerVehicle": "Registrar",
     "permit": "Permiso activo",
     "noPermit": "No tienes un permiso activo.",
     "buyPermit": "Comprar permiso",

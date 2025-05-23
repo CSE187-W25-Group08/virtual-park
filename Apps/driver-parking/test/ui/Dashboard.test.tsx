@@ -16,10 +16,6 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
   listUnpaid: vi.fn(),
 }));
 
-vi.mock('../../src/app/[locale]/register/actions', () => ({
-  getPrimaryVehicle: vi.fn()
-}));
-
 vi.mock('next/headers', () => ({
   cookies: () => ({
     set: vi.fn(),
@@ -44,24 +40,6 @@ const renderWithIntl = (component: React.ReactElement) => {
     </NextIntlClientProvider>
   );
 };
-
-it('renders the welcome message with the user name', async () => {
-  Object.defineProperty(window, 'sessionStorage', {
-    value: {
-      getItem: vi.fn((key) => (key === 'name' ? 'Molly Member' : null)),
-    }
-  });
-
-  renderWithIntl(<Dashboard />);
-
-  await screen.getByText('Molly Member');
-});
-
-it('renders the active vehicle with no active vehicle', async () => {
-  renderWithIntl(<Dashboard />);
-
-  await screen.getByText('No active vehicle.');
-});
 
 it('renders the active permit section with no active permit', async () => {
   renderWithIntl(<Dashboard />);
