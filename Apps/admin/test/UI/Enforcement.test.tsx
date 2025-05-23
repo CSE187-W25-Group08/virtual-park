@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { newEnforcer, testEnforcers } from '../MockData'
 import Page from '@/app/enforcement/page'
 import EnforcementList from '@/app/enforcement/EnforcementList'
+import CreationModal from '@/app/enforcement/CreationModal'
 
 const mockPush = vi.fn()
 const mockPathname = "/enforcement"
@@ -63,6 +64,31 @@ it('Closes the creation modal when clicking away from it', async () => {
   await userEvent.keyboard(`{Escape}`) 
   const submit = screen.queryByText('Submit')
   expect(submit).toBeNull()
+})
+
+it('Clears the filled in text', async () => {
+  render(
+    <CreationModal 
+      open={true}
+      onClose={vi.fn()}
+      onSubmit={vi.fn()}
+    />
+  )
+
+  const nameInput = await screen.findByLabelText(/New Officer Name/)
+  const idInput = await screen.findByLabelText(/New Officer ID/)
+  const emailInput = await screen.findByLabelText(/New Officer Email/)
+  const passwordInput = await screen.findByLabelText(/Set Password/)
+  const confirmInput = await screen.findByLabelText(/Confirm Password/)
+  await userEvent.type(nameInput, newEnforcer.name)
+  await userEvent.type(idInput, newEnforcer.enforcementId)
+  await userEvent.type(emailInput, newEnforcer.email)
+  await userEvent.type(passwordInput, newEnforcer.password)
+  await userEvent.type(confirmInput, newEnforcer.password)
+
+  fireEvent.click(screen.getByText('Clear'))
+
+  expect(screen.queryByText(newEnforcer.name)).toBeNull()
 })
 
 it('Calls createEnforcement with the correct details', async () => {

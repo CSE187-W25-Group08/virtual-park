@@ -87,7 +87,7 @@ export default function EnforcementList() {
       headerName: 'Account Created',
       width: 200,
       flex: 1,
-      renderCell: (params) => params.value || 'Unknown date',
+      renderCell: (params) => params.value,
     },
   ]
   return (

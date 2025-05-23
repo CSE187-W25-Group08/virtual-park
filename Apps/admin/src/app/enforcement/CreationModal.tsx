@@ -38,10 +38,6 @@ export default function CreationModal({ open, onClose, onSubmit }: CreationModal
   }
 
   const handleSubmit = () => {
-    if (!isFormValid()) {
-      alert('Please fill in all fields and make sure passwords match.')
-      return
-    }
     onSubmit({name, enforcementId, email, password})
     setName('')
     setEnforcementId('')
