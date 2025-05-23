@@ -12,4 +12,8 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
 })
 
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle PostgreSQL client', err);
+});
+
 export { pool }
