@@ -8,9 +8,6 @@ on:
 env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
-  MASTER_SECRET: not-a-very-secret-secret
-  STRIPE_PUBLISHABLE_KEY : ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
-  STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
 
 jobs:
   lint:
@@ -43,14 +40,36 @@ jobs:
   test:
     name: Testing
     runs-on: ubuntu-latest
-    # needs: [lint, build]
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/testdb
+      MASTER_SECRET: not-a-very-secret-secret
+      STRIPE_PUBLISHABLE_KEY : ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+      - run: echo $POSTGRES_USER
       - run: npm install
       - run: npm run installs
-      - run: dev-compose
       - run: npm run test
-      - run: dev-compose-down
 
   deploy-docker:
     name: Build and Push Docker Image to GHCR
