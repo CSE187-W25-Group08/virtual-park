@@ -153,8 +153,7 @@ export class AuthService {
   }
 
   public async getUserById(id: string): Promise<User | undefined> {
-    const uid = jwt.verify(id, `${process.env.MASTER_SECRET}`) as { id: string };
-    const user = await db.getUserById(uid.id);
+    const user = await db.getUserById(id);
     if (user) {
       return {id: id, name: user.name, email: user.email};
     } else {

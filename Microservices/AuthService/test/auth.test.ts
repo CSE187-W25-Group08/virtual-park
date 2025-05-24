@@ -1,6 +1,7 @@
 import { test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
+import jwt from 'jsonwebtoken'
 
 import * as db from './db'
 import app from '../src/app'
@@ -351,31 +352,21 @@ test('Get Anna by ID', async () => {
       accessToken = res.body.accessToken
     })
   await supertest(server)
-    .get(`/api/v0/auth/user?id=${accessToken}`)
+    .get(`/api/v0/auth/user?id=03845709-4d40-45fe-9e51-11789f6f209a`)
     .set('Authorization', 'Bearer ' + accessToken)
     .expect(200)
 })
 
-test('Get Edna by ID', async () => {
+test('Get Nick by ID', async () => {
   let accessToken
   await supertest(server)
     .post('/api/v0/auth/login')
-    .send({ email: anna.email, password: anna.password })
+    .send({ email: 'nick@books.com', password: 'nickenforcement' })
     .then((res) => {
       accessToken = res.body.accessToken
     })
   await supertest(server)
-    .post('/api/v0/auth/enforcement')
-    .set('Authorization', 'Bearer ' + accessToken)
-    .send(edna)
-  await supertest(server)
-    .post('/api/v0/auth/login')
-    .send({ email: edna.email, password: edna.password })
-    .then((res) => {
-      accessToken = res.body.accessToken
-    })
-  await supertest(server)
-    .get(`/api/v0/auth/user?id=${accessToken}`)
+    .get(`/api/v0/auth/user?id=03845709-4d40-45fe-9e51-11789f6f119b`)
     .set('Authorization', 'Bearer ' + accessToken)
     .expect(200)
 })
@@ -391,8 +382,9 @@ test('Drivers cannot access /user endpoint', async () => {
     .then((res) => {
       accessToken = res.body.accessToken
     })
+  const uid = jwt.verify(accessToken, `${process.env.MASTER_SECRET}`) as { id: string }
   await supertest(server)
-    .get(`/api/v0/auth/user?id=${accessToken}`)
+    .get(`/api/v0/auth/user?id=${uid.id}`)
     .set('Authorization', 'Bearer ' + accessToken)
     .expect(401)
 })
@@ -406,7 +398,7 @@ test('Get nonexistent user by ID', async () => {
       accessToken = res.body.accessToken
     })
   await supertest(server)
-    .get(`/api/v0/auth/user?id=${badIdJWT}`)
+    .get(`/api/v0/auth/user?id=483a70c3-7d24-4b45-bcc2-1589e624a483`)
     .set('Authorization', 'Bearer ' + accessToken)
     .expect(404)
 })
