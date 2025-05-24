@@ -37,6 +37,7 @@ export class LotService {
         }
         )
         .then(json => {
+          console.log("get lots admin service", json.data, json);
           resolve(json.data.getAll)
         })
         .catch((err) => {
@@ -113,6 +114,7 @@ export class LotService {
           if (!json?.data?.getLotById) {
             return reject('Unknown Lot');
           }
+          console.log("get lot by id admin service", json.data, json);
           resolve(json.data.getLotById.name);
         })
         .catch((err) => {
