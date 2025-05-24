@@ -17,7 +17,7 @@ export async function googleVision(base64Image: string) : Promise<string> {
   return recognizePlateFromImage(cookie, base64Image)
 }
 
-export async function getDriverFromVehiclePlate(plate: string) : Promise<String> {
+export async function getDriverFromVehiclePlate(plate: string) : Promise<string> {
   const cookie = (await cookies()).get('session')?.value
   const vehicle = await getVehicleByPlate(cookie, plate)
   return vehicle.driver
