@@ -129,6 +129,23 @@ it("should show an permit found for the vehicle error", async () => {
           }),
       } as Response)
     }
+    if (url === 'http://localhost:4020/graphql') {
+    return Promise.resolve({
+      status: 200,
+      json: () => Promise.resolve({
+        data: {
+          getVehicleByPlate: {
+            id: 'vehicle101',
+            licensePlate: '123owo',
+            driver: 'driver0827',
+            make: 'Toyota',
+            model: 'Corolla',
+            color: 'white'
+          }
+        }
+      })
+    } as Response)
+  }
 
     return Promise.reject(new Error('Unknown fetch'))
   })
