@@ -114,7 +114,7 @@ export class LotService {
           if (!json?.data?.getLotById) {
             return reject('Unknown Lot');
           }
-          console.log("get lot by id admin service", json.data, json);
+          console.log("get lot by id admin service", json.data, "json", json);
           resolve(json.data.getLotById.name);
         })
         .catch((err) => {
