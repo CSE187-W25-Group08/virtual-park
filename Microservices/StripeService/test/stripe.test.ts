@@ -54,6 +54,23 @@ test("User can create stripe checkout session", async () => {
     });
 });
 
+test("User can create stripe checkout session through redirected url", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+            mutation {
+          createCheckoutSession(amount: 5555, name: "Test", successUrl: "https://example.com/success", cancelUrl: "https://example.com/cancel")
+      }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body)
+      expect(res.body.data.createCheckoutSession).toBeTruthy()
+    });
+});
+
 test("Throws if STRIPE_SECRET_KEY is missing", async () => {
   delete process.env.STRIPE_SECRET_KEY; // simulate missing key
 

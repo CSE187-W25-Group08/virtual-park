@@ -5,46 +5,55 @@ import {
 } from "./schema";
 import Stripe from "stripe";
 
-
 @Resolver()
 export class StripeResolver {
-   
   @Query(() => String)
   dummy(): string {
     return "OK";
   }
-  /*
-  @Query((returns) => StripeConfig)
-  async config(): Promise<StripeConfig> {
-    if (!stripe) {
-      throw Error();
+
+  @Authorized("driver")
+  @Mutation(() => String)
+  async createCheckoutSession(
+    @Arg("amount", () => Int) amount: number,
+    @Arg("name") name: string,
+    @Arg("successUrl") successUrl: string,
+    @Arg("cancelUrl") cancelUrl: string
+  ): Promise<string> {
+    const stripeSecret = process.env.STRIPE_SECRET_KEY;
+    if (!stripeSecret) {
+      console.log('test')
+      throw new Error("Missing Stripe secret key");
+    }
+    const stripe = new Stripe(stripeSecret);
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: name, 
+            },
+            unit_amount: amount, 
+          },
+          quantity: 1,
+        },
+      ],
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+    });
+
+    if (!session.url) {
+      throw new Error("Failed to create checkout session");
     }
 
-    const envPrice = process.env.PRICE;
-    if (!envPrice) {
-      throw Error();
-    }
-
-    const price = await stripe.prices.retrieve(envPrice);
-    if (!price.unit_amount) {
-      throw Error;
-    }
-
-    const envPubKey = process.env.STRIPE_PUBLISHABLE_KEY;
-    if (!envPubKey) {
-      throw Error();
-    }
-    return {
-      publicKey: envPubKey,
-      unitAmount: price.unit_amount,
-      currency: price.currency,
-    };
+    return session.url;
   }
-    */
 
-
-
-  @Authorized('driver')
+  @Authorized("driver")
   @Mutation(() => PaymentIntentResponse)
   async createPaymentIntent(
     @Arg("amount", () => Int) amount: number
@@ -55,22 +64,20 @@ export class StripeResolver {
     }
     const stripe = new Stripe(stripeSecret);
 
-    console.log('createPaymentIntent called with amount:', amount);
+    console.log("createPaymentIntent called with amount:", amount);
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: "usd",
       automatic_payment_methods: { enabled: true },
     });
-    const client_secret = paymentIntent.client_secret
+    const client_secret = paymentIntent.client_secret;
 
     if (!client_secret) {
-      throw Error()
+      throw Error();
     }
 
     return {
       clientSecret: client_secret,
     };
   }
-
-
 }
