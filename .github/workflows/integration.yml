@@ -66,6 +66,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
+      - run: echo $POSTGRES_USER
       - run: npm install
       - run: npm run installs
       - run: npm run test
