@@ -54,8 +54,7 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
-        volumes:
-          - ./docker/initdb:/docker-entrypoint-initdb.d
+          --mount type=bind,source=${{ github.workspace }}/docker/initdb,target=/docker-entrypoint-initdb.d
 
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/testdb
