@@ -7,7 +7,8 @@ import { Card, Typography, Box,
 import { useTranslations } from 'next-intl'
 
 import { PermitType } from '../../../../permit/index'
-import { useRouter } from 'next/navigation'
+import { getCheckoutSessionUrlAction } from '../../stripe/action'
+import { redirect } from 'next/navigation'
 
 /* reference: https://www.typescriptlang.org/docs/handbook/functions.html */
 export default function PermitCard({permit}: { permit: PermitType }) {
@@ -17,10 +18,19 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   //   alert(`${t('purchased')} ${permitType} ($${permit.price})`)
   // }
 
-  const router = useRouter()
+  const convertToSubCurrency = (amount: number, factor = 100) => {
+    return Math.round(amount * factor);
+  };
 
-  const handleClick = () => {
-    router.push(`/permit/purchase/${permit.type}?price=${permit.price}`)
+  const priceCurrency = convertToSubCurrency(permit.price);
+
+  const handleClick = async() => {
+  const successUrl = `${process.env.NEXT_PUBLIC_CHECKOUT_URL}?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=success`
+  const cancelUrl = `${process.env.NEXT_PUBLIC_CHECKOUT_URL}?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=cancel`
+    const url = await getCheckoutSessionUrlAction(priceCurrency, permit.type, successUrl, cancelUrl)
+    if (url) {
+      redirect(url)
+    }   
   }
   
   return (
