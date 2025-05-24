@@ -102,6 +102,42 @@ test('Returns vehicle by vehicle ID', async () => {
     })
 })
 
+test('Returns vehicle by vehicle plate', async () => {
+  const vehiclesResponse = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `{
+        userVehicle
+        { id, driver, licensePlate, make, model, color, active }
+      }`
+    })
+  
+  const vehiclePlate = vehiclesResponse.body.data.userVehicle[0].licensePlate
+  
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
+        {
+          getVehicleByPlate(plate: "${vehiclePlate}") {
+            id
+            driver
+            licensePlate
+            make
+            model
+            color
+            active
+          }
+        }
+      `
+    })
+    .then((res) => {
+      expect(res.body.data.getVehicleByPlate).toBeDefined()
+    })
+})
+
 /*reference: https://jestjs.io/docs/mock-function-api#mockfnmockrejectedvaluevalue */
 test('Returns unauthorized error when auth service throws', async () => {
   authserviceMock.mockRejectedValue(new Error('Authentication failed'))
