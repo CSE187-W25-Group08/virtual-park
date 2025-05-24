@@ -61,7 +61,7 @@ jobs:
       - name: Wait for DB
         run: sleep 10
       - run: npm run test
-        name: Stop and clean up Docker Compose
+      - name: Stop and clean up Docker Compose
         if: always()
         run: docker compose -f docker/docker-compose.test.yml down
 
