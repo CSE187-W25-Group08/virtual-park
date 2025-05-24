@@ -41,7 +41,17 @@ SELECT
 FROM
   vehicle
 WHERE
-  id = $1;
+  driver = $1
+  AND id = $2;
+`;
+
+export const getVehicleByPlate = `
+SELECT
+  id, driver, data
+FROM
+  vehicle
+WHERE
+  data->>'license_plate' = $1;
 `;
 
 export const getVehicleByIdAdmin = `

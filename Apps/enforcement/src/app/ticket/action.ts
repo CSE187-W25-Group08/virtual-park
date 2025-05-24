@@ -7,6 +7,9 @@ import {Ticket} from '../../ticket'
 import {Lot} from '../../lot'
 import {issueTicketForVehicle} from '../../ticket/service'
 import {getAllLots} from '../../lot/service'
+import {getDriver} from '../../auth/service'
+import {Driver} from '../../auth'
+import {sendTicketNotification} from '../../email/service'
 
 export async function issueTicketForCar(
   driverId: string,
@@ -35,4 +38,17 @@ export async function issueTicketForCar(
 export async function getallLots(): Promise<Lot[]> {
   const cookie = (await cookies()).get('session')?.value
   return getAllLots(cookie)
+}
+
+export async function getDriverDetails(id: string): Promise<Driver | undefined> {
+  const cookie = (await cookies()).get('session')?.value
+  return getDriver(id, cookie)
+}
+
+export async function sendEmail(
+  email: string,
+  name: string,
+  ticket: Ticket
+): Promise<void> {
+  return sendTicketNotification(email, name, ticket)
 }

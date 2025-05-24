@@ -16,7 +16,7 @@ import {
   Stack,
 } from '@mui/material'
 import {TicketViewProps, TicketInfo } from '../../ticket/index'
-import {issueTicketForCar, getallLots} from './action'
+import {issueTicketForCar, getallLots, getDriverDetails, sendEmail} from './action'
 import {Lot} from '../../lot/index'
 
 
@@ -102,6 +102,10 @@ export default function TicketView({
         ticketInfo.cost,
         false
       )
+      const driver = await getDriverDetails(ticketInfo.driverID)
+      if (driver) {
+        await sendEmail(driver.email, driver.name, ticket)
+      }
       
       success(ticket.id)
       resetDialog()

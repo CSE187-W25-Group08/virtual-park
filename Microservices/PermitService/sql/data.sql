@@ -68,7 +68,18 @@ INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
   '5ed85022-ec19-4e22-aff8-9a98feddeea9',
   jsonb_build_object(
     'issue_date', '2024-09-21T08:00:00.000Z',
-    'exp_date', '2025-06-14T08:00:00.000Z'
+    'exp_date', '2025-09-21T08:00:00.000Z'
+  )
+);
+
+-- jentest2 permit
+INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
+  'ee86f267-9cc0-4767-96f9-f64af8e2fcf3',
+  'd8ae74ff-f0c8-4837-8690-d3e9471fe283',
+  '5ed85022-ec19-4e22-aff8-9a98feddeea9',
+  jsonb_build_object(
+    'issue_date', '2024-07-21T08:00:00.000Z',
+    'exp_date', '2025-07-21T08:00:00.000Z'
   )
 );
 

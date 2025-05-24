@@ -460,3 +460,29 @@ VALUES (
     )
   )
 );
+
+INSERT INTO member(id, data) 
+VALUES (
+  'ced418e8-af5c-4a95-9896-374082a80117',
+  jsonb_build_object(
+    'email','jtest1@yopmail.com',
+    'name','Jen Test1',
+    'pwhash',crypt('jtest1',gen_salt('bf')),
+    'roles','["driver"]',
+    'joindate', '2023-06-15T12:00:00+00:00',
+    'suspended', false
+  )
+);
+
+INSERT INTO member(id, data) 
+VALUES (
+  'd8ae74ff-f0c8-4837-8690-d3e9471fe283',
+  jsonb_build_object(
+    'email','jtest2@yopmail.com',
+    'name','Jen Test2',
+    'pwhash',crypt('jtest2',gen_salt('bf')),
+    'roles','["driver"]',
+    'joindate', '2023-06-15T12:00:00+00:00',
+    'suspended', false
+  )
+);
