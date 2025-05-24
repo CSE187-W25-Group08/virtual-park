@@ -68,10 +68,10 @@ export class VehicleService {
 
   /* reference: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing
   https://stackoverflow.com/questions/62913315/operator-in-typescript */
-  public async getVehicleById(vehicleId: string) {
+  public async getVehicleById(vehicleId: string, userId: string | undefined) {
     const query = {
       text: queries.getVehicleById,
-      values: [vehicleId]
+      values: [userId, vehicleId]
     }
     const { rows } = await pool.query(query)
 

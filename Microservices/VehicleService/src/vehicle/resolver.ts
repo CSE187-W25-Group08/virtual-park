@@ -16,8 +16,8 @@ export class VehicleResolver {
   @Authorized()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => Vehicle)
-  async getVehicleById(@Arg("id") id: string): Promise<Vehicle> {
-    return await new VehicleService().getVehicleById(id)
+  async getVehicleById(@Arg("id") id: string, @Ctx() request: Request): Promise<Vehicle> {
+    return await new VehicleService().getVehicleById(id, request.user?.id)
   }
 
   @Authorized()
@@ -49,7 +49,7 @@ export class VehicleResolver {
   @Authorized("driver")
   @Mutation(() => Vehicle, { nullable: true })
   async updatePrimaryVehicle(@Ctx() request: Request, @Arg("input") input: VehicleIdInput): Promise<Vehicle | null> {
-    const addedVehicle = await new VehicleService().getVehicleById(input.id)
+    const addedVehicle = await new VehicleService().getVehicleById(input.id, request.user?.id);
     if (addedVehicle.active) {
       return await new VehicleService().updatePrimaryVehicle(request.user?.id, input.id)
     }

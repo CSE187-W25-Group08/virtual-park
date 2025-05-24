@@ -41,7 +41,8 @@ SELECT
 FROM
   vehicle
 WHERE
-  id = $1;
+  driver = $1
+  AND id = $2;
 `;
 
 export const getVehicleByPlate = `

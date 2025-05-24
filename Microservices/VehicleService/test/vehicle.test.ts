@@ -66,7 +66,7 @@ test('Returns Member\'s Vehicles', async () => {
     })
 })
 
-test('Returns vehicle by vehicle ID', async () => {
+test('Returns vehicle by vehicle ID and user ID', async () => {
   const vehiclesResponse = await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
