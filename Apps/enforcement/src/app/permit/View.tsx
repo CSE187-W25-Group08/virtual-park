@@ -17,7 +17,7 @@ import {
   TableBody,
   Alert
 } from '@mui/material'
-import { getpermitByPlateNum, googleVision} from './action'
+import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate} from './action'
 import { Permit } from '../../permit/index'
 import TicketView from '../ticket/View'
 
@@ -27,6 +27,7 @@ export default function PermitView() {
   const [error, setError] = useState<string | null>(null)
   const [ticketSuccess, setTicketSuccess] = useState<string | null>(null)
   const [ticketDialog, setTicketDialog] = useState(false)
+  const [driverID, setDriverID] = useState('')
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -49,6 +50,10 @@ export default function PermitView() {
     
     if (permitInfo.length === 0) {
       setError('No permits found for this vehicle')
+      const driverID = await getDriverFromVehiclePlate(carPlate)
+      setDriverID(String(driverID))
+    } else {
+      setDriverID(String(permitInfo[0].driverID))
     }
   }
   
@@ -234,7 +239,7 @@ export default function PermitView() {
         <TicketView
           open={ticketDialog}
           close={() => setTicketDialog(false)}
-          driverID=""
+          driverID={driverID}
           vehicleID={permits[0]?.vehicleID || carPlate}
           success={handleTicketSuccess}
           error={handleTicketError}
