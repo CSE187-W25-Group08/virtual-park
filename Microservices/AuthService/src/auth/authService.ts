@@ -11,7 +11,7 @@
 import * as jwt from "jsonwebtoken"
 import * as db from './db'
 import { midt, UUID, SessionUser } from '../types'
-import { Credentials, Authenticated, NewUser, Driver, NewEnforcement, Enforcement } from '.'
+import { Credentials, Authenticated, NewUser, User, Driver, NewEnforcement, Enforcement } from '.'
 import { OAuth2Client } from 'google-auth-library';
 
 // https://chat.deepseek.com/a/chat/s/b44e480a-f720-4b4e-b923-ac03aa7f7fc6
@@ -150,5 +150,15 @@ export class AuthService {
         )
       }
     })
+  }
+
+  public async getUserById(id: string): Promise<User | undefined> {
+    const uid = jwt.verify(id, `${process.env.MASTER_SECRET}`) as { id: string };
+    const user = await db.getUserById(uid.id);
+    if (user) {
+      return {id: id, name: user.name, email: user.email};
+    } else {
+      return undefined;
+    }
   }
 }

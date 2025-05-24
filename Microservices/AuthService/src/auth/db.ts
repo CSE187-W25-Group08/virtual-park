@@ -14,6 +14,20 @@ export async function getUserByEmail(email: string): Promise<User | undefined> {
     return ({ name: rows[0].name, id: rows[0].id, email: rows[0].email });
   }
 }
+
+export async function getUserById(id: string): Promise<User | undefined> {
+  const getUser = {
+    text: `
+      SELECT data->>'name' AS name, data->>'email' AS email FROM member
+      WHERE id = $1;`,
+    values: [id],
+  }
+  const { rows } = await pool.query(getUser);
+  if (rows.length === 1) {
+    return ({ name: rows[0].name, id: id, email: rows[0].email });
+  }
+}
+
 export async function createNewUser(signUpDetails: NewUser): Promise<User | undefined> {
   const emailUniqueCheck = {
     text: `SELECT * FROM member

@@ -341,3 +341,72 @@ test('Must be an admin to fetch enforcement officers', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .expect(401)
 })
+
+test('Get Anna by ID', async () => {
+  let accessToken
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .get(`/api/v0/auth/user?id=${accessToken}`)
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(200)
+})
+
+test('Get Edna by ID', async () => {
+  let accessToken
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .post('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send(edna)
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: edna.email, password: edna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .get(`/api/v0/auth/user?id=${accessToken}`)
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(200)
+})
+
+test('Drivers cannot access /user endpoint', async () => {
+  let accessToken
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: tommy.email, password: tommy.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .get(`/api/v0/auth/user?id=${accessToken}`)
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(401)
+})
+
+test('Get nonexistent user by ID', async () => {
+  let accessToken
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  await supertest(server)
+    .get(`/api/v0/auth/user?id=${badIdJWT}`)
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(404)
+})

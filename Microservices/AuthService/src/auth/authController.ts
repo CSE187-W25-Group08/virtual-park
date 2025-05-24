@@ -12,7 +12,7 @@ import {
   Query
 } from 'tsoa'
 
-import { Credentials, Authenticated, NewUser, Driver, NewEnforcement, Enforcement } from '.'
+import { Credentials, Authenticated, NewUser, User, Driver, NewEnforcement, Enforcement } from '.'
 import { AuthService } from './authService'
 import { SessionUser } from '../types'
 
@@ -139,4 +139,23 @@ export class AuthController extends Controller {
     await new AuthService().reactivateDriver(email);
   }
 
+  @Get('user')
+  @Security("jwt")
+  @Response('401', 'Unauthorized')
+  @Response('404', 'User not found')
+  public async getUser(
+    @Request() request: Express.Request,
+    @Query() id: string,
+  ): Promise<User | undefined> {
+    const requester = request.user as SessionUser;
+    if (requester.roles?.includes('enforcement') || requester.roles?.includes('admin')) {
+      const user = await new AuthService().getUserById(id);
+      if (!user) {
+        this.setStatus(404);
+      }
+      return user;
+    } else {
+      this.setStatus(401);
+    }
+  }
 }
