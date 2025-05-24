@@ -6,14 +6,22 @@ const client = new vision.ImageAnnotatorClient({
 
 export async function extractLicensePlateText(imageBuffer: Buffer): Promise<string> {
   const [result] = await client.textDetection({ image: { content: imageBuffer } })
-  const detections = result.textAnnotations
+  const allText = result.textAnnotations?.[0].description
+  
+  console.log('All detected text:', allText);
 
-  if (!detections || detections.length === 0) {
-    throw new Error("No text detected")
+  const patterns = [
+    /\b\d[A-Z]{3}\d{3}\b/i,
+    /\b[A-Z]{3}\s*\d{3}\b/i
+  ]
+  
+  for (const pattern of patterns) {
+    const match = allText?.match(pattern)
+    if (match) {
+      const plate = match[0].replace(/\s/g, "").toUpperCase()
+      return plate
+    }
   }
-
-  const fullText = detections[2].description || ""
-  const match = fullText.match(/[A-Z0-9]{5,8}/)
-  if (!match) throw new Error("No license plate found")
-  return match[0]
+  
+  throw new Error("No license plate found")
 }
