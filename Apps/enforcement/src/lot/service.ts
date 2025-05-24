@@ -29,16 +29,17 @@ export async function getAllLots(cookie: string | undefined): Promise<Lot[]> {
         `,
       }),
     })
-    .then(response => {
-      if (response.status !== 200) {
-        reject('Unauthorized')
-        return
-      }
-      return response.json()
-    })
-    .then(json => {
-      resolve(json.data.getAll)
-    })
-    .catch((error) => reject(error))
+      .then(response => {
+        if (response.status !== 200) {
+          reject('Unauthorized')
+          return
+        }
+        return response.json()
+      })
+      .then(json => {
+        console.log("enforcement get all lots", json.data)
+        resolve(json.data.getAll)
+      })
+      .catch((error) => reject(error))
   })
 }
