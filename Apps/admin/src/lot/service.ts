@@ -98,6 +98,7 @@ export class LotService {
     })
   }
 
+  // Using graphql prepared vars didn't work
   public async getLotById(id: string): Promise<string> {
     return new Promise((resolve, reject) => {
       fetch('http://localhost:4040/graphql', {
