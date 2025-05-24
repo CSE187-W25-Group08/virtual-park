@@ -19,7 +19,6 @@ import * as fs from 'fs'
 
 import dotenv from 'dotenv'
 dotenv.config()
-process.env.POSTGRES_DB = 'account'
 
 // console.log('databse show:',process.env.POSTGRES_DB)
 // console.log('user show:',process.env.POSTGRES_USER)
@@ -27,7 +26,7 @@ process.env.POSTGRES_DB = 'account'
 const pool = new Pool({
   host: 'localhost',
   port: 5432,
-  database: process.env.POSTGRES_DB,
+  database: process.env.POSTGRES_DB || 'account',
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
 })
