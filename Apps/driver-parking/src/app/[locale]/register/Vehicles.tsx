@@ -105,193 +105,203 @@ export default function Vehicles() {
   };
 
   return (
-    <Card sx={{ p: 2, border: '1px solid #ccc', width: 325 }}>
-      {!showForm && !showEditForm ? (
-        <>
-        <Typography variant="h6" sx={{ mb: 2 }}>{t('title')}</Typography>
-          {vehicles.map((vehicle, index) => (
-            <Box key={index}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  py: 1,
-                  borderBottom: index !== vehicles.length - 1 ? '1px dashed #ccc' : 'none',
-                }}
-              >
-                <Typography variant="body2">
-                  {vehicle.make}, {vehicle.model} - {vehicle.color} 
-                  <br />
-                  ({vehicle.licensePlate})
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  {vehicle.active && (
-                    <Typography
-                      variant="caption"
-                      sx={{ 
-                        backgroundColor: '#e0e0e0',
-                        borderRadius: '8px',
-                        px: 1,
-                        fontWeight: 500,
-                        fontSize: '0.75rem',
-                      }}
-                    >
-                      Default
-                    </Typography>
-                  )}
-                  <Typography
-                    variant="body2"
-                    sx={{ color: 'primary.main', cursor: 'pointer' }}
-                    onClick={() => handleEdit(vehicle)}
-                  >
-                    {t('edit')}
+    <Box sx={{
+      display: 'flex',
+      width: '100%',
+      justifyContent: 'center',
+    }}>
+      <Card sx={{
+        p: 2,
+        border: '1px solid #ccc',
+        width: {xs: '100%', sm: '400px'},
+      }}>
+        {!showForm && !showEditForm ? (
+          <>
+          <Typography variant="h6" sx={{ mb: 2 }}>{t('title')}</Typography>
+            {vehicles.map((vehicle, index) => (
+              <Box key={index}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    py: 1,
+                    borderBottom: index !== vehicles.length - 1 ? '1px dashed #ccc' : 'none',
+                  }}
+                >
+                  <Typography variant="body2">
+                    {vehicle.make}, {vehicle.model} - {vehicle.color} 
+                    <br />
+                    ({vehicle.licensePlate})
                   </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {vehicle.active && (
+                      <Typography
+                        variant="caption"
+                        sx={{ 
+                          backgroundColor: '#e0e0e0',
+                          borderRadius: '8px',
+                          px: 1,
+                          fontWeight: 500,
+                          fontSize: '0.75rem',
+                        }}
+                      >
+                        Default
+                      </Typography>
+                    )}
+                    <Typography
+                      variant="body2"
+                      sx={{ color: 'primary.main', cursor: 'pointer' }}
+                      onClick={() => handleEdit(vehicle)}
+                    >
+                      {t('edit')}
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
+            ))}
+
+            <Button
+              fullWidth
+              variant="outlined"
+              sx={{ mt: 2, textTransform: 'none', fontWeight: 500 }}
+              onClick={() => setShowForm(true)}
+            >
+              {t('register')}
+            </Button>
+            <div>{error}</div>
+          </>
+        ) : (showEditForm && !showForm ? (
+          <>
+          <Typography variant="h6" sx={{ mb: 2 }}>EDIT</Typography>
+            <TextField
+              required
+              label={t('licensePlate')}
+              name="licensePlate"
+              fullWidth
+              value={selectedVehicle?.licensePlate}
+              onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, licensePlate: e.target.value }))}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              label={t('make')}
+              name="make"
+              fullWidth
+              value={selectedVehicle?.make}
+              onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, make: e.target.value }))}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              label={t('model')}
+              name="model"
+              fullWidth
+              value={selectedVehicle?.model}
+              onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, model: e.target.value }))}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              label={t('color')}
+              name="color"
+              fullWidth
+              value={selectedVehicle?.color}
+              onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, color: e.target.value }))}
+              sx={{ mb: 2 }}
+            />
+            {!selectedIsActive && (<FormControlLabel
+              control={<Switch
+                        checked={selectedVehicle?.active}
+                        onChange={(e) =>
+                        setSelectedVehicle((prev) =>
+                          prev ? { ...prev, active: e.target.checked } : prev
+                        )
+                      }
+                        />}
+              label={t('default')}
+              sx={{ mb: 2 }}
+            />)}
+
+            <Box display="flex" justifyContent="space-between">
+              <Button onClick={() => {
+                      setShowEditForm(false);
+                      setFormData(emptyForm);
+                  }}
+              >
+                {t('cancel')}
+              </Button>
+              <Button variant="contained"
+                onClick={handleEditSubmit}
+                disabled={!isFormValid(selectedVehicle?.licensePlate, selectedVehicle?.make, selectedVehicle?.model, selectedVehicle?.color)}
+              >
+                {t('save')}
+              </Button>
             </Box>
-          ))}
-
-          <Button
-            fullWidth
-            variant="outlined"
-            sx={{ mt: 2, textTransform: 'none', fontWeight: 500 }}
-            onClick={() => setShowForm(true)}
-          >
-            {t('register')}
-          </Button>
-          <div>{error}</div>
-        </>
-      ) : (showEditForm && !showForm ? (
+          </>
+        ) : 
         <>
-        <Typography variant="h6" sx={{ mb: 2 }}>EDIT</Typography>
-          <TextField
-            required
-            label={t('licensePlate')}
-            name="licensePlate"
-            fullWidth
-            value={selectedVehicle?.licensePlate}
-            onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, licensePlate: e.target.value }))}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            required
-            label={t('make')}
-            name="make"
-            fullWidth
-            value={selectedVehicle?.make}
-            onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, make: e.target.value }))}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            required
-            label={t('model')}
-            name="model"
-            fullWidth
-            value={selectedVehicle?.model}
-            onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, model: e.target.value }))}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            required
-            label={t('color')}
-            name="color"
-            fullWidth
-            value={selectedVehicle?.color}
-            onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, color: e.target.value }))}
-            sx={{ mb: 2 }}
-          />
-          {!selectedIsActive && (<FormControlLabel
-            control={<Switch
-                      checked={selectedVehicle?.active}
-                      onChange={(e) =>
-                      setSelectedVehicle((prev) =>
-                        prev ? { ...prev, active: e.target.checked } : prev
-                      )
-                    }
-                      />}
-            label={t('default')}
-            sx={{ mb: 2 }}
-          />)}
+          <Typography variant="h6" sx={{ mb: 2 }}>{t('addTitle')}</Typography>
+            <TextField
+              required
+              label={t('licensePlate')}
+              name="licensePlate"
+              fullWidth
+              value={formData.licensePlate}
+              onChange={handleChange}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              label={t('make')}
+              name="make"
+              fullWidth
+              value={formData.make}
+              onChange={handleChange}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              label={t('model')}
+              name="model"
+              fullWidth
+              value={formData.model}
+              onChange={handleChange}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              label={t('color')}
+              name="color"
+              fullWidth
+              value={formData.color}
+              onChange={handleChange}
+              sx={{ mb: 2 }}
+            />
+            {vehicles.length != 0 && (<FormControlLabel
+              control={<Switch checked={formData.isDefault} onChange={handleToggle} />}
+              label={t('default')}
+              sx={{ mb: 2 }}
+            />)}
 
-          <Box display="flex" justifyContent="space-between">
-            <Button onClick={() => {
-                    setShowEditForm(false);
-                    setFormData(emptyForm);
-                }}
-            >
-              {t('cancel')}
-            </Button>
-            <Button variant="contained"
-              onClick={handleEditSubmit}
-              disabled={!isFormValid(selectedVehicle?.licensePlate, selectedVehicle?.make, selectedVehicle?.model, selectedVehicle?.color)}
-            >
-              {t('save')}
-            </Button>
-          </Box>
-        </>
-      ) : 
-      <>
-        <Typography variant="h6" sx={{ mb: 2 }}>{t('addTitle')}</Typography>
-          <TextField
-            required
-            label={t('licensePlate')}
-            name="licensePlate"
-            fullWidth
-            value={formData.licensePlate}
-            onChange={handleChange}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            required
-            label={t('make')}
-            name="make"
-            fullWidth
-            value={formData.make}
-            onChange={handleChange}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            required
-            label={t('model')}
-            name="model"
-            fullWidth
-            value={formData.model}
-            onChange={handleChange}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            required
-            label={t('color')}
-            name="color"
-            fullWidth
-            value={formData.color}
-            onChange={handleChange}
-            sx={{ mb: 2 }}
-          />
-          {vehicles.length != 0 && (<FormControlLabel
-            control={<Switch checked={formData.isDefault} onChange={handleToggle} />}
-            label={t('default')}
-            sx={{ mb: 2 }}
-          />)}
-
-          <Box display="flex" justifyContent="space-between">
-            <Button onClick={() => {
-                    setShowForm(false);
-                    setFormData(emptyForm);
-                }}
-            >
-              {t('cancel')}
-            </Button>
-            <Button variant="contained"
-              onClick={handleSubmit}
-              disabled={!isFormValid(formData.licensePlate, formData.make, formData.model, formData.color)}
-            >
-              {t('save')}
-            </Button>
-          </Box>
-        </>
-      )}
-    </Card>
+            <Box display="flex" justifyContent="space-between">
+              <Button onClick={() => {
+                      setShowForm(false);
+                      setFormData(emptyForm);
+                  }}
+              >
+                {t('cancel')}
+              </Button>
+              <Button variant="contained"
+                onClick={handleSubmit}
+                disabled={!isFormValid(formData.licensePlate, formData.make, formData.model, formData.color)}
+              >
+                {t('save')}
+              </Button>
+            </Box>
+          </>
+        )}
+      </Card>
+    </Box>
   );
 }
