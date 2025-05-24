@@ -41,8 +41,7 @@ SELECT
 FROM
   vehicle
 WHERE
-  driver = $1
-AND id = $2;
+  id = $1;
 `;
 
 export const getVehicleByIdAdmin = `

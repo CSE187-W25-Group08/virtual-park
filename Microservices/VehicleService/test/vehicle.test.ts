@@ -66,7 +66,7 @@ test('Returns Member\'s Vehicles', async () => {
     })
 })
 
-test('Returns vehicle by vehicle ID and authenticated user ID', async () => {
+test('Returns vehicle by vehicle ID', async () => {
   const vehiclesResponse = await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
@@ -77,13 +77,15 @@ test('Returns vehicle by vehicle ID and authenticated user ID', async () => {
       }`
     })
   
+  const vehicleId = vehiclesResponse.body.data.userVehicle[0].id
+  
   await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
     .send({
       query: `
-        query GetVehicle($id: String!) {
-          getVehicleById(id: $id) {
+        {
+          getVehicleById(id: "${vehicleId}") {
             id
             driver
             licensePlate
@@ -93,10 +95,7 @@ test('Returns vehicle by vehicle ID and authenticated user ID', async () => {
             active
           }
         }
-      `,
-      variables: {
-        id: vehiclesResponse.body.data.userVehicle[0].id
-      }
+      `
     })
     .then((res) => {
       expect(res.body.data.getVehicleById).toBeDefined()
