@@ -87,6 +87,25 @@ export class VehicleService {
     return vehicleObj;
   }
 
+  public async getVehicleByPlate(plate: string) {
+    const query = {
+      text: queries.getVehicleByPlate,
+      values: [plate]
+    }
+    const { rows } = await pool.query(query)
+
+    const vehicleObj: Vehicle = {
+      'id': rows[0].id,
+      'driver': rows[0].driver,
+      'licensePlate': rows[0].data.license_plate,
+      'make': rows[0].data.make,
+      'model': rows[0].data.model,
+      'color': rows[0].data.color,
+      'active': rows[0].data.active
+    }
+    return vehicleObj;
+  }
+
   public async getVehicleByIdAdmin(vehicleId: string) {
     const query = {
       text: queries.getVehicleByIdAdmin,

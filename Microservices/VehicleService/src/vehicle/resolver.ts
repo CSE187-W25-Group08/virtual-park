@@ -22,6 +22,13 @@ export class VehicleResolver {
 
   @Authorized()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(returns => Vehicle)
+  async getVehicleByPlate(@Arg("plate") plate: string): Promise<Vehicle> {
+    return await new VehicleService().getVehicleByPlate(plate)
+  }
+
+  @Authorized()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => [Vehicle])
   async userVehicle(@Ctx() request: Request): Promise<Vehicle[]> {
     return await new VehicleService().getUserVehicles(request.user?.id)

@@ -44,6 +44,15 @@ WHERE
   id = $1;
 `;
 
+export const getVehicleByPlate = `
+SELECT
+  id, driver, data
+FROM
+  vehicle
+WHERE
+  data->>'license_plate' = $1;
+`;
+
 export const getVehicleByIdAdmin = `
 SELECT
   id, driver, data
