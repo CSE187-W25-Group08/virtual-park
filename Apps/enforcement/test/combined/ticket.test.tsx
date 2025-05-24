@@ -1,6 +1,6 @@
 import { it, afterEach, vi, beforeEach, expect } from 'vitest' 
 // import { render, screen, cleanup, within } from '@testing-library/react'
-import { screen, within, prettyDOM, render, cleanup } from '@testing-library/react'
+import { screen, within, prettyDOM, render, cleanup} from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
@@ -127,14 +127,13 @@ it("issue ticket button test", async () => {
   await screen.findByText('Issue Parking Ticket')
 })
 
-
 it("issue ticket successfully", async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  
   vi.mocked(fetch).mockImplementation((url, options) => {
-    if (
-      url === 'http://localhost:4000/graphql' 
-    ) {
+    
+    if (url === 'http://localhost:4000/graphql') {
       console.log('fetch called with permit:', url, options)
       return Promise.resolve({
         status: 200,
@@ -147,7 +146,9 @@ it("issue ticket successfully", async () => {
                   permitType: 'Student',
                   issueDate: '2025-05-01',
                   expDate: '2025-06-01',
-                  isValid: true
+                  isValid: true,
+                  driverID: 'driver-123',
+                  vehicleID: 'vehicle-123'
                 }
               ]
             }
@@ -162,21 +163,22 @@ it("issue ticket successfully", async () => {
           data: {
             ticketIssue: {
               id: '1234',
-              driverID: '1222',
+              driverID: 'driver-123',
               enforcer: '1111',
-              lot: 'lot 101',
+              lot: 'Area 51 Lot',
               paid: false,
-              description: 'no permit',
-              due: '4/20/2025',
-              issue: '5/20/2025',
-              violation: 'no permit',
+              description: 'no valid permit',
+              due: '2025-06-20',
+              issue: '2025-05-24',
+              violation: 'Expired Permit',
               image: 'car.jpg',
-              cost: 12,
+              cost: 50,
             }
           }
         }),
       } as Response)
     }
+
     if (url === 'http://localhost:4040/graphql') {
       return Promise.resolve({ 
         status: 200,
@@ -202,7 +204,65 @@ it("issue ticket successfully", async () => {
         }),
       } as Response)
     }
-    return Promise.reject(new Error('Unknown fetch'))
+
+    if (url === 'http://localhost:4020/graphql') {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getVehicleByPlate: {
+              id: '123',
+              licensePlate: '123ABC',
+              driver: 'driver-123',
+              make: 'Toyota',
+              model: 'Corolla',
+              color: 'white'
+            }
+          }
+        })
+      } as Response)
+    }
+
+    if (url === 'http://localhost:4030/graphql') {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getDriver: {
+              id: '123',
+              name: 'John Doe',
+              email: 'john@example.com',
+              phone: '555-0123'
+            }
+          }
+        })
+      } as Response)
+    }
+
+    if (String(url).startsWith('http://localhost:3010/api/v0/auth/user')) {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          id: '123',
+          name: 'nickdriver',
+          email: 'nick@books.com',
+          phone: '555-0123',
+          role: 'driver'
+        }),
+      } as Response)
+    }
+    if (url === 'http://localhost:3011/api/v0/ocr/scan') {
+      console.log('OCR API called with:', options?.body)
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          licensePlate: '123ABC'
+        }),
+      } as Response)
+    }
+
+    console.log('Unknown fetch URL:', url)
+    return Promise.reject(new Error('Unknown fetch: ' + url))
   })
 
   render(<PermitPage />)
