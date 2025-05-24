@@ -11,6 +11,8 @@
     "package": "docker build . -t cte-linux-amd64 --platform linux/amd64 && docker save -o cte-linux-amd64.tar cte-linux-amd64",
     "containerised": "npm run build && npm run compose",
     "compose": "docker compose up --build",
+    "dev-compose": "cd Dev && docker-compose up -d",
+    "dev-compose-down": "cd Dev && docker-compose down",
     "installs": "npm install && npm run install-auth && npm run install-ticket && npm run install-vehicle && npm run install-permit && npm run install-ocr && npm run install-stripe && npm run install-lot && npm run install-driver-app && npm run install-admin-app && npm run install-enforcement-app && npm run install-police-api && npm run install-registrar-api",
     "install-auth": "cd Microservices/AuthService && npm install",
     "install-lot": "cd Microservices/LotService && npm install",

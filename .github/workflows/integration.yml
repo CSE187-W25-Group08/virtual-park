@@ -5,6 +5,12 @@ on:
     tags:
       # Version the tag as you can only use a tag once
       - "integration-v*.*.*"
+env:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  MASTER_SECRET: not-a-very-secret-secret
+  STRIPE_PUBLISHABLE_KEY : ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+  STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
 
 jobs:
   lint:
@@ -42,7 +48,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm install
       - run: npm run installs
+      - run: dev-compose
       - run: npm run test
+      - run: dev-compose-down
 
   deploy-docker:
     name: Build and Push Docker Image to GHCR
