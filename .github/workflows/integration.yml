@@ -48,7 +48,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm install
       - run: npm run installs
+      - run: dev-compose
       - run: npm run test
+      - run: dev-compose-down
 
   deploy-docker:
     name: Build and Push Docker Image to GHCR
