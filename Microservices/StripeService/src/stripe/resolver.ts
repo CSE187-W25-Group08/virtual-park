@@ -21,7 +21,7 @@ export class StripeResolver {
     @Arg("cancelUrl") cancelUrl: string
   ): Promise<string> {
     const stripeSecret = process.env.STRIPE_SECRET_KEY;
-    console.log(stripeSecret)
+    // console.log(stripeSecret)
     if (!stripeSecret) {
       console.log('test')
       throw new Error("Missing Stripe secret key");
@@ -60,7 +60,7 @@ export class StripeResolver {
     @Arg("amount", () => Int) amount: number
   ): Promise<PaymentIntentResponse> {
     const stripeSecret = process.env.STRIPE_SECRET_KEY;
-    console.log(stripeSecret)
+    // console.log(stripeSecret)
     if (!stripeSecret) {
       throw Error();
     }
