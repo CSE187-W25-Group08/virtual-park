@@ -1,12 +1,13 @@
 import { Lot, UpdateLotData } from "."
 
 export class LotService {
-  public async getLots(): Promise<Lot[]> {
+  public async getAllLots(cookie: string | undefined): Promise<Lot[]> {
     return new Promise((resolve, reject) => {
       fetch('http://localhost:4040/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${cookie}`,
         },
         body: JSON.stringify({
           query: `
@@ -30,20 +31,17 @@ export class LotService {
         }),
       })
         .then(response => {
-          if (response.status != 200) {
+          if (response.status !== 200) {
             reject('Unauthorized')
+            return
           }
           return response.json()
-        }
-        )
+        })
         .then(json => {
-          console.log("get lots admin service", json.data, json);
+          console.log("admin get all lots", json.data)
           resolve(json.data.getAll)
         })
-        .catch((err) => {
-          console.error('Fetch error:', err);
-          reject('Unknown Lot');
-        });
+        .catch((error) => reject(error))
     })
   }
 
