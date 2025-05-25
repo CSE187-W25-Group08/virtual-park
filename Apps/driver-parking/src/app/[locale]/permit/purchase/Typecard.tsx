@@ -30,8 +30,10 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   const priceCurrency = convertToSubCurrency(permit.price);
 
   const handleClick = async() => {
-  const successUrl = `${process.env.NEXT_PUBLIC_CHECKOUT_URL}?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=success`
-  const cancelUrl = `${process.env.NEXT_PUBLIC_CHECKOUT_URL}?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=cancel`
+  const successUrl = `http://localhost:3000/checkout/?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=success`
+  const cancelUrl = `http://localhost:3000/checkout/?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=cancel`
+  //const successUrl = `${process.env.NEXT_PUBLIC_CHECKOUT_URL}?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=success`
+  //const cancelUrl = `${process.env.NEXT_PUBLIC_CHECKOUT_URL}?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=cancel`
     const url = await getCheckoutSessionUrlAction(priceCurrency, permit.type, successUrl, cancelUrl)
     if (url) {
       redirect(url)
