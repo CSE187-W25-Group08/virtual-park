@@ -40,7 +40,7 @@
     "test-ticket": "cd TicketService && npm run test",
     "test-vehicle": "cd VehicleService && npm run test",
     "test-stripe": "cd StripeService && npm run test",
-    "test": "npm run test-auth && npm run test-ticket && npm run test-permit&& npm run test-vehicle && npm run test-lot && npm run test-stripe"
+    "test": "npm run test-stripe && npm run test-auth && npm run test-ticket && npm run test-permit&& npm run test-vehicle && npm run test-lot"
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",
