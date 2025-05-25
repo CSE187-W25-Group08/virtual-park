@@ -26,7 +26,6 @@ export default function DriversGrid() {
     const setDriverData = async () => {
       const driverList = await fetchDrivers();
       if (driverList) setDrivers(driverList);
-      // console.log(driverList[0])
     };
     setDriverData();
   }, []);

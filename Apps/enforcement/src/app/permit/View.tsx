@@ -42,7 +42,6 @@ export default function PermitView() {
   
   const handleSearch = async (plateInput?: string) => {
     const plateToUse = plateInput || carPlate
-    console.log('plateToUse: ', plateToUse)
     if (!plateToUse) {
       setError('Please enter a car plate number')
       return
