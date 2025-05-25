@@ -157,6 +157,9 @@ export default function PermitView() {
             Upload Image
           </Button>
         </label>
+        <Button variant="outlined" component="span" sx={{ height: 50 }} onClick={clearScreen}>
+            Clear
+        </Button>
 
       {/* reference: https://mui.com/material-ui/react-alert/ */}
        {/* reference: https://mui.com/material-ui/react-table/ */}
