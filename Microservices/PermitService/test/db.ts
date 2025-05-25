@@ -38,6 +38,7 @@ const run = async (file: string) => {
 }
 
 const reset = async () => {
+  console.log('running permit test reset');
   await run('sql/schema.sql')
   await run('sql/test.sql')
 }
