@@ -14,10 +14,12 @@ import {
 import userEvent from '@testing-library/user-event'
 
 const mockedPush = vi.fn()
+//const mockedRedirect = vi.fn();
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: mockedPush,
-  })
+  }),
+  //redirect: () => mockedRedirect,
 }))
 
 const mockedGetCookies = vi.fn()
@@ -268,3 +270,78 @@ it('Cannot appeal the ticket when the request fails', async () => {
     expect(mockedPush).not.toHaveBeenCalledWith('/ticket')
   })
 })
+
+
+it('Renders ticket pay button', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+
+  vi.stubGlobal('fetch', vi.fn((url, options) => {
+    const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
+    const query = body.query || '';
+
+    if (query.includes('getVehicleById')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({ data: { getVehicleById: testVehicle } }),
+      });
+    }
+
+    if (query.includes('ticketId')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({ data: { ticketId: testTicket } }),
+      });
+    }
+
+    return Promise.reject(new Error('Unhandled GraphQL query'));
+  }));
+
+  renderWithIntl(<View ticketId={'t3'}/>)
+  await screen.findByText(/Pay Ticket/)
+})
+
+/*
+it('Can click ticket pay button', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+
+  vi.stubGlobal('fetch', vi.fn((url, options) => {
+    const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
+    const query = body.query || '';
+
+    if (query.includes('getVehicleById')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({ data: { getVehicleById: testVehicle } }),
+      });
+    }
+
+    if (query.includes('ticketId')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({ data: { ticketId: testTicket } }),
+      });
+    }
+
+    if (query.includes('createCheckoutSession')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({ data: { createCheckoutSession: 'url' } }),
+      });
+    }
+
+    return Promise.reject(new Error('Unhandled GraphQL query'));
+  }));
+
+  renderWithIntl(<View ticketId={'t3'}/>)
+  const button = await screen.findByText(/Pay Ticket/)
+  fireEvent.click(button)
+  expect(mockedRedirect).toHaveBeenCalled()
+
+
+})
+*/

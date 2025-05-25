@@ -5,9 +5,8 @@ import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
 import { Box, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter} from 'next/navigation'
 import { useTranslations } from "next-intl";
- import { redirect } from 'next/navigation'
 
 import AppealModal from './AppealModal';
 import { Ticket } from "@/ticket";
@@ -77,13 +76,39 @@ export default function Card({ ticketId }: { ticketId: string }) {
   // need to convert the cost to sub-currency (e.g., cents) for Stripe
 
   const handleClickPaid = async () => {
+    function generateCheckoutUrls(data: Record<string, unknown>, redirectURL: string) {
+    const queryString = Object.entries(data)
+      .map(([key, value]) => {
+        if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+          return `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`;
+        }
+        return null; 
+      })
+      .filter(Boolean)
+      .join("&");
+
+      const successUrl = `${redirectURL}/checkout/?${queryString}&status=success`;
+      const cancelUrl = `${redirectURL}/checkout/?${queryString}&status=cancel`;
+
+      return { successUrl, cancelUrl };
+    }
     const convertToSubCurrency = (amount: number, factor = 100) => {
       return Math.round(amount * factor);
     };
     const priceCurrency = convertToSubCurrency(ticket!.cost);
-    const successUrl = `http://localhost:3000/checkout/?&amount=${encodeURIComponent(ticket!.cost)}&name=${encodeURIComponent(ticket!.violation)}&type=ticket&id=${encodeURIComponent(ticket!.id)}status=success`
-    const cancelUrl = `http://localhost:3000/checkout/?&amount=${encodeURIComponent(ticket!.cost)}&name=${encodeURIComponent(ticket!.violation)}&type=ticket&id=${encodeURIComponent(ticket!.id)}status=cancel`
+    const redirectURL = process.env.NEXT_PUBLIC_REDIRECT!;
+
+    const dynamicUrls = generateCheckoutUrls({
+      type: "ticket",
+      amount: ticket!.cost,
+      name: ticket!.violation,
+      id: ticket!.id,
+    }, redirectURL);
+
+    const successUrl = dynamicUrls.successUrl;
+    const cancelUrl = dynamicUrls.cancelUrl;
     const url = await getCheckoutSessionUrlAction(priceCurrency, ticket!.violation, "ticket",ticket!.id, successUrl, cancelUrl)
+    console.log(url)
     if (url) {
       redirect(url)
     }   
@@ -135,6 +160,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
           : ticket?.appeal === "rejected"
           ? t("rejected")
           : ""}
+          {process.env.NEXT_PUBLIC_REDIRECT!}
       </Typography>
     </Typography>
   }
