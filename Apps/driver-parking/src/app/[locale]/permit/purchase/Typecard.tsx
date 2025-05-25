@@ -56,6 +56,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
           {/* <Button variant="contained" aria-label={`Purchase ${permitType} Permit`} color="primary" onClick={purchaseHandler}>
             {t('purchase')}
           </Button> */}
+          {/* you could call the permit.id in the handleClick function */}
           <Button onClick={() => handleClick()}>Pay for Permit</Button>
         </Box>
       </Card>

@@ -7,6 +7,7 @@ export interface Permit {
 }
 
 export interface PermitType {
+    id: string,
     type: string,
     price: number
 }
