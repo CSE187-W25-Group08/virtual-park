@@ -1,8 +1,6 @@
 import { Authorized, Query, Resolver, Mutation, Int, Arg } from "type-graphql";
-import {
-  PaymentIntentResponse,
-  //StripeConfig,
-} from "./schema";
+import //StripeConfig,
+"./schema";
 import Stripe from "stripe";
 
 @Resolver()
@@ -17,13 +15,15 @@ export class StripeResolver {
   async createCheckoutSession(
     @Arg("amount", () => Int) amount: number,
     @Arg("name") name: string,
+    @Arg("type") type: string, //ticket permit (all trinkets and baubles)
+    @Arg("id") id: string, //id of permit or ticket etc (all trinkets and baubles)
     @Arg("successUrl") successUrl: string,
     @Arg("cancelUrl") cancelUrl: string
   ): Promise<string> {
     const stripeSecret = process.env.STRIPE_SECRET_KEY;
     // console.log(stripeSecret)
     if (!stripeSecret) {
-      console.log('test')
+      console.log("test");
       throw new Error("Missing Stripe secret key");
     }
     const stripe = new Stripe(stripeSecret);
@@ -37,6 +37,10 @@ export class StripeResolver {
             currency: "usd",
             product_data: {
               name: name,
+              metadata: {
+                type: type,
+                id: id,
+              },
             },
             unit_amount: amount,
           },
@@ -54,6 +58,7 @@ export class StripeResolver {
     return session.url;
   }
 
+  /*
   @Authorized("driver")
   @Mutation(() => PaymentIntentResponse)
   async createPaymentIntent(
@@ -82,4 +87,5 @@ export class StripeResolver {
       clientSecret: client_secret,
     };
   }
+    */
 }

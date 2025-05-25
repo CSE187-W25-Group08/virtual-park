@@ -8,8 +8,8 @@ import { Card, Typography, Box,
 import { useTranslations } from 'next-intl'
 
 import { PermitType } from '../../../../permit/index'
-import { getCheckoutSessionUrlAction } from '../../stripe/action'
-import { redirect } from 'next/navigation'
+// import { getCheckoutSessionUrlAction } from '../../stripe/action'
+// import { redirect } from 'next/navigation'
 
 /* reference: https://www.typescriptlang.org/docs/handbook/functions.html */
 export default function PermitCard({permit}: { permit: PermitType }) {
@@ -23,13 +23,14 @@ export default function PermitCard({permit}: { permit: PermitType }) {
    React.useEffect(() => {
   }, []);
 
-  const convertToSubCurrency = (amount: number, factor = 100) => {
-    return Math.round(amount * factor);
-  };
+  //const convertToSubCurrency = (amount: number, factor = 100) => {
+  //  return Math.round(amount * factor);
+  //};
 
-  const priceCurrency = convertToSubCurrency(permit.price);
+  //const priceCurrency = convertToSubCurrency(permit.price);
 
   const handleClick = async() => {
+    /*
   const successUrl = `http://localhost:3000/checkout/?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=success`
   const cancelUrl = `http://localhost:3000/checkout/?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=cancel`
   //const successUrl = `${process.env.NEXT_PUBLIC_CHECKOUT_URL}?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=success`
@@ -38,6 +39,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
     if (url) {
       redirect(url)
     }   
+      */
   }
   
   return (
