@@ -11,8 +11,11 @@ export async function listAll(jwt: string): Promise<Ticket[]> {
 export async function getTicketDetails(ticketId: string): Promise<Ticket> {
   const cookie = (await cookies()).get('session')?.value;
   const ticket = await new TicketService().getTicketInfo(cookie, ticketId);
+  console.log("get ticket Details action ticket", ticket);
   ticket.lot = await getLotName(ticket.lot);
+  console.log("get ticket Details action ticket", ticket.lot);
   ticket.vehicle = await getVehiclePLate(cookie, ticket.vehicle)
+  console.log("get ticket Details action ticket", ticket.vehicle);
   return ticket;
   // const testTicket = {
   //   id: "a1b2c3d4",

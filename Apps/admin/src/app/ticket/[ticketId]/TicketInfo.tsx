@@ -28,10 +28,12 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
         const result = await getTicketDetails(ticketId);
         if (result) {
           setTicket(result);
+        } else  {
+          console.log("fetch failed");
         }
       };
       fetchData();
-  
+      console.log(ticket);
     }, [ticketId])
 
     const handleApproveAppeal = async (ticketId : string) => {

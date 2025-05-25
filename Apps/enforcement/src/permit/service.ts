@@ -42,29 +42,11 @@ export async function getPermitByPlate(cookie: string | undefined, carplate: str
 }
 
 export async function recognizePlateFromImage(cookie: string | undefined, base64Image: string): Promise<string> {
-  // const apiKey = process.env.GOOGLE_VISION_API_KEY;
-
-  // const response = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`, {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({
-  //     requests: [
-  //       {
-  //         image: { content: base64Image },
-  //         features: [{ type: 'TEXT_DETECTION' }],
-  //       },
-  //     ],
-  //   }),
-  // });
-
-  // const json = await response.json();
-  // const plateText = json.responses?.[0]?.textAnnotations?.[2]?.description?.trim();
-  // return plateText?.replace(/\s/g, '') || '';
   const response = await fetch('http://localhost:3011/api/v0/ocr/scan', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ base64Image }),
   });
   const json = await response.json();
-  return json.licensePlate || 'failed';
+  return json.licensePlate;
 }

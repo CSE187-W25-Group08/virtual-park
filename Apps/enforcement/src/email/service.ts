@@ -13,17 +13,28 @@ export async function sendTicketNotification(email: string, name: string, ticket
     const issueDate = new Date(ticket.issue);
     const dueDate = new Date(ticket.due);
     const data = await mg.messages.create("virtual-park.net", {
-      from: "Virtual Park Enforcement <postmaster@virtual-park.net>",
-      to: [`${name} <${email}>`],
-      subject: "New Ticket",
-      text: `You have been issued a new ticket:\n
-      Description: ${ticket.description}\n
-      Violation: ${ticket.violation}\n
-      Issue Date: ${issueDate}\n
-      Due Date: ${dueDate}\n
-      Cost: $${ticket.cost}\n
-      Please log in to your account to view more details.`,
-    });
+  from: "Virtual Park Enforcement <postmaster@virtual-park.net>",
+  to: [`${name} <${email}>`],
+  subject: "New Ticket",
+  text: `You have been issued a new ticket:\n
+          Violation: ${ticket.violation}\n
+          Description: ${ticket.description}\n
+          Issue Date: ${issueDate}\n
+          Due Date: ${dueDate}\n
+          Cost: $${ticket.cost}\n
+          Please log in to your account to view more details: https://virtual-park.net/login`,
+  html: `<p>You have been issued a new ticket:</p>
+          <ul>
+            <li><strong>Violation:</strong> ${ticket.violation}</li>
+            <li><strong>Description:</strong> ${ticket.description}</li>
+            <li><strong>Issue Date:</strong> ${issueDate}</li>
+            <li><strong>Due Date:</strong> ${dueDate}</li>
+            <li><strong>Cost:</strong> $${ticket.cost}</li>
+          </ul>
+          <p>
+            Please <a href="https://virtual-park.net/login">log in</a> to your account to view more details.
+          </p>`,
+});
 
     console.log(data); // logs response data
   } catch (error) {

@@ -30,7 +30,7 @@ export default function DriversGrid() {
     };
     setDriverData();
   }, []);
-
+  // revisit info used in this page
   const columns: GridColDef[] = [
     {
       field: 'icon',

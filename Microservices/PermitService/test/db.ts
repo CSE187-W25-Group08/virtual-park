@@ -8,7 +8,7 @@ dotenv.config()
 const pool = new Pool({
   host: 'localhost',
   port: 5432,
-  database: process.env.POSTGRES_DB || 'permit',
+  database: process.env.POSTGRES_DB || 'testdb',
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
 })
@@ -38,6 +38,7 @@ const run = async (file: string) => {
 }
 
 const reset = async () => {
+  console.log('running permit test reset');
   await run('sql/schema.sql')
   await run('sql/test.sql')
 }

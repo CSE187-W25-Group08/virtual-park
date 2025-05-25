@@ -40,28 +40,13 @@ jobs:
   test:
     name: Testing
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: testdb
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-        volumes:
-          - ./docker/initdb:/docker-entrypoint-initdb.d
 
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/testdb
       MASTER_SECRET: not-a-very-secret-secret
       STRIPE_PUBLISHABLE_KEY : ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      POSTGRES_DB: testdb
 
     steps:
       - uses: actions/checkout@v4
@@ -71,7 +56,14 @@ jobs:
       - run: echo $POSTGRES_USER
       - run: npm install
       - run: npm run installs
+      - name: Start DB via Docker Compose
+        run: docker compose -f Dev/docker-compose.yaml up -d
+      - name: Wait for DB
+        run: sleep 10
       - run: npm run test
+      - name: Stop and clean up Docker Compose
+        if: always()
+        run: docker compose -f Dev/docker-compose.yaml down
 
   deploy-docker:
     name: Build and Push Docker Image to GHCR

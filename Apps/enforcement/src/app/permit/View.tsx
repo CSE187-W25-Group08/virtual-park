@@ -78,21 +78,23 @@ export default function PermitView() {
     setError(null)
     setTicketSuccess(null)
 
-    try {
-      const base64 = await toBase64(file)
-      const plate = await googleVision(base64)
+   
+    const base64 = await toBase64(file)
+    const plate = await googleVision(base64)
 
-      setCarPlate(plate)
-      // const permitInfo = await getpermitByPlateNum(plate)
-      // setPermits(permitInfo)
-
-      // if (permitInfo.length === 0) {
-      //   setError(`No permits found for detected plate: ${plate}`)
-      // }
-    } catch (err) {
-      console.error(err)
+    if (!plate) {
       setError('Failed to recognize license plate')
+    } else {
+      setCarPlate(plate)
+      handleSearch()
     }
+    
+    // const permitInfo = await getpermitByPlateNum(plate)
+    // setPermits(permitInfo)
+
+    // if (permitInfo.length === 0) {
+    //   setError(`No permits found for detected plate: ${plate}`)
+    // }
   }
 
   const toBase64 = (file: File): Promise<string> => {
