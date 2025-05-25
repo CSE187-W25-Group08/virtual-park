@@ -43,7 +43,7 @@ test("User can create stripe checkout session through redirected url", async () 
     .send({
       query: `
       mutation {
-          createCheckoutSession(amount: 5555, name: "Test", type: "222", id: "42b", successUrl: "https://example.com/success", cancelUrl: "https://example.com/cancel")
+          createCheckoutSession(amount: 5555, name: "Test", type: "222", id: "42b", cookie: "test", successUrl: "https://example.com/success", cancelUrl: "https://example.com/cancel")
       }
       `,
     })

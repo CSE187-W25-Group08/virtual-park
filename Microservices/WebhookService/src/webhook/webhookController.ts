@@ -2,6 +2,7 @@ import { Request, Controller, Post, Route, Body } from "tsoa";
 
 import express from "express";
 import Stripe from "stripe";
+import { setTicketPaid } from "../ticket/service";
 
 const stripeSecretkey = process.env.STRIPE_SECRET_KEY;
 if (!stripeSecretkey) {
@@ -16,6 +17,7 @@ export class WebhookController extends Controller {
     @Request() request: express.Request,
     @Body() body: Buffer
   ): Promise<void> {
+    // parsing information can ignore if you want to implement purchases flow
     const rawBody = body.toString("utf-8");
     const signature = request.headers["stripe-signature"] as string;
 
@@ -58,16 +60,35 @@ export class WebhookController extends Controller {
 
             const dataType = product.metadata.type;
             const dataId = product.metadata.id;
-            const dataDriver = product.metadata.driver;
+            const dataCookie = product.metadata.cookie;
 
             const dataName = product.name;
             const dataAmount = lineItems[0].price?.unit_amount;
 
+            // MARK: IMPLEMENT HEREEE
             console.log("Product name:", dataName);
             console.log("Amount price:", dataAmount);
             console.log("Type:", dataType);
             console.log("ID:", dataId);
-            console.log("Driver:", dataDriver);
+            console.log("Driver:", dataCookie);
+
+            switch(dataType) {
+              case "ticket": {
+                const ticket =  await setTicketPaid(dataId, true, dataCookie);
+                if (ticket) {
+                  console.log("Ticket paid successfully:", ticket);
+                }
+
+                break;
+              }
+              default: {
+                console.log('emow')
+                break;
+              }
+            }
+
+
+
           }
           break;
         }

@@ -19,12 +19,13 @@ export async function getCheckoutSessionUrl(
       },
       body: JSON.stringify({
         query: `
-      mutation ($amount: Int!, $name: String!, $type: String!, $id: String!, $successUrl: String!, $cancelUrl: String!) {
+      mutation ($amount: Int!, $name: String!, $type: String!, $id: String!, $cookie: String!, $successUrl: String!, $cancelUrl: String!) {
         createCheckoutSession(
           amount: $amount,
           name: $name,
           type: $type,
           id: $id,
+          cookie: $cookie,
           successUrl: $successUrl,
           cancelUrl: $cancelUrl
         )
@@ -35,6 +36,7 @@ export async function getCheckoutSessionUrl(
           name: name,
           type: type,
           id: id,
+          cookie: cookie,
           successUrl,
           cancelUrl,
         },
