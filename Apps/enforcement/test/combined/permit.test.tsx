@@ -8,6 +8,7 @@ import userEvent from '@testing-library/user-event'
 // import PurchaseHistoryPage from '../../src/app/[locale]/permit/history/page'
 // import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import PermitPage from '../../src/app/permit/page'
+import Page from '../../src/app/page'
 import { getPermitByPlate } from '../../src/permit/service'
 
 vi.mock('next/navigation', () => ({
@@ -29,6 +30,12 @@ beforeEach(() => {
 afterEach(() => {
   cleanup()
   vi.clearAllMocks()
+})
+
+it("render page", async () => {
+  render(<Page />)
+  const heading = screen.getByText('Vehicle Permit')
+  expect(heading).toBeTruthy()
 })
 
 it("should fetch user's permits by plate", async () => {
