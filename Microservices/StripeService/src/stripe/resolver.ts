@@ -1,4 +1,5 @@
-import { Authorized, Query, Resolver, Mutation, Int, Arg } from "type-graphql";
+import { Ctx, Authorized, Query, Resolver, Mutation, Int, Arg } from "type-graphql";
+import { Request } from "express"
 import //StripeConfig,
 "./schema";
 import Stripe from "stripe";
@@ -18,7 +19,8 @@ export class StripeResolver {
     @Arg("type") type: string, //ticket permit (all trinkets and baubles)
     @Arg("id") id: string, //id of permit or ticket etc (all trinkets and baubles)
     @Arg("successUrl") successUrl: string,
-    @Arg("cancelUrl") cancelUrl: string
+    @Arg("cancelUrl") cancelUrl: string,
+    @Ctx() request: Request
   ): Promise<string> {
     const stripeSecret = process.env.STRIPE_SECRET_KEY;
     // console.log(stripeSecret)
@@ -40,6 +42,7 @@ export class StripeResolver {
               metadata: {
                 type: type,
                 id: id,
+                driver: String(request.user?.id)
               },
             },
             unit_amount: amount,

@@ -58,10 +58,12 @@ export class WebhookController extends Controller {
             console.log("Product name:", product.name);
 
             const type = product.metadata.type;
-            const id = product.metadata.custom_id;
+            const id = product.metadata.id;
+            const driver = product.metadata.driver;
 
             console.log("Type:", type);
             console.log("ID:", id);
+            console.log("Driver:", driver);
           }
           break;
         }
