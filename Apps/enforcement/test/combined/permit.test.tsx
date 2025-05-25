@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event'
 // import { permit_history as permitHistoryMessages } from '../../messages/en.json'
 import PermitPage from '../../src/app/permit/page'
 import Page from '../../src/app/page'
-import { getPermitByPlate } from '../../src/permit/service'
+import { getPermitByPlate, recognizePlateFromImage } from '../../src/permit/service'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -118,6 +118,17 @@ it('getpermitBycarplate rejects and return authorized error', async () => {
 
   await expect(getPermitByPlate('invalidCookie', 'abc12')).rejects.toBe('Unauthorized')
 })
+
+it('test recognizePlateFromImage no license', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+    status: 401,
+    json: () => Promise.resolve({}),
+  } as Response))
+
+  const result = await recognizePlateFromImage('invalidCookie', 'abc12')
+  expect(result).toBe(undefined)
+})
+
 
 it("should show an permit found for the vehicle error", async () => {
   const mockPush = vi.fn()
