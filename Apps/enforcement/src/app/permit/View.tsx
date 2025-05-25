@@ -38,19 +38,21 @@ export default function PermitView() {
     setCarPlate(event.target.value)
   }
   
-  const handleSearch = async () => {
-    if (!carPlate) {
+  const handleSearch = async (plateInput?: string) => {
+    const plateToUse = plateInput || carPlate
+    console.log('plateToUse: ', plateToUse)
+    if (!plateToUse) {
       setError('Please enter a car plate number')
       return
     }
     setError(null)
     setTicketSuccess(null)
-    const permitInfo = await getpermitByPlateNum(carPlate)
+    const permitInfo = await getpermitByPlateNum(plateToUse)
     setPermits(permitInfo)
     
     if (permitInfo.length === 0) {
       setError('No permits found for this vehicle')
-      const driverID = await getDriverFromVehiclePlate(carPlate)
+      const driverID = await getDriverFromVehiclePlate(plateToUse)
       setDriverID(String(driverID))
     } else {
       setDriverID(String(permitInfo[0].driverID))
@@ -86,7 +88,8 @@ export default function PermitView() {
       setError('Failed to recognize license plate')
     } else {
       setCarPlate(plate)
-      handleSearch()
+      console.log('plate: ', plate)
+      handleSearch(plate)
     }
     
     // const permitInfo = await getpermitByPlateNum(plate)
@@ -130,7 +133,7 @@ export default function PermitView() {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleSearch}
+          onClick={() => handleSearch()}
           sx={{height: 50}}
         >
           {'Search'}
