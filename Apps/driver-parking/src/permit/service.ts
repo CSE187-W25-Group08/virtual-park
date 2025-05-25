@@ -31,7 +31,7 @@ export async function getPermitType(cookie: string | undefined):Promise<PermitTy
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${cookie}`,
       },
-      body: JSON.stringify({query: `{PermitType {type, price}}`}),
+      body: JSON.stringify({query: `{PermitType {id, type, price}}`}),
     })
     .then(response => { 
       if (response.status != 200) {

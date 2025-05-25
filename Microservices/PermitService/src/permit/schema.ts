@@ -30,10 +30,14 @@ export class Permit {
 
 @ObjectType()
 export class PermitType {
-  constructor(price: number, type: string) {
+  constructor( id: string, price: number, type: string) {
+    this.id = id
     this.type = type
     this.price = price
   }
+  @Field(() => ID)
+  @IsUUID()
+  id!: string
 
   @Field()
   type!: string
