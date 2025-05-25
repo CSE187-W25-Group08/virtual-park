@@ -48,5 +48,5 @@ export async function recognizePlateFromImage(cookie: string | undefined, base64
     body: JSON.stringify({ base64Image }),
   });
   const json = await response.json();
-  return json.licensePlate || 'failed';
+  return json.licensePlate;
 }

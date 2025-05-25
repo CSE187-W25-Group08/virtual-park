@@ -4,11 +4,11 @@ const client = new vision.ImageAnnotatorClient({
   keyFilename: process.env.GOOGLE_CREDENTIALS_PATH || './service-account.json',
 })
 
-export async function extractLicensePlateText(imageBuffer: Buffer): Promise<string> {
+export async function extractLicensePlateText(imageBuffer: Buffer): Promise<string|undefined> {
   const [result] = await client.textDetection({ image: { content: imageBuffer } })
   const allText = result.textAnnotations?.[0].description
   
-  console.log('All detected text:', allText);
+  // console.log('All detected text:', allText);
 
   const patterns = [
     /\b\d[A-Z]{3}\d{3}\b/i,
@@ -20,8 +20,8 @@ export async function extractLicensePlateText(imageBuffer: Buffer): Promise<stri
     if (match) {
       const plate = match[0].replace(/\s/g, "").toUpperCase()
       return plate
+    } else {
+      return undefined;
     }
   }
-  
-  throw new Error("No license plate found")
 }
