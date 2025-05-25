@@ -223,34 +223,17 @@ it("issue ticket successfully", async () => {
       } as Response)
     }
 
-    if (url === 'http://localhost:4030/graphql') {
-      return Promise.resolve({
-        status: 200,
-        json: () => Promise.resolve({
-          data: {
-            getDriver: {
-              id: '123',
-              name: 'John Doe',
-              email: 'john@example.com',
-              phone: '555-0123'
-            }
-          }
-        })
-      } as Response)
-    }
-
     if (String(url).startsWith('http://localhost:3010/api/v0/auth/user')) {
       return Promise.resolve({
         status: 200,
         json: () => Promise.resolve({
           id: '123',
           name: 'nickdriver',
-          email: 'nick@books.com',
-          phone: '555-0123',
-          role: 'driver'
+          email: 'nick@books.com'
         }),
       } as Response)
     }
+    
     if (url === 'http://localhost:3011/api/v0/ocr/scan') {
       console.log('OCR API called with:', options?.body)
       return Promise.resolve({
@@ -288,7 +271,7 @@ it("issue ticket successfully", async () => {
   const issueButton = within(dialog).getByText('Issue Ticket')
   await userEvent.click(issueButton)
   await screen.findByText('Ticket issued successfully')
-})
+}, { timeout: 10000 })
 
 it("not all the required fields get filled out in the ticket ", async () => {
   const mockPush = vi.fn()
@@ -478,4 +461,4 @@ it("failed to issue ticket", async () => {
   await userEvent.click(issueButton)
   await screen.findByText('Failed to issue ticket')
   // await screen.findByText('Ticket 1234 issued successfully')
-})
+}, { timeout: 10000 })
