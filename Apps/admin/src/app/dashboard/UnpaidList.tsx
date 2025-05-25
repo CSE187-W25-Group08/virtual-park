@@ -19,7 +19,6 @@ export default function UnpaidList() {
     const setAppealData = async () => {
       const list = await listUnpaid();
       if (list) setUnpaid(list);
-      // console.log("in view", unpaid);
     }
     setAppealData();
   }, [])
