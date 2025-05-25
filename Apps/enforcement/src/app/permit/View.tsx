@@ -15,7 +15,8 @@ import {
   TableRow,
   Paper,
   TableBody,
-  Alert
+  Alert,
+  CircularProgress 
 } from '@mui/material'
 import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate} from './action'
 import { Permit } from '../../permit/index'
@@ -28,6 +29,7 @@ export default function PermitView() {
   const [ticketSuccess, setTicketSuccess] = useState<string | null>(null)
   const [ticketDialog, setTicketDialog] = useState(false)
   const [driverID, setDriverID] = useState('')
+  const [loading, setLoading] = useState(false)
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -38,19 +40,20 @@ export default function PermitView() {
     setCarPlate(event.target.value)
   }
   
-  const handleSearch = async () => {
-    if (!carPlate) {
+  const handleSearch = async (plateInput?: string) => {
+    const plateToUse = plateInput || carPlate
+    if (!plateToUse) {
       setError('Please enter a car plate number')
       return
     }
     setError(null)
     setTicketSuccess(null)
-    const permitInfo = await getpermitByPlateNum(carPlate)
+    const permitInfo = await getpermitByPlateNum(plateToUse)
     setPermits(permitInfo)
     
     if (permitInfo.length === 0) {
       setError('No permits found for this vehicle')
-      const driverID = await getDriverFromVehiclePlate(carPlate)
+      const driverID = await getDriverFromVehiclePlate(plateToUse)
       setDriverID(String(driverID))
     } else {
       setDriverID(String(permitInfo[0].driverID))
@@ -71,28 +74,39 @@ export default function PermitView() {
     setError(errorMessage)
   }
 
+  const clearScreen = () => {
+    setCarPlate('')
+    setPermits([])
+    setError(null)
+    setTicketSuccess(null)
+  }
+
   const handleOCR = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
-    setError(null)
-    setTicketSuccess(null)
+    clearScreen()
+    setLoading(true)
 
-    try {
-      const base64 = await toBase64(file)
-      const plate = await googleVision(base64)
+    const base64 = await toBase64(file)
+    const plate = await googleVision(base64)
 
-      setCarPlate(plate)
-      // const permitInfo = await getpermitByPlateNum(plate)
-      // setPermits(permitInfo)
+    setLoading(false)
 
-      // if (permitInfo.length === 0) {
-      //   setError(`No permits found for detected plate: ${plate}`)
-      // }
-    } catch (err) {
-      console.error(err)
+    if (!plate) {
       setError('Failed to recognize license plate')
+    } else {
+      setCarPlate(plate)
+      console.log('plate: ', plate)
+      handleSearch(plate)
     }
+    
+    // const permitInfo = await getpermitByPlateNum(plate)
+    // setPermits(permitInfo)
+
+    // if (permitInfo.length === 0) {
+    //   setError(`No permits found for detected plate: ${plate}`)
+    // }
   }
 
   const toBase64 = (file: File): Promise<string> => {
@@ -128,7 +142,7 @@ export default function PermitView() {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleSearch}
+          onClick={() => handleSearch()}
           sx={{height: 50}}
         >
           {'Search'}
@@ -147,6 +161,9 @@ export default function PermitView() {
             Upload Image
           </Button>
         </label>
+        <Button variant="outlined" component="span" sx={{ height: 50 }} onClick={clearScreen}>
+            Clear
+        </Button>
 
       {/* reference: https://mui.com/material-ui/react-alert/ */}
        {/* reference: https://mui.com/material-ui/react-table/ */}
@@ -161,6 +178,13 @@ export default function PermitView() {
           {error}
         </Alert>
       )}
+
+      {loading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
+          <CircularProgress />
+        </Box>
+      )}
+
       
       {permits.length > 0 && (
         <Box>

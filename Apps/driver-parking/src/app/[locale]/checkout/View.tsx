@@ -16,11 +16,11 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 export default function View({
   type,
-  price,
+  amount,
   status,
 }: {
   type: string;
-  price: number;
+  amount: number;
   status: string;
 }) {
   const handleBack = () => {
@@ -53,8 +53,8 @@ export default function View({
           Purchase {status}
         </Typography>
         <Typography>
-          You’ve purchased a <strong>{type}</strong> permit for{" "}
-          <strong>${price}</strong>.
+          You’ve purchased a <strong>{type}</strong> for{" "}
+          <strong>${amount}</strong>.
         </Typography>
         <Box>
           <Button

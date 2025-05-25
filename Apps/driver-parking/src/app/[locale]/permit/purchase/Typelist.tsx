@@ -14,6 +14,7 @@ export default function TypeList() {
 
   useEffect(() => {
     const fetchData = async () => {
+    console.log('Stripe Public Key:', process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
       const fetch = await permitTypes()
       setpermitTypeList(fetch)
     }

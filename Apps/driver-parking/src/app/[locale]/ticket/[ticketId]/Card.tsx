@@ -7,6 +7,7 @@ import { Box, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import { useRouter } from 'next/navigation'
 import { useTranslations } from "next-intl";
+ import { redirect } from 'next/navigation'
 
 import AppealModal from './AppealModal';
 import { Ticket } from "@/ticket";
@@ -17,6 +18,7 @@ import {
   } from "../actions";
 import { Vehicle } from "@/register";
 import { getVehicleById } from "../../register/actions";
+import { getCheckoutSessionUrlAction } from "../../stripe/action";
 
 export default function Card({ ticketId }: { ticketId: string }) {
   const [ticket, setTicket] = useState<Ticket | null>(null);
@@ -72,15 +74,20 @@ export default function Card({ ticketId }: { ticketId: string }) {
     }
   };
 
-  /*
+  // need to convert the cost to sub-currency (e.g., cents) for Stripe
+
   const handleClickPaid = async () => {
-     const newTicket = await setTicketPaid(ticketId, true);
-     if (newTicket) {
-       setTicket(newTicket);
-       router.push('/ticket');
-     }
-   };
-   */
+    const convertToSubCurrency = (amount: number, factor = 100) => {
+      return Math.round(amount * factor);
+    };
+    const priceCurrency = convertToSubCurrency(ticket!.cost);
+    const successUrl = `http://localhost:3000/checkout/?&amount=${encodeURIComponent(ticket!.cost)}&name=${encodeURIComponent(ticket!.violation)}&type=ticket&id=${encodeURIComponent(ticket!.id)}status=success`
+    const cancelUrl = `http://localhost:3000/checkout/?&amount=${encodeURIComponent(ticket!.cost)}&name=${encodeURIComponent(ticket!.violation)}&type=ticket&id=${encodeURIComponent(ticket!.id)}status=cancel`
+    const url = await getCheckoutSessionUrlAction(priceCurrency, ticket!.violation, "ticket",ticket!.id, successUrl, cancelUrl)
+    if (url) {
+      redirect(url)
+    }   
+  };
 
   const handleOpenAppealModal = () => {
     setAppealModalOpen(true);
@@ -172,7 +179,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
   
                 {(!ticket?.paid && ticket?.appeal != "approved") && (
                   <Box sx={{display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 1}}>
-                    {/*<Button variant="outlined" onClick={() => {handleClickPaid()}}>{t('payTicket')}</Button>*/}
+                    <Button variant="outlined" onClick={() => {handleClickPaid()}}>{t('payTicket')}</Button>*
                     <Button variant="outlined" onClick={() => {handleOpenAppealModal()}}>
                       {t('appealTicket')}
                     </Button>
