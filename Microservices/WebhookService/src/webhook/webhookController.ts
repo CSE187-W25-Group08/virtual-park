@@ -12,7 +12,7 @@ const stripe = new Stripe(stripeSecretkey);
 
 @Route("webhook")
 export class WebhookController extends Controller {
-  @Post("doesnt matter?")
+  @Post("")
   public async handleStripePushNotification(
     @Request() request: express.Request,
     @Body() body: Buffer
