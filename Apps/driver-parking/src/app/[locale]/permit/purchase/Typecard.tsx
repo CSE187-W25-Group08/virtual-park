@@ -1,5 +1,6 @@
 'use client'
 
+import * as React from 'react';
 import { Card, Typography, Box, 
   // Button, 
   ListItem, 
@@ -18,6 +19,10 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   //   alert(`${t('purchased')} ${permitType} ($${permit.price})`)
   // }
 
+
+   React.useEffect(() => {
+  }, []);
+
   const convertToSubCurrency = (amount: number, factor = 100) => {
     return Math.round(amount * factor);
   };
@@ -35,6 +40,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   
   return (
     <ListItem disablePadding>
+      {process.env.NEXT_PUBLIC_CHECKOUT_URL}
       <Card sx={{ p: 2, border: 'solid', width: '100%', mb: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
