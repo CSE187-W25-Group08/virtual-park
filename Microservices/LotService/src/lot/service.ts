@@ -44,8 +44,8 @@ export class LotService {
       values: [id]
     }
     const { rows } = await pool.query(query);
+    console.log("lots by id return rows", rows);
     const lots = await this.rowToLot(rows);
-    console.log("lots by id return", lots);
     return lots[0];
   }
 

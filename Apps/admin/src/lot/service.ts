@@ -119,7 +119,7 @@ export class LotService {
           resolve(json.data.getLotById.name);
         })
         .catch((err) => {
-          console.error('Fetch error:', err);
+          console.error('getLotById Fetch error:', err);
           reject('Unknown Lot');
         });
     });

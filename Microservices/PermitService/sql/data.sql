@@ -72,7 +72,6 @@ INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
   )
 );
 
--- jentest2 permit
 INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
   'ee86f267-9cc0-4767-96f9-f64af8e2fcf3',
   'd8ae74ff-f0c8-4837-8690-d3e9471fe283',
@@ -82,33 +81,3 @@ INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
     'exp_date', '2025-07-21T08:00:00.000Z'
   )
 );
-
-/*
-SELECT 
-  vinfo.license_plate,
-  dp.id AS permitID,
-  pt.data->>'type' AS permitType,
-  dp.data->>'issue_date' AS issueDate,
-  dp.data->>'exp_date' AS expDate,
-  (dp.data->>'exp_date')::timestamp > NOW() AS isValid
-FROM driverpermit dp
-JOIN permittype pt ON dp.permitType = pt.id
-LEFT JOIN dblink('dbname=vehicle user=postgres',
-  $$SELECT id AS driverID, data->>'license_plate' AS license_plate FROM vehicle$$
-) 
-AS vinfo(driverID UUID, license_plate TEXT)
-ON dp.driverID = vinfo.driverID
-WHERE vinfo.license_plate = '123BC4A';
-*/
-
--- SELECT dp.id AS "permitID", pt.data->>'type' AS "permitType", dp.data->>'issue_date' AS "issueDate",
--- dp.data->>'exp_date' AS "expDate", (dp.data->>'exp_date')::timestamp > NOW() AS "isValid", v.driver AS "driverID",
--- v.id AS "vehicleID"
--- FROM driverpermit dp
--- JOIN permittype pt ON dp.permitType = pt.id
--- JOIN dblink('dbname=vehicle user=postgres',
--- $$SELECT id, driver::uuid, data->>'license_plate' AS license_plate
--- FROM vehicle
--- WHERE data->>'license_plate' = '123BC4A'$$
--- ) AS v(id uuid, driver uuid, license_plate text)
--- ON dp.driverID = v.driver;

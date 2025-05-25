@@ -3,13 +3,13 @@
 import { cookies } from 'next/headers'
 
 
-import {Ticket} from '../../ticket'
-import {Lot} from '../../lot'
-import {issueTicketForVehicle} from '../../ticket/service'
-import {getAllLots} from '../../lot/service'
-import {getDriver} from '../../auth/service'
-import {Driver} from '../../auth'
-import {sendTicketNotification} from '../../email/service'
+import { Ticket } from '../../ticket'
+import { Lot } from '../../lot'
+import { issueTicketForVehicle } from '../../ticket/service'
+import { getAllLots } from '../../lot/service'
+import { getDriver } from '../../auth/service'
+import { Driver } from '../../auth'
+import { sendTicketNotification } from '../../email/service'
 
 export async function issueTicketForCar(
   driverId: string,
@@ -36,6 +36,7 @@ export async function issueTicketForCar(
 }
 
 export async function getallLots(): Promise<Lot[]> {
+  console.log("enforcement get all lots action called");
   const cookie = (await cookies()).get('session')?.value
   return getAllLots(cookie)
 }
