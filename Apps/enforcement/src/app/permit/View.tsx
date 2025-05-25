@@ -73,14 +73,19 @@ export default function PermitView() {
     setError(errorMessage)
   }
 
+  const clearScreen = () => {
+    setCarPlate('')
+    setPermits([])
+    setError(null)
+    setTicketSuccess(null)
+  }
+
   const handleOCR = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
-    setError(null)
-    setTicketSuccess(null)
+    clearScreen()
 
-   
     const base64 = await toBase64(file)
     const plate = await googleVision(base64)
 
