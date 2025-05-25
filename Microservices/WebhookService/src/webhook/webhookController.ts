@@ -87,17 +87,17 @@ export class WebhookController extends Controller {
               }
             }
 
-
-
           }
           break;
         }
 
+        /*
         case "payment_method.attached": {
           const paymentMethod = event.data.object as Stripe.PaymentMethod;
           console.log(`PaymentMethod attached: ${paymentMethod.id}`);
           break;
         }
+          */
         default:
           console.log(`Unhandled event type ${event.type}`);
           break;
