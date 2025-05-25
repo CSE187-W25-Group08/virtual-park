@@ -10,8 +10,8 @@ import { useSearchParams } from 'next/navigation'
 export default function Page(){
   const searchParams = useSearchParams() 
   const type = searchParams.get('type') || ''
-  const price = parseFloat(searchParams.get('price') || '0')
+  const amount = parseFloat(searchParams.get('amount') || '0')
   const status = searchParams.get('status') || ''
 
-  return <View type={type} price = {price} status={status}/>;
+  return <View type={type} amount = {amount} status={status}/>;
 }

@@ -55,15 +55,19 @@ export class WebhookController extends Controller {
           if (lineItems && lineItems.length > 0) {
             const product = lineItems[0].price?.product as Stripe.Product;
 
-            console.log("Product name:", product.name);
 
-            const type = product.metadata.type;
-            const id = product.metadata.id;
-            const driver = product.metadata.driver;
+            const dataType = product.metadata.type;
+            const dataId = product.metadata.id;
+            const dataDriver = product.metadata.driver;
 
-            console.log("Type:", type);
-            console.log("ID:", id);
-            console.log("Driver:", driver);
+            const dataName = product.name;
+            const dataAmount = lineItems[0].price?.unit_amount;
+
+            console.log("Product name:", dataName);
+            console.log("Amount price:", dataAmount);
+            console.log("Type:", dataType);
+            console.log("ID:", dataId);
+            console.log("Driver:", dataDriver);
           }
           break;
         }
