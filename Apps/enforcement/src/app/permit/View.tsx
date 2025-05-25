@@ -15,7 +15,8 @@ import {
   TableRow,
   Paper,
   TableBody,
-  Alert
+  Alert,
+  CircularProgress 
 } from '@mui/material'
 import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate} from './action'
 import { Permit } from '../../permit/index'
@@ -28,6 +29,7 @@ export default function PermitView() {
   const [ticketSuccess, setTicketSuccess] = useState<string | null>(null)
   const [ticketDialog, setTicketDialog] = useState(false)
   const [driverID, setDriverID] = useState('')
+  const [loading, setLoading] = useState(false)
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -85,9 +87,12 @@ export default function PermitView() {
     if (!file) return
 
     clearScreen()
+    setLoading(true)
 
     const base64 = await toBase64(file)
     const plate = await googleVision(base64)
+
+    setLoading(false)
 
     if (!plate) {
       setError('Failed to recognize license plate')
@@ -174,6 +179,13 @@ export default function PermitView() {
           {error}
         </Alert>
       )}
+
+      {loading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
+          <CircularProgress />
+        </Box>
+      )}
+
       
       {permits.length > 0 && (
         <Box>
