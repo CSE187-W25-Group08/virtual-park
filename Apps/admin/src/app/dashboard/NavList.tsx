@@ -10,7 +10,6 @@ import {
   Typography
 } from'@mui/material'
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import { useState, useEffect } from 'react';
@@ -19,7 +18,6 @@ import { usePathname, useRouter } from 'next/navigation';
 export default function NavList() {
   const listItems = [
     { text: 'Home', page: "/", icon: <HomeRoundedIcon /> },
-    { text: 'Drivers', page: "/drivers", icon: <PeopleRoundedIcon /> },
     { text: 'Enforcement', page: '/enforcement', icon: <LocalPoliceIcon />},
     { text: 'Lots', page: "/lots", icon: <LocalParkingIcon /> },
   ];

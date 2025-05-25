@@ -25,9 +25,9 @@ afterEach(() => {
 
 it('Navigates to drivers', async () => {
   render(<SideBarNav />)
-  const driverNavigation = await screen.findByText('Drivers')
+  const driverNavigation = await screen.findByText('Enforcement')
   await fireEvent.click(driverNavigation)
-  expect(mockPush).toHaveBeenCalledWith('/drivers')
+  expect(mockPush).toHaveBeenCalledWith('/enforcement')
 })
 
 it('Navigates to home', async () => {

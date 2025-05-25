@@ -12,6 +12,7 @@ export interface Ticket {
   cost: number,
   appeal: string,
   appealReason?: string
+  driver?: string
 }
 
 export interface TicketId {

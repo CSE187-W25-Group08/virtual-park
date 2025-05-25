@@ -54,6 +54,10 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
       router.push('/')
     }
 
+    // const handleOpenDriver = async (driverId : string | undefined) => {
+    //   if (driverId) {router.push('/drivers/' + driverId)}
+    // }
+
     // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
     const getAppealChipColor = (appeal: string | null) => {
       switch (appeal) {
@@ -134,6 +138,18 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
                 <Typography variant="h6"><strong>Amount Due:</strong> ${ticket.cost}</Typography>
               </Grid>
             </Grid>
+            {/* {ticket.driver && (
+              <Box>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleOpenDriver(ticket.driver)}
+                  sx={{ mt: 2}}
+                >
+                  View Driver
+                </Button>
+              </Box>
+            )} */}
           </CardContent>
         </Card>
         {(ticket.appeal && ticket.appeal != 'null') && (

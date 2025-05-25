@@ -24,7 +24,7 @@ export class VehicleService {
         .catch(() => reject('Unauthorized'))
     })
   }
-  public async getVehiclePlate(cookie: string | undefined, id: string): Promise<string> {
+  public async getVehiclePlate(cookie: string | undefined, id: string): Promise<Vehicle> {
     return new Promise((resolve, reject) => {
       fetch('http://localhost:4020/graphql', {
         method: 'POST',
@@ -32,7 +32,7 @@ export class VehicleService {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${cookie}`,
         },
-        body: JSON.stringify({ query: `{getAnyVehicleById(id: "${id}") {licensePlate}}` }),
+        body: JSON.stringify({ query: `{getAnyVehicleById(id: "${id}") {id, licensePlate, driver, make, model, color}}` }),
       })
         .then(response => {
           if (response.status != 200) {
@@ -42,7 +42,7 @@ export class VehicleService {
         }
         )
         .then(json => {
-          resolve(json.data.getAnyVehicleById.licensePlate)
+          resolve(json.data.getAnyVehicleById)
         })
         .catch((err) => {
           console.error('Fetch error:', err);

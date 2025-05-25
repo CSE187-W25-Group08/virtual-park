@@ -1,4 +1,4 @@
-import { it, expect, vi} from "vitest";
+import { it, expect, vi } from "vitest";
 import { Lot, UpdateLotData } from "../../src/lot";
 import { LotService } from "../../src/lot/service";
 const newLot: UpdateLotData = {
@@ -70,7 +70,7 @@ it("successfully fetches all lots from GraphQL API", async () => {
     })
   } as Response);
 
-  const result = await new LotService().getLots();
+  const result = await new LotService().getAllLots("mock cookie");
 
   expect(result[0].id).toEqual("lot-001");
 });
@@ -85,7 +85,7 @@ it("Error on mock lots", async () => {
     })
   } as Response);
 
-  await expect(new LotService().getLots()).rejects.toThrow('Unauthorized');
+  await expect(new LotService().getAllLots("mock cookie")).rejects.toThrow('Unauthorized');
 });
 
 
