@@ -38,6 +38,19 @@ INSERT INTO vehicle (id, driver, data) VALUES (
   )
 );
 
+-- jentest3 vehicle
+INSERT INTO vehicle (id, driver, data) VALUES (
+  'ca755b1a-975c-4543-983f-888897db3cab',
+  'e38d15bc-5f7d-4f66-9e17-b4827bd8371c',
+  jsonb_build_object(
+    'license_plate', '4XXX333',
+    'make', 'Subaru',
+    'model', 'BRZ',
+    'color', 'White',
+    'active', false
+  )
+);
+
 --molly 2 vehicles
 INSERT INTO vehicle (id, driver, data) VALUES (
   '18fa94fc-4783-42df-a904-7ec17efadca5',

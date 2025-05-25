@@ -486,3 +486,16 @@ VALUES (
     'suspended', false
   )
 );
+
+INSERT INTO member(id, data) 
+VALUES (
+  'e38d15bc-5f7d-4f66-9e17-b4827bd8371c',
+  jsonb_build_object(
+    'email','jenchenshb@gmail.com',
+    'name','Jennifer Chen',
+    'pwhash',crypt('jtest3',gen_salt('bf')),
+    'roles','["driver"]',
+    'joindate', '2023-06-15T12:00:00+00:00',
+    'suspended', false
+  )
+);
