@@ -73,14 +73,19 @@ export default function PermitView() {
     setError(errorMessage)
   }
 
+  const clearScreen = () => {
+    setCarPlate('')
+    setPermits([])
+    setError(null)
+    setTicketSuccess(null)
+  }
+
   const handleOCR = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
-    setError(null)
-    setTicketSuccess(null)
+    clearScreen()
 
-   
     const base64 = await toBase64(file)
     const plate = await googleVision(base64)
 
@@ -152,6 +157,9 @@ export default function PermitView() {
             Upload Image
           </Button>
         </label>
+        <Button variant="outlined" component="span" sx={{ height: 50 }} onClick={clearScreen}>
+            Clear
+        </Button>
 
       {/* reference: https://mui.com/material-ui/react-alert/ */}
        {/* reference: https://mui.com/material-ui/react-table/ */}
