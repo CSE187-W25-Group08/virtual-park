@@ -186,7 +186,7 @@ test('should issue a daily permit', async () => {
 
 const week =  '8616e7a7-bd6e-45e2-9809-ed22c727a6da';
 const SecondVehicleId = 'a74ab65d-f1ec-48b0-852b-5e9a486fc323';
-test('should issue a daily permit', async () => {
+test('should issue a weekly permit', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
@@ -219,5 +219,42 @@ test('should issue a daily permit', async () => {
       ExpDate.setDate(ExpDate.getDate() + 7);
       expect(issueDate.toDateString()).not.toEqual(ExpDate.toDateString());
       console.log('issue date details', issueDate, ExpDate)
+    })
+})
+
+const month =  '7acb1a82-c27a-4440-ace7-6d47add695dd';
+const ThirdVehicleId = 'ca755b1a-975c-4543-983f-888897db3cab';
+test('should issue a monthly permit', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+     .send({
+        query: `
+          mutation ($permitTypeId: String!, $vehicleId: String!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+              driverID
+              vehicleID
+              permitType
+              issueDate
+              expDate
+              isValid
+            }
+          }
+        `,
+        variables: {
+          permitTypeId: month,
+          vehicleId: ThirdVehicleId
+        }
+      })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      expect(res.body.data.issuePermit).toBeDefined()
+      const permit = res.body.data.issuePermit;
+      const issueDate = new Date(permit.issueDate);
+      const ExpDate = new Date(issueDate);
+      ExpDate.setMonth(ExpDate.getMonth() + 1);
+      expect(issueDate.getMonth()).toEqual(ExpDate.getMonth() - 1);
     })
 })
