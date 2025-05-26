@@ -144,3 +144,35 @@ test('should return empty array with not exist car plate number', async () => {
       expect(res.body.data.getPermitBycarPlate.length).toEqual(0)
     })
 })
+
+
+test('should issue a permit', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+     .send({
+        query: `
+          mutation ($permitTypeId: String!, $vehicleId: String!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+              driverID
+              vehicleID
+              permitType
+              issueDate
+              expDate
+              isValid
+              price
+            }
+          }
+        `,
+        variables: {
+          permitTypeId: '8616e7a7-bd6e-45e2-9809-ed22c727a6da',
+          vehicleId: '5616e7a7-bd6e-45e2-9809-ed22c727a6da'
+        }
+      })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      expect(res.body.data.issuePermit.length).toEqual(0)
+    })
+})

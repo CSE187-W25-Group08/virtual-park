@@ -39,6 +39,7 @@ export class PermitResolver {
     return await new PermitService().getValidPermit(Request.user?.id)
   }
 
+  @Authorized()
   @Mutation(() => PermitIssue)
   async issuePermit(
     @Arg("permitTypeId") permitTypeId: string,

@@ -8,6 +8,9 @@ import { Card, Typography, Box,
 import { useTranslations } from 'next-intl'
 
 import { PermitType } from '../../../../permit/index'
+import { getPrimaryVehicle } from '../../register/actions';
+import { Vehicle } from '../../../../register';
+import { createCheckout } from '../../../../stripe/helper';
 // import { getCheckoutSessionUrlAction } from '../../stripe/action'
 // import { redirect } from 'next/navigation'
 
@@ -15,12 +18,19 @@ import { PermitType } from '../../../../permit/index'
 export default function PermitCard({permit}: { permit: PermitType }) {
   const t = useTranslations('purchase_permit')
 
+  const [vehicle, setVehicle] = React.useState<Vehicle | null>(null);
+
+
   // const purchaseHandler = () => {
   //   alert(`${t('purchased')} ${permitType} ($${permit.price})`)
   // }
 
 
    React.useEffect(() => {
+    const getActiveVehicle = async () => {
+      setVehicle(await getPrimaryVehicle());
+    }
+    getActiveVehicle();
   }, []);
 
   //const convertToSubCurrency = (amount: number, factor = 100) => {
@@ -30,16 +40,22 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   //const priceCurrency = convertToSubCurrency(permit.price);
 
   const handleClick = async() => {
-    /*
-  const successUrl = `http://localhost:3000/checkout/?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=success`
-  const cancelUrl = `http://localhost:3000/checkout/?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=cancel`
-  //const successUrl = `${process.env.NEXT_PUBLIC_CHECKOUT_URL}?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=success`
-  //const cancelUrl = `${process.env.NEXT_PUBLIC_CHECKOUT_URL}?type=${encodeURIComponent(permit.type)}&price=${encodeURIComponent(permit.price)}&status=cancel`
-    const url = await getCheckoutSessionUrlAction(priceCurrency, permit.type, successUrl, cancelUrl)
-    if (url) {
-      redirect(url)
-    }   
-      */
+    if (!vehicle) {
+      alert('Please select a vehicle first');
+      return;
+    }
+    const name = "PermitPurchese";
+    const amount = permit?.price;
+    // meta data includes cookie as well
+    const metaData = {
+      permitTypeId: permit?.id,
+      type: "permit",
+      vehicleId: vehicle?.id,
+    }
+    console.log("name", name)
+    console.log("amount", amount)
+    console.log("metaData", metaData)
+    await createCheckout(name, amount, metaData)
   }
   
   return (

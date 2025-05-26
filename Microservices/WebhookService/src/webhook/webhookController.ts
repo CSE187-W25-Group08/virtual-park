@@ -4,6 +4,7 @@ import express from "express";
 import Stripe from "stripe";
 import { setTicketPaidAction } from "../ticket/action";
 import { sendTicketPaymentConfirmation } from "../email/service";
+import { setPermitTypePaid } from "../permit/action";
 
 const stripeSecretkey = process.env.STRIPE_SECRET_KEY;
 if (!stripeSecretkey) {
@@ -87,7 +88,8 @@ export class WebhookController extends Controller {
                 break;
               }
               case "permit": {
-                console.log("ADD PERMIT ACITON HERE");
+                const metadata = product.metadata;
+                await setPermitTypePaid(metadata);
                 break;
               }
               default: {
