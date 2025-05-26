@@ -258,3 +258,41 @@ test('should issue a monthly permit', async () => {
       expect(issueDate.getMonth()).toEqual(ExpDate.getMonth() - 1);
     })
 })
+
+const year =  '5ed85022-ec19-4e22-aff8-9a98feddeea9';
+const FourthVehicleId = '18fa94fc-4783-42df-a904-7ec17efadca5';
+test('should issue a monthly permit', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+     .send({
+        query: `
+          mutation ($permitTypeId: String!, $vehicleId: String!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+              driverID
+              vehicleID
+              permitType
+              issueDate
+              expDate
+              isValid
+            }
+          }
+        `,
+        variables: {
+          permitTypeId: year,
+          vehicleId: FourthVehicleId
+        }
+      })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      expect(res.body.data.issuePermit).toBeDefined()
+      const permit = res.body.data.issuePermit;
+      const issueDate = new Date(permit.issueDate);
+      const ExpDate = new Date(issueDate);
+      ExpDate.setFullYear(ExpDate.getFullYear() + 1);
+      expect(issueDate.getFullYear()).toEqual(ExpDate.getFullYear() - 1);
+    })
+})
+
