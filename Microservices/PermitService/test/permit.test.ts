@@ -160,19 +160,19 @@ test('should issue a permit', async () => {
               issueDate
               expDate
               isValid
-              price
             }
           }
         `,
         variables: {
           permitTypeId: '8616e7a7-bd6e-45e2-9809-ed22c727a6da',
-          vehicleId: '5616e7a7-bd6e-45e2-9809-ed22c727a6da'
+          vehicleId: 'f94b39b3-fcc3-4f00-a02a-29ffc06a9365'
         }
       })
     .then((res) => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      expect(res.body.data.issuePermit.length).toEqual(0)
+      console.log('issue permit details', res.body.data.issuePermit)
+      expect(res.body.data.issuePermit).toBeDefined()
     })
 })

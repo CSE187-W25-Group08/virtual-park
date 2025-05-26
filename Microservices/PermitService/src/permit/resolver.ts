@@ -69,7 +69,7 @@ export class PermitResolver {
     const newPermit = await new PermitService().permitIssue({
       driverID: driverId,
       vehicleID: vehicleId,
-      permitType: permitType.type,
+      permitType: permitTypeId,
       issueDate: issueDate.toISOString(),
       expDate: expDate.toISOString(),
       isValid: true,

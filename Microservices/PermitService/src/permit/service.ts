@@ -43,7 +43,7 @@ export class PermitService {
   public async permitIssue(permitData: {
     driverID: string;
     vehicleID: string;
-    permitType: string;
+    permitType: string; 
     issueDate: string;
     expDate: string;
     isValid: boolean;
@@ -51,11 +51,13 @@ export class PermitService {
   }): Promise<PermitIssue> {
     const data = {
       vehicleID: permitData.vehicleID,
+      permitType: permitData.permitType,
       issueDate: permitData.issueDate,
       expDate: permitData.expDate,
       isValid: permitData.isValid,
-      price: permitData.price
+      price: permitData.price,
     };
+  
     const query = {
       text: queries.issuePermit,
       values: [
@@ -72,17 +74,17 @@ export class PermitService {
     }
     
     const row = rows[0];
+    
     return new PermitIssue(
+      row.driverid,
+      row.data.vehicleID,
       row.id,
-      row.driverID,
-      row.data.vehicleID, 
-      row.permitType,
+      row.data.permitType,
       row.data.issueDate,
       row.data.expDate,
-      row.data.isValid
+      row.data.isValid 
     );
   }
-
   public async getPermitByCar(carPlateNum: string): Promise<PermitValid[]> {
     const query = queries.getPermitByVehiclePlateNum(carPlateNum)
     const {rows} = await pool.query(query)
