@@ -72,7 +72,7 @@
     "start-permit": "cd Microservices/PermitService && npm start",
     "start-lot": "cd Microservices/LotService && npm start",
     "start-stripe": "cd Microservices/StripeService && npm start",
-    "start-stripe": "cd Microservices/WebhookService && npm start",
+    "start-webhook": "cd Microservices/WebhookService && npm start",
     "start-driver-app": "cd Apps/driver-parking && npm start",
     "start-admin-app": "cd Apps/admin && npm  start",
     "start-enforcement-app": "cd Apps/enforcement && npm start",
