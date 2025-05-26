@@ -38,7 +38,7 @@ export class PermitResolver {
   ): Promise<Permit | null> {
     return await new PermitService().getValidPermit(Request.user?.id)
   }
-  // In your GraphQL resolver/schema
+  
   @Mutation(() => Permit)
   async issuePermit(
     @Arg("permitTypeId") permitTypeId: string,
