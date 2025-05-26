@@ -73,10 +73,6 @@ export class PermitService {
     
     const {rows} = await pool.query(query);
     
-    if (rows.length === 0) {
-      throw new Error("Failed to create permit");
-    }
-    
     const row = rows[0];
     
     return new PermitIssue(
