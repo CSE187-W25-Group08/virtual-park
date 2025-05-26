@@ -48,7 +48,7 @@ export class PermitResolver {
   ): Promise<PermitIssue> {
     const driverId = Request.user?.id;
     if (!driverId) {
-      throw new Error("User not authenticated or user ID not found");
+      throw new Error("UserID invalid");
     }
     const permitType = await new PermitService().getSpecificPermitType(permitTypeId)
     if (!permitType) {
@@ -57,7 +57,7 @@ export class PermitResolver {
     /* year, month, week, daily */
     const issueDate = new Date();
     const expDate = new Date(issueDate);
-    if (permitType.type === 'daily') {
+    if (permitType.type === 'Daily') {
       expDate.setHours(23, 59, 59, 999);
     } else if (permitType.type === 'Week') {
       expDate.setDate(expDate.getDate() + 7);

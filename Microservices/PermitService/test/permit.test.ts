@@ -145,8 +145,9 @@ test('should return empty array with not exist car plate number', async () => {
     })
 })
 
-
-test('should issue a permit', async () => {
+const daily =  '9b968eea-9abe-457c-ae79-1b128074f683';
+const VehicleId = 'f94b39b3-fcc3-4f00-a02a-29ffc06a9365';
+test('should issue a daily permit', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
@@ -164,15 +165,59 @@ test('should issue a permit', async () => {
           }
         `,
         variables: {
-          permitTypeId: '8616e7a7-bd6e-45e2-9809-ed22c727a6da',
-          vehicleId: 'f94b39b3-fcc3-4f00-a02a-29ffc06a9365'
+          permitTypeId: daily,
+          vehicleId: VehicleId
         }
       })
     .then((res) => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      console.log('issue permit details', res.body.data.issuePermit)
+      // console.log('issue permit details', res.body.data.issuePermit)
       expect(res.body.data.issuePermit).toBeDefined()
+      const permit = res.body.data.issuePermit;
+      const issueDate = new Date(permit.issueDate);
+      const expDate = new Date(permit.expDate);
+      expect(issueDate.toDateString()).toEqual(expDate.toDateString());
+      expect(expDate.getHours()).toBe(23);
+      expect(expDate.getMinutes()).toBe(59);
+    })
+})
+
+const week =  '8616e7a7-bd6e-45e2-9809-ed22c727a6da';
+const SecondVehicleId = 'a74ab65d-f1ec-48b0-852b-5e9a486fc323';
+test('should issue a daily permit', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+     .send({
+        query: `
+          mutation ($permitTypeId: String!, $vehicleId: String!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+              driverID
+              vehicleID
+              permitType
+              issueDate
+              expDate
+              isValid
+            }
+          }
+        `,
+        variables: {
+          permitTypeId: week,
+          vehicleId: SecondVehicleId
+        }
+      })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      expect(res.body.data.issuePermit).toBeDefined()
+      const permit = res.body.data.issuePermit;
+      const issueDate = new Date(permit.issueDate);
+      const ExpDate = new Date(issueDate);
+      ExpDate.setDate(ExpDate.getDate() + 7);
+      expect(issueDate.toDateString()).not.toEqual(ExpDate.toDateString());
+      console.log('issue date details', issueDate, ExpDate)
     })
 })

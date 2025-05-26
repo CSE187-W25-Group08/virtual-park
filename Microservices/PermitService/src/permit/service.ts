@@ -37,7 +37,11 @@ export class PermitService {
     }
     const {rows} = await pool.query(query)
     const row = rows[0];
-    return new PermitType(row.id, row.price, row.type);
+    return new PermitType(
+      row.id,
+      row.data.price,
+      row.data.type
+    );
   }
 
   public async permitIssue(permitData: {
