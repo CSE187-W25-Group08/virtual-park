@@ -2,6 +2,17 @@ export const permitType= `
 select * from permitType;
 `;
 
+export const getSpecificPermitType= `
+select * from permitType
+where id = $1;
+`;
+
+export const issuePermit = `
+  INSERT INTO driverPermit (driverID, permitType, data)
+  VALUES ($1, $2, $3)
+  RETURNING *;
+`;
+
 export const selectDriverPermits = `
 SELECT 
     dp.id AS id,

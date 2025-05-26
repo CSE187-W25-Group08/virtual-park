@@ -1,5 +1,5 @@
 import { pool } from '../db'
-import { Permit, PermitType, PermitValid} from './schema'
+import { Permit, PermitType, PermitValid, PermitIssue} from './schema'
 import * as queries from './queries'
 
 export class PermitService {
@@ -29,6 +29,55 @@ export class PermitService {
       price: result.data.price,
       type: result.data.type
     }))
+  }
+  public async getSpecificPermitType(permitID: string):Promise<PermitType> {
+    const query = {
+      text: queries.getSpecificPermitType,
+      values: [permitID]
+    }
+    const {rows} = await pool.query(query)
+    const row = rows[0];
+    return new PermitType(row.id, row.price, row.type);
+  }
+
+  public async permitIssue(permitData: {
+    driverID: string;
+    vehicleID: string;
+    permitType: string;
+    issueDate: string;
+    expDate: string;
+    isValid: boolean;
+    price: number;
+  }): Promise<PermitIssue> {
+    const query = {
+      text: queries.issuePermit,
+      values: [
+        permitData.driverID,
+        permitData.vehicleID,
+        permitData.permitType,
+        permitData.issueDate,
+        permitData.expDate,
+        permitData.isValid,
+        permitData.price
+      ]
+    };
+    
+    const {rows} = await pool.query(query);
+    
+    if (rows.length === 0) {
+      throw new Error("Failed to create permit");
+    }
+    
+    const row = rows[0];
+    return new PermitIssue(
+      row.driverID,
+      row.vehicleID,
+      row.id, 
+      row.permitType,
+      row.issueDate,
+      row.expDate,
+      row.isValid
+    );
   }
 
   public async getPermitByCar(carPlateNum: string): Promise<PermitValid[]> {

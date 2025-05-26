@@ -1,5 +1,5 @@
-import { Authorized, Ctx, Query, Resolver, Arg } from 'type-graphql'
-import { Permit, PermitType, PermitValid } from './schema'
+import { Authorized, Ctx, Query, Resolver, Arg, Mutation } from 'type-graphql'
+import { Permit, PermitType, PermitValid, PermitIssue } from './schema'
 import { Request } from "express"
 import { PermitService } from './service'
 
@@ -37,6 +37,45 @@ export class PermitResolver {
     @Ctx() Request: Request
   ): Promise<Permit | null> {
     return await new PermitService().getValidPermit(Request.user?.id)
+  }
+  // In your GraphQL resolver/schema
+  @Mutation(() => Permit)
+  async issuePermit(
+    @Arg("permitTypeId") permitTypeId: string,
+    @Arg("vehicleId") vehicleId: string,
+    @Ctx() Request: Request
+  ): Promise<PermitIssue> {
+    const driverId = Request.user?.id;
+    if (!driverId) {
+      throw new Error("User not authenticated or user ID not found");
+    }
+    const permitType = await new PermitService().getSpecificPermitType(permitTypeId)
+    if (!permitType) {
+      throw new Error("Permit type not found");
+    }
+    /* year, month, week, daily */
+    const issueDate = new Date();
+    const expDate = new Date(issueDate);
+    if (permitType.type === 'daily') {
+      expDate.setHours(23, 59, 59, 999);
+    } else if (permitType.type === 'Week') {
+      expDate.setDate(expDate.getDate() + 7);
+    } else if (permitType.type === 'Month') {
+      expDate.setMonth(expDate.getMonth() + 1);
+    } else if (permitType.type === 'Year') {
+      expDate.setFullYear(expDate.getFullYear() + 1)
+    }
+    const newPermit = await new PermitService().permitIssue({
+      driverID: driverId,
+      vehicleID: vehicleId,
+      permitType: permitType.type,
+      issueDate: issueDate.toISOString(),
+      expDate: expDate.toISOString(),
+      isValid: true,
+      price: permitType.price
+    });
+    
+    return newPermit;
   }
 }
 

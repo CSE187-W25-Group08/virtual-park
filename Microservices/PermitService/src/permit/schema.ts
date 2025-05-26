@@ -82,5 +82,42 @@ export class PermitValid {
 
   @Field(() => GraphQLISODateTime)
   expDate!: string
+}
+
+@ObjectType()
+export class PermitIssue {
+  constructor( driverID: string, vehicleID: string, permitID: string, permitType: string, issueDate: string, expDate: string, isValid: boolean) {
+    this.driverID = driverID
+    this.vehicleID = vehicleID
+    this.permitID = permitID
+    this.permitType = permitType
+    this.issueDate = issueDate
+    this.expDate = expDate
+    this.isValid = isValid
+  }
+
+  @Field(() => ID)
+  @IsUUID()
+  permitID!: string
+
+  @Field(() => ID)
+  @IsUUID()
+  driverID!: string
+
+  @Field(() => ID)
+  @IsUUID()
+  vehicleID!: string
+
+  @Field()
+  permitType!: string;
+
+  @Field()
+  isValid!: boolean;
+
+  @Field(() => GraphQLISODateTime)
+  issueDate!: string
+
+  @Field(() => GraphQLISODateTime)
+  expDate!: string
 
 }
