@@ -42,11 +42,36 @@ export async function getPermitByPlate(cookie: string | undefined, carplate: str
 }
 
 export async function recognizePlateFromImage(cookie: string | undefined, base64Image: string): Promise<string> {
-  const response = await fetch('http://localhost:3011/api/v0/ocr/scan', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ base64Image }),
-  });
-  const json = await response.json();
-  return json.licensePlate;
+  return new Promise((resolve, reject) => {
+    fetch('http://localhost:4020/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookie}`,
+      },
+      body: JSON.stringify({
+        query: `
+          mutation ScanImage($base64Image: String!) {
+            scanImage(base64Image: $base64Image) {
+              licensePlate
+            }
+          }
+        `,
+        variables: {
+          base64Image
+        }
+      }),
+    })
+    .then(response => {
+      if (response.status !== 200) {
+        reject('Unauthorized')
+        return
+      }
+      return response.json()
+    })
+    .then(json => {
+      resolve(json.data.getPermitBycarPlate)
+    })
+    .catch((error) => reject(error))
+  })
 }

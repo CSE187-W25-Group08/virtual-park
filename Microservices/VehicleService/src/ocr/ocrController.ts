@@ -13,3 +13,4 @@ export class OCRController extends Controller {
       return { licensePlate }
   } 
 }
+

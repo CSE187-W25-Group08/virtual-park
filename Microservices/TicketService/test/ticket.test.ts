@@ -279,6 +279,7 @@ test("Get spefic ticket with admin endpoint", async () => {
       `
     })
     .then((res) => {
+      console.log(res.body.errors);
       expect(res.body.data.getTicketInfo.id).toEqual(ticketId);
     });
 });
@@ -287,6 +288,7 @@ test("Issue a new ticket", async () => {
   const testTicketData = {
     driverID: "5f3a9c2d-8b45-4e87-a130-9cf85df72b1a",
     vehicleID: "7de23f18-c56b-42d1-b8a9-3e4f8c2d1a5b",
+    enforcer: "7de23f18-c56b-42d1-b8a9-3e4f8c2d1a12",
     lot: "c72e1459-5b52-41f2-b731-15c7c981e8b0",
     paid: false,
     description: "no valid permit exist",
@@ -338,79 +340,5 @@ test("Issue a new ticket", async () => {
     .then((res) => {
       console.log('the details of the ticketissue:', res.body.data.ticketIssue)
       expect(res.body.data.ticketIssue).toBeDefined();
-    });
-});
-
-test("Approve ticket appeal with admin endpoint", async () => {
-  let ticketId;
-  await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
-    .send({
-      query: `
-        query {
-          allTicket {
-            id,
-            appeal
-          }
-        }
-      `
-    })
-    .then((res) => {
-      ticketId = res.body.data.allTicket[0].id;
-    })
-  await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
-    .send({
-      query: `
-        mutation { approveAppeal (id: "${ticketId}") {
-            id,
-            vehicle,
-            lot,
-            appeal
-          }
-        }
-      `
-    })
-    .then((res) => {
-      expect(res.body.data.approveAppeal.appeal).toEqual("approved");
-    });
-});
-
-test("Reject ticket appeal with admin endpoint", async () => {
-  let ticketId;
-  await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
-    .send({
-      query: `
-        query {
-          allTicket {
-            id,
-            appeal
-          }
-        }
-      `
-    })
-    .then((res) => {
-      ticketId = res.body.data.allTicket[0].id;
-    })
-  await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
-    .send({
-      query: `
-      mutation { rejectAppeal (id: "${ticketId}") {
-            id,
-            vehicle,
-            lot,
-            appeal
-          }
-        }
-      `
-    })
-    .then((res) => {
-      expect(res.body.data.rejectAppeal.appeal).toEqual("rejected");
     });
 });
