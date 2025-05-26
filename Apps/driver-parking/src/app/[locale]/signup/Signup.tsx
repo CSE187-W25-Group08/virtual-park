@@ -12,11 +12,13 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import InputAdornment from '@mui/material/InputAdornment'
 import Alert from '@mui/material/Alert'
 import { useTranslations } from "next-intl";
+import { GoogleLogin } from '@react-oauth/google'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { signup } from './actions'
+import { loginWithGoogle } from '../login/action'
 
 export default function Signup() {
   const [name, setName] = useState('')
@@ -42,8 +44,13 @@ export default function Signup() {
     }
   }
 
-  const handleClick = async () => {
-  const user = await signup({name: name, email: email, password: password})
+  const handleClick = async (googleCred? : string) => {
+    let user;
+    if (googleCred) {
+      user = await loginWithGoogle(googleCred);
+    } else {
+      user = await signup({name: name, email: email, password: password})
+    }
     if (user) {
       setFailedSignup(false)
       window.sessionStorage.setItem('name', user.name)
@@ -60,9 +67,19 @@ export default function Signup() {
       alignItems: 'center'}}>
       {failedSignup &&
         <Alert severity="error" aria-label="sign up error">{t("emailTaken")}</Alert>}
-      <Typography variant="h4" sx={{
-        marginTop: '120px',
-      }}>{t("createAccount")}</Typography>
+      <Typography variant="h4" sx={{mt:3}}>{t("createAccount")}</Typography>
+      <Box sx={{m:2}}>
+        <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              if (credentialResponse.credential) {
+                await handleClick(credentialResponse.credential);
+              }
+            }}
+            onError={() => {
+              setFailedSignup(true);
+            }}
+        />
+      </Box>
       <TextField
         required
         name='email'
@@ -113,7 +130,7 @@ export default function Signup() {
         }}
       />   
       <Button variant="contained"
-        onClick={handleClick}
+        onClick={() =>handleClick()}
         aria-label='Sign Up'
         color='primary'
         sx={{
