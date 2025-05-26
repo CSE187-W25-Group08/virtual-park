@@ -3,7 +3,7 @@ import { Request, Controller, Post, Route, Body } from "tsoa";
 import express from "express";
 import Stripe from "stripe";
 import { setTicketPaidAction } from "../ticket/action";
-//import { sendTicketPaymentConfirmation } from "../email/service";
+import { sendTicketPaymentConfirmation } from "../email/service";
 
 const stripeSecretkey = process.env.STRIPE_SECRET_KEY;
 if (!stripeSecretkey) {
@@ -81,8 +81,8 @@ export class WebhookController extends Controller {
 
             switch(dataType) {
               case "ticket": {
-                //await sendTicketPaymentConfirmation(customerEmail || "Customer@email", customerName || "Customer");
                 const metadata = product.metadata;
+                await sendTicketPaymentConfirmation(customerEmail || "Customer@email", customerName || "Customer", dataName, dataAmount || 0, metadata);
                 await setTicketPaidAction(metadata);
                 break;
               }
