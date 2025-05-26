@@ -75,7 +75,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
 
 
   const handleClickPaid = async () => {
-    const name = "Ticket Payment"
+    const name = ticket?.violation || 'oops'
     const amount = ticket?.cost || 0; 
     // meta data includes cookie as well
     const metaData = {
