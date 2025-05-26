@@ -4,6 +4,7 @@ import * as http from 'http'
 
 import * as db from './db'
 import { app, bootstrap } from '../src/app'
+import { AuthService } from '../src/auth/service'
 
 let server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
 
@@ -261,7 +262,7 @@ test('should issue a monthly permit', async () => {
 
 const year =  '5ed85022-ec19-4e22-aff8-9a98feddeea9';
 const FourthVehicleId = '18fa94fc-4783-42df-a904-7ec17efadca5';
-test('should issue a monthly permit', async () => {
+test('should issue a yearly permit', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
@@ -295,4 +296,33 @@ test('should issue a monthly permit', async () => {
       expect(issueDate.getFullYear()).toEqual(ExpDate.getFullYear() - 1);
     })
 })
+
+test('should return an error for missing user ID', async () => {
+  AuthService.prototype.check = vi.fn().mockResolvedValue({id: undefined} as any);
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation ($permitTypeId: String!, $vehicleId: String!) {
+          issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+            permitID
+            driverID
+            vehicleID
+            permitType
+            issueDate
+            expDate
+            isValid
+          }
+        }
+      `,
+      variables: {
+        permitTypeId: '9b968eea-9abe-457c-ae79-1b128074f683',
+        vehicleId: 'f94b39b3-fcc3-4f00-a02a-29ffc06a9365'
+      }
+    })
+    .then((res) => {
+      expect(res.body.errors[0].message).toBe("UserID invalid");
+    });
+});
 

@@ -51,9 +51,6 @@ export class PermitResolver {
       throw new Error("UserID invalid");
     }
     const permitType = await new PermitService().getSpecificPermitType(permitTypeId)
-    if (!permitType) {
-      throw new Error("Permit type not found");
-    }
     /* year, month, week, daily */
     const issueDate = new Date();
     const expDate = new Date(issueDate);
