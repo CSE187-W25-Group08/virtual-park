@@ -38,8 +38,8 @@ export class PermitResolver {
   ): Promise<Permit | null> {
     return await new PermitService().getValidPermit(Request.user?.id)
   }
-  
-  @Mutation(() => Permit)
+
+  @Mutation(() => PermitIssue)
   async issuePermit(
     @Arg("permitTypeId") permitTypeId: string,
     @Arg("vehicleId") vehicleId: string,

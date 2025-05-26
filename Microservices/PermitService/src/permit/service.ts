@@ -49,16 +49,19 @@ export class PermitService {
     isValid: boolean;
     price: number;
   }): Promise<PermitIssue> {
+    const data = {
+      vehicleID: permitData.vehicleID,
+      issueDate: permitData.issueDate,
+      expDate: permitData.expDate,
+      isValid: permitData.isValid,
+      price: permitData.price
+    };
     const query = {
       text: queries.issuePermit,
       values: [
         permitData.driverID,
-        permitData.vehicleID,
         permitData.permitType,
-        permitData.issueDate,
-        permitData.expDate,
-        permitData.isValid,
-        permitData.price
+        JSON.stringify(data)
       ]
     };
     
@@ -71,12 +74,12 @@ export class PermitService {
     const row = rows[0];
     return new PermitIssue(
       row.driverID,
-      row.vehicleID,
+      row.data.vehicleID,
       row.id, 
       row.permitType,
-      row.issueDate,
-      row.expDate,
-      row.isValid
+      row.data.issueDate,
+      row.data.expDate,
+      row.data.isValid
     );
   }
 
