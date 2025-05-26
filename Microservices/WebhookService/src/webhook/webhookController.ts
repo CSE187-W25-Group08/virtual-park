@@ -3,6 +3,7 @@ import { Request, Controller, Post, Route, Body } from "tsoa";
 import express from "express";
 import Stripe from "stripe";
 import { setTicketPaidAction } from "../ticket/action";
+//import { sendTicketPaymentConfirmation } from "../email/service";
 
 const stripeSecretkey = process.env.STRIPE_SECRET_KEY;
 if (!stripeSecretkey) {
@@ -39,6 +40,8 @@ export class WebhookController extends Controller {
       throw new Error(`Webhook Error: ${message}`);
     }
 
+
+
     // all events that can be handled by our webhook (we set these in Stripe dashboard)
     try {
       switch (event.type) {
@@ -57,12 +60,19 @@ export class WebhookController extends Controller {
           if (lineItems && lineItems.length > 0) {
             const product = lineItems[0].price?.product as Stripe.Product;
 
+            console.log("=======Whose buying=======")
+            const customerEmail = session.customer_details?.email || session.customer_email;
+            const customerName = session.customer_details?.name;
+            console.log("Customer email:", customerEmail);
+            console.log("Customer name:", customerName);
 
 
             const dataName = product.name;
             const dataAmount = lineItems[0].price?.unit_amount;
             const dataType = product.metadata.type;
 
+
+            console.log(process.env.MAILGUN_API_KEY || "API_KEY")
             // MARK: IMPLEMENT HEREEE
             console.log("=======Mandatory Fields=======")
             console.log("Product name:", dataName);
@@ -71,6 +81,7 @@ export class WebhookController extends Controller {
 
             switch(dataType) {
               case "ticket": {
+                //await sendTicketPaymentConfirmation(customerEmail || "Customer@email", customerName || "Customer");
                 const metadata = product.metadata;
                 await setTicketPaidAction(metadata);
                 break;
