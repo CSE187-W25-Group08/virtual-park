@@ -2,7 +2,7 @@ import { it, afterEach, vi, expect } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import Signup from '../../src/app/[locale]/signup/Signup'
 import { signup } from '../../src/app/[locale]/signup/actions'
 import {signup as signupMessages} from '../../messages/en.json'
@@ -25,7 +25,9 @@ const mockSignup = signup as ReturnType<typeof vi.fn>
 const renderWithIntl = (component: React.ReactElement) => {
   return render(
     <NextIntlClientProvider locale="en" messages={{signup: signupMessages}}>
-      {component}
+      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+        {component}
+      </GoogleOAuthProvider>
     </NextIntlClientProvider>
   )
 }

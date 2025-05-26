@@ -3,7 +3,7 @@ import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import SignupPage from '../../src/app/[locale]/signup/page'
 import { signup as signupMessages } from '../../messages/en.json'
 const mockPush = vi.fn();
@@ -49,7 +49,9 @@ afterEach(() => {
 const renderWithIntl = (component: React.ReactElement) => {
   return render(
     <NextIntlClientProvider locale="en" messages={{signup: signupMessages}}>
-      {component}
+      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+        {component}
+      </GoogleOAuthProvider>
     </NextIntlClientProvider>
   )
 }
