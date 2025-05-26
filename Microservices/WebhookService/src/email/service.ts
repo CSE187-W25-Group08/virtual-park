@@ -29,7 +29,7 @@ export async function sendTicketPaymentConfirmation(email: string, name: string,
   });
 
   try {
-    const data = await mg.messages.create(process.env.MAILGUN_DOMAIN || 'noenv', {
+    const data = await mg.messages.create("virtual-park.net", {
       from: "Virtual Park <noreply@yourdomain.com>", // Use a verified sender
       to: [`${name} <${email}>`],
       subject: "Purchase Confirmation",
