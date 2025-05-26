@@ -2,7 +2,7 @@ import { Request, Controller, Post, Route, Body } from "tsoa";
 
 import express from "express";
 import Stripe from "stripe";
-import { setTicketPaid } from "../ticket/service";
+import { getCheckoutSessionUrlAction } from "../ticket/action";
 
 const stripeSecretkey = process.env.STRIPE_SECRET_KEY;
 if (!stripeSecretkey) {
@@ -58,31 +58,29 @@ export class WebhookController extends Controller {
             const product = lineItems[0].price?.product as Stripe.Product;
 
 
-            const dataType = product.metadata.type;
-            const dataId = product.metadata.id;
-            const dataCookie = product.metadata.cookie;
 
             const dataName = product.name;
             const dataAmount = lineItems[0].price?.unit_amount;
+            const dataType = product.metadata.type;
 
             // MARK: IMPLEMENT HEREEE
+            console.log("=======Mandatory Fields=======")
             console.log("Product name:", dataName);
             console.log("Amount price:", dataAmount);
             console.log("Type:", dataType);
-            console.log("ID:", dataId);
-            console.log("Driver:", dataCookie);
 
             switch(dataType) {
               case "ticket": {
-                const ticket =  await setTicketPaid(dataId, true, dataCookie);
-                if (ticket) {
-                  console.log("Ticket paid successfully:", ticket);
-                }
-
+                const metadata = product.metadata;
+                await getCheckoutSessionUrlAction(metadata);
+                break;
+              }
+              case "permit": {
+                console.log("ADD PERMIT ACITON HERE");
                 break;
               }
               default: {
-                console.log('emow')
+                console.log('Meow something went wrong')
                 break;
               }
             }
