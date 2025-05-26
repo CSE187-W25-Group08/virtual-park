@@ -2,7 +2,7 @@ import { Request, Controller, Post, Route, Body } from "tsoa";
 
 import express from "express";
 import Stripe from "stripe";
-import { getCheckoutSessionUrlAction } from "../ticket/action";
+import { setTicketPaidAction } from "../ticket/action";
 
 const stripeSecretkey = process.env.STRIPE_SECRET_KEY;
 if (!stripeSecretkey) {
@@ -72,7 +72,7 @@ export class WebhookController extends Controller {
             switch(dataType) {
               case "ticket": {
                 const metadata = product.metadata;
-                await getCheckoutSessionUrlAction(metadata);
+                await setTicketPaidAction(metadata);
                 break;
               }
               case "permit": {
