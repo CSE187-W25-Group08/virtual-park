@@ -5,7 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
 import { Box, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
-import { redirect, useRouter} from 'next/navigation'
+import { useRouter} from 'next/navigation'
 import { useTranslations } from "next-intl";
 
 import AppealModal from './AppealModal';
@@ -17,7 +17,7 @@ import {
   } from "../actions";
 import { Vehicle } from "@/register";
 import { getVehicleById } from "../../register/actions";
-import { getCheckoutSessionUrlAction } from "../../stripe/action";
+import { createCheckout } from "../../../../stripe/helper";
 
 export default function Card({ ticketId }: { ticketId: string }) {
   const [ticket, setTicket] = useState<Ticket | null>(null);
@@ -73,45 +73,16 @@ export default function Card({ ticketId }: { ticketId: string }) {
     }
   };
 
-  // need to convert the cost to sub-currency (e.g., cents) for Stripe
 
   const handleClickPaid = async () => {
-    function generateCheckoutUrls(data: Record<string, unknown>, redirectURL: string) {
-    const queryString = Object.entries(data)
-      .map(([key, value]) => {
-        if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`;
-        }
-        return null; 
-      })
-      .filter(Boolean)
-      .join("&");
-
-      const successUrl = `${redirectURL}/checkout/?${queryString}&status=success`;
-      const cancelUrl = `${redirectURL}/checkout/?${queryString}&status=cancel`;
-
-      return { successUrl, cancelUrl };
-    }
-    const convertToSubCurrency = (amount: number, factor = 100) => {
-      return Math.round(amount * factor);
-    };
-    const priceCurrency = convertToSubCurrency(ticket!.cost);
-    const redirectURL = 'https://virtual-park.net/'
-
-    const dynamicUrls = generateCheckoutUrls({
+    const name = "Ticket Payment"
+    const amount = ticket?.cost || 0; 
+    // meta data includes cookie as well
+    const metaData = {
+      id: ticketId,
       type: "ticket",
-      amount: ticket!.cost,
-      name: ticket!.violation,
-      id: ticket!.id,
-    }, redirectURL);
-
-    const successUrl = dynamicUrls.successUrl;
-    const cancelUrl = dynamicUrls.cancelUrl;
-    const url = await getCheckoutSessionUrlAction(priceCurrency, ticket!.violation, "ticket",ticket!.id, successUrl, cancelUrl)
-    console.log(url)
-    if (url) {
-      redirect(url)
-    }   
+    }
+    await createCheckout(name, amount, metaData)
   };
 
   const handleOpenAppealModal = () => {

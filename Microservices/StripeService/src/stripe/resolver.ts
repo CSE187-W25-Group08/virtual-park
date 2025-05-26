@@ -1,4 +1,5 @@
 import { Authorized, Query, Resolver, Mutation, Int, Arg } from "type-graphql";
+import { GraphQLJSONObject } from "graphql-type-json";
 import //StripeConfig,
 "./schema";
 import Stripe from "stripe";
@@ -10,14 +11,13 @@ export class StripeResolver {
     return "OK";
   }
 
+  // https://chatgpt.com/c/68341091-d450-800d-b2cc-0652e5714a72 to get dyamcmetadata working
   @Authorized("driver")
   @Mutation(() => String)
   async createCheckoutSession(
     @Arg("amount", () => Int) amount: number,
     @Arg("name") name: string,
-    @Arg("type") type: string, //ticket permit (all trinkets and baubles)
-    @Arg("id") id: string, //id of permit or ticket etc (all trinkets and baubles)
-    @Arg("cookie") cookie: string, // cookie of user
+    @Arg("metadata", () => GraphQLJSONObject) metadata: Record<string, string>,
     @Arg("successUrl") successUrl: string,
     @Arg("cancelUrl") cancelUrl: string,
   ): Promise<string> {
@@ -37,11 +37,7 @@ export class StripeResolver {
             currency: "usd",
             product_data: {
               name: name,
-              metadata: {
-                type: type,
-                id: id,
-                cookie: cookie
-              },
+              metadata: metadata
             },
             unit_amount: amount,
           },
