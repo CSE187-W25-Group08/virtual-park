@@ -96,7 +96,7 @@ export default function Card({ ticketId }: { ticketId: string }) {
       return Math.round(amount * factor);
     };
     const priceCurrency = convertToSubCurrency(ticket!.cost);
-    const redirectURL = process.env.NEXT_PUBLIC_REDIRECT!;
+    const redirectURL = 'https://virtual-park.net/'
 
     const dynamicUrls = generateCheckoutUrls({
       type: "ticket",
