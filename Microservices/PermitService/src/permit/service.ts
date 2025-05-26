@@ -73,9 +73,9 @@ export class PermitService {
     
     const row = rows[0];
     return new PermitIssue(
+      row.id,
       row.driverID,
-      row.data.vehicleID,
-      row.id, 
+      row.data.vehicleID, 
       row.permitType,
       row.data.issueDate,
       row.data.expDate,

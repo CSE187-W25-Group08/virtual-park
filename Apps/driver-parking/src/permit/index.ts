@@ -15,3 +15,14 @@ export interface PermitType {
 export interface PermitPurchase {
   purchased: (permit: Permit) => void
 }
+
+export interface PermitIssue {
+  permitID: string
+  driverID: string
+  vehicleID: string
+  permitType: string
+  issueDate: string
+  expDate: string
+  isValid: string
+  price: string
+}
