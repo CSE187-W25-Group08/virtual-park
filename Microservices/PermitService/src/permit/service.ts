@@ -73,12 +73,12 @@ export class PermitService {
 
     return new PermitIssue(
       row.driverid,
-      row.data.vehicleID,
+      row.data.vehicleid,
       row.id,
-      row.data.permitType,
-      row.data.issueDate,
-      row.data.expDate,
-      row.data.isValid
+      row.data.permittype,
+      row.data.issuedate,
+      row.data.expdate,
+      (row.data.isvalid == 'true') ? true : false
     );
   }
 

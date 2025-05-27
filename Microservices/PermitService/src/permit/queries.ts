@@ -17,14 +17,14 @@ export const issuePermit = `
   INSERT INTO driverPermit (driverID, permitType, data)
   VALUES (
     $1::uuid,
-    $2::text,
+    $2::uuid,
     jsonb_build_object(
-      'vehicleID', $3::text,
-      'permitType', $4::text,
-      'issueDate', $5::timestamptz,
-      'expDate', $6::timestamptz,
-      'isValid', $7::boolean,
-      'price', $8::numeric
+      'vehicleid', $3::text,
+      'permittype', $4::text,
+      'issuedate', $5::text,
+      'expdate', $6::text,
+      'isvalid', $7::text,
+      'price', $8::text
     )
   )
   RETURNING *;
