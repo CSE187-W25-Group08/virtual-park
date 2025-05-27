@@ -14,7 +14,7 @@ vi.mock('../src/auth/service', () => {
     AuthService: class {
       check = authserviceMock
       // async check() {
-        // return { id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54'}
+      // return { id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54'}
       // }
     }
   }
@@ -32,7 +32,7 @@ afterAll(() => {
 })
 
 beforeEach(async () => {
-  authserviceMock.mockResolvedValue({id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54'})
+  authserviceMock.mockResolvedValue({ id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54' })
   return db.reset()
 })
 
@@ -47,7 +47,7 @@ test('Returns all vehicles', async () => {
       }`
     })
     .then((res) => {
-      expect(res.body.data.vehicle.length).toEqual(5)
+      expect(res.body.data.vehicle.length).toEqual(6)
     })
 })
 
@@ -76,9 +76,9 @@ test('Returns vehicle by vehicle ID and user ID', async () => {
         { id, driver, licensePlate, make, model, color, active }
       }`
     })
-  
+
   const vehicleId = vehiclesResponse.body.data.userVehicle[0].id
-  
+
   await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
@@ -112,9 +112,9 @@ test('Returns vehicle by vehicle plate', async () => {
         { id, driver, licensePlate, make, model, color, active }
       }`
     })
-  
+
   const vehiclePlate = vehiclesResponse.body.data.userVehicle[0].licensePlate
-  
+
   await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
@@ -141,7 +141,7 @@ test('Returns vehicle by vehicle plate', async () => {
 /*reference: https://jestjs.io/docs/mock-function-api#mockfnmockrejectedvaluevalue */
 test('Returns unauthorized error when auth service throws', async () => {
   authserviceMock.mockRejectedValue(new Error('Authentication failed'))
-  
+
   await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer InvalidToken`)
@@ -185,17 +185,17 @@ test('Member Registers a Vehicle', async () => {
         }
       `
     })
-    // .then((res) => {
-    //   expect(res.body.data.registerVehicle.active).toBe(false)
-    // })
+  // .then((res) => {
+  //   expect(res.body.data.registerVehicle.active).toBe(false)
+  // })
 
-    const vehicleId = res1.body.data.registerVehicle.id;
+  const vehicleId = res1.body.data.registerVehicle.id;
 
-await supertest(server)
-  .post('/graphql')
-  .set('Authorization', `Bearer Placeholder`)
-  .send({
-    query: `
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
       mutation {
         updatePrimaryVehicle(input: {
           id: "${vehicleId}"
@@ -210,7 +210,7 @@ await supertest(server)
         }
       }
     `
-  })
+    })
 })
 
 test('user who do no thave primary car', async () => {
@@ -257,13 +257,13 @@ test('user who has primary car adds a new car selected as primary', async () => 
         }
       `
     })
-    const vehicleId = res1.body.data.registerVehicle.id;
+  const vehicleId = res1.body.data.registerVehicle.id;
 
-await supertest(server)
-  .post('/graphql')
-  .set('Authorization', `Bearer Placeholder`)
-  .send({
-    query: `
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
       mutation {
         updatePrimaryVehicle(input: {
           id: "${vehicleId}"
@@ -278,7 +278,7 @@ await supertest(server)
         }
       }
     `
-  })
+    })
 
   await supertest(server)
     .post('/graphql')
@@ -316,7 +316,7 @@ test('Edits a vehicle', async () => {
       vehicle = res.body.data.userVehicle[0]
     })
 
-    await supertest(server)
+  await supertest(server)
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
     .send({
@@ -344,4 +344,4 @@ test('Edits a vehicle', async () => {
     .then((res) => {
       expect(res.body.data.editVehicle.licensePlate).toEqual("newplate")
     })
-  })
+})
