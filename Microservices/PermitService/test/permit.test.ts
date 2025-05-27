@@ -219,7 +219,7 @@ test('should issue a weekly permit', async () => {
       const ExpDate = new Date(issueDate);
       ExpDate.setDate(ExpDate.getDate() + 7);
       expect(issueDate.toDateString()).not.toEqual(ExpDate.toDateString());
-      console.log('issue date details', issueDate, ExpDate)
+      // console.log('issue date details', issueDate, ExpDate)
     })
 })
 
