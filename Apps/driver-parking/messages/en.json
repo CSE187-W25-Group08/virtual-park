@@ -127,5 +127,11 @@
     "purchase": "Purchase Permit",
     "tickets": "Tickets",
     "permitHistory": "Permit History"
+  },
+  "checkout": {
+    "goBack": "Go Back",
+    "purchase": "Purchase",
+    "message": "You've purchased a {type} for ",
+    "dashboard": "Go to Dashboard"
   }
 }
