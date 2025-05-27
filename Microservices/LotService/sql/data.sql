@@ -11,7 +11,7 @@ VALUES (
     'address', 'Area 51, Nevada, USA',
     'latitude', 37.2431,
     'longitude', -115.7930,
-    'capacity', 1000,
+    'capacity', 800,
     'availableSpots', 987,
     'isActive', true,
     'type', 'Top Secret',
@@ -29,7 +29,7 @@ VALUES (
     'address', 'UC Santa Cruz, Hagar Dr, Santa Cruz, CA 95064',
     'latitude', 36.9914,
     'longitude', -122.0523,
-    'capacity', 650,
+    'capacity', 450,
     'availableSpots', 142,
     'isActive', true,
     'type', 'Student Parking',
@@ -38,23 +38,6 @@ VALUES (
   )
 );
 
-INSERT INTO lot(id, data)
-VALUES (
-  '18435dfa-2727-4f9f-8fc5-680c20dfb81a',
-  jsonb_build_object(
-    'name', 'Lot 104',
-    'zone', 'East Remote',
-    'address', 'East Remote Parking Lot, Santa Cruz, CA 95064',
-    'latitude', 36.9911,
-    'longitude', -122.0531,
-    'capacity', 1000,
-    'availableSpots', 375,
-    'isActive', true,
-    'type', 'General Parking',
-    'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
-  )
-);
 
 INSERT INTO lot(id, data)
 VALUES (

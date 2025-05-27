@@ -18,6 +18,7 @@ export async function getPermitByDriver(cookie: string | undefined): Promise<Per
       }
       )
       .then(json => {
+        console.log("permits by user json", json, json.error);
         resolve(json.data.permitsByDriver)
       })
       .catch((error) => reject(error))

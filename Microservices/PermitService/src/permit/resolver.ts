@@ -6,12 +6,14 @@ import { PermitService } from './service'
 @Resolver()
 export class PermitResolver {
   @Authorized()
-   
+
   @Query(() => [Permit])
   async permitsByDriver(
     @Ctx() Request: Request
   ): Promise<Permit[]> {
-    return await new PermitService().getPermitByDriver(Request.user?.id)
+    const perms = await new PermitService().getPermitByDriver(Request.user?.id)
+    console.log("users permits", perms)
+    return perms
   }
 
   @Authorized()
@@ -26,7 +28,7 @@ export class PermitResolver {
   @Authorized('enforcement')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => [PermitValid])
-  async getPermitBycarPlate(  @Arg("input") carPlate: string
+  async getPermitBycarPlate(@Arg("input") carPlate: string
   ): Promise<PermitValid[]> {
     return await new PermitService().getPermitByCar(carPlate)
   }
@@ -50,6 +52,7 @@ export class PermitResolver {
     if (!driverId) {
       throw new Error("UserID invalid");
     }
+    console.log("issued new permit called")
     const permitType = await new PermitService().getSpecificPermitType(permitTypeId)
     /* year, month, week, daily */
     const issueDate = new Date();
@@ -72,7 +75,7 @@ export class PermitResolver {
       isValid: true,
       price: permitType.price
     });
-    
+    console.log("issued new permit", newPermit)
     return newPermit;
   }
 }
