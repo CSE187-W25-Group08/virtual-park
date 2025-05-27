@@ -2,9 +2,10 @@
 
 import * as React from 'react';
 import { Card, Typography, Box, 
-  // Button, 
+  Chip,
   ListItem, 
   Button} from '@mui/material'
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import { useTranslations } from 'next-intl'
 
 import { PermitType } from '../../../../permit/index'
@@ -19,12 +20,6 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   const t = useTranslations('purchase_permit')
 
   const [vehicle, setVehicle] = React.useState<Vehicle | null>(null);
-
-
-  // const purchaseHandler = () => {
-  //   alert(`${t('purchased')} ${permitType} ($${permit.price})`)
-  // }
-
 
    React.useEffect(() => {
     const getActiveVehicle = async () => {
@@ -52,28 +47,29 @@ export default function PermitCard({permit}: { permit: PermitType }) {
       type: "permit",
       vehicleId: vehicle?.id,
     }
-    console.log("name", name)
-    console.log("amount", amount)
-    console.log("metaData", metaData)
+    // console.log("name", name)
+    // console.log("amount", amount)
+    // console.log("metaData", metaData)
     await createCheckout(name, amount, metaData)
   }
   
   return (
     <ListItem disablePadding>
-      {process.env.NEXT_PUBLIC_CHECKOUT_URL}
       <Card sx={{ p: 2, border: 'solid', width: '100%', mb: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
-            <Typography>
-              {t(permit.type)}
-            </Typography>
+            <Typography variant="h6">{t(permit.type)}</Typography>
             <Typography>${permit.price}</Typography>
           </Box>
-          {/* <Button variant="contained" aria-label={`Purchase ${permitType} Permit`} color="primary" onClick={purchaseHandler}>
-            {t('purchase')}
-          </Button> */}
-          {/* you could call the permit.id in the handleClick function */}
-          <Button onClick={() => handleClick()}>Pay for Permit</Button>
+          {(permit.purchased) ? (
+            <CheckRoundedIcon />
+            ) : (
+            <Button
+              onClick={handleClick}
+              disabled={permit.purchased}
+              variant="contained"
+              color="primary"
+            > {t('buy')} </Button>)}
         </Box>
       </Card>
     </ListItem>

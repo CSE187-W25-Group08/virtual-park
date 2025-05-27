@@ -1,15 +1,16 @@
 export interface Permit {
-    id: string,
-    issueDate: string,
-    expDate: string,
-    type: string,
-    price: number
+  id: string,
+  issueDate: string,
+  expDate: string,
+  type: string,
+  price: number
 }
 
 export interface PermitType {
-    id: string,
-    type: string,
-    price: number
+  id: string,
+  type: string,
+  price: number,
+  purchased?: boolean,
 }
 
 export interface PermitPurchase {

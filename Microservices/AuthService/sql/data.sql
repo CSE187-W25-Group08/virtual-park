@@ -499,3 +499,17 @@ VALUES (
     'suspended', false
   )
 );
+
+
+INSERT INTO member(id, data) 
+VALUES (
+  'c852b1b6-dc7c-48b2-84f1-fe8aa828a928',
+  jsonb_build_object(
+    'email','jin@books.com',
+    'name','Whimsical Driving fairy that is entranced by a Toyotta SUV',
+    'pwhash',crypt('jinmember',gen_salt('bf')),
+    'roles','["driver"]',
+    'joindate', '2023-06-15T12:00:00+00:00',
+    'suspended', false
+  )
+);

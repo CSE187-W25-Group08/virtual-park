@@ -45,7 +45,8 @@
     "Month": "Mes",
     "Year": "Año",
     "purchase": "Comprar",
-    "purchased": "Comprado:"
+    "purchased": "Comprado:",
+    "buy": "comprar permiso"
   },
   "vehicle": {
     "title": "Vehículos",
@@ -58,7 +59,8 @@
     "model": "Modelo",
     "default": "Vehículo predeterminado",
     "cancel": "Cancelar",
-    "save": "Guardar"
+    "save": "Guardar",
+    "primary": "primario"
   },
   "ticket": {
     "accepted": "Aceptado",
