@@ -14,16 +14,26 @@ export default function TypeList() {
 
   useEffect(() => {
     const fetchData = async () => {
+      try {
       // console.log('Stripe Public Key:', process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
       const permits = await permitTypes()
       const alreadyOwnedPermits = await getUserPermits()
       // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
-      const ownedTypes = new Set(alreadyOwnedPermits.map(p => p.type));
+      const now = new Date();
+      // Only include permits that are not expired
+      const ownedTypes = new Set(
+        alreadyOwnedPermits
+          .filter(p => new Date(p.expDate) > now)
+          .map(p => p.type)
+      );
       const updatedPermits = permits.map(p => ({
         ...p,
         purchased: ownedTypes.has(p.type),
       }));
-      setpermitTypeList(updatedPermits);
+      setpermitTypeList(updatedPermits);}
+      catch (e) {
+      console.error('Error loading permit types:', e)
+      }
     }
     fetchData()
   }, [])
