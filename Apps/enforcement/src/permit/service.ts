@@ -41,6 +41,7 @@ export async function getPermitByPlate(cookie: string | undefined, carplate: str
   })
 }
 
+
 export async function recognizePlateFromImage(cookie: string | undefined, base64Image: string): Promise<string> {
   return new Promise((resolve, reject) => {
     fetch('http://localhost:4020/graphql', {
@@ -75,3 +76,4 @@ export async function recognizePlateFromImage(cookie: string | undefined, base64
     .catch((error) => reject(error))
   })
 }
+

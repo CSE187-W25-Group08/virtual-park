@@ -40,31 +40,59 @@ export default function PermitView() {
     setCarPlate(event.target.value)
   }
   
-  const handleSearch = async (plateInput?: string) => {
-    const plateToUse = plateInput || carPlate
-    if (!plateToUse) {
-      setError('Please enter a car plate number')
-      return
-    }
-    setError(null)
-    setTicketSuccess(null)
-    const permitInfo = await getpermitByPlateNum(plateToUse)
-    setPermits(permitInfo)
+  // const handleSearch = async (plateInput?: string) => {
+  //   const plateToUse = plateInput || carPlate
+  //   if (!plateToUse) {
+  //     setError('Please enter a car plate number')
+  //     return
+  //   }
+  //   setError(null)
+  //   setTicketSuccess(null)
+  //   const permitInfo = await getpermitByPlateNum(plateToUse)
+  //   setPermits(permitInfo)
     
+  //   if (permitInfo.length === 0) {
+  //     setError('No permits found for this vehicle')
+  //     const driverID = await getDriverFromVehiclePlate(plateToUse)
+  //     if (driverID) {
+  //       setDriverID(String(driverID))
+  //     }
+  //     else {
+  //       setDriverID('')
+  //     }
+  //   } else {
+  //     setDriverID(String(permitInfo[0].driverID))
+  //   }
+  // }
+  const handleSearch = async (plateInput?: string) => {
+  const plateToUse = plateInput || carPlate;
+  if (!plateToUse) {
+    setError('Please enter a car plate number');
+    return;
+  }
+  setError(null);
+  setTicketSuccess(null);
+  try {
+    const permitInfo = await getpermitByPlateNum(plateToUse);
+    setPermits(permitInfo);
     if (permitInfo.length === 0) {
-      setError('No permits found for this vehicle')
-      const driverID = await getDriverFromVehiclePlate(plateToUse)
+      setError('No permits found for this vehicle');
+      const driverID = await getDriverFromVehiclePlate(plateToUse);
       if (driverID) {
-        setDriverID(String(driverID))
-      }
-      else {
-        setDriverID('')
+        setDriverID(String(driverID));
+      } else {
+        setDriverID('');
       }
     } else {
-      setDriverID(String(permitInfo[0].driverID))
+      setDriverID(String(permitInfo[0].driverID));
     }
+    } catch (err: any) {
+    // console.error("Error during permit search:", err);
+    setPermits([]);
+    setDriverID('');
   }
-  
+};
+
   const ticketDialogHandler = () => {
     setTicketDialog(true)
   }
