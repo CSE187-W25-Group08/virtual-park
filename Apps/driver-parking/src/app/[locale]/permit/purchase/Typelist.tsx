@@ -17,15 +17,12 @@ export default function TypeList() {
       // console.log('Stripe Public Key:', process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
       const permits = await permitTypes()
       const alreadyOwnedPermits = await getUserPermits()
-      console.log(alreadyOwnedPermits);
-      console.log(permits)
       // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
       const ownedTypes = new Set(alreadyOwnedPermits.map(p => p.type));
       const updatedPermits = permits.map(p => ({
         ...p,
         purchased: ownedTypes.has(p.type),
       }));
-      console.log(updatedPermits)
       setpermitTypeList(updatedPermits);
     }
     fetchData()

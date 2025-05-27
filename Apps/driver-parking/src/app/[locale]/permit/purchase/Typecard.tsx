@@ -1,10 +1,13 @@
 'use client'
 
 import * as React from 'react';
-import { Card, Typography, Box, 
-  Chip,
+import {
+  Typography, 
+  Box, 
   ListItem, 
-  Button} from '@mui/material'
+  Button,
+  Paper
+} from '@mui/material'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import { useTranslations } from 'next-intl'
 
@@ -54,24 +57,47 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   }
   
   return (
-    <ListItem disablePadding>
-      <Card sx={{ p: 2, border: 'solid', width: '100%', mb: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+   <ListItem disablePadding>
+      <Paper
+        elevation={3}
+        sx={{
+          p: 2,
+          width: '100%',
+          mb: 2,
+          borderRadius: 3,
+          transition: 'transform 0.2s, box-shadow 0.2s',
+          '&:hover': {
+            transform: 'scale(1.01)',
+            boxShadow: 6,
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <Box>
             <Typography variant="h6">{t(permit.type)}</Typography>
             <Typography>${permit.price}</Typography>
           </Box>
-          {(permit.purchased) ? (
-            <CheckRoundedIcon />
-            ) : (
+          {permit.purchased ? (
+            <CheckRoundedIcon color="success" />
+          ) : (
             <Button
               onClick={handleClick}
               disabled={permit.purchased}
               variant="contained"
               color="primary"
-            > {t('buy')} </Button>)}
+              sx={{ borderRadius: 2 }}
+            >
+              {t('buy')}
+            </Button>
+          )}
         </Box>
-      </Card>
+      </Paper>
     </ListItem>
-  )
+  );
 }
