@@ -24,11 +24,6 @@ export default function LotList() {
   // based on MUI https://mui.com/material-ui/react-list/
   const columns: GridColDef[] = [
   {
-    field: 'id',
-    headerName: 'Lot ID',
-    width: 150,
-  },
-  {
     field: 'name',
     headerName: 'Name',
     width: 200,
@@ -71,11 +66,6 @@ export default function LotList() {
     field: 'capacity',
     headerName: 'Capacity',
     width: 110,
-  },
-  {
-    field: 'availableSpots',
-    headerName: 'Available Spots',
-    width: 150,
   },
   {
     field: 'isActive',

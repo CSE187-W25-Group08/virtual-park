@@ -1,6 +1,6 @@
 'use client'
 import {
-  Typography, 
+  // Typography, 
   Box,
   Drawer,
   Stack,
@@ -54,14 +54,14 @@ export default function SideBarNav() {
       >
         <Avatar
           sizes="small"
-          alt={window.sessionStorage.getItem('name') ?? 'Admin User'}
+          alt={'Admin User'}
           src="/static/images/avatar/7.jpg"
           sx={{ width: 36, height: 36 }}
         />
         <Box sx={{ mr: 'auto' }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
+          {/* <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
             {window.sessionStorage.getItem('name')}
-          </Typography>
+          </Typography> */}
         </Box>
         <IconButton onClick={() => handleLogout()}>
           <LogoutIcon />
