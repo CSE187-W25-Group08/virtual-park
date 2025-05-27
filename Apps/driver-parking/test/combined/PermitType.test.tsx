@@ -12,17 +12,18 @@ vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
 
+
+const mockedGetCookies = vi.fn()
 vi.mock('next/headers', () => ({
   cookies: () => ({
     set: vi.fn(),
-    get: vi.fn(),
+    get: mockedGetCookies,
     delete: vi.fn(),
   }),
 }))
 
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
-  vi.stubGlobal('alert', vi.fn())
 })
 
 afterEach(() => {
@@ -39,32 +40,46 @@ const renderWithIntl = (component: React.ReactElement) => {
 }
 
 it('renders permit types returned from permitTypes()', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
 
   vi.mocked(fetch).mockImplementation((url, options) => {
-    if (url?.toString().includes('/graphql')) {
+    const body = JSON.parse(options?.body as string)
+    // Match PermitType query
+    if (body.query.includes('PermitType')) {
       return Promise.resolve({
+        ok: true,
         status: 200,
         json: () => Promise.resolve({
           data: {
             PermitType: [
-              {
-                type: 'Daily',
-                price: 5
-              }
-            ]
+              { id: '1', type: 'Daily', price: 5 },
+              { id: '2', type: 'Month', price: 20 },
+            ],
           },
         }),
       } as Response)
     }
-    return Promise.reject('Unknown fetch')
-  })
+    // Match permitsByDriver query
+    if (body.query.includes('permitsByDriver')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            permitsByDriver: [
+              { id: '101', type: 'Daily', price: 5, issueDate: '2024-01-01', expDate: '2099-01-01' },
+            ],
+          },
+        }),
+      } as Response)
+    }
+    return Promise.reject(new Error('Unknown GraphQL query'))
+  }) as typeof fetch
+
   renderWithIntl(<TypePage />)
-  await screen.findByText('Daily')
-  // const purchaseButton = await screen.findByLabelText('Purchase Student Permit')
-  // await userEvent.click(purchaseButton)
-  // expect(alert).toHaveBeenCalledWith('Purchased: Student ($3.14)')
+  await screen.findByText('Month')
 })
 
 /* reference: https://web.dev/learn/testing/get-started/component-testing */
