@@ -70,7 +70,7 @@ export class PermitService {
 
     const { rows } = await pool.query(query);
     const row = rows[0];
-
+    console.log("row that was inserted by permitIssue in permit service", row)
     return new PermitIssue(
       row.driverid,
       row.data.vehicleid,
