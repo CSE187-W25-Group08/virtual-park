@@ -36,3 +36,4 @@ coverage
 
 Spikes/ALPR-Testing/OCRService/credentials/
 Microservices/OCRService/credentials/*.json
+Microservices/VehicleService/credentials/*.json
