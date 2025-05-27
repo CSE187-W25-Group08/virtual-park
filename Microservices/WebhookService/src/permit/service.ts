@@ -14,15 +14,13 @@ export async function issuePermit(
         query: `
           mutation ($permitTypeId: String!, $vehicleId: String!) {
             issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
-              id
-              permitType {
-                name
-              }
-              vehicle {
-                licensePlate
-              }
-              issuedAt
-              expiresAt
+              driverID
+              vehicleID
+              permitType
+              issueDate
+              expDate
+              isValid
+
             }
           }
         `,

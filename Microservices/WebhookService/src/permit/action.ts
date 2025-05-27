@@ -4,11 +4,12 @@ export async function setPermitTypePaid(metadata: Record<string, unknown>): Prom
   const permitTypeId = metadata.permitTypeId as string;
   const vehicleId = metadata.vehicleId as string;
   const dataCookie = metadata.cookie as string;
-  console.log("ID:", permitTypeId);
+  console.log("Permit Type ID:", permitTypeId);
   console.log("VehicleId:", vehicleId);
   console.log("Cookie:", dataCookie);
 
-  await issuePermit(permitTypeId, vehicleId, dataCookie);
+  const permit = await issuePermit(permitTypeId, vehicleId, dataCookie);
+  console.log(permit)
   console.log("=======Permit Fields=======")
 
 };
