@@ -11,8 +11,8 @@ export class PermitService {
     const { rows } = await pool.query(query)
     return rows.map(result => ({
       id: result.id,
-      issueDate: result.issue_date,
-      expDate: result.exp_date,
+      issueDate: result.issuedate,
+      expDate: result.expdate,
       type: result.type,
       price: result.price
     }))
