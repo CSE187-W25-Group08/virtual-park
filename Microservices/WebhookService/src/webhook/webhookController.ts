@@ -3,7 +3,7 @@ import { Request, Controller, Post, Route, Body } from "tsoa";
 import express from "express";
 import Stripe from "stripe";
 import { setTicketPaidAction } from "../ticket/action";
-import { sendTicketPaymentConfirmation } from "../email/service";
+import { sendPermitPaymentConfirmation, sendTicketPaymentConfirmation } from "../email/service";
 import { setPermitTypePaid } from "../permit/action";
 
 const stripeSecretkey = process.env.STRIPE_SECRET_KEY;
@@ -89,6 +89,7 @@ export class WebhookController extends Controller {
               }
               case "permit": {
                 const metadata = product.metadata;
+                await sendPermitPaymentConfirmation(customerEmail || "Customer@email", customerName || "Customer", dataName, dataAmount || 0, metadata);
                 await setPermitTypePaid(metadata);
                 break;
               }
