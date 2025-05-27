@@ -2,68 +2,121 @@
 
 import { useState } from 'react';
 import {
-    IconButton,
-    Drawer,
-    Box,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemText,
-    Typography
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+  ListItemIcon,
+  ListItemText,
+  // Box
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 import { logout } from '@/app/[locale]/login/action';
 
-
 export default function BottomMenu() {
-    const [open, setOpen] = useState(false);
-    const toggleDrawer = () => setOpen(!open);
-    const router = useRouter();
-    const t = useTranslations('bottom_navbar');
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const router = useRouter();
+  const t = useTranslations('bottom_navbar');
 
-    const handleLogout = async () => {
-        await logout();
-        window.sessionStorage.clear();
-        router.push('/');
-    };
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    window.sessionStorage.clear();
+    router.push('/');
+  };
 
   return (
     <>
       <IconButton
-      edge="end"
-      color="inherit"
-      aria-label="Bottom Menu"
-      onClick={toggleDrawer}
-      sx={{
-        flexDirection: 'column',
-        alignItems: 'center'
-      }}
+        edge="end"
+        color="inherit"
+        aria-label="Bottom Menu"
+        onClick={handleClick}
+        sx={{
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
       >
-          <MenuIcon />
-          <Typography variant="caption" sx={{ marginTop: '4px' }}>
-            {t('more')}
-          </Typography>
+        <MenuIcon />
+        <Typography variant="caption" sx={{ marginTop: '4px' }}>
+          {t('more')}
+        </Typography>
       </IconButton>
 
-      <Drawer anchor="right" open={open} onClose={toggleDrawer}>
-        <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
-          <List>
-            <ListItem>
-              <ListItemButton onClick={() => router.push('/permit/history')}>
-                <ListItemText primary={t('permitHistory')} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem>
-              <ListItemButton onClick={handleLogout}>
-                <ListItemText primary={t('logout')} />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Box>
-      </Drawer>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        slotProps={{
+          paper: {
+            elevation: 4,
+            sx: {
+              borderRadius: 2,
+              minWidth: 200,
+              mt: -8, // raise the menu above the bottom nav
+              mr: -2,
+              py: 0.5,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem
+          onClick={() => {
+            router.push('/permit/history');
+            handleClose();
+          }}
+          sx={{
+            borderRadius: 1,
+            mx: 1,
+            my: 0.5,
+            '&:hover': {
+              backgroundColor: 'primary.light',
+              color: 'white',
+            },
+          }}
+        >
+          <ListItemText>{t('permitHistory')}</ListItemText>
+          <ListItemIcon sx={{ minWidth: 0, ml: 2 }}>
+            <HistoryRoundedIcon fontSize="small" />
+          </ListItemIcon>
+        </MenuItem>
+
+        <MenuItem
+          onClick={() => {
+            handleLogout();
+            handleClose();
+          }}
+          sx={{
+            borderRadius: 1,
+            mx: 1,
+            my: 0.5,
+            '&:hover': {
+              backgroundColor: 'error.light',
+              color: 'white',
+            },
+          }}
+        >
+          <ListItemText>{t('logout')}</ListItemText>
+          <ListItemIcon sx={{ minWidth: 0, ml: 2 }}>
+            <LogoutRoundedIcon fontSize="small" />
+          </ListItemIcon>
+        </MenuItem>
+      </Menu>
     </>
   );
 }

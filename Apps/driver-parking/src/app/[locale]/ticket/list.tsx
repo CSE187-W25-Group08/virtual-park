@@ -68,7 +68,9 @@ export default function TicketList() {
       <Box sx={{ px: 2, mb: 10 }}>
         <List sx={{ width: '100%' }}>
           {unpaidTicket.length <= 0 ?
-            <Typography sx={{mt: 7}}>{t('noTickets')}</Typography> : (
+           (<Box sx={{display:'flex', width:'100%', justifyContent:'center'}}>
+              <Typography sx={{mt: 7}}>{t('noTickets')}</Typography>
+            </Box>) : (
             <>
 
             <Badge badgeContent={unpaidTicket.length}>

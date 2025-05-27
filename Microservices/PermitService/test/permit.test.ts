@@ -146,14 +146,14 @@ test('should return empty array with not exist car plate number', async () => {
     })
 })
 
-const daily =  '9b968eea-9abe-457c-ae79-1b128074f683';
+const daily = '9b968eea-9abe-457c-ae79-1b128074f683';
 const VehicleId = 'f94b39b3-fcc3-4f00-a02a-29ffc06a9365';
 test('should issue a daily permit', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
-     .send({
-        query: `
+    .send({
+      query: `
           mutation ($permitTypeId: String!, $vehicleId: String!) {
             issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
               driverID
@@ -165,11 +165,11 @@ test('should issue a daily permit', async () => {
             }
           }
         `,
-        variables: {
-          permitTypeId: daily,
-          vehicleId: VehicleId
-        }
-      })
+      variables: {
+        permitTypeId: daily,
+        vehicleId: VehicleId
+      }
+    })
     .then((res) => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
@@ -185,14 +185,14 @@ test('should issue a daily permit', async () => {
     })
 })
 
-const week =  '8616e7a7-bd6e-45e2-9809-ed22c727a6da';
+const week = '8616e7a7-bd6e-45e2-9809-ed22c727a6da';
 const SecondVehicleId = 'a74ab65d-f1ec-48b0-852b-5e9a486fc323';
 test('should issue a weekly permit', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
-     .send({
-        query: `
+    .send({
+      query: `
           mutation ($permitTypeId: String!, $vehicleId: String!) {
             issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
               driverID
@@ -204,11 +204,11 @@ test('should issue a weekly permit', async () => {
             }
           }
         `,
-        variables: {
-          permitTypeId: week,
-          vehicleId: SecondVehicleId
-        }
-      })
+      variables: {
+        permitTypeId: week,
+        vehicleId: SecondVehicleId
+      }
+    })
     .then((res) => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
@@ -223,14 +223,14 @@ test('should issue a weekly permit', async () => {
     })
 })
 
-const month =  '7acb1a82-c27a-4440-ace7-6d47add695dd';
+const month = '7acb1a82-c27a-4440-ace7-6d47add695dd';
 const ThirdVehicleId = 'ca755b1a-975c-4543-983f-888897db3cab';
 test('should issue a monthly permit', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
-     .send({
-        query: `
+    .send({
+      query: `
           mutation ($permitTypeId: String!, $vehicleId: String!) {
             issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
               driverID
@@ -242,11 +242,11 @@ test('should issue a monthly permit', async () => {
             }
           }
         `,
-        variables: {
-          permitTypeId: month,
-          vehicleId: ThirdVehicleId
-        }
-      })
+      variables: {
+        permitTypeId: month,
+        vehicleId: ThirdVehicleId
+      }
+    })
     .then((res) => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
@@ -260,14 +260,14 @@ test('should issue a monthly permit', async () => {
     })
 })
 
-const year =  '5ed85022-ec19-4e22-aff8-9a98feddeea9';
+const year = '5ed85022-ec19-4e22-aff8-9a98feddeea9';
 const FourthVehicleId = '18fa94fc-4783-42df-a904-7ec17efadca5';
 test('should issue a yearly permit', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
-     .send({
-        query: `
+    .send({
+      query: `
           mutation ($permitTypeId: String!, $vehicleId: String!) {
             issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
               driverID
@@ -279,11 +279,11 @@ test('should issue a yearly permit', async () => {
             }
           }
         `,
-        variables: {
-          permitTypeId: year,
-          vehicleId: FourthVehicleId
-        }
-      })
+      variables: {
+        permitTypeId: year,
+        vehicleId: FourthVehicleId
+      }
+    })
     .then((res) => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
