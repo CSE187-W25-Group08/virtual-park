@@ -36,8 +36,8 @@ SELECT
   'bea45ed8-aa83-4c49-a201-4625baa0e91a'::uuid,
   id,
   jsonb_build_object(
-    'issue_date', '2025-03-05T08:00:00.000Z',
-    'exp_date', '2025-03-06T08:00:00.000Z'
+    'issuedate', '2025-03-05T08:00:00.000Z',
+    'expdate', '2025-03-06T08:00:00.000Z'
   )
 FROM permitType
 WHERE data->>'type' = 'Daily';
@@ -48,8 +48,8 @@ SELECT
   'bea45ed8-aa83-4c49-a201-4625baa0e91a'::uuid,
   id,
   jsonb_build_object(
-    'issue_date', '2025-03-06T08:00:00.000Z',
-    'exp_date', '2025-03-07T08:00:00.000Z'
+    'issuedate', '2025-03-06T08:00:00.000Z',
+    'expdate', '2025-03-07T08:00:00.000Z'
   )
 FROM permitType
 WHERE data->>'type' = 'Daily';
@@ -59,8 +59,8 @@ SELECT
   'bea45ed8-aa83-4c49-a201-4625baa0e91a'::uuid,
   id,
   jsonb_build_object(
-    'issue_date', '2024-09-21T08:00:00.000Z',
-    'exp_date', '2025-06-14T08:00:00.000Z'
+    'issuedate', '2024-09-21T08:00:00.000Z',
+    'expdate', '2025-06-14T08:00:00.000Z'
   )
 FROM permitType
 WHERE data->>'type' = 'Year';

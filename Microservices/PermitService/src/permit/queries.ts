@@ -48,8 +48,8 @@ WHERE
 /* reference: https://www.postgresql.org/docs/current/contrib-dblink-function.html 
 https://www.geeksforgeeks.org/postgresql-dollar-quoted-string-constants/*/
 export const getPermitByVehiclePlateNum = (carPlateNum: string) => `
-SELECT dp.id AS "permitID", pt.data->>'type' AS "permitType", dp.data->>'issue_date' AS "issueDate",
-dp.data->>'exp_date' AS "expDate", (dp.data->>'exp_date')::timestamp > NOW() AS "isValid", v.driver AS "driverID",
+SELECT dp.id AS "permitID", pt.data->>'type' AS "permitType", dp.data->>'issuedate' AS "issueDate",
+dp.data->>'expdate' AS "expDate", (dp.data->>'expdate')::timestamp > NOW() AS "isValid", v.driver AS "driverID",
 v.id AS "vehicleID"
 FROM driverpermit dp
 JOIN permittype pt ON dp.permitType = pt.id
@@ -65,8 +65,8 @@ ON dp.driverID = v.driver;
 export const getActivePermit = `
 SELECT 
     dp.id AS id,
-    dp.data->>'issue_date' AS issue_date,
-    dp.data->>'exp_date' AS exp_date,
+    dp.data->>'issuedate' AS issuedate,
+    dp.data->>'expdate' AS expdate,
     pt.data->>'type' AS type,
     pt.data->>'price' AS price
 FROM 
@@ -76,7 +76,7 @@ JOIN
 WHERE 
     dp.driverID = $1
 AND
-    (dp.data->>'exp_date')::timestamp > NOW()
+    (dp.data->>'expdate')::timestamp > NOW()
 AND
-    (dp.data->>'issue_date')::timestamp <= NOW()
+    (dp.data->>'issuedate')::timestamp <= NOW()
 `;

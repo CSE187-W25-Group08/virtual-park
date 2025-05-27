@@ -148,8 +148,8 @@ export class PermitService {
     // }
     return {
       id: result.rows[0].id,
-      issueDate: result.rows[0].issue_date,
-      expDate: result.rows[0].exp_date,
+      issueDate: result.rows[0].issuedate,
+      expDate: result.rows[0].expdate,
       type: result.rows[0].type,
       price: result.rows[0].price
     }
