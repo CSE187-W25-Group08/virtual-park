@@ -70,8 +70,12 @@ export async function recognizePlateFromImage(cookie: string | undefined, base64
       return response.json()
     })
     .then(json => {
-      resolve(json.data.scanImage.licensePlate)
+      const plate = json?.data?.scanImage?.licensePlate;
+      resolve(plate)
     })
-    .catch((error) => reject(error))
+    .catch((error) => {
+      console.error('OCR service error:', error)
+      reject('Failed to contact OCR service')
+    })
   })
 }
