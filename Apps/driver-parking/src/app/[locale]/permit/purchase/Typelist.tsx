@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 // import { useTranslations } from 'next-intl'
 
-import { permitTypes } from '../actions'
+import { permitTypes, getUserPermits} from '../actions'
 import PermitCard from './Typecard'
 import { PermitType } from '../../../../permit'
 
@@ -15,8 +15,9 @@ export default function TypeList() {
   useEffect(() => {
     const fetchData = async () => {
     console.log('Stripe Public Key:', process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
-      const fetch = await permitTypes()
-      setpermitTypeList(fetch)
+      const permits = await permitTypes()
+      const alreadyOwnedPermits = await getUserPermits()
+      setpermitTypeList(permits)
     }
     fetchData()
   }, [])
