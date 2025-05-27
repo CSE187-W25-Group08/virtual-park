@@ -59,7 +59,8 @@
     "model": "Model",
     "default": "Default Vehicle",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "primary": "primary"
   },
   "ticket": {
     "accepted": "Accepted",

@@ -146,7 +146,7 @@ export default function Vehicles() {
                           fontSize: '0.75rem',
                         }}
                       >
-                        Default
+                        {t('primary')}
                       </Typography>
                     )}
                     <Typography

@@ -10,7 +10,7 @@ export interface PermitType {
   id: string,
   type: string,
   price: number,
-  purchased?: boolean
+  purchased?: boolean,
 }
 
 export interface PermitPurchase {
