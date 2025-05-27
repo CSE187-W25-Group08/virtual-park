@@ -45,7 +45,8 @@
     "Month": "Mes",
     "Year": "Año",
     "purchase": "Comprar",
-    "purchased": "Comprado:"
+    "purchased": "Comprado:",
+    "buy": "comprar permiso"
   },
   "vehicle": {
     "title": "Vehículos",

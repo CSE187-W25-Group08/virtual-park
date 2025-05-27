@@ -52,9 +52,9 @@ export default function PermitCard({permit}: { permit: PermitType }) {
       type: "permit",
       vehicleId: vehicle?.id,
     }
-    console.log("name", name)
-    console.log("amount", amount)
-    console.log("metaData", metaData)
+    // console.log("name", name)
+    // console.log("amount", amount)
+    // console.log("metaData", metaData)
     await createCheckout(name, amount, metaData)
   }
   
@@ -73,7 +73,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
             {t('purchase')}
           </Button> */}
           {/* you could call the permit.id in the handleClick function */}
-          <Button onClick={() => handleClick()}>Pay for Permit</Button>
+          <Button onClick={() => handleClick()}>{t("buy")}</Button>
         </Box>
       </Card>
     </ListItem>

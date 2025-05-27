@@ -45,7 +45,8 @@
     "Month": "Month",
     "Year": "Year",
     "purchase": "Purchase",
-    "purchased": "Purchased:"
+    "purchased": "Purchased:",
+    "buy": "Buy Permit"
   },
   "vehicle": {
     "title": "Vehicles",

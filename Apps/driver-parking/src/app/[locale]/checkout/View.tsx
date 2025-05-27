@@ -53,7 +53,7 @@ export default function View({
           Purchase {status}
         </Typography>
         <Typography>
-          You’ve purchased a <strong>{type}</strong> for{" "}
+          Succesfully paid for a <strong>{type}</strong> for{" "}
           <strong>${amount}</strong>.
         </Typography>
         <Box>
