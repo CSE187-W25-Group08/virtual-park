@@ -19,7 +19,6 @@ export async function extractLicensePlateText(imageBuffer: Buffer): Promise<stri
     const match = allText?.match(pattern)
     if (match) {
       const plate = match[0].replace(/\s/g, "").toUpperCase()
-      // console.log('found plate:', plate)
       return plate
     }
   }

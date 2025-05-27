@@ -131,7 +131,6 @@ export default function PermitView() {
       setError('Failed to recognize license plate')
     } else {
       setCarPlate(plate)
-      console.log('plate: ', plate)
       handleSearch(plate)
     }
     
