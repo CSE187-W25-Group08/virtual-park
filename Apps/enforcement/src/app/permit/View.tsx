@@ -40,53 +40,23 @@ export default function PermitView() {
     setCarPlate(event.target.value)
   }
   
-  // const handleSearch = async (plateInput?: string) => {
-  //   const plateToUse = plateInput || carPlate
-  //   if (!plateToUse) {
-  //     setError('Please enter a car plate number')
-  //     return
-  //   }
-  //   setError(null)
-  //   setTicketSuccess(null)
-  //   const permitInfo = await getpermitByPlateNum(plateToUse)
-  //   setPermits(permitInfo)
-    
-  //   if (permitInfo.length === 0) {
-  //     setError('No permits found for this vehicle')
-  //     const driverID = await getDriverFromVehiclePlate(plateToUse)
-  //     setDriverID(String(driverID))
-  //   } else {
-  //     setDriverID(String(permitInfo[0].driverID))
-  //   }
-  // }
   const handleSearch = async (plateInput?: string) => {
     const plateToUse = plateInput || carPlate
-    console.log('Searching for plate:', plateToUse) // Add this
-    console.log('Plate length:', plateToUse.length) // Add this
-    console.log('Plate chars:', [...plateToUse]) // Add this
-    
     if (!plateToUse) {
       setError('Please enter a car plate number')
       return
     }
     setError(null)
     setTicketSuccess(null)
+    const permitInfo = await getpermitByPlateNum(plateToUse)
+    setPermits(permitInfo)
     
-    try {
-      const permitInfo = await getpermitByPlateNum(plateToUse)
-      console.log('Permit result:', permitInfo) // Add this
-      setPermits(permitInfo)
-      
-      if (permitInfo.length === 0) {
-        setError('No permits found for this vehicle')
-        const driverID = await getDriverFromVehiclePlate(plateToUse)
-        setDriverID(String(driverID))
-      } else {
-        setDriverID(String(permitInfo[0].driverID))
-      }
-    } catch (error) {
-      console.error('Search error:', error) // Add this
-      setError('Error searching for permits')
+    if (permitInfo.length === 0) {
+      setError('No permits found for this vehicle')
+      // const driverID = await getDriverFromVehiclePlate(plateToUse)
+      setDriverID(String(driverID))
+    } else {
+      setDriverID(String(permitInfo[0].driverID))
     }
   }
   

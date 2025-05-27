@@ -94,6 +94,9 @@ export class VehicleService {
     }
     const { rows } = await pool.query(query)
 
+    if (rows.length === 0) {
+      throw new Error(`Vehicle with license plate ${plate} not found`)
+    }
     const vehicleObj: Vehicle = {
       'id': rows[0].id,
       'driver': rows[0].driver,

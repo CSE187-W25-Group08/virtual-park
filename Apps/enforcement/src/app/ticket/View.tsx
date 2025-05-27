@@ -102,10 +102,10 @@ export default function TicketView({
         ticketInfo.cost,
         false
       )
-      const driver = await getDriverDetails(ticketInfo.driverID)
-      if (driver) {
-        await sendEmail(driver.email, driver.name, ticket)
-      }
+      // const driver = await getDriverDetails(ticketInfo.driverID)
+      // if (driver) {
+      //   await sendEmail(driver.email, driver.name, ticket)
+      // }
       
       success(ticket.id)
       resetDialog()

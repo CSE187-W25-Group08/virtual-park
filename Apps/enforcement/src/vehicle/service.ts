@@ -27,6 +27,7 @@ export async function getVehicleByPlate(cookie: string|undefined, plate: string)
     .then(response => {
       if (response.status != 200) {
         reject('Unauthorized')
+        return
       }
       return response.json()} 
     )
