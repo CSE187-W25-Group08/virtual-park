@@ -51,10 +51,10 @@ export default function View({
         sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
         <CheckCircleIcon color="success" sx={{ fontSize: 80 }} />
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" sx = {{mt : 1}} gutterBottom >
           {t('purchase')} {status}
         </Typography>
-        <Typography>
+        <Typography sx = {{mt : 1}}>
           {t('message', {type: type})} <strong>${amount}</strong>.
         </Typography>
         <Box>
