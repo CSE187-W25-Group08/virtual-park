@@ -92,6 +92,7 @@
     "payTicket": "Pagar multa",
     "appealTicket": "Apelar multa",
     "appealReason": "Razón de la apelación",
+    "appealPlaceholder": "Explique el motivo de su apelación",
     "appealDescription": "Descripción de la apelación",
     "loading": "Cargando",
     "viewTicket": "Ver multa"
@@ -129,5 +130,11 @@
     "purchase": "Comprar permiso",
     "tickets": "Multas",
     "permitHistory": "Historial de permisos"
+  },
+  "checkout": {
+    "goBack": "Volver",
+    "purchase": "Comprar",
+    "message": "Has comprado un {type} para ",
+    "dashboard": "Ir al tablero"
   }
 }

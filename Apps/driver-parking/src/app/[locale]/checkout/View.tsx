@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import {} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -28,6 +29,7 @@ export default function View({
     window.scrollTo(0, 0);
   };
   const router = useRouter();
+  const t = useTranslations("checkout");
 
   return (
     <React.Fragment>
@@ -41,7 +43,7 @@ export default function View({
           >
             <ArrowBackIcon />
           </IconButton>
-          <Typography>Go Back</Typography>
+          <Typography>{t('goBack')}</Typography>
         </Toolbar>
       </AppBar>
 
@@ -50,11 +52,10 @@ export default function View({
       >
         <CheckCircleIcon color="success" sx={{ fontSize: 80 }} />
         <Typography variant="h4" gutterBottom>
-          Purchase {status}
+          {t('purchase')} {status}
         </Typography>
         <Typography>
-          Succesfully paid for a <strong>{type}</strong> for{" "}
-          <strong>${amount}</strong>.
+          {t('message', {type: type})} <strong>${amount}</strong>.
         </Typography>
         <Box>
           <Button
@@ -62,7 +63,7 @@ export default function View({
             color="primary"
             onClick={() => router.push("/dashboard")}
           >
-            Go to Dashboard
+            {t('dashboard')}
           </Button>
         </Box>
       </Box>
