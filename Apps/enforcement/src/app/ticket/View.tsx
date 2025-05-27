@@ -86,35 +86,68 @@ export default function TicketView({
     });
   };
   
+  // const handleSubmitTicket = async () => {
+  //   try {
+  //     if (!ticketInfo.lot || !ticketInfo.violation || !ticketInfo.description) {
+  //       error('Please fill in all required fields *')
+  //       return
+  //     }
+  //     const ticket = await issueTicketForCar(
+  //       ticketInfo.driverID,
+  //       ticketInfo.vehicleID,
+  //       ticketInfo.lot,
+  //       ticketInfo.description,
+  //       ticketInfo.violation,
+  //       ticketInfo.image,
+  //       ticketInfo.cost,
+  //       false
+  //     )
+  //     const driver = await getDriverDetails(ticketInfo.driverID)
+  //     if (driver) {
+  //       await sendEmail(driver.email, driver.name, ticket)
+  //     }
+      
+  //     success(ticket.id)
+  //     resetDialog()
+      
+  //   } catch (err) {
+  //     console.log(err)
+  //     error(`Failed to issue ticket`)
+  //   }
+  // }
   const handleSubmitTicket = async () => {
-    try {
-      if (!ticketInfo.lot || !ticketInfo.violation || !ticketInfo.description) {
-        error('Please fill in all required fields *')
-        return
-      }
-      const ticket = await issueTicketForCar(
-        ticketInfo.driverID,
-        ticketInfo.vehicleID,
-        ticketInfo.lot,
-        ticketInfo.description,
-        ticketInfo.violation,
-        ticketInfo.image,
-        ticketInfo.cost,
-        false
-      )
-      const driver = await getDriverDetails(ticketInfo.driverID)
-      if (driver) {
-        await sendEmail(driver.email, driver.name, ticket)
-      }
-      
-      success(ticket.id)
-      resetDialog()
-      
-    } catch (err) {
-      console.log(err)
-      error(`Failed to issue ticket`)
+  try {
+    if (!ticketInfo.lot || !ticketInfo.violation || !ticketInfo.description) {
+      error('Please fill in all required fields *')
+      return
     }
+    
+    const ticket = await issueTicketForCar(
+      ticketInfo.driverID,
+      ticketInfo.vehicleID,
+      ticketInfo.lot,
+      ticketInfo.description,
+      ticketInfo.violation,
+      ticketInfo.image,
+      ticketInfo.cost,
+      false
+    )
+
+    if (ticketInfo.driverID) {
+        const driver = await getDriverDetails(ticketInfo.driverID)
+        if (driver) {
+          await sendEmail(driver.email, driver.name, ticket)
+        }
+    }
+    
+    success(ticket.id)
+    resetDialog()
+    
+  } catch (err) {
+    console.error('Failed to issue ticket:', err)
+    error(`Failed to issue ticket: ${err}`)
   }
+}
   
   const resetDialog = () => {
     setTicketInfo({

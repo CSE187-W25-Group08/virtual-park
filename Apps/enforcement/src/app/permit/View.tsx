@@ -54,7 +54,12 @@ export default function PermitView() {
     if (permitInfo.length === 0) {
       setError('No permits found for this vehicle')
       const driverID = await getDriverFromVehiclePlate(plateToUse)
-      setDriverID(String(driverID))
+      if (driverID) {
+        setDriverID(String(driverID))
+      }
+      else {
+        setDriverID('')
+      }
     } else {
       setDriverID(String(permitInfo[0].driverID))
     }
@@ -79,6 +84,7 @@ export default function PermitView() {
     setPermits([])
     setError(null)
     setTicketSuccess(null)
+    setDriverID('')
   }
 
   const handleOCR = async (e: ChangeEvent<HTMLInputElement>) => {
