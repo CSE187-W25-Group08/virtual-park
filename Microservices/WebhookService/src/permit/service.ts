@@ -4,7 +4,6 @@ export async function issuePermit(
   cookie: string
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    console.log("issue permit called in webhook")
     fetch("http://localhost:4000/graphql", {
       method: "POST",
       headers: {

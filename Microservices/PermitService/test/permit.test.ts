@@ -288,12 +288,12 @@ test('should issue a yearly permit', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      // expect(res.body.data.issuePermit).toBeDefined()
+      expect(res.body.data.issuePermit).toBeDefined()
       const permit = res.body.data.issuePermit;
       const issueDate = new Date(permit.issueDate);
       const ExpDate = new Date(issueDate);
       ExpDate.setFullYear(ExpDate.getFullYear() + 1);
-      // expect(issueDate.getFullYear()).toEqual(ExpDate.getFullYear() - 1);
+      expect(issueDate.getFullYear()).toEqual(ExpDate.getFullYear() - 1);
     })
 })
 
