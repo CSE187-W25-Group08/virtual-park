@@ -298,7 +298,7 @@ test('should issue a yearly permit', async () => {
 })
 
 test('should return an error for missing user ID', async () => {
-  AuthService.prototype.check = vi.fn().mockResolvedValue({id: undefined} as any);
+  AuthService.prototype.check = vi.fn().mockResolvedValue({ id: undefined } as { id: string | undefined });
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
