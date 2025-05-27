@@ -7,9 +7,26 @@ select * from permitType
 where id = $1;
 `;
 
+// export const issuePermit = `
+//   INSERT INTO driverPermit (driverID, permitType, data)
+//   VALUES ($1, $2, $3::jsonb)
+//   RETURNING *;
+// `;
+
 export const issuePermit = `
   INSERT INTO driverPermit (driverID, permitType, data)
-  VALUES ($1, $2, $3::jsonb)
+  VALUES (
+    $1::uuid,
+    $2::text,
+    jsonb_build_object(
+      'vehicleID', $3::text,
+      'permitType', $4::text,
+      'issueDate', $5::timestamptz,
+      'expDate', $6::timestamptz,
+      'isValid', $7::boolean,
+      'price', $8::numeric
+    )
+  )
   RETURNING *;
 `;
 
