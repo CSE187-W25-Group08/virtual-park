@@ -53,7 +53,7 @@ export default function PermitView() {
     
     if (permitInfo.length === 0) {
       setError('No permits found for this vehicle')
-      // const driverID = await getDriverFromVehiclePlate(plateToUse)
+      const driverID = await getDriverFromVehiclePlate(plateToUse)
       setDriverID(String(driverID))
     } else {
       setDriverID(String(permitInfo[0].driverID))
