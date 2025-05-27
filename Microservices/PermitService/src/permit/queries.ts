@@ -33,8 +33,8 @@ export const issuePermit = `
 export const selectDriverPermits = `
 SELECT 
     dp.id AS id,
-    dp.data->>'issue_date' AS issue_date,
-    dp.data->>'exp_date' AS exp_date,
+    dp.data->>'issuedate' AS issuedate,
+    dp.data->>'expdate' AS expdate,
     pt.data->>'type' AS type,
     pt.data->>'price' AS price
 FROM 
