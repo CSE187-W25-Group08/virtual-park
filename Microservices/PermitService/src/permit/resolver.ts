@@ -75,7 +75,7 @@ export class PermitResolver {
       isValid: true,
       price: permitType.price
     });
-    console.log("issued new permit", newPermit)
+    console.log("issued new permit in resolver", newPermit)
     return newPermit;
   }
 }

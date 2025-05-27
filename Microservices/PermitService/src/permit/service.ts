@@ -53,6 +53,7 @@ export class PermitService {
     isValid: boolean;
     price: number;
   }): Promise<PermitIssue> {
+    console.log("inserting pertmit data in permitservice", permitData)
     const query = {
       text: queries.issuePermit,
       values: [
