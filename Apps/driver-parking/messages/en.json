@@ -46,7 +46,8 @@
     "Year": "Year",
     "purchase": "Purchase",
     "purchased": "Purchased:",
-    "buy": "Buy Permit"
+    "buy": "Buy Permit",
+    "no_vehicle_warning": "Must register a vehicle before aquiring a permit"
   },
   "vehicle": {
     "title": "Vehicles",

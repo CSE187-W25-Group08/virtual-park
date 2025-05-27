@@ -6,7 +6,9 @@ import {
   Box, 
   ListItem, 
   Button,
-  Paper
+  Paper,
+  Collapse,
+  Alert,
 } from '@mui/material'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import { useTranslations } from 'next-intl'
@@ -23,6 +25,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   const t = useTranslations('purchase_permit')
 
   const [vehicle, setVehicle] = React.useState<Vehicle | null>(null);
+  const [showWarning, setShowWarning] = React.useState(false);
 
    React.useEffect(() => {
     const getActiveVehicle = async () => {
@@ -39,7 +42,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
 
   const handleClick = async() => {
     if (!vehicle) {
-      alert('Please select a vehicle first');
+      setShowWarning(true);
       return;
     }
     const name = "PermitPurchese";
@@ -57,7 +60,15 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   }
   
   return (
-   <ListItem disablePadding>
+    <React.Fragment>
+     {showWarning && <ListItem disablePadding sx={{ flexDirection: 'column' }}>
+        <Collapse in={showWarning} sx={{ width: '100%', mb: 1 }}>
+          <Alert severity="warning" onClose={() => setShowWarning(false)}>
+          {t('no_vehicle_warning')}
+          </Alert>
+        </Collapse> 
+        </ListItem>}
+      <ListItem disablePadding>
       <Paper
         elevation={3}
         sx={{
@@ -96,8 +107,9 @@ export default function PermitCard({permit}: { permit: PermitType }) {
               {t('buy')}
             </Button>
           )}
-        </Box>
-      </Paper>
-    </ListItem>
+          </Box>
+        </Paper>
+      </ListItem>
+    </ React.Fragment>
   );
 }
