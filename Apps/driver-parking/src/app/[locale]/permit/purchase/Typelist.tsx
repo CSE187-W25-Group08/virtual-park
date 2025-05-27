@@ -14,10 +14,16 @@ export default function TypeList() {
 
   useEffect(() => {
     const fetchData = async () => {
-    console.log('Stripe Public Key:', process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+      // console.log('Stripe Public Key:', process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
       const permits = await permitTypes()
       const alreadyOwnedPermits = await getUserPermits()
-      setpermitTypeList(permits)
+      // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
+      const ownedIds = new Set(alreadyOwnedPermits.map(p => p.id));
+      const updatedPermits = permits.map(p => ({
+        ...p,
+        purchased: ownedIds.has(p.id),
+      }));
+      setpermitTypeList(updatedPermits);
     }
     fetchData()
   }, [])
