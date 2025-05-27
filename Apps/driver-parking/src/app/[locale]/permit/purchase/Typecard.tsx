@@ -1,10 +1,15 @@
 'use client'
 
 import * as React from 'react';
-import { Card, Typography, Box, 
-  Chip,
+import {
+  Typography, 
+  Box, 
   ListItem, 
-  Button} from '@mui/material'
+  Button,
+  Paper,
+  Collapse,
+  Alert,
+} from '@mui/material'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import { useTranslations } from 'next-intl'
 
@@ -20,6 +25,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   const t = useTranslations('purchase_permit')
 
   const [vehicle, setVehicle] = React.useState<Vehicle | null>(null);
+  const [showWarning, setShowWarning] = React.useState(false);
 
    React.useEffect(() => {
     const getActiveVehicle = async () => {
@@ -36,7 +42,7 @@ export default function PermitCard({permit}: { permit: PermitType }) {
 
   const handleClick = async() => {
     if (!vehicle) {
-      alert('Please select a vehicle first');
+      setShowWarning(true);
       return;
     }
     const name = "PermitPurchese";
@@ -54,24 +60,56 @@ export default function PermitCard({permit}: { permit: PermitType }) {
   }
   
   return (
-    <ListItem disablePadding>
-      <Card sx={{ p: 2, border: 'solid', width: '100%', mb: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <React.Fragment>
+     {showWarning && <ListItem disablePadding sx={{ flexDirection: 'column' }}>
+        <Collapse in={showWarning} sx={{ width: '100%', mb: 1 }}>
+          <Alert severity="warning" onClose={() => setShowWarning(false)}>
+          {t('no_vehicle_warning')}
+          </Alert>
+        </Collapse> 
+        </ListItem>}
+      <ListItem disablePadding>
+      <Paper
+        elevation={3}
+        sx={{
+          p: 2,
+          width: '100%',
+          mb: 2,
+          borderRadius: 3,
+          transition: 'transform 0.2s, box-shadow 0.2s',
+          '&:hover': {
+            transform: 'scale(1.01)',
+            boxShadow: 6,
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <Box>
             <Typography variant="h6">{t(permit.type)}</Typography>
             <Typography>${permit.price}</Typography>
           </Box>
-          {(permit.purchased) ? (
-            <CheckRoundedIcon />
-            ) : (
+          {permit.purchased ? (
+            <CheckRoundedIcon color="success" />
+          ) : (
             <Button
               onClick={handleClick}
               disabled={permit.purchased}
               variant="contained"
               color="primary"
-            > {t('buy')} </Button>)}
-        </Box>
-      </Card>
-    </ListItem>
-  )
+              sx={{ borderRadius: 2 }}
+            >
+              {t('buy')}
+            </Button>
+          )}
+          </Box>
+        </Paper>
+      </ListItem>
+    </ React.Fragment>
+  );
 }

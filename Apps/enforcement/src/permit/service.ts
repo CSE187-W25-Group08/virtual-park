@@ -70,7 +70,7 @@ export async function recognizePlateFromImage(cookie: string | undefined, base64
       return response.json()
     })
     .then(json => {
-      resolve(json.data.getPermitBycarPlate)
+      resolve(json.data.scanImage.licensePlate)
     })
     .catch((error) => reject(error))
   })

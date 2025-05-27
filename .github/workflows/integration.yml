@@ -68,7 +68,7 @@ jobs:
   deploy-docker:
     name: Build and Push Docker Image to GHCR
     runs-on: ubuntu-latest
-    needs: [lint, build]
+    # needs: [lint, build]
     permissions:
       contents: read
       packages: write

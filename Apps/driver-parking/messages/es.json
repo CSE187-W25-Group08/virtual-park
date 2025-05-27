@@ -46,7 +46,8 @@
     "Year": "Año",
     "purchase": "Comprar",
     "purchased": "Comprado:",
-    "buy": "comprar permiso"
+    "buy": "comprar permiso",
+    "no_vehicle_warning": "Must register a vehicle before aquiring a permit"
   },
   "vehicle": {
     "title": "Vehículos",
