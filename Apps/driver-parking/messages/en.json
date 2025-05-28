@@ -52,7 +52,12 @@
     "purchase": "Purchase",
     "purchased": "Purchased:",
     "buy": "Buy Permit",
-    "no_vehicle_warning": "Must register a vehicle before aquiring a permit"
+    "no_vehicle_warning": "Must register a vehicle before aquiring a permit",
+    "Student": "Student",
+    "Staff": "Staff",
+    "Visitor": "Visitor",
+    "Motorcycle": "Motorcycle",
+    "Remote": "Remote"
   },
   "vehicle": {
     "title": "Vehicles",

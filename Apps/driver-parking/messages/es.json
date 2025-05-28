@@ -52,7 +52,12 @@
     "purchase": "Comprar",
     "purchased": "Comprado:",
     "buy": "comprar permiso",
-    "no_vehicle_warning": "Must register a vehicle before aquiring a permit"
+    "no_vehicle_warning": "Must register a vehicle before aquiring a permit",
+    "Student": "Estudiante",
+    "Staff": "Personal",
+    "Visitor": "Visitante",
+    "Motorcycle": "Motocicleta",
+    "Remote": "Remoto"
   },
   "vehicle": {
     "title": "Vehículos",

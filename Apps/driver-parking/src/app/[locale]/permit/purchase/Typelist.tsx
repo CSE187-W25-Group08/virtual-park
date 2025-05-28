@@ -1,7 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-// import { useTranslations } from 'next-intl'
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useTranslations } from 'next-intl'
 
 import { permitTypes, getUserPermits} from '../actions'
 import PermitCard from './Typecard'
@@ -9,7 +14,7 @@ import { PermitType } from '../../../../permit'
 
 export default function TypeList() {
   const [permitTypeList, setpermitTypeList] = useState<PermitType[]>([])
-  // const t = useTranslations('purchase_permit')
+  const t = useTranslations('purchase_permit')
   // const [purchased, setPurchased] = useState<Permit | null>(null)
 
   useEffect(() => {
@@ -38,11 +43,31 @@ export default function TypeList() {
     fetchData()
   }, [])
 
+const classes = permitTypeList.reduce((array, permit) => {
+  const permitClass = permit.permitClass;
+  if (!array[permitClass]) {
+    array[permitClass] = [];
+  }
+  array[permitClass].push(permit);
+  return array;
+}, {} as Record<string, PermitType[]>);
+
   return (
     <div style={{ padding: '1rem' }}>
-      {permitTypeList.map((permit) => (
-        <PermitCard key={`${permit.type} - ${permit.price}`} permit={permit} />
-      ))}
-    </div> 
+    {Object.entries(classes).map(([permitClass, permits]) => (
+      <Accordion key={permitClass}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography variant="h6" component="div">
+            {t(permitClass)}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {permits.map((permit) => (
+            <PermitCard key={`${permit.type} - ${permit.permitClass}`} permit={permit} />
+          ))}
+        </AccordionDetails>
+      </Accordion>
+    ))}
+  </div>
   )
 }
