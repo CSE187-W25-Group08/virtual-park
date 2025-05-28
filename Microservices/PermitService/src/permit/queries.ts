@@ -47,20 +47,38 @@ WHERE
 
 /* reference: https://www.postgresql.org/docs/current/contrib-dblink-function.html 
 https://www.geeksforgeeks.org/postgresql-dollar-quoted-string-constants/*/
+// export const getPermitByVehiclePlateNum = (carPlateNum: string) => `
+// SELECT dp.id AS "permitID", pt.data->>'type' AS "permitType", dp.data->>'issuedate' AS "issueDate",
+// dp.data->>'expdate' AS "expDate", (dp.data->>'expdate')::timestamp > NOW() AS "isValid", v.driver AS "driverID",
+// v.id AS "vehicleID"
+// FROM driverpermit dp
+// JOIN permittype pt ON dp.permitType = pt.id
+// JOIN dblink('dbname=vehicle user=postgres',
+// $$SELECT id, driver::uuid, data->>'license_plate' AS license_plate
+// FROM vehicle
+// WHERE data->>'license_plate' = '${carPlateNum}'$$
+// ) AS v(id uuid, driver uuid, license_plate text)
+// ON dp.driverID = v.driver;
+// `;
 export const getPermitByVehiclePlateNum = (carPlateNum: string) => `
-SELECT dp.id AS "permitID", pt.data->>'type' AS "permitType", dp.data->>'issuedate' AS "issueDate",
-dp.data->>'expdate' AS "expDate", (dp.data->>'expdate')::timestamp > NOW() AS "isValid", v.driver AS "driverID",
-v.id AS "vehicleID"
-FROM driverpermit dp
-JOIN permittype pt ON dp.permitType = pt.id
-JOIN dblink('dbname=vehicle user=postgres',
-$$SELECT id, driver::uuid, data->>'license_plate' AS license_plate
-FROM vehicle
-WHERE data->>'license_plate' = '${carPlateNum}'$$
-) AS v(id uuid, driver uuid, license_plate text)
-ON dp.driverID = v.driver;
-`;
-
+SELECT 
+  dp.id AS "permitID", 
+  pt.data->>'type' AS "permitType", 
+  dp.data->>'issuedate' AS "issueDate",
+  dp.data->>'expdate' AS "expDate", 
+  (dp.data->>'expdate')::timestamp > NOW() AS "isValid", 
+  v.driver AS "driverID",
+  v.id AS "vehicleID"
+FROM (
+  SELECT *
+  FROM dblink(
+    'dbname=vehicle user=postgres',
+    $$SELECT id::uuid, driver::uuid, data FROM vehicle WHERE data->>'license_plate' = '${carPlateNum}'$$
+  ) AS vehicle(id uuid, driver uuid, data jsonb)
+) AS v
+LEFT JOIN driverpermit dp ON dp.driverID = v.driver
+LEFT JOIN permittype pt ON dp.permitType = pt.id;
+`
 
 export const getActivePermit = `
 SELECT 

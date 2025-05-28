@@ -297,7 +297,7 @@ export default function PermitView() {
           open={ticketDialog}
           close={() => setTicketDialog(false)}
           driverID={driverID}
-          vehicleID={permits[0]?.vehicleID || carPlate}
+          vehicleID={permits.length > 0 ? permits[0].vehicleID : carPlate}
           success={handleTicketSuccess}
           error={handleTicketError}
         />

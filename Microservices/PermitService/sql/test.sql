@@ -64,3 +64,4 @@ SELECT
   )
 FROM permitType
 WHERE data->>'type' = 'Year';
+

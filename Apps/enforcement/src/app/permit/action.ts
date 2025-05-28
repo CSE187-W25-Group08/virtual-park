@@ -10,9 +10,6 @@ import { getVehicleByPlate } from '../../vehicle/service'
 export async function getpermitByPlateNum(carPlate: string) : Promise<Permit[]> {
   const cookie = (await cookies()).get('session')?.value
   const permit = await getPermitByPlate(cookie, carPlate)
-  if (!permit) {
-    return []
-  }
   return permit
 }
 
@@ -21,8 +18,17 @@ export async function googleVision(base64Image: string) : Promise<string> {
   return recognizePlateFromImage(cookie, base64Image)
 }
 
-export async function getDriverFromVehiclePlate(plate: string) : Promise<string> {
-  const cookie = (await cookies()).get('session')?.value
-  const vehicle = await getVehicleByPlate(cookie, plate)
-  return vehicle.driver
+
+export async function getDriverFromVehiclePlate(plate: string): Promise<string> {
+  try {
+    const cookie = (await cookies()).get('session')?.value
+    const vehicle = await getVehicleByPlate(cookie, plate)
+    if (!vehicle || !vehicle.driver) {
+      return ''
+    }
+    return vehicle.driver
+  } catch (error) {
+    console.error('Error in getDriverFromVehiclePlate:', error)
+    return ''
+  }
 }
