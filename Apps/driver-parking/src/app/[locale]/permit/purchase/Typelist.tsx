@@ -41,7 +41,7 @@ export default function TypeList() {
   return (
     <div style={{ padding: '1rem' }}>
       {permitTypeList.map((permit) => (
-        <PermitCard key={permit.type} permit={permit} />
+        <PermitCard key={`${permit.type} - ${permit.price}`} permit={permit} />
       ))}
     </div> 
   )
