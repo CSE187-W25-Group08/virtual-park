@@ -44,7 +44,7 @@ test('Get all permitType', async () => {
       }`
     })
     .then((res) => {
-      expect(res.body.data.PermitType.length).toEqual(4)
+      expect(res.body.data.PermitType.length).toEqual(13)
 
     })
 })
@@ -65,7 +65,7 @@ test('retrieve all the permits belong to the specific user', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      expect(res.body.data.permitsByDriver.length).toEqual(3)
+      expect(res.body.data.permitsByDriver.length).toEqual(4)
     })
 })
 
@@ -114,7 +114,7 @@ test('retrieve the permit info based on the vehicle car plate', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      expect(res.body.data.getPermitBycarPlate.length).toEqual(3)
+      expect(res.body.data.getPermitBycarPlate.length).toEqual(4)
     })
 })
 
@@ -325,4 +325,21 @@ test('should return an error for missing user ID', async () => {
       expect(res.body.errors[0].message).toBe("UserID invalid");
     });
 });
+
+test('Returns the daily permit for motorcyclists', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+      {
+        getDailyPermitType(driverClass: "Motorcycle")
+        { id type price permitClass }
+      }
+      `
+    })
+    .then((res) => {
+      expect(res.body.data.getDailyPermitType.price).toEqual(4)
+    })
+})
 

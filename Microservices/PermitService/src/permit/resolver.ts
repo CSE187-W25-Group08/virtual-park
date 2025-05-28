@@ -27,7 +27,7 @@ export class PermitResolver {
   @Authorized()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => PermitType)
-  async DailyPermitType(
+  async getDailyPermitType(
     @Arg("driverClass") driverClass: string,
   ): Promise<PermitType> {
     return await new PermitService().getSpecificDailyPermit(driverClass)
