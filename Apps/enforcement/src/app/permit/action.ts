@@ -23,7 +23,7 @@ export async function getDriverFromVehiclePlate(plate: string): Promise<string> 
   try {
     const cookie = (await cookies()).get('session')?.value
     const vehicle = await getVehicleByPlate(cookie, plate)
-    if (!vehicle || !vehicle.driver) {
+    if (!vehicle.driver) {
       return ''
     }
     return vehicle.driver
