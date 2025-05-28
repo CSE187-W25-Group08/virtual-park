@@ -86,8 +86,8 @@ export default function PermitView() {
     } else {
       setDriverID(String(permitInfo[0].driverID));
     }
-    } catch (err: any) {
-    // console.error("Error during permit search:", err);
+    } catch (err) {
+    console.error("Error during permit search:", err);
     setPermits([]);
     setDriverID('');
   }
@@ -133,7 +133,7 @@ export default function PermitView() {
       setCarPlate(plate)
       handleSearch(plate)
     }
-    
+
     // const permitInfo = await getpermitByPlateNum(plate)
     // setPermits(permitInfo)
 
