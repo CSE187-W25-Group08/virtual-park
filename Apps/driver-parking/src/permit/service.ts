@@ -43,6 +43,7 @@ export async function getPermitType(cookie: string | undefined): Promise<PermitT
       }
       )
       .then(json => {
+        console.log("permits by type json", json, json.error);
         resolve(json.data.PermitType)
       })
       .catch((error) => reject(error))

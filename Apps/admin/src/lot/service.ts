@@ -38,7 +38,7 @@ export class LotService {
           return response.json()
         })
         .then(json => {
-          console.log("admin get all lots", json.data)
+          // console.log("admin get all lots", json.data)
           resolve(json.data.getAll)
         })
         .catch((error) => reject(error))
@@ -63,7 +63,7 @@ export class LotService {
   public async updateLots(lotId: string, data: UpdateLotData): Promise<Lot> {
 
     const jsonString = this.helperObjToGraphql(data)
-    console.log(jsonString);
+    // console.log(jsonString);
 
 
     return new Promise((resolve, reject) => {
@@ -113,7 +113,7 @@ export class LotService {
           if (!json?.data?.getLotById) {
             return reject('Unknown Lot');
           }
-          console.log("get lot by id admin service", json.data, "json", json);
+          // console.log("get lot by id admin service", json.data, "json", json);
           resolve(json.data.getLotById.name);
         })
         .catch((err) => {

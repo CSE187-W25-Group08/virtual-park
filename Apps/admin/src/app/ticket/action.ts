@@ -12,13 +12,13 @@ export async function listAll(jwt: string): Promise<Ticket[]> {
 export async function getTicketDetails(ticketId: string): Promise<Ticket> {
   const cookie = (await cookies()).get('session')?.value;
   const ticket = await new TicketService().getTicketInfo(cookie, ticketId);
-  console.log("get ticket Details action ticket", ticket);
+  // console.log("get ticket Details action ticket", ticket);
   ticket.lot = await getLotName(ticket.lot);
-  console.log("get ticket Details action ticket", ticket.lot);
+  // console.log("get ticket Details action ticket", ticket.lot);
   const ticketVehicle = await getVehiclePLate(cookie, ticket.vehicle)
   ticket.vehicle = ticketVehicle.licensePlate
   ticket.driver = ticketVehicle.driver
-  console.log("get ticket Details action ticket", ticket.vehicle);
+  // console.log("get ticket Details action ticket", ticket.vehicle);
   return ticket;
 }
 

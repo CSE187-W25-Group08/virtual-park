@@ -37,7 +37,7 @@ export async function getAllLots(cookie: string | undefined): Promise<Lot[]> {
         return response.json()
       })
       .then(json => {
-        console.log("enforcement get all lots", json.data)
+        // console.log("enforcement get all lots", json.data)
         resolve(json.data.getAll)
       })
       .catch((error) => reject(error))
