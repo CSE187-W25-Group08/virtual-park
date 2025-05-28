@@ -8,7 +8,7 @@ export async function getPermitByDriver(cookie: string | undefined): Promise<Per
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${cookie}`,
       },
-      body: JSON.stringify({ query: `{permitsByDriver {id, issueDate, expDate, type, price}}` }),
+      body: JSON.stringify({ query: `{permitsByDriver {id, issueDate, expDate, type, price, permitClass}}` }),
     })
       .then(response => {
         if (response.status != 200) {
@@ -33,7 +33,7 @@ export async function getPermitType(cookie: string | undefined): Promise<PermitT
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${cookie}`,
       },
-      body: JSON.stringify({ query: `{PermitType {id, type, price}}` }),
+      body: JSON.stringify({ query: `{PermitType {id, type, price, permitClass}}` }),
     })
       .then(response => {
         if (response.status != 200) {
@@ -58,7 +58,7 @@ export async function getValidPermit(cookie: string | undefined): Promise<Permit
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${cookie}`,
       },
-      body: JSON.stringify({ query: `{validPermit {issueDate, expDate, type, price}}` }),
+      body: JSON.stringify({ query: `{validPermit {issueDate, expDate, type, price, permitClass}}` }),
     })
       .then(response => {
         if (response.status != 200) {
@@ -95,6 +95,7 @@ export async function issuePermit(permitTypeId: string, vehicleId: string, cooki
               expDate
               isValid
               price
+              permitClass
             }
           }
         `,

@@ -3,7 +3,8 @@ export interface Permit {
   issueDate: string,
   expDate: string,
   type: string,
-  price: number
+  price: number,
+  permitClass: string,
 }
 
 export interface PermitType {
@@ -11,6 +12,7 @@ export interface PermitType {
   type: string,
   price: number,
   purchased?: boolean,
+  permitClass: string,
 }
 
 export interface PermitPurchase {
@@ -26,4 +28,5 @@ export interface PermitIssue {
   expDate: string
   isValid: string
   price: string
+  permitClass: string
 }

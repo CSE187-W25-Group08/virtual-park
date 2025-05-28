@@ -3,12 +3,13 @@ import { IsNumber, IsUUID} from 'class-validator'
 
 @ObjectType()
 export class Permit {
-  constructor(id: string, issueDate: string, expDate: string, type: string, price: number) {
+  constructor(id: string, issueDate: string, expDate: string, type: string, price: number, permitClass: string) {
     this.id = id
     this.issueDate = issueDate
     this.expDate = expDate
     this.type = type
     this.price = price
+    this.permitClass = permitClass
   }
   @Field(() => ID)
   @IsUUID()
@@ -26,14 +27,18 @@ export class Permit {
   @Field()
   @IsNumber()
   price!: number;
+
+  @Field()
+  permitClass!: string;
 }
 
 @ObjectType()
 export class PermitType {
-  constructor( id: string, price: number, type: string) {
+  constructor( id: string, price: number, type: string, permitClass: string) {
     this.id = id
     this.type = type
     this.price = price
+    this.permitClass = permitClass
   }
   @Field(() => ID)
   @IsUUID()
@@ -45,11 +50,14 @@ export class PermitType {
   @Field()
   @IsNumber()
   price!: number;
+
+  @Field()
+  permitClass!: string;
 }
 
 @ObjectType()
 export class PermitValid {
-  constructor( driverID: string, vehicleID: string, permitID: string, permitType: string, issueDate: string, expDate: string, isValid: boolean) {
+  constructor( driverID: string, vehicleID: string, permitID: string, permitType: string, issueDate: string, expDate: string, isValid: boolean, permitClass: string) {
     this.driverID = driverID
     this.vehicleID = vehicleID
     this.permitID = permitID
@@ -57,6 +65,7 @@ export class PermitValid {
     this.issueDate = issueDate
     this.expDate = expDate
     this.isValid = isValid
+    this.permitClass = permitClass
   }
 
   @Field(() => ID)
@@ -82,11 +91,14 @@ export class PermitValid {
 
   @Field(() => GraphQLISODateTime)
   expDate!: string
+
+  @Field()
+  permitClass!: string;
 }
 
 @ObjectType()
 export class PermitIssue {
-  constructor( driverID: string, vehicleID: string, permitID: string, permitType: string, issueDate: string, expDate: string, isValid: boolean) {
+  constructor( driverID: string, vehicleID: string, permitID: string, permitType: string, issueDate: string, expDate: string, isValid: boolean, permitClass: string) {
     this.driverID = driverID
     this.vehicleID = vehicleID
     this.permitID = permitID
@@ -94,6 +106,7 @@ export class PermitIssue {
     this.issueDate = issueDate
     this.expDate = expDate
     this.isValid = isValid
+    this.permitClass = permitClass
   }
 
   @Field(() => ID)
@@ -119,5 +132,8 @@ export class PermitIssue {
 
   @Field(() => GraphQLISODateTime)
   expDate!: string
+
+  @Field()
+  permitClass!: string;
 
 }

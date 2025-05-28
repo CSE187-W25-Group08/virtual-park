@@ -14,7 +14,8 @@ export class PermitService {
       issueDate: result.issuedate,
       expDate: result.expdate,
       type: result.type,
-      price: result.price
+      price: result.price,
+      permitClass: result.permitclass
     }))
   }
 
@@ -27,7 +28,8 @@ export class PermitService {
     return rows.map(result => ({
       id: result.id,
       price: result.data.price,
-      type: result.data.type
+      type: result.data.type,
+      permitClass: result.data.class
     }))
   }
   public async getSpecificPermitType(permitID: string): Promise<PermitType> {
@@ -40,7 +42,8 @@ export class PermitService {
     return new PermitType(
       row.id,
       row.data.price,
-      row.data.type
+      row.data.type,
+      row.data.class
     );
   }
 
@@ -52,6 +55,7 @@ export class PermitService {
     expDate: string;
     isValid: boolean;
     price: number;
+    permitClass: string;
   }): Promise<PermitIssue> {
     console.log("inserting pertmit data in permitservice", permitData)
     const query = {
@@ -64,7 +68,8 @@ export class PermitService {
         permitData.issueDate,
         permitData.expDate,
         permitData.isValid,
-        permitData.price
+        permitData.price,
+        permitData.permitClass
       ]
     };
 
@@ -78,7 +83,8 @@ export class PermitService {
       row.data.permittype,
       row.data.issuedate,
       row.data.expdate,
-      (row.data.isvalid == 'true') ? true : false
+      (row.data.isvalid == 'true') ? true : false,
+      row.data.permitclass
     );
   }
 
@@ -134,6 +140,7 @@ export class PermitService {
       issueDate: result.issueDate,
       expDate: result.expDate,
       isValid: result.isValid,
+      permitClass: result.permitClass
     }))
   }
 
@@ -151,7 +158,8 @@ export class PermitService {
       issueDate: result.rows[0].issuedate,
       expDate: result.rows[0].expdate,
       type: result.rows[0].type,
-      price: result.rows[0].price
+      price: result.rows[0].price,
+      permitClass: result.rows[0].permitclass
     }
   }
 }

@@ -74,7 +74,8 @@ export class PermitResolver {
       issueDate: issueDate.toISOString(),
       expDate: expDate.toISOString(),
       isValid: true,
-      price: permitType.price
+      price: permitType.price,
+      permitClass: permitType.permitClass
     });
     console.log("issued new permit in resolver", newPermit)
     return newPermit;

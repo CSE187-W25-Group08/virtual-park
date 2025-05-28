@@ -24,7 +24,8 @@ export const issuePermit = `
       'issuedate', $5::text,
       'expdate', $6::text,
       'isvalid', $7::text,
-      'price', $8::text
+      'price', $8::text,
+      'permitclass', $9::text
     )
   )
   RETURNING *;
@@ -36,7 +37,8 @@ SELECT
     dp.data->>'issuedate' AS issuedate,
     dp.data->>'expdate' AS expdate,
     pt.data->>'type' AS type,
-    pt.data->>'price' AS price
+    pt.data->>'price' AS price,
+    pt.data->>'class' AS permitclass
 FROM 
     driverPermit dp
 JOIN 
@@ -64,6 +66,7 @@ export const getPermitByVehiclePlateNum = (carPlateNum: string) => `
 SELECT 
   dp.id AS "permitID", 
   pt.data->>'type' AS "permitType", 
+  pt.data->>'class' AS "permitClass",
   dp.data->>'issuedate' AS "issueDate",
   dp.data->>'expdate' AS "expDate", 
   (dp.data->>'expdate')::timestamp > NOW() AS "isValid", 
@@ -86,7 +89,8 @@ SELECT
     dp.data->>'issuedate' AS issuedate,
     dp.data->>'expdate' AS expdate,
     pt.data->>'type' AS type,
-    pt.data->>'price' AS price
+    pt.data->>'price' AS price,
+    pt.data->>'class' AS permitclass
 FROM 
     driverPermit dp
 JOIN 
