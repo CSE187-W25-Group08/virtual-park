@@ -12,8 +12,8 @@ import TicketCard from "../ticket/card"
 import PermitListCard from "../permit/history/PermitListCard"
 import { Ticket } from "@/ticket"
 import { listUnpaid } from "../ticket/actions"
-import { Permit } from "@/permit"
-import { getActivePermit } from "../dashboard/actions"
+import { Permit, PermitType } from "@/permit"
+import { getActivePermit, getDailyPermitType } from "../dashboard/actions"
 import { Vehicle } from '@/register'
 import { getPrimaryVehicle } from '../register/actions'
 
@@ -21,6 +21,7 @@ export default function Dashboard() {
   const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([])
   const [activePermit, setActivePermit] = useState<Permit | null>(null)
   const [vehicle, setVehicle] = useState<Vehicle | null>(null)
+  const [dailyPermitType, setDailyPermitType] = useState<PermitType | null>(null)
   const [registerModalOpen, setRegisterModalOpen] = useState(false)
   const router = useRouter()
   const t = useTranslations("dashboard")
@@ -35,13 +36,16 @@ export default function Dashboard() {
       if (activePermit) {
         setActivePermit(activePermit)
       }
+      const vehicle = await getPrimaryVehicle()
+      if (vehicle) {
+        setVehicle(vehicle)
+        const driverClass = vehicle.type ? vehicle.type : 'Remote'
+        const dailyPermitType = await getDailyPermitType(driverClass)
+        setDailyPermitType(dailyPermitType)
+      }
     }
 
-    const getActiveVehicle = async () => {
-      setVehicle(await getPrimaryVehicle());
-    }
     fetchData()
-    getActiveVehicle()
   }, [])
 
   const handleBuyPermit = async () => {
@@ -49,6 +53,8 @@ export default function Dashboard() {
       setRegisterModalOpen(true)
       return
     }
+
+    console.log('This would buy a daily permit of type ', dailyPermitType)
   }
 
   const handleRegisterModalClose = () => {
