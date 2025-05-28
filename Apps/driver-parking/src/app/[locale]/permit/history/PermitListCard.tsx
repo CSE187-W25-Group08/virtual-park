@@ -22,6 +22,9 @@ const PermitListCard = ({permit}: {permit: Permit}) => {
           <Typography variant="body1" color="text.secondary" align="center" gutterBottom>
             ${permit.price}
           </Typography>
+          <Typography variant="body1" color="text.secondary" align="center" gutterBottom>
+            {t(permit.permitClass)}
+          </Typography>
           <Typography variant="body2" color="text.secondary" align="center" gutterBottom>
             {t('issued')}{timeFormatter(permit.issueDate)}
           </Typography>

@@ -37,7 +37,12 @@
     "Week": "Week",
     "Month": "Month",
     "Year": "Year",
-    "timeLeft": "Time Remaining:"
+    "timeLeft": "Time Remaining:",
+    "Student": "Student",
+    "Staff": "Staff",
+    "Visitor": "Visitor",
+    "Motorcycle": "Motorcycle",
+    "Remote": "Remote"
   },
   "purchase_permit": {
     "Daily": "Daily",
