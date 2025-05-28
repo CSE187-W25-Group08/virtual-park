@@ -46,6 +46,21 @@ export class PermitService {
       row.data.class
     );
   }
+  public async getSpecificDailyPermit(driverClass: string): Promise<PermitType> {
+    const query = {
+      text: queries.getSpecificDailyPermit,
+      values: [driverClass]
+    }
+
+    const { rows } = await pool.query(query)
+    const row = rows[0]
+    return new PermitType(
+      row.id,
+      row.data.price,
+      row.data.type,
+      row.data.class
+    )
+  }
 
   public async permitIssue(permitData: {
     driverID: string;

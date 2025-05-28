@@ -7,6 +7,17 @@ select * from permitType
 where id = $1;
 `;
 
+export const getSpecificDailyPermit = `
+SELECT
+  *
+FROM
+  permitType
+WHERE
+  data->>'type' = 'Daily'
+  AND
+  data->>'class' = $1
+`;
+
 // export const issuePermit = `
 //   INSERT INTO driverPermit (driverID, permitType, data)
 //   VALUES ($1, $2, $3::jsonb)

@@ -24,6 +24,15 @@ export class PermitResolver {
     return await new PermitService().getPermitType()
   }
 
+  @Authorized()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(returns => PermitType)
+  async DailyPermitType(
+    @Arg("driverClass") driverClass: string,
+  ): Promise<PermitType> {
+    return await new PermitService().getSpecificDailyPermit(driverClass)
+  }
+
   /* should Only allow officer to do that, and in the future, I might consider adding a member with the role of enforcement officer */
   @Authorized('enforcement')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
