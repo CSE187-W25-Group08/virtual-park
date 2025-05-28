@@ -133,7 +133,7 @@ export default function PermitView() {
       setCarPlate(plate)
       handleSearch(plate)
     }
-    
+  
     // const permitInfo = await getpermitByPlateNum(plate)
     // setPermits(permitInfo)
 
