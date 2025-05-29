@@ -2,7 +2,6 @@ import { Authorized, Query, Mutation, Resolver, Ctx, Arg } from 'type-graphql'
 import { Vehicle, RegisterVehicle, VehicleIdInput, EditVehicleInput, UnRegisterVehicle } from './schema'
 import { Request } from "express"
 import { VehicleService } from './service'
-import { UnregisterVehicle } from './queries'
 
 @Resolver()
 export class VehicleResolver {
