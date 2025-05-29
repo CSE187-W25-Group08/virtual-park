@@ -128,10 +128,6 @@ it('test recognizePlateFromImage no license', async () => {
   await expect(recognizePlateFromImage('invalidCookie', 'abc12'))
     .rejects
     .toBe('Unauthorized')
-
-  // await expect(getPermitByPlate('invalidCookie', 'abc12')).rejects.toBe('Unauthorized')
-  // const result = await recognizePlateFromImage('invalidCookie', 'abc12')
-  // expect(result).toBe(undefined)
 })
 
 
