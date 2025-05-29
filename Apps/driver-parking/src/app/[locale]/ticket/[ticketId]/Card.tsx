@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
 import { Box, Typography, Chip } from "@mui/material";
