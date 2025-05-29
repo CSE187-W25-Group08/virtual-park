@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import TicketCard from "./Card";
-import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
+import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -31,9 +31,7 @@ export default function View({ ticketId }: { ticketId: string }) {
         </Toolbar>
       </AppBar>
 
-      <Box sx={{ mt: 8, px: 2 }}>
-        <TicketCard ticketId={ticketId}/>
-      </Box>
+      <TicketCard ticketId={ticketId}/>
     </React.Fragment>
   );
 }

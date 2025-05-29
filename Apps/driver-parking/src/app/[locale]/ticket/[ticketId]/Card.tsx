@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ListItemText from "@mui/material/ListItemText";
+import CheckIcon from "@mui/icons-material/Check";
+import ErrorIcon from '@mui/icons-material/Error';
 import CardMedia from "@mui/material/CardMedia";
-import { Box, Typography, Chip } from "@mui/material";
+import { Box, Typography, Alert, Grid } from "@mui/material";
 import Fab from "@mui/material/Fab";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import FrontHandIcon from "@mui/icons-material/FrontHand";
@@ -110,8 +111,6 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
 
   const appealedDisplay = (ticket: Ticket) => {
     return (
-      <ListItemText
-        primary={
           <Typography>
             <strong>{t("appealStatus")}</strong>&nbsp;
             <Typography
@@ -123,7 +122,7 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
                     : ticket?.appeal === "approved"
                     ? "success.dark"
                     : ticket?.appeal === "rejected"
-                    ? "red"
+                    ? "error.dark"
                     : "text.primary",
               }}
             >
@@ -136,10 +135,9 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
                 : ""}
             </Typography>
           </Typography>
-        }
-      />
     );
   };
+
 
   const topHalf = () => {
     return (
@@ -152,12 +150,18 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
               justifyContent: "space-between",
             }}
           >
-            <Chip
-              label={ticket.paid ? "Paid" : "Unpaid"}
-              color={ticket.paid ? "success" : "error"}
-              variant="filled"
-              sx={{ fontSize: "1rem", px: 2, py: 1 }}
-            />
+            <Alert
+              icon={ticket.paid ? <CheckIcon fontSize="inherit" /> : <ErrorIcon fontSize="inherit" />}
+              severity={ticket.paid ? "success" : "error"}
+              sx = {{ borderRadius: 3}}
+            >
+              <Box>
+              <Typography><strong>Due: </strong> {handleHourDate(ticket.due)}</Typography>
+              <Typography><strong>Status: </strong>{ticket.paid ? "Paid" : "Unpaid"}</Typography>
+              {appealed && appealedDisplay(ticket)}
+              </Box>
+            </Alert>
+
             <CardMedia
               component="img"
               image={`${ticket.image}?w=164&h=164&fit=crop&auto=format`}
@@ -165,9 +169,10 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
               loading="lazy"
               style={{ width: "100%", height: "auto" }}
               aria-label={"image_" + ticketId}
+              sx = {{ borderRadius: 2, mb: 2}}
             />
             <Typography>
-              <strong>{t("violation")}</strong>
+              <strong>{t("violation")} </strong>
               {ticket?.violation}
             </Typography>
             <Typography>
@@ -183,15 +188,8 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
             </Typography>
 
             <Typography>
-              <strong>{t("due")}</strong> {handleHourDate(ticket?.due)}
-            </Typography>
-
-            <Typography>
               <strong>{t("cost")}</strong> ${ticket?.cost}
             </Typography>
-
-            {/* pay and appeald button */}
-            {appealed && appealedDisplay(ticket)}
 
           </Box>
         ) : (
@@ -201,11 +199,12 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
     );
   };
 
+            {/* pay and appeald button */}
   const bottomHalf = () => {
     return (
       <React.Fragment>
         {ticket ? (
-          <Box>
+          <Box >
             {!ticket?.paid && ticket?.appeal != "approved" && (
               <Box
                 sx={{
@@ -250,8 +249,17 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
     );
   };
 
-  return <React.Fragment>
-    {topHalf()}
-    {bottomHalf()}
-  </React.Fragment>;
+  return (
+    <React.Fragment>
+      <Box>
+        <Grid
+          style={{ height: "70vh", overflow: "auto" }}
+          size={{ xs: 12, sm: 12, md: 12 }}
+        >
+          {topHalf()}
+        </Grid>
+        {bottomHalf()}
+      </Box>
+    </React.Fragment>
+  );
 }
