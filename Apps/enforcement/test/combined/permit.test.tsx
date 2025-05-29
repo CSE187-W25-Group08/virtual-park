@@ -125,8 +125,13 @@ it('test recognizePlateFromImage no license', async () => {
     json: () => Promise.resolve({}),
   } as Response))
 
-  const result = await recognizePlateFromImage('invalidCookie', 'abc12')
-  expect(result).toBe(undefined)
+  await expect(recognizePlateFromImage('invalidCookie', 'abc12'))
+    .rejects
+    .toBe('Unauthorized')
+
+  // await expect(getPermitByPlate('invalidCookie', 'abc12')).rejects.toBe('Unauthorized')
+  // const result = await recognizePlateFromImage('invalidCookie', 'abc12')
+  // expect(result).toBe(undefined)
 })
 
 
