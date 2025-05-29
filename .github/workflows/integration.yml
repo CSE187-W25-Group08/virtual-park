@@ -48,12 +48,15 @@ jobs:
       STRIPE_PUBLISHABLE_KEY : ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
       POSTGRES_DB: testdb
-
+      JSON_LIMIT: 15mb
+      GOOGLE_CREDENTIALS_PATH: ${{ secrets.GOOGLE_CREDENTIALS_PATH }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
+      - name: Recreate ocr-service-account.json
+        run: base64 -d > /Micorservices/VehicleService/credentials/ocr-service-account.json
       - run: echo $POSTGRES_USER
       - run: npm install
       - run: npm run installs
