@@ -122,7 +122,7 @@ it('Calls createEnforcement with the correct details', async () => {
       password: newEnforcer.password
     })
   })
-})
+}, 4000)
 
 it('Pops up an alert when creating an existing officer account', async () => {
   mockedGetEnforcement.mockResolvedValue(testEnforcers)
