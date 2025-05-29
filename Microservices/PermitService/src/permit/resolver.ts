@@ -64,17 +64,27 @@ export class PermitResolver {
     }
     console.log("issued new permit called")
     const permitType = await new PermitService().getSpecificPermitType(permitTypeId)
-    /* year, month, week, daily */
+    /* academic year, year, quarter, month, week, daily, hourly */
     const issueDate = new Date();
     const expDate = new Date(issueDate);
     if (permitType.type === 'Daily') {
       expDate.setHours(23, 59, 59, 999);
+    } else if (permitType.type === 'Hourly') {
+      expDate.setHours(expDate.getHours() + 4);
     } else if (permitType.type === 'Week') {
       expDate.setDate(expDate.getDate() + 7);
     } else if (permitType.type === 'Month') {
       expDate.setMonth(expDate.getMonth() + 1);
+    } else if (permitType.type === 'Quarter') {
+      expDate.setMonth(expDate.getMonth() + 3);
     } else if (permitType.type === 'Year') {
       expDate.setFullYear(expDate.getFullYear() + 1)
+    } else if (permitType.type === 'Academic Year') {
+      issueDate.setMonth(8);
+      issueDate.setDate(1);
+      expDate.setMonth(5);
+      expDate.setDate(30);
+      expDate.setFullYear(expDate.getFullYear() + 1);
     }
     const newPermit = await new PermitService().permitIssue({
       driverID: driverId,

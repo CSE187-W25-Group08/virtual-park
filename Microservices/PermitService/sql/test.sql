@@ -27,14 +27,14 @@ INSERT INTO permitType (id, data) VALUES (
   )
 );
 
--- INSERT INTO permitType (id, data) VALUES (
---   '02d241e9-68da-4991-b599-f2c75d86f492',
---   jsonb_build_object(
---     'price', 220.17,
---     'type', 'Quarterly',
---     'class', 'Staff'
---   )
--- );
+INSERT INTO permitType (id, data) VALUES (
+  '02d241e9-68da-4991-b599-f2c75d86f492',
+  jsonb_build_object(
+    'price', 220.17,
+    'type', 'Quarter',
+    'class', 'Staff'
+  )
+);
 
 INSERT INTO permitType (id, data) VALUES (
   '5ed85022-ec19-4e22-aff8-9a98feddeea9',
@@ -45,14 +45,14 @@ INSERT INTO permitType (id, data) VALUES (
   )
 );
 
--- INSERT INTO permitType (id, data) VALUES (
---   '1d4f1f9a-fd32-494f-8f44-3339422eeb5f',
---   jsonb_build_object(
---     'price', 515.95,
---     'type', 'Academic Year',
---     'class', 'Student'
---   )
--- );
+INSERT INTO permitType (id, data) VALUES (
+  '1d4f1f9a-fd32-494f-8f44-3339422eeb5f',
+  jsonb_build_object(
+    'price', 515.95,
+    'type', 'Academic Year',
+    'class', 'Student'
+  )
+);
 
 INSERT INTO permitType (id, data) VALUES (
   '9d62b330-5c1b-4ae6-93ea-95330f719050',
@@ -81,23 +81,23 @@ INSERT INTO permitType (id, data) VALUES (
   )
 );
 
--- INSERT INTO permitType (id, data) VALUES (
---   '7afdd578-b10c-4c5e-b5f2-35e243eaf42a',
---   jsonb_build_object(
---     'price', 140.25,
---     'type', 'Quarterly',
---     'class', 'Remote'
---   )
--- );
+INSERT INTO permitType (id, data) VALUES (
+  '7afdd578-b10c-4c5e-b5f2-35e243eaf42a',
+  jsonb_build_object(
+    'price', 140.25,
+    'type', 'Quarter',
+    'class', 'Remote'
+  )
+);
 
--- INSERT INTO permitType (id, data) VALUES (
---   'b97eb6cc-354b-4f0c-b0c3-46d622fa836a',
---   jsonb_build_object(
---     'price', 378.12,
---     'type', 'Academic Year',
---     'class', 'Remote'
---   )
--- );
+INSERT INTO permitType (id, data) VALUES (
+  'b97eb6cc-354b-4f0c-b0c3-46d622fa836a',
+  jsonb_build_object(
+    'price', 378.12,
+    'type', 'Academic Year',
+    'class', 'Remote'
+  )
+);
 
 INSERT INTO permitType (id, data) VALUES (
   '74e74aa3-0743-453f-b48f-6a7819b52326',
@@ -135,23 +135,23 @@ INSERT INTO permitType (id, data) VALUES (
   )
 );
 
--- INSERT INTO permitType (id, data) VALUES (
---   '08e30dc9-cb87-45f0-ba45-11ad502ec47a',
---   jsonb_build_object(
---     'price', 84.37,
---     'type', 'Quarterly',
---     'class', 'Motorcycle'
---   )
--- );
+INSERT INTO permitType (id, data) VALUES (
+  '08e30dc9-cb87-45f0-ba45-11ad502ec47a',
+  jsonb_build_object(
+    'price', 84.37,
+    'type', 'Quarter',
+    'class', 'Motorcycle'
+  )
+);
 
--- INSERT INTO permitType (id, data) VALUES (
---   'a81978f9-fd44-4a50-b508-25b8c9107eb5',
---   jsonb_build_object(
---     'price', 168.75,
---     'type', 'Academic Year',
---     'class', 'Motorcycle'
---   )
--- );
+INSERT INTO permitType (id, data) VALUES (
+  'a81978f9-fd44-4a50-b508-25b8c9107eb5',
+  jsonb_build_object(
+    'price', 168.75,
+    'type', 'Academic Year',
+    'class', 'Motorcycle'
+  )
+);
 
 INSERT INTO permitType (id, data) VALUES (
   '4e23aa69-899e-4746-b91a-75284b38b517',
@@ -171,14 +171,14 @@ INSERT INTO permitType (id, data) VALUES (
   )
 );
 
--- INSERT INTO permitType (id, data) VALUES (
---   '9c50b4f9-fc75-4a1f-85c2-44b204e6f285',
---   jsonb_build_object(
---     'price', 2.50,
---     'type', 'Hourly',
---     'class', 'Visitor'
---   )
--- );
+INSERT INTO permitType (id, data) VALUES (
+  '9c50b4f9-fc75-4a1f-85c2-44b204e6f285',
+  jsonb_build_object(
+    'price', 2.50,
+    'type', 'Hourly',
+    'class', 'Visitor'
+  )
+);
 
 INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
   '1978402d-6fb5-4515-8bcf-612d99bd9657',
