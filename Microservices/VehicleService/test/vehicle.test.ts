@@ -385,3 +385,25 @@ test('Member calls getAnyVehicleById', async () => {
     })
   expect(res1.body.data.getAnyVehicleById.licensePlate).toBe('123BC4A')
 })
+
+test('No existing plate for getVehicleByPlate', async () => {
+  const res1 = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
+        {
+          getVehicleByPlate(plate: "badPlate") {
+            id
+            driver
+            licensePlate
+            make
+            model
+            color
+            active
+          }
+        }
+      `
+    })
+})
+
