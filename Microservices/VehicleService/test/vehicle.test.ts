@@ -353,19 +353,14 @@ test('Member UnRegister Vehicle', async () => {
     .send({
       query: `
         mutation {
-          UnregisterVehicle(input: 'testingLP') {
+          UnregisterVehicle(input: "testingLP") {
             id
             licensePlate
-            make
-            model
-            color
-            driver
-            active
           }
         }
       `
     })
 
   const vehicle = res1;
-  console.log('vehicel: ', vehicle)
+  console.log('vehicel: ', vehicle.body)
 })
