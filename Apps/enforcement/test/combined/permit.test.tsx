@@ -110,14 +110,14 @@ it("should show an error saying carplate should be enter", async () => {
 })
 
 /* reference: https://web.dev/learn/testing/get-started/component-testing */
-// it('getpermitBycarplate rejects and return authorized error', async () => {
-//   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
-//     status: 401,
-//     json: () => Promise.resolve({}),
-//   } as Response))
+it('getpermitBycarplate rejects and return authorized error', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+    status: 401,
+    json: () => Promise.resolve({}),
+  } as Response))
 
-//   await expect(getPermitByPlate('invalidCookie', 'abc12')).rejects.toBe('Unauthorized')
-// })
+  await expect(getPermitByPlate('invalidCookie', 'abc12')).rejects.toBe('Unauthorized')
+})
 
 it('test recognizePlateFromImage no license', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
