@@ -345,3 +345,27 @@ test('Edits a vehicle', async () => {
       expect(res.body.data.editVehicle.licensePlate).toEqual("newplate")
     })
 })
+
+test('Member UnRegister Vehicle', async () => {
+  const res1 = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
+        mutation {
+          UnregisterVehicle(input: 'testingLP') {
+            id
+            licensePlate
+            make
+            model
+            color
+            driver
+            active
+          }
+        }
+      `
+    })
+
+  const vehicle = res1;
+  console.log('vehicel: ', vehicle)
+})
