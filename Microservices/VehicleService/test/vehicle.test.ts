@@ -405,5 +405,7 @@ test('No existing plate for getVehicleByPlate', async () => {
         }
       `
     })
+    
+    expect(res1.body.errors[0].message).toBe('Vehicle with license plate badPlate not found');
 })
 
