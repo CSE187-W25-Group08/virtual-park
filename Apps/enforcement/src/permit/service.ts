@@ -26,6 +26,9 @@ export async function getPermitByPlate(cookie: string | undefined, carplate: str
       },
     }),
   });
+  if (response.status !== 200) {
+    throw 'Unauthorized';
+  }
   const json = await response.json();
   if (json.errors || !json.data) {
     console.error("GraphQL Error:", json.errors);
