@@ -28,9 +28,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
         const result = await getTicketDetails(ticketId);
         if (result) {
           setTicket(result);
-          console.log(result);
-        } else  {
-          console.log("fetch failed");
+          // console.log(result);
         }
       };
       fetchData();
@@ -54,10 +52,6 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
       router.push('/')
     }
 
-    // const handleOpenDriver = async (driverId : string | undefined) => {
-    //   if (driverId) {router.push('/drivers/' + driverId)}
-    // }
-
     // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
     const getAppealChipColor = (appeal: string | null) => {
       switch (appeal) {
@@ -67,8 +61,6 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
           return "success";
         case "rejected":
           return "error";
-        default:
-          return "default";
       }
     };
     // https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
@@ -83,7 +75,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
     return (
       <>
         <Card sx={{ maxWidth: '60%', mx: "auto", mt: 4, p:3}}>
-            <IconButton onClick={() => routeBack()}>
+            <IconButton onClick={() => routeBack()} aria-hidden="false" aria-label="back">
               <ArrowBackIosNewIcon sx={{color:'black'}} />
             </IconButton>
           <Box

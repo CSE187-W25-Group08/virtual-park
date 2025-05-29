@@ -35,7 +35,7 @@ export default function UnpaidList() {
       width: 200,
       renderCell: (params) => {
         const date = new Date(params.value);
-        const formatted = date.toLocaleString() || 'Invalid date';
+        const formatted = date.toLocaleString();
         return <Typography noWrap>{formatted}</Typography>;
       },
     },
@@ -45,7 +45,7 @@ export default function UnpaidList() {
       width: 200,
       renderCell: (params) => {
         const date = new Date(params.value);
-        const formatted = date.toLocaleString() || 'Invalid date';
+        const formatted = date.toLocaleString();
         return <Typography noWrap>{formatted}</Typography>;
       },
     },
@@ -126,7 +126,7 @@ export default function UnpaidList() {
         pageSizeOptions={[10, 20, 50]}
         density="compact"
         disableColumnResize
-        getRowId={(row) => row.id || Math.random().toString()}
+        getRowId={(row) => row.id}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
         }

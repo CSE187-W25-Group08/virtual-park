@@ -104,7 +104,7 @@ const columns: GridColDef[] = [
     width: 120,
     renderCell: (params) => {
       const date = new Date(params.value);
-      const formatted = date.toLocaleDateString('en-US') || 'Invalid date';
+      const formatted = date.toLocaleDateString('en-US');
       return <Typography noWrap>{formatted}</Typography>;
     },
   },
@@ -114,7 +114,7 @@ const columns: GridColDef[] = [
     width: 120,
     renderCell: (params) => {
       const date = new Date(params.value);
-      const formatted = date.toLocaleDateString('en-US') || 'Invalid date';
+      const formatted = date.toLocaleDateString('en-US');
       return <Typography noWrap>{formatted}</Typography>;
     },
   },
@@ -132,7 +132,7 @@ const columns: GridColDef[] = [
         pageSizeOptions={[10, 20, 50]}
         density="compact"
         disableColumnResize
-        getRowId={(row) => row.id || Math.random().toString()}
+        getRowId={(row) => row.id}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
         }
