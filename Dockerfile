@@ -1,4 +1,7 @@
 FROM node:23-alpine
+
+ENV NODE_OPTIONS=--max-old-space-size=4096
+
 EXPOSE 3000
 
 WORKDIR /home/app

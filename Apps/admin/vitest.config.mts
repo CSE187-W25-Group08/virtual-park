@@ -19,11 +19,8 @@ export default defineConfig({
       include: [
         'src/**',
       ],
-      // drivers list page is removed from app temporarily while being re-evaluated
       exclude: [
         'src/app/layout.tsx',
-        'src/app/drivers/**',
-        'src/driver/**',
       ],
     },
   },

@@ -14,13 +14,21 @@ vi.mock('next/navigation', () => ({
   usePathname: () => mockPathname,
 }));
 
+vi.mock('next/headers', () => ({
+  cookies: () => ({
+    set: vi.fn(),
+    get: vi.fn(() => ({ value: 'mock-session-token' })),
+    delete: vi.fn(),
+  }),
+}))
+
 vi.mock('../../src/app/dashboard/actions', () => ({
   listAppeals: vi.fn(() => testTicket),
 }))
 
 afterEach(() => {
   cleanup()
-  vi.restoreAllMocks()
+  vi.clearAllMocks()
 })
 
 it('Navigates to drivers', async () => {
@@ -35,4 +43,15 @@ it('Navigates to home', async () => {
   const driverNavigation = await screen.findByText('Home')
   await fireEvent.click(driverNavigation)
   expect(mockPush).toHaveBeenCalledWith('/')
+})
+
+import * as logoutModule from '@/app/login/action'
+
+vi.spyOn(logoutModule, 'logout').mockResolvedValue(undefined)
+
+it('Navigates upon logout', async () => {
+  render(<SideBarNav />)
+  const logoutButton = await screen.findByLabelText('logout')
+  await fireEvent.click(logoutButton)
+  expect(mockPush).toHaveBeenCalledOnce()
 })
