@@ -41,9 +41,18 @@ export async function getallLots(): Promise<Lot[]> {
   return getAllLots(cookie)
 }
 
-export async function getDriverDetails(id: string): Promise<Driver | undefined> {
-  const cookie = (await cookies()).get('session')?.value
-  return getDriver(id, cookie)
+export async function getDriverDetails(id: string) {
+  try {
+    const cookie = (await cookies()).get('session')?.value
+    if (!cookie) {
+      return null
+    }
+    const driver = await getDriver(id, cookie)
+    return driver
+  } catch (error) {
+    console.error('Error in getDriverDetails:', error)
+    return null
+  }
 }
 
 export async function sendEmail(

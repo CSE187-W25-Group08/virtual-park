@@ -57,7 +57,7 @@ export class PermitType {
 
 @ObjectType()
 export class PermitValid {
-  constructor( driverID: string, vehicleID: string, permitID: string, permitType: string, issueDate: string, expDate: string, isValid: boolean, permitClass: string) {
+  constructor( driverID: string, vehicleID: string, permitID: string | null, permitType: string | null, issueDate: string, expDate: string, isValid: boolean, permitClass: string) {
     this.driverID = driverID
     this.vehicleID = vehicleID
     this.permitID = permitID
@@ -68,11 +68,11 @@ export class PermitValid {
     this.permitClass = permitClass
   }
 
-  @Field(() => ID)
+  @Field(() => ID, {nullable: true})
   @IsUUID()
-  permitID!: string
+  permitID!: string | null
 
-  @Field(() => ID)
+  @Field(() => ID, { nullable: true })
   @IsUUID()
   driverID!: string
 
@@ -80,19 +80,19 @@ export class PermitValid {
   @IsUUID()
   vehicleID!: string
 
-  @Field()
-  permitType!: string;
+  @Field(() => String, { nullable: true })
+  permitType!: string | null;
 
-  @Field()
+  @Field(() => Boolean, { nullable: true })
   isValid!: boolean;
 
-  @Field(() => GraphQLISODateTime)
+  @Field(() => GraphQLISODateTime, { nullable: true })
   issueDate!: string
 
-  @Field(() => GraphQLISODateTime)
+  @Field(() => GraphQLISODateTime, { nullable: true })
   expDate!: string
 
-  @Field()
+  @Field(() => String, { nullable: true })
   permitClass!: string;
 }
 

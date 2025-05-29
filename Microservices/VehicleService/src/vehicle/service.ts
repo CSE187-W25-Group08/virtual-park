@@ -66,6 +66,20 @@ export class VehicleService {
     return vehicleObj;
   }
 
+    public async UnregisterVehicle(input: string) {
+    const query = {
+      text: queries.UnregisterVehicle,
+      values: [input]
+    }
+    const { rows } = await pool.query(query)
+
+    const vehicleObj: Vehicle = {
+      'id': rows[0].id,
+      'licensePlate': rows[0].data.license_plate,
+    }
+    return vehicleObj;
+  }
+
   /* reference: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing
   https://stackoverflow.com/questions/62913315/operator-in-typescript */
   public async getVehicleById(vehicleId: string, userId: string | undefined) {

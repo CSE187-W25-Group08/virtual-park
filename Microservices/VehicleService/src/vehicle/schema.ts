@@ -32,6 +32,18 @@ export class Vehicle {
   active?: boolean;
 }
 
+@ObjectType()
+export class UnRegisterVehicle {
+  @Field(() => ID)
+  @IsUUID()
+  id!: string
+
+  @Field()
+  @MinLength(1)
+  @MaxLength(8)
+  licensePlate!: string
+}
+
 @InputType()
 export class RegisterVehicle {
   @Field()

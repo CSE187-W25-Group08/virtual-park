@@ -5,7 +5,8 @@ import { cookies } from 'next/headers'
 
 import { Permit } from '../../permit'
 import { getPermitByPlate, recognizePlateFromImage } from '../../permit/service'
-import { getVehicleByPlate } from '../../vehicle/service'
+import { getVehicleByPlate, UnregisterVehicle } from '../../vehicle/service'
+import { UnregisterVeh } from '@/vehicle'
 
 export async function getpermitByPlateNum(carPlate: string) : Promise<Permit[]> {
   const cookie = (await cookies()).get('session')?.value
@@ -32,3 +33,10 @@ export async function getDriverFromVehiclePlate(plate: string): Promise<string> 
     return ''
   }
 }
+
+export async function UnregisteredVehicle(carPlate: string) : Promise<UnregisterVeh> {
+  const cookie = (await cookies()).get('session')?.value
+  const vehicleID = await UnregisterVehicle(cookie, carPlate)
+  return vehicleID
+}
+

@@ -7,3 +7,8 @@ export interface Vehicle {
   color: string,
   active: boolean
 }
+
+export interface UnregisterVeh {
+  id: string;
+  licensePlate: string;
+}

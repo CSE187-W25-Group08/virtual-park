@@ -18,7 +18,7 @@ import {
   Alert,
   CircularProgress 
 } from '@mui/material'
-import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate} from './action'
+import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate, UnregisteredVehicle} from './action'
 import { Permit } from '../../permit/index'
 import TicketView from '../ticket/View'
 
@@ -30,6 +30,7 @@ export default function PermitView() {
   const [ticketDialog, setTicketDialog] = useState(false)
   const [driverID, setDriverID] = useState('')
   const [loading, setLoading] = useState(false)
+  const [vehicleID, setVehicleID] = useState('')
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -40,60 +41,47 @@ export default function PermitView() {
     setCarPlate(event.target.value)
   }
   
-  // const handleSearch = async (plateInput?: string) => {
-  //   const plateToUse = plateInput || carPlate
-  //   if (!plateToUse) {
-  //     setError('Please enter a car plate number')
-  //     return
-  //   }
-  //   setError(null)
-  //   setTicketSuccess(null)
-  //   const permitInfo = await getpermitByPlateNum(plateToUse)
-  //   setPermits(permitInfo)
-    
-  //   if (permitInfo.length === 0) {
-  //     setError('No permits found for this vehicle')
-  //     const driverID = await getDriverFromVehiclePlate(plateToUse)
-  //     if (driverID) {
-  //       setDriverID(String(driverID))
-  //     }
-  //     else {
-  //       setDriverID('')
-  //     }
-  //   } else {
-  //     setDriverID(String(permitInfo[0].driverID))
-  //   }
-  // }
   const handleSearch = async (plateInput?: string) => {
-  const plateToUse = plateInput || carPlate;
-  if (!plateToUse) {
-    setError('Please enter a car plate number');
-    return;
-  }
-  setError(null);
-  setTicketSuccess(null);
-  try {
-    const permitInfo = await getpermitByPlateNum(plateToUse);
-    setPermits(permitInfo);
-    if (permitInfo.length === 0) {
-      setError('No permits found for this vehicle');
-      const driverID = await getDriverFromVehiclePlate(plateToUse);
-      if (driverID) {
-        setDriverID(String(driverID));
-      } else {
-        setDriverID('');
-      }
-    } else {
-      setDriverID(String(permitInfo[0].driverID));
+    const plateToUse = plateInput || carPlate;
+    if (!plateToUse) {
+      setError('Please enter a car plate number');
+      return;
     }
-    } catch (err) {
-    console.error("Error during permit search:", err);
-    setPermits([]);
-    setDriverID('');
-  }
-};
+    setError(null);
+    setTicketSuccess(null);
+    setVehicleID('');
+    
+    try {
+      const permitInfo = await getpermitByPlateNum(plateToUse);
 
-  const ticketDialogHandler = () => {
+      const validPermits = permitInfo.filter(permit => permit.permitID != null);
+      
+      setPermits(validPermits);
+      
+      if (validPermits.length === 0) {
+        setError('No permits found for this vehicle');
+        const driverID = await getDriverFromVehiclePlate(plateToUse);
+        if (driverID) {
+          setDriverID(String(driverID));
+        } else {
+          setDriverID('');
+        }
+      } else {
+        setDriverID(String(validPermits[0].driverID));
+        setVehicleID(String(validPermits[0].vehicleID));
+      }
+    } catch (err) {
+      console.error("Error during permit search:", err);
+      setPermits([]);
+      setDriverID('');
+      setVehicleID('');
+    }
+  };
+  const ticketDialogHandler = async () => {
+    if (permits.length === 0) {
+       const unregisterVeh = await UnregisteredVehicle(carPlate);
+       setVehicleID(unregisterVeh.id);
+    }
     setTicketDialog(true)
   }
   
@@ -101,7 +89,8 @@ export default function PermitView() {
     setTicketDialog(false)
     setTicketSuccess(`Ticket issued successfully`)
   }
-  
+
+
   const handleTicketError = (errorMessage: string) => {
     setTicketDialog(false)
     setError(errorMessage)
@@ -297,7 +286,7 @@ export default function PermitView() {
           open={ticketDialog}
           close={() => setTicketDialog(false)}
           driverID={driverID}
-          vehicleID={permits.length > 0 ? permits[0].vehicleID : carPlate}
+          vehicleID={vehicleID}
           success={handleTicketSuccess}
           error={handleTicketError}
         />

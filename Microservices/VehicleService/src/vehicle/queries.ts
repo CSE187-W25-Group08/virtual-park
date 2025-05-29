@@ -35,6 +35,16 @@ VALUES (
 RETURNING id, driver, data;
 `;
 
+export const UnregisterVehicle = `
+INSERT INTO vehicle (data)
+VALUES (
+  jsonb_build_object(
+    'license_plate', $1::text
+  )
+)
+RETURNING id, data;
+`;
+
 export const getVehicleById = `
 SELECT
   id, driver, data
