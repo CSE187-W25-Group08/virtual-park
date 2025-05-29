@@ -383,5 +383,5 @@ test('Member calls getAnyVehicleById', async () => {
       }
     `
     })
-  expect(res1.data.getAnyVehicleById.licensePlate).toBe('123BC4')
+  expect(res1.body.data.getAnyVehicleById.licensePlate).toBe('123BC4A')
 })
