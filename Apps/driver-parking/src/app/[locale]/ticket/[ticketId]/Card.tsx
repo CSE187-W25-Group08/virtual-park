@@ -4,8 +4,8 @@ import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
 import { Box, Typography, Chip } from "@mui/material";
 import Fab from "@mui/material/Fab";
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import FrontHandIcon from '@mui/icons-material/FrontHand';
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import FrontHandIcon from "@mui/icons-material/FrontHand";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
@@ -141,24 +141,31 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
     );
   };
 
-  return (
-    <React.Fragment>
-      {ticket ? (
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Chip
-            label={ticket.paid ? "Paid" : "Unpaid"}
-            color={ticket.paid ? "success" : "error"}
-            variant="filled"
-            sx={{ fontSize: "1rem", px: 2, py: 1 }}
-          />
-          <CardMedia
-            component="img"
-            image={`${ticket.image}?w=164&h=164&fit=crop&auto=format`}
-            alt="Invalid image"
-            loading="lazy"
-            style={{ width: "100%", height: "auto" }}
-            aria-label={"image_" + ticketId}
-          />
+  const topHalf = () => {
+    return (
+      <React.Fragment>
+        {ticket ? (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <Chip
+              label={ticket.paid ? "Paid" : "Unpaid"}
+              color={ticket.paid ? "success" : "error"}
+              variant="filled"
+              sx={{ fontSize: "1rem", px: 2, py: 1 }}
+            />
+            <CardMedia
+              component="img"
+              image={`${ticket.image}?w=164&h=164&fit=crop&auto=format`}
+              alt="Invalid image"
+              loading="lazy"
+              style={{ width: "100%", height: "auto" }}
+              aria-label={"image_" + ticketId}
+            />
             <Typography>
               <strong>{t("violation")}</strong>
               {ticket?.violation}
@@ -186,46 +193,65 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
             {/* pay and appeald button */}
             {appealed && appealedDisplay(ticket)}
 
-                {!ticket?.paid && ticket?.appeal != "approved" && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      gap: 1,
-                    }}
-                  >
-                    <Fab
-                      color="primary"
-                      variant="extended"
-                      onClick={() => {
-                        handleClickPaid();
-                      }}
-                    >
-                      <CurrencyExchangeIcon sx={{ mr: 1 }} />
-                      {t("payTicket")}
-                    </Fab>
+          </Box>
+        ) : (
+          <div>{t("loading")}</div>
+        )}
+      </React.Fragment>
+    );
+  };
 
-                    <Fab
-                      color="secondary"
-                      variant="extended"
-                      onClick={() => {
-                        handleOpenAppealModal();
-                      }}
-                    >
-                      <FrontHandIcon sx={{ mr: 1 }} />
-                      {t("appealTicket")}
-                    </Fab>
-                  </Box>
-                )}
-                <AppealModal
-                  open={appealModalOpen}
-                  onClose={handleCloseAppealModal}
-                  onSubmit={handleSubmitAppeal}
-                />
-        </Box>
-      ) : (
-        <div>{t("loading")}</div>
-      )}
-    </React.Fragment>
-  );
+  const bottomHalf = () => {
+    return (
+      <React.Fragment>
+        {ticket ? (
+          <Box>
+            {!ticket?.paid && ticket?.appeal != "approved" && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 1,
+                }}
+              >
+                <Fab
+                  color="primary"
+                  variant="extended"
+                  onClick={() => {
+                    handleClickPaid();
+                  }}
+                >
+                  <CurrencyExchangeIcon sx={{ mr: 1 }} />
+                  {t("payTicket")}
+                </Fab>
+
+                <Fab
+                  color="secondary"
+                  variant="extended"
+                  onClick={() => {
+                    handleOpenAppealModal();
+                  }}
+                >
+                  <FrontHandIcon sx={{ mr: 1 }} />
+                  {t("appealTicket")}
+                </Fab>
+              </Box>
+            )}
+            <AppealModal
+              open={appealModalOpen}
+              onClose={handleCloseAppealModal}
+              onSubmit={handleSubmitAppeal}
+            />
+          </Box>
+        ) : (
+          <div>{t("loading")}</div>
+        )}
+      </React.Fragment>
+    );
+  };
+
+  return <React.Fragment>
+    {topHalf()}
+    {bottomHalf()}
+  </React.Fragment>;
 }

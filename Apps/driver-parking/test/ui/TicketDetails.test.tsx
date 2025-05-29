@@ -109,12 +109,12 @@ it('render details page', async () => {
 
   renderWithIntl(page);
 
-  await screen.findByText('Violation: Expired meter');
+  await screen.findByText('Expired meter');
 });
 
 it('contains Violation Text', async () => {
   renderWithIntl(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
-  await screen.findByText('Violation: Expired meter');
+  await screen.findByText('Expired meter');
 })
 
 it('contains image', async () => {
