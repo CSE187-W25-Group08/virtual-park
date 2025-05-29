@@ -371,7 +371,7 @@ test('Member calls getAnyVehicleById', async () => {
     .set('Authorization', `Bearer Placeholder`)
     .send({
       query: `{
-        getAnyVehicleById(input: {id: "18fa94fc-4783-42df-a904-7ec17efadca5"}) {
+        getAnyVehicleById(id: "18fa94fc-4783-42df-a904-7ec17efadca5") {
           id
           licensePlate
           make
@@ -383,5 +383,5 @@ test('Member calls getAnyVehicleById', async () => {
       }
     `
     })
-  console.log('veh: ', res1.body)
+  expect(res1.data.getAnyVehicleById.licensePlate).toBe('123BC4')
 })
