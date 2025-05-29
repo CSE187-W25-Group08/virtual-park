@@ -45,12 +45,12 @@ export default function NavList() {
     router.push(page);
   };
 
-  const currentPageName = listItems[selectedIndex]?.text || "Unknown";
+  const currentPageName = listItems[selectedIndex]?.text || "Ticket";
   // MUI example https://github.com/mui/material-ui/blob/v7.1.0/docs/data/material/getting-started/templates/dashboard/components/MenuContent.tsx
   return (
     <Box>
       <Box sx={{ p: 3 }}>
-        <Typography variant="h5">Dashboard &gt; {currentPageName} </Typography>
+        <Typography variant="h6">Dashboard &gt; {currentPageName} </Typography>
       </Box>
       <Divider />
       <List dense>

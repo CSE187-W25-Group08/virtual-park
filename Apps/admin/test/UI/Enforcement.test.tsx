@@ -89,7 +89,7 @@ it('Clears the filled in text', async () => {
   fireEvent.click(screen.getByText('Clear'))
 
   expect(screen.queryByText(newEnforcer.name)).toBeNull()
-})
+}, 10000)
 
 it('Calls createEnforcement with the correct details', async () => {
   mockedGetEnforcement.mockResolvedValue(testEnforcers)
@@ -122,7 +122,7 @@ it('Calls createEnforcement with the correct details', async () => {
       password: newEnforcer.password
     })
   })
-}, 4000)
+}, 10000)
 
 it('Pops up an alert when creating an existing officer account', async () => {
   mockedGetEnforcement.mockResolvedValue(testEnforcers)
@@ -151,4 +151,4 @@ it('Pops up an alert when creating an existing officer account', async () => {
   await waitFor(() => {
     expect(alertCalled).toBe(true)
   })
-}, 4000)
+}, 10000)

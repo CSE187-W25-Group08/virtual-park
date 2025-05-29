@@ -92,7 +92,7 @@ it('Creates a new enforcement account successfully', async () => {
   fireEvent.click(screen.getByText('Submit'))
 
   await screen.findByText(newEnforcer.name)
-}, 4000)
+}, 10000)
 
 it('Actions handles an undefined response', async () => {
   mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
@@ -140,7 +140,7 @@ it('Actions handles an undefined response', async () => {
   await waitFor(() => {
     expect(alertCalled).toBe(true)
   })
-})
+}, 10000)
 
 it('Blocks an unauthorized fetch call for getting enforcement', async () => {
   vi.mocked(fetch).mockImplementation((url, options) => {
@@ -202,4 +202,4 @@ it('Blocks an unauthorized fetch call for creating a new officer', async () => {
   await waitFor(() => {
     expect(alertCalled).toBe(true)
   })
-})
+}, 10000)

@@ -37,7 +37,7 @@ afterEach(() => {
 
 import Page from '@/app/page'
 
-it('Displays list of active appeals', async () => {
+it('Displays list of unpaid tickets', async () => {
   vi.mocked(fetch).mockImplementation((url, options) => {
   const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}
   const query = body.query || ''
@@ -55,5 +55,3 @@ it('Displays list of active appeals', async () => {
   render(<Page />)
   await screen.findByText('submitted');
 })
-
-

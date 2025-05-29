@@ -5,6 +5,7 @@ import { LotService } from "../../lot/service";
 import { VehicleService } from "../../vehicle/service";
 import { cookies } from 'next/headers'
 import { Vehicle } from "@/vehicle";
+
 export async function listAll(jwt: string): Promise<Ticket[]> {
   return new TicketService().getAllTicket(jwt)
 }
@@ -12,13 +13,13 @@ export async function listAll(jwt: string): Promise<Ticket[]> {
 export async function getTicketDetails(ticketId: string): Promise<Ticket> {
   const cookie = (await cookies()).get('session')?.value;
   const ticket = await new TicketService().getTicketInfo(cookie, ticketId);
-  // console.log("get ticket Details action ticket", ticket);
+  console.log("get ticket Details action ticket", ticket);
   ticket.lot = await getLotName(ticket.lot);
-  // console.log("get ticket Details action ticket", ticket.lot);
+  console.log("get ticket Details action ticket lot", ticket.lot);
   const ticketVehicle = await getVehiclePLate(cookie, ticket.vehicle)
   ticket.vehicle = ticketVehicle.licensePlate
   ticket.driver = ticketVehicle.driver
-  // console.log("get ticket Details action ticket", ticket.vehicle);
+  console.log("get ticket Details action ticket vehicle", ticket.vehicle);
   return ticket;
 }
 

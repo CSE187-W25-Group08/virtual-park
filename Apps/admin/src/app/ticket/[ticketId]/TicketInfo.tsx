@@ -138,18 +138,6 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
                 <Typography variant="h6"><strong>Amount Due:</strong> ${ticket.cost}</Typography>
               </Grid>
             </Grid>
-            {/* {ticket.driver && (
-              <Box>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleOpenDriver(ticket.driver)}
-                  sx={{ mt: 2}}
-                >
-                  View Driver
-                </Button>
-              </Box>
-            )} */}
           </CardContent>
         </Card>
         {(ticket.appeal && ticket.appeal != 'null') && (

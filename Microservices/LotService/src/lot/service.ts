@@ -32,7 +32,7 @@ export class LotService {
       text: queries.selectAll
     }
     const { rows } = await pool.query(query);
-    console.log("get all lots in lot service rows", rows);
+    // console.log("get all lots in lot service rows", rows);
     const lots = await this.rowToLot(rows);
     return lots;
   }
