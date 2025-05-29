@@ -53,6 +53,7 @@ it('should fetch user\'s purchased permits', async () => {
                 issueDate: '2025-01-01',
                 expDate: '2025-01-01',
                 price: 5,
+                permitClass: 'Remote',
               },
               {
                 id: '2',
@@ -60,6 +61,7 @@ it('should fetch user\'s purchased permits', async () => {
                 issueDate: '2025-02-01',
                 expDate: '2025-02-07',
                 price: 27,
+                permitClass: 'Remote',
               },
             ],
           },

@@ -50,21 +50,24 @@ it('mocks Typelist component', async () => {
   const types = [{
     id: '1',
     type: 'Daily',
-    price: 5
+    price: 5,
+    permitClass: 'Remote'
   },
   {
     id: '2',
     type: 'Week',
-    price: 27
+    price: 27,
+    permitClass: 'Remote'
   },
   {
     id: '3',
     type: 'Month',
-    price: 90
+    price: 90,
+    permitClass: 'Remote'
   }]
   mockPermitTypes.mockResolvedValueOnce(types)
   mockUserPermits.mockResolvedValueOnce([])
   renderWithIntl(<Typelist />)
 
-  await screen.findByText('Daily')
+  await screen.findByText('Remote')
 })

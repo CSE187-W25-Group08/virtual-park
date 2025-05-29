@@ -54,8 +54,8 @@ it('renders permit types returned from permitTypes()', async () => {
         json: () => Promise.resolve({
           data: {
             PermitType: [
-              { id: '1', type: 'Daily', price: 5 },
-              { id: '2', type: 'Month', price: 20 },
+              { id: '1', type: 'Daily', price: 5, permitClass: 'Remote' },
+              { id: '2', type: 'Month', price: 20, permitClass: 'Remote' },
             ],
           },
         }),
@@ -69,7 +69,7 @@ it('renders permit types returned from permitTypes()', async () => {
         json: () => Promise.resolve({
           data: {
             permitsByDriver: [
-              { id: '101', type: 'Daily', price: 5, issueDate: '2024-01-01', expDate: '2099-01-01' },
+              { id: '101', type: 'Daily', price: 5, issueDate: '2024-01-01', expDate: '2099-01-01', permitClass: 'Remote' },
             ],
           },
         }),
@@ -79,7 +79,7 @@ it('renders permit types returned from permitTypes()', async () => {
   }) as typeof fetch
 
   renderWithIntl(<TypePage />)
-  await screen.findByText('Month')
+  await screen.findByText('Remote')
 })
 
 /* reference: https://web.dev/learn/testing/get-started/component-testing */

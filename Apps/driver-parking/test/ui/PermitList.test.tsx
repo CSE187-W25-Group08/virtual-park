@@ -32,6 +32,7 @@ it('mocks PermitList component', async () => {
     issueDate: '2025-01-01',
     expDate: '2025-01-01',
     price: 5,
+    permitClass: 'Remote'
   },
   {
     id: '2',
@@ -39,6 +40,7 @@ it('mocks PermitList component', async () => {
     issueDate: '2025-01-02',
     expDate: '2025-01-08',
     price: 27,
+    permitClass: 'Remote'
   },
   {
     id: '3',
@@ -46,6 +48,7 @@ it('mocks PermitList component', async () => {
     issueDate: '2025-01-03',
     expDate: '2025-02-03',
     price: 90,
+    permitClass: 'Remote'
   },
   {
     id: '4',
@@ -53,6 +56,7 @@ it('mocks PermitList component', async () => {
     issueDate: '2025-01-04',
     expDate: '2026-01-04',
     price: 515.95,
+    permitClass: 'Remote'
   }]
   mockgetUserPermits.mockResolvedValueOnce(testPermits)
 

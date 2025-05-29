@@ -88,6 +88,7 @@ it('renders active permit', async () => {
     issueDate: '2025-01-01',
     expDate: '2025-01-01',
     price: 5,
+    permitClass: 'Visitor'
   });
 
   vi.mocked(fetch).mockImplementation((url, options) => {
