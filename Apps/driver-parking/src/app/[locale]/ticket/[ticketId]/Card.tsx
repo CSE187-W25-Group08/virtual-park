@@ -3,35 +3,37 @@ import React, { useEffect, useState } from "react";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import CardMedia from "@mui/material/CardMedia";
-import { Box, Typography} from "@mui/material";
-import Button from "@mui/material/Button";
-import { useRouter} from 'next/navigation'
+import { Box, Typography, Chip } from "@mui/material";
+import Fab from "@mui/material/Fab";
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import FrontHandIcon from '@mui/icons-material/FrontHand';
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-import AppealModal from './AppealModal';
+import AppealModal from "./AppealModal";
 import { Ticket } from "@/ticket";
 import {
-    getTicketById,
-    // setTicketPaid,
-    setTicketAppealed
-  } from "../actions";
+  getTicketById,
+  // setTicketPaid,
+  setTicketAppealed,
+} from "../actions";
 import { Vehicle } from "@/register";
 import { getVehicleById } from "../../register/actions";
 import { createCheckout } from "../../../../stripe/helper";
 
-export default function Card({ ticketId }: { ticketId: string }) {
+export default function TicketCard({ ticketId }: { ticketId: string }) {
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
   const [appealModalOpen, setAppealModalOpen] = useState(false);
   const t = useTranslations("ticket_details");
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
       const result = await getTicketById(ticketId);
       if (result) {
         setTicket(result);
-        
+
         const vehicle = await getVehicleById(result.vehicle);
         if (vehicle) {
           setVehicle(vehicle);
@@ -60,9 +62,9 @@ export default function Card({ ticketId }: { ticketId: string }) {
     const timeString = dateReceived.toLocaleTimeString(undefined, options);
 
     if (isToday) {
-      return `${t('today')} ${timeString}`;
+      return `${t("today")} ${timeString}`;
     } else if (isYesterday) {
-      return `${t('yesterday')} ${timeString}`;
+      return `${t("yesterday")} ${timeString}`;
     } else {
       const datePart = dateReceived.toLocaleDateString(undefined, {
         weekday: "long",
@@ -73,77 +75,83 @@ export default function Card({ ticketId }: { ticketId: string }) {
     }
   };
 
-
   const handleClickPaid = async () => {
-    const name = ticket?.violation || 'oops'
-    const amount = ticket?.cost || 0; 
+    const name = ticket?.violation || "oops";
+    const amount = ticket?.cost || 0;
     // meta data includes cookie as well
     const metaData = {
       id: ticketId,
       type: "ticket",
-    }
-    await createCheckout(name, amount, metaData)
+    };
+    await createCheckout(name, amount, metaData);
   };
 
   const handleOpenAppealModal = () => {
     setAppealModalOpen(true);
-  }
+  };
 
   const handleCloseAppealModal = () => {
     setAppealModalOpen(false);
-  }
+  };
 
   const handleSubmitAppeal = async (appealReason: string) => {
-    const appealedTicket = await setTicketAppealed(ticketId, 'submitted', appealReason)
+    const appealedTicket = await setTicketAppealed(
+      ticketId,
+      "submitted",
+      appealReason
+    );
     if (appealedTicket) {
-      setTicket(appealedTicket)
-      handleCloseAppealModal()
-      router.push('/ticket')
+      setTicket(appealedTicket);
+      handleCloseAppealModal();
+      router.push("/ticket");
     }
-  }
+  };
 
-  const appealed = ticket?.appeal != "null"
+  const appealed = ticket?.appeal != "null";
 
   const appealedDisplay = (ticket: Ticket) => {
-
     return (
       <ListItemText
-  primary={
-    <Typography>
-      {t('appealStatus')}&nbsp;
-      <Typography
-        component="span"
-        sx={{
-          color:
-            ticket?.appeal === "submitted"
-              ? "warning.dark"
-              : ticket?.appeal === "approved"
-              ? "success.dark"
-              : ticket?.appeal === "rejected"
-              ? "red"
-              : "text.primary",
-        }}
-      >
-        {ticket?.appeal === "submitted"
-          ? t("submitted")
-          : ticket?.appeal === "approved"
-          ? t("approved")
-          : ticket?.appeal === "rejected"
-          ? t("rejected")
-          : ""}
-          {process.env.NEXT_PUBLIC_REDIRECT!}
-      </Typography>
-    </Typography>
-  }
-/>
-
-    )
-  }
+        primary={
+          <Typography>
+            <strong>{t("appealStatus")}</strong>&nbsp;
+            <Typography
+              component="span"
+              sx={{
+                color:
+                  ticket?.appeal === "submitted"
+                    ? "warning.dark"
+                    : ticket?.appeal === "approved"
+                    ? "success.dark"
+                    : ticket?.appeal === "rejected"
+                    ? "red"
+                    : "text.primary",
+              }}
+            >
+              {ticket?.appeal === "submitted"
+                ? t("submitted")
+                : ticket?.appeal === "approved"
+                ? t("approved")
+                : ticket?.appeal === "rejected"
+                ? t("rejected")
+                : ""}
+            </Typography>
+          </Typography>
+        }
+      />
+    );
+  };
 
   return (
     <React.Fragment>
       {ticket ? (
-        <Box>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Chip
+            label={ticket.paid ? "Paid" : "Unpaid"}
+            color={ticket.paid ? "success" : "error"}
+            variant="filled"
+            sx={{ fontSize: "1rem", px: 2, py: 1 }}
+          />
           <CardMedia
             component="img"
             image={`${ticket.image}?w=164&h=164&fit=crop&auto=format`}
@@ -152,47 +160,72 @@ export default function Card({ ticketId }: { ticketId: string }) {
             style={{ width: "100%", height: "auto" }}
             aria-label={"image_" + ticketId}
           />
-          <List>
-            <ListItemText>{t('violation')} {ticket?.violation}</ListItemText>
+            <Typography>
+              <strong>{t("violation")}</strong>
+              {ticket?.violation}
+            </Typography>
+            <Typography>
+              <strong>{t("description")}</strong> {ticket?.description}
+            </Typography>
 
-            <ListItemText>{t('description')} {ticket?.description}</ListItemText>
+            <Typography>
+              <strong>{t("licensePlate")}</strong> {vehicle?.licensePlate}
+            </Typography>
 
-            <ListItemText>{t('licensePlate')} {vehicle?.licensePlate}</ListItemText>
+            <Typography>
+              <strong>{t("issued")}</strong> {handleHourDate(ticket?.issue)}
+            </Typography>
 
-            <ListItemText>{t('issued')} {handleHourDate(ticket?.issue)}</ListItemText>
+            <Typography>
+              <strong>{t("due")}</strong> {handleHourDate(ticket?.due)}
+            </Typography>
 
-            <ListItemText>{t('due')} {handleHourDate(ticket?.due)}</ListItemText>
+            <Typography>
+              <strong>{t("cost")}</strong> ${ticket?.cost}
+            </Typography>
 
-            <ListItemText>{t('cost')} ${ticket?.cost}</ListItemText>
-
+            {/* pay and appeald button */}
             {appealed && appealedDisplay(ticket)}
 
+                {!ticket?.paid && ticket?.appeal != "approved" && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      gap: 1,
+                    }}
+                  >
+                    <Fab
+                      color="primary"
+                      variant="extended"
+                      onClick={() => {
+                        handleClickPaid();
+                      }}
+                    >
+                      <CurrencyExchangeIcon sx={{ mr: 1 }} />
+                      {t("payTicket")}
+                    </Fab>
 
-            <ListItemText>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                {ticket?.paid ? 
-                <Typography color='success.dark'>{t('paid')}</Typography> : 
-                <Typography color='red'>{t('unpaid')}</Typography>}
-  
-                {(!ticket?.paid && ticket?.appeal != "approved") && (
-                  <Box sx={{display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 1}}>
-                    <Button variant="outlined" onClick={() => {handleClickPaid()}}>{t('payTicket')}</Button>*
-                    <Button variant="outlined" onClick={() => {handleOpenAppealModal()}}>
-                      {t('appealTicket')}
-                    </Button>
+                    <Fab
+                      color="secondary"
+                      variant="extended"
+                      onClick={() => {
+                        handleOpenAppealModal();
+                      }}
+                    >
+                      <FrontHandIcon sx={{ mr: 1 }} />
+                      {t("appealTicket")}
+                    </Fab>
                   </Box>
-                )} 
+                )}
                 <AppealModal
                   open={appealModalOpen}
                   onClose={handleCloseAppealModal}
                   onSubmit={handleSubmitAppeal}
                 />
-              </Box>
-            </ListItemText>
-          </List>
         </Box>
       ) : (
-        <div>{t('loading')}</div>
+        <div>{t("loading")}</div>
       )}
     </React.Fragment>
   );

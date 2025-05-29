@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Card from "./Card";
+import TicketCard from "./Card";
 import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
@@ -32,7 +32,7 @@ export default function View({ ticketId }: { ticketId: string }) {
       </AppBar>
 
       <Box sx={{ mt: 8, px: 2 }}>
-        <Card ticketId={ticketId}/>
+        <TicketCard ticketId={ticketId}/>
       </Box>
     </React.Fragment>
   );

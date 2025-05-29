@@ -22,8 +22,8 @@ import { getCheckoutSessionUrlAction } from '../app/[locale]/stripe/action';
       return Math.round(amount * factor);
     };
     const amountInCents = convertToSubCurrency(amount);
-    const redirectURL = 'https://virtual-park.net/'
-    //const redirectURL = 'http://localhost:3000/'
+    //const redirectURL = 'https://virtual-park.net/'
+    const redirectURL = 'http://localhost:3000/'
 
     const dynamicUrls = generateCheckoutUrls({
       name: name,
