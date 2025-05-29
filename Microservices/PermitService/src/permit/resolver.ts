@@ -35,7 +35,7 @@ export class PermitResolver {
 
   /* should Only allow officer to do that, and in the future, I might consider adding a member with the role of enforcement officer */
   @Authorized('enforcement')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   @Query(() => [PermitValid])
   async getPermitBycarPlate(@Arg("input") carPlate: string): Promise<PermitValid[]> {
     const result = await new PermitService().getPermitByCar(carPlate);
