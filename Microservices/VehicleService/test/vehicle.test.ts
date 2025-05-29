@@ -370,8 +370,7 @@ test('Member calls getAnyVehicleById', async () => {
     .post('/graphql')
     .set('Authorization', `Bearer Placeholder`)
     .send({
-      query: `
-      mutation {
+      query: `{
         getAnyVehicleById(input: {id: "18fa94fc-4783-42df-a904-7ec17efadca5"}) {
           id
           licensePlate
@@ -384,4 +383,5 @@ test('Member calls getAnyVehicleById', async () => {
       }
     `
     })
+  console.log('veh: ', res1.body)
 })
