@@ -81,7 +81,7 @@ export class PermitResolver {
       expDate.setFullYear(expDate.getFullYear() + 1)
     } else if (permitType.type === 'Academic Year') {
       issueDate.setMonth(8);
-      issueDate.setDate(1);
+      issueDate.setDate(0);
       expDate.setMonth(5);
       expDate.setDate(29);
       expDate.setFullYear(expDate.getFullYear() + 1);
