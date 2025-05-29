@@ -364,3 +364,24 @@ test('Member UnRegister Vehicle', async () => {
   const vehicle = res1;
   console.log('vehicel: ', vehicle.body)
 })
+
+test('Member calls getAnyVehicleById', async () => {
+  const res1 = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
+      mutation {
+        getAnyVehicleById(input: {id: "18fa94fc-4783-42df-a904-7ec17efadca5"}) {
+          id
+          licensePlate
+          make
+          model
+          color
+          driver
+          active
+        }
+      }
+    `
+    })
+})
