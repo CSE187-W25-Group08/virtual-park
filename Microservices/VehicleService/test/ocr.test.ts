@@ -36,3 +36,21 @@ beforeEach(async () => {
   return db.reset()
 })
 
+test('Member calls scanImage', async () => {
+  const res = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
+        mutation {
+          scanImage(base64Image: "test") {
+            licensePlate
+          }
+        }
+      `
+    });
+
+  expect(res.status).toBe(200);
+  expect(res.body.errors).toBeUndefined();
+  expect(res.body.data.scanImage.licensePlate).toBe('2SAM123');
+});
