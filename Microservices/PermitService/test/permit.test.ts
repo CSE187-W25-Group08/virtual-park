@@ -40,11 +40,12 @@ test('Get all permitType', async () => {
         PermitType {
           type
           price
+          permitClass
         }
       }`
     })
     .then((res) => {
-      expect(res.body.data.PermitType.length).toEqual(13)
+      expect(res.body.data.PermitType.length).toEqual(20)
 
     })
 })
