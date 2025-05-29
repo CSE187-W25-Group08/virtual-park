@@ -83,7 +83,7 @@ export class PermitResolver {
       issueDate.setMonth(8);
       issueDate.setDate(1);
       expDate.setMonth(5);
-      expDate.setDate(30);
+      expDate.setDate(29);
       expDate.setFullYear(expDate.getFullYear() + 1);
     }
     const newPermit = await new PermitService().permitIssue({
