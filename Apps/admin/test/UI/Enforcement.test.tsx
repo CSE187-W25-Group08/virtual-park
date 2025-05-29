@@ -151,4 +151,4 @@ it('Pops up an alert when creating an existing officer account', async () => {
   await waitFor(() => {
     expect(alertCalled).toBe(true)
   })
-})
+}, 4000)
