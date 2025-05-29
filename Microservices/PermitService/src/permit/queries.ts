@@ -109,7 +109,7 @@ JOIN
 WHERE 
     dp.driverID = $1
 AND
-    (dp.data->>'expdate')::timestamp > NOW()
+    (dp.data->>'expdate')::timestamptz > NOW()
 AND
-    (dp.data->>'issuedate')::timestamp <= NOW()
+    (dp.data->>'issuedate')::timestamptz <= NOW()
 `;
