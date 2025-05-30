@@ -97,3 +97,15 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'active', true
   )
 );
+
+INSERT INTO vehicle (id, driver, data) VALUES (
+  '18fa94fc-4783-42df-a904-7ec17efadcb9',
+  'c852b1b6-dc7c-48b2-84f1-fe8aa828a929',
+  jsonb_build_object(
+    'license_plate', '7ZJN054',
+    'make', 'arf',
+    'model', 'bark',
+    'color', 'bark',
+    'active', true
+  )
+);
