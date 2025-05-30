@@ -48,10 +48,8 @@ test("A payment confirmation is sent", async () => {
             name: "John Doe",
             nameOfProduct: "Monthly Permit",
             costOfProduct: 1999,
-            metadata: {
-              permitTypeId: "permit-123",
-              vehicleId: "vehicle-456"
-            }
+            permitTypeId: "permit-123",
+            vehicleId: "vehicle-456"
           )
         }
       `,
