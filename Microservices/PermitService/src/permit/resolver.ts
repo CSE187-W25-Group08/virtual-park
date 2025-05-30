@@ -67,7 +67,7 @@ export class PermitResolver {
     const issueDate = new Date();
     const expDate = new Date(issueDate);
     if (permitType.type === 'Daily') {
-      expDate.setHours(23, 59, 59, 999);
+      expDate.setHours(6, 59, 59, 999);
     } else if (permitType.type === 'Hourly') {
       expDate.setHours(expDate.getHours() + 4);
     } else if (permitType.type === 'Week') {
