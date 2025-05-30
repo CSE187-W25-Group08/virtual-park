@@ -298,6 +298,43 @@ test('should issue a hourly permit', async () => {
     })
 })
 
+const quarter = '02d241e9-68da-4991-b599-f2c75d86f492';
+const SixthVehicleId = 'ca755b1a-975c-4543-983f-888897db3cab';
+test('should issue a quarter permit', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+          mutation ($permitTypeId: String!, $vehicleId: String!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+              driverID
+              vehicleID
+              permitType
+              issueDate
+              expDate
+              isValid
+            }
+          }
+        `,
+      variables: {
+        permitTypeId: quarter,
+        vehicleId: SixthVehicleId
+      }
+    })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      expect(res.body.data.issuePermit).toBeDefined()
+      const permit = res.body.data.issuePermit;
+      const issueDate = new Date(permit.issueDate);
+      const ExpDate = new Date(issueDate);
+      ExpDate.setMonth(ExpDate.getMonth() + 3);
+      expect(issueDate.getMonth()).toEqual(ExpDate.getMonth() - 3);
+    })
+})
+
 const year = '5ed85022-ec19-4e22-aff8-9a98feddeea9';
 const FourthVehicleId = '18fa94fc-4783-42df-a904-7ec17efadca5';
 test('should issue a yearly permit', async () => {
