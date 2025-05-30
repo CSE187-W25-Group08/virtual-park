@@ -155,8 +155,8 @@ test('should issue a daily permit', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-          mutation ($permitTypeId: String!, $vehicleId: String!) {
-            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+          mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
               driverID
               vehicleID
               permitType
@@ -168,7 +168,8 @@ test('should issue a daily permit', async () => {
         `,
       variables: {
         permitTypeId: daily,
-        vehicleId: VehicleId
+        vehicleId: VehicleId,
+        price: 4
       }
     })
     .then((res) => {
@@ -194,8 +195,8 @@ test('should issue a weekly permit', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-          mutation ($permitTypeId: String!, $vehicleId: String!) {
-            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+          mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
               driverID
               vehicleID
               permitType
@@ -207,7 +208,8 @@ test('should issue a weekly permit', async () => {
         `,
       variables: {
         permitTypeId: week,
-        vehicleId: SecondVehicleId
+        vehicleId: SecondVehicleId,
+        price: 20
       }
     })
     .then((res) => {
@@ -232,8 +234,8 @@ test('should issue a monthly permit', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-          mutation ($permitTypeId: String!, $vehicleId: String!) {
-            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+          mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
               driverID
               vehicleID
               permitType
@@ -245,7 +247,8 @@ test('should issue a monthly permit', async () => {
         `,
       variables: {
         permitTypeId: month,
-        vehicleId: ThirdVehicleId
+        vehicleId: ThirdVehicleId,
+        price: 50
       }
     })
     .then((res) => {
@@ -269,8 +272,8 @@ test('should issue a hourly permit', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-          mutation ($permitTypeId: String!, $vehicleId: String!) {
-            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+          mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
               driverID
               vehicleID
               permitType
@@ -282,7 +285,8 @@ test('should issue a hourly permit', async () => {
         `,
       variables: {
         permitTypeId: hour,
-        vehicleId: FifthVehicleId
+        vehicleId: FifthVehicleId,
+        price: 2
       }
     })
     .then((res) => {
@@ -306,8 +310,8 @@ test('should issue a quarter permit', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-          mutation ($permitTypeId: String!, $vehicleId: String!) {
-            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+          mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
               driverID
               vehicleID
               permitType
@@ -319,7 +323,8 @@ test('should issue a quarter permit', async () => {
         `,
       variables: {
         permitTypeId: quarter,
-        vehicleId: SixthVehicleId
+        vehicleId: SixthVehicleId,
+        price: 30
       }
     })
     .then((res) => {
@@ -343,8 +348,8 @@ test('should issue a yearly permit', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-          mutation ($permitTypeId: String!, $vehicleId: String!) {
-            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+          mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
               driverID
               vehicleID
               permitType
@@ -356,7 +361,8 @@ test('should issue a yearly permit', async () => {
         `,
       variables: {
         permitTypeId: year,
-        vehicleId: FourthVehicleId
+        vehicleId: FourthVehicleId,
+        price: 100
       }
     })
     .then((res) => {
@@ -380,8 +386,8 @@ test('should issue a yearly permit', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-          mutation ($permitTypeId: String!, $vehicleId: String!) {
-            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+          mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
               driverID
               vehicleID
               permitType
@@ -393,7 +399,8 @@ test('should issue a yearly permit', async () => {
         `,
       variables: {
         permitTypeId: academicYear,
-        vehicleId: SeventhVehicleId
+        vehicleId: SeventhVehicleId,
+        price: 150
       }
     })
     .then((res) => {
@@ -418,8 +425,8 @@ test('should return an error for missing user ID', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-        mutation ($permitTypeId: String!, $vehicleId: String!) {
-          issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId) {
+        mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
+          issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
             permitID
             driverID
             vehicleID
@@ -432,7 +439,8 @@ test('should return an error for missing user ID', async () => {
       `,
       variables: {
         permitTypeId: '9b968eea-9abe-457c-ae79-1b128074f683',
-        vehicleId: 'f94b39b3-fcc3-4f00-a02a-29ffc06a9365'
+        vehicleId: 'f94b39b3-fcc3-4f00-a02a-29ffc06a9365',
+        price: 4
       }
     })
     .then((res) => {
