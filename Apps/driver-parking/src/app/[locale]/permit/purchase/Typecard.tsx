@@ -9,6 +9,11 @@ import {
   Paper,
   Collapse,
   Alert,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  SelectChangeEvent
 } from '@mui/material'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import { useTranslations } from 'next-intl'
@@ -26,6 +31,10 @@ export default function PermitCard({permit}: { permit: PermitType }) {
 
   const [vehicle, setVehicle] = React.useState<Vehicle | null>(null);
   const [showWarning, setShowWarning] = React.useState(false);
+  const [hours, setHours] = React.useState(1);
+
+  const isHourly = permit.type === 'Hourly';
+  const adjustedPrice = isHourly ? permit.price * hours : permit.price;
 
    React.useEffect(() => {
     const getActiveVehicle = async () => {
@@ -40,18 +49,23 @@ export default function PermitCard({permit}: { permit: PermitType }) {
 
   //const priceCurrency = convertToSubCurrency(permit.price);
 
+  const handleHourChange = (event: SelectChangeEvent<number>) => {
+    setHours(Number(event.target.value));
+  };
+
   const handleClick = async() => {
     if (!vehicle) {
       setShowWarning(true);
       return;
     }
     const name = "PermitPurchese";
-    const amount = permit?.price;
+    const amount = adjustedPrice;
     // meta data includes cookie as well
     const metaData = {
       permitTypeId: permit?.id,
       type: "permit",
       vehicleId: vehicle?.id,
+      price: adjustedPrice,
     }
     // console.log("name", name)
     // console.log("amount", amount)
@@ -92,7 +106,23 @@ export default function PermitCard({permit}: { permit: PermitType }) {
         >
           <Box>
             <Typography variant="h6">{t(permit.type)}</Typography>
-            <Typography>${permit.price}</Typography>
+            <Typography>${adjustedPrice}</Typography>
+          </Box>
+          <Box>
+            {isHourly && (
+              <FormControl sx={{minWidth: { xs: 50, sm: 120 }}}>
+                <InputLabel>{t('hours')}</InputLabel>
+                <Select
+                  value={hours}
+                  label={t('hours')}
+                  onChange={handleHourChange}
+                >
+                  {[1, 2, 3, 4].map(h => (
+                    <MenuItem key={h} value={h}>{h}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
           </Box>
           {permit.purchased ? (
             <CheckRoundedIcon color="success" />

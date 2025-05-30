@@ -45,7 +45,8 @@
     "Staff": "Personal",
     "Visitor": "Visitante",
     "Motorcycle": "Motocicleta",
-    "Remote": "Remoto"
+    "Remote": "Remoto",
+    "hours": "Horas"
   },
   "purchase_permit": {
     "Hourly": "Por hora",
