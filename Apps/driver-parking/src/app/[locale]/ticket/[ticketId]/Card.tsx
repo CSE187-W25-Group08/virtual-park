@@ -253,7 +253,7 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
     <React.Fragment>
       <Box>
         <Grid
-          style={{ height: "70vh", overflow: "auto" }}
+          style={{ height: "76vh", overflow: "auto" }}
           size={{ xs: 12, sm: 12, md: 12 }}
         >
           {topHalf()}

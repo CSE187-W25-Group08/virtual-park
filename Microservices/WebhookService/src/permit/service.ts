@@ -13,7 +13,7 @@ export async function issuePermit(
       },
       body: JSON.stringify({
         query: `
-          mutation ($permitTypeId: String!, $vehicleId: String!, $price: Number!) {
+          mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
             issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
               driverID
               vehicleID
@@ -33,12 +33,14 @@ export async function issuePermit(
       }),
     })
       .then((response) => {
+        console.log(response)
         if (response.status !== 200) {
           return reject("Error issuing permit");
         }
         return response.json();
       })
       .then((json) => {
+        console.log(json)
         if (json.errors) {
           return reject(json.errors[0].message);
         }
