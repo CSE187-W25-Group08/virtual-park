@@ -38,7 +38,7 @@ it("render page", async () => {
   expect(heading).toBeTruthy()
 })
 
-it("should fetch user's permits by plate", async () => {
+it("should show a valid permit message when there is a valid permit belong to the specific vehicle", async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
   vi.mocked(fetch).mockImplementation((url, options) => {
@@ -71,7 +71,7 @@ it("should fetch user's permits by plate", async () => {
 
   await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '123ABC')
   await userEvent.click(screen.getByText('Search'))
-  await screen.findByText('Student')
+  await screen.findByText('Valid permit found for vehicle 123ABC')
 })
 
 it("should show an error saying carplate should be enter", async () => {

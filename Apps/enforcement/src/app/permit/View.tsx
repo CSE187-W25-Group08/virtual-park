@@ -146,10 +146,10 @@ export default function PermitView() {
     })
   }
 
-  const noPermitError = error === 'No permits found for this vehicle'
+  const noPermitError = error === 'No permits found for this vehicle' || error === 'Expired permit found for this vehicle'
   
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
+    <Container maxWidth="md" sx={{py: 4}}>
       <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
         Vehicle Permit
       </Typography>
