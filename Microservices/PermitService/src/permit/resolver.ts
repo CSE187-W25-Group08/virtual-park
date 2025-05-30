@@ -69,7 +69,7 @@ export class PermitResolver {
     if (permitType.type === 'Daily') {
       expDate.setHours(23, 59, 0, 0);
     } else if (permitType.type === 'Hourly') {
-      expDate.setHours(expDate.getHours() + 4);
+      expDate.setHours(expDate.getHours() + 1);
     } else if (permitType.type === 'Week') {
       expDate.setDate(expDate.getDate() + 7);
     } else if (permitType.type === 'Month') {
