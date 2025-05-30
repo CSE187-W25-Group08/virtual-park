@@ -342,3 +342,62 @@ test("Issue a new ticket", async () => {
       expect(res.body.data.ticketIssue).toBeDefined();
     });
 });
+
+// test("Approve an appeal", async () => {
+//   const appealedTicketId = '58a43482-2f12-4b38-9b2a-aae693e8c52c'
+
+//   await supertest(server)
+//     .post("/graphql")
+//     .set('Authorization', 'Bearer ' + accessToken)
+//     .send({
+//       query: `
+//         mutation {
+//           approveAppeal(id: "${appealedTicketId}") {
+//             id,
+//             appeal,
+//             appealReason
+//           }
+//         }
+//       `,
+//     })
+//     .then((res) => {
+//       expect(res.body.data.approveAppeal.id).toEqual(appealedTicketId);
+//       expect(res.body.data.approveAppeal.appeal).toEqual("approved");
+//     });
+// });
+test("Approve an appeal", async () => {
+  const appealedTicket = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        query {
+          appealedTicket {
+            id,
+            appeal,
+            appealReason
+          }
+        }
+      `
+    });
+  const appealedTicketId = appealedTicket.body.data.appealedTicket[0].id;
+  expect(appealedTicket.body.data.appealedTicket[0].appeal).not.toBe('approved');
+  
+  console.log('Using ticket ID:', appealedTicketId);
+
+  const approveTicket = await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          approveAppeal(id: "${appealedTicketId}") {
+            id,
+            appeal,
+            appealReason
+          }
+        }
+      `,
+    });
+  expect(approveTicket.body.data.approveAppeal.appeal).toEqual("approved");
+});
