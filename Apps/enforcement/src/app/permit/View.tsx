@@ -8,13 +8,13 @@ import {
   Box, 
   Button, 
   TextField,
-  TableContainer,
-  Table,
-  TableHead,
-  TableCell,
-  TableRow,
-  Paper,
-  TableBody,
+  // TableContainer,
+  // Table,
+  // TableHead,
+  // TableCell,
+  // TableRow,
+  // Paper,
+  // TableBody,
   Alert,
   CircularProgress 
 } from '@mui/material'
@@ -60,6 +60,7 @@ export default function PermitView() {
       setPermits(validPermits);
       
       if (validPermits.length === 0) {
+        setvalidPermit('');
         setError('No permits found for this vehicle');
         const driverID = await getDriverFromVehiclePlate(plateToUse);
         if (driverID) {
@@ -94,6 +95,7 @@ export default function PermitView() {
   
   const handleTicketSuccess = () => {
     setTicketDialog(false)
+    setError(null)
     setTicketSuccess(`Ticket issued successfully`)
   }
 
