@@ -1,36 +1,16 @@
 import { } from 'class-validator'
-import { Field, Int, ObjectType, } from 'type-graphql'
+import { Field, InputType } from 'type-graphql'
 
-@ObjectType()
-export class StripeConfig {
+@InputType()
+export class PermitPaymentMetadataInput {
   @Field()
-  publicKey: string;
-
-  @Field(() => Int)
-  unitAmount: number;
+  permitTypeId: string;
 
   @Field()
-  currency: string;
+  vehicleId: string;
 
-  constructor(
-    publicKey: string,
-    unitAmount: number,
-    currency: string
-  ) {
-    this.publicKey = publicKey;
-    this.unitAmount = unitAmount;
-    this.currency = currency;
-  }
-}
-
-
-@ObjectType()
-export class PaymentIntentResponse {
-  @Field()
-  clientSecret: string;
-  constructor(
-    clientSecret: string,
-  ) {
-    this.clientSecret = clientSecret;
+  constructor() {
+    this.permitTypeId = "";
+    this.vehicleId = "";
   }
 }
