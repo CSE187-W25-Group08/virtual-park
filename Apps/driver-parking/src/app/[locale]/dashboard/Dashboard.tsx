@@ -79,13 +79,18 @@ export default function Dashboard() {
         {unpaidTickets.length === 0 && (
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Typography variant="h6" sx={{ marginLeft: 1 }}>
-              {t('noTickets')} {!isMobile &&(<Link href="/ticket" style={{color: '#1976d2'}}>{t('manageTickets')}.</Link>)}
+              {t('noTickets')} {!isMobile &&(
+                <Link href="/ticket" onClick={() => router.push("/ticket")} style={{color: '#1976d2'}} aria-label="Manage Tickets">
+                  {t('manageTickets')}.
+                </Link>
+              )}
             </Typography>
             {isMobile && (
               <Button
                 variant="contained"
                 sx={{ marginTop: 2, marginLeft: 1 }}
-                onClick={() => router.push("/ticket")}>
+                onClick={() => router.push("/ticket")}
+                aria-label="Manage Tickets">
                 {t('manageTickets')}
               </Button>
             )}
