@@ -70,6 +70,5 @@ it('should log out user when clicking logout button', async () => {
   const logoutButton = screen.getByText('Logout');
   await userEvent.click(logoutButton);
 
-
   expect(mockDelete).toHaveBeenCalledWith('session');
 });
