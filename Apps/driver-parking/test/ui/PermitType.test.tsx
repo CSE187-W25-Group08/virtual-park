@@ -1,4 +1,4 @@
-import { it, afterEach, vi, expect } from 'vitest'
+import { it, afterEach, beforeEach, vi, expect } from 'vitest'
 import { render, cleanup, screen } from '@testing-library/react'
 import { NextIntlClientProvider } from 'next-intl'
 
@@ -10,6 +10,36 @@ afterEach(() => {
   cleanup()
   vi.restoreAllMocks()
 })
+
+beforeEach(() => {
+  vi.stubGlobal('fetch', vi.fn((url, options) => {
+    const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
+    const query = body.query || '';
+
+    if (query.includes('PermitType')) {
+      return Promise.resolve(new Response(JSON.stringify({
+        data: {
+          PermitType: [
+            { id: '1', type: 'Daily', price: 5, permitClass: 'Remote' },
+            { id: '2', type: 'Week', price: 27, permitClass: 'Remote' },
+            { id: '3', type: 'Month', price: 90, permitClass: 'Remote' }
+          ]
+        }
+      }), { status: 200 }));
+    }
+
+    if (query.includes('permitsByDriver')) {
+      return Promise.resolve(new Response(JSON.stringify({
+        data: {
+          permitsByDriver: []
+        }
+      }), { status: 200 }));
+    }
+
+    return Promise.resolve(new Response(JSON.stringify({ data: {} }), { status: 200 }));
+  }));
+});
+
 
 const mockedGetCookies = vi.fn()
 vi.mock('next/headers', () => ({
