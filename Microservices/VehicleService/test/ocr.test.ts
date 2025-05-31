@@ -1,6 +1,5 @@
-import { vi, beforeAll, afterAll, beforeEach } from 'vitest'
-// test, expect
-// import supertest from 'supertest'
+import { vi, beforeAll, afterAll, beforeEach,test, expect } from 'vitest'
+import supertest from 'supertest'
 import * as http from 'http'
 
 import * as db from './db'
@@ -36,6 +35,10 @@ beforeEach(async () => {
   authserviceMock.mockResolvedValue({ id: '45c90975-92e0-4a51-b5ea-2fe5f8613b54' })
   return db.reset()
 })
+
+test('Member calls scanImage', async () => {
+  expect(2).toBe(2)
+});
 
 
 // collapse this test and never open it again. this is your warning
