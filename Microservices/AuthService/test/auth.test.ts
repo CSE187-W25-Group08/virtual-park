@@ -402,3 +402,24 @@ test('Get nonexistent user by ID', async () => {
     .set('Authorization', 'Bearer ' + accessToken)
     .expect(404)
 })
+
+
+test('User logged in can retrieve their info', async () => {
+  let accessToken
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy)
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: tommy.email, password: tommy.password })
+    .then((res) => {
+      accessToken = res.body.accessToken
+    })
+  const res = await supertest(server)
+    .get(`/api/v0/auth/driverinfo`)
+    .set('Authorization', 'Bearer ' + accessToken)
+    .expect(200)
+
+  console.log(res.body)
+})
+

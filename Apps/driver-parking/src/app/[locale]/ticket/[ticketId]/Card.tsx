@@ -20,11 +20,16 @@ import {
 import { Vehicle } from "@/register";
 import { getVehicleById } from "../../register/actions";
 import { createCheckout } from "../../../../stripe/helper";
+import { UserInfo } from "../../../../auth";
+import { getUserInfoAction } from "../../login/action";
+import { sendAppealPaymentConfirmation } from "../../../../email/service";
 
 export default function TicketCard({ ticketId }: { ticketId: string }) {
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
   const [appealModalOpen, setAppealModalOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+
   const t = useTranslations("ticket_details");
   const router = useRouter();
 
@@ -38,6 +43,12 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
         if (vehicle) {
           setVehicle(vehicle);
         }
+      }
+
+
+      const result2 = await getUserInfoAction();
+      if (result2) {
+        setUserInfo(result2)
       }
     };
     fetchData();
@@ -102,6 +113,8 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
     );
     if (appealedTicket) {
       setTicket(appealedTicket);
+      await sendAppealPaymentConfirmation(userInfo!.email, userInfo!.name)
+
       handleCloseAppealModal();
       router.push("/ticket");
     }
@@ -211,6 +224,8 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
                   display: "flex",
                   justifyContent: "space-between",
                   gap: 1,
+                  ml:3,
+                  mr:3
                 }}
               >
                 <Fab
@@ -253,7 +268,7 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
     <React.Fragment>
       <Box>
         <Grid
-          style={{ height: "70vh", overflow: "auto" }}
+          style={{ height: "76vh", overflow: "auto" }}
           size={{ xs: 12, sm: 12, md: 12 }}
         >
           {topHalf()}

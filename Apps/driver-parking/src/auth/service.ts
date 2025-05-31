@@ -1,4 +1,4 @@
-import { NewUser, Authenticated, Credentials } from './'
+import { NewUser, Authenticated, Credentials, UserInfo } from './'
 
 export async function signupUser(user: NewUser): Promise<Authenticated | undefined> {
   try {
@@ -73,5 +73,28 @@ export async function check(cookie: string | undefined): Promise<void> {
     await response.json();
   } catch {
     return Promise.reject('Unauthorized');
+  }
+}
+
+
+export async function getUserInfo(cookie: string | undefined): Promise<UserInfo | undefined> {
+  try {
+    const response = await fetch('http://localhost:3010/api/v0/auth/driverinfo', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${cookie}`,
+      }
+
+    });
+
+    if (response.status !== 200) {
+      throw new Error(response.statusText);
+    }
+
+    return await response.json();
+  }
+  catch (error) {
+    console.error('Authentication failed:', error);
+    return undefined;
   }
 }

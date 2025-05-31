@@ -36,20 +36,27 @@ const accessToken = 'Placeholder before authenticated implementation'
 
 
 
-test("User can create stripe checkout session through redirected url", async () => {
+test("A payment confirmation is sent", async () => {
   await supertest(server)
     .post("/graphql")
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-      mutation {
-          createCheckoutSession(amount: 5555, name: "Test", metadata: {id : "test", cat: "big"}, successUrl: "https://example.com/success", cancelUrl: "https://example.com/cancel")
-      }
+        mutation {
+          sendPermitPaymentEmail(
+            email: "jiqle@ucsc.edu",
+            name: "John Doe",
+            nameOfProduct: "Monthly Permit",
+            costOfProduct: 1999,
+            permitTypeId: "permit-123",
+            vehicleId: "vehicle-456"
+          )
+        }
       `,
     })
     .then((res) => {
-      console.log(res.body)
-      expect(res.body.data.createCheckoutSession).toBeTruthy()
+      console.log(res.body.errors)
+      expect(res.body.data.sendPermitPaymentEmail).toBeTruthy()
     });
 });
 

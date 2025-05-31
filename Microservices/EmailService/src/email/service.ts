@@ -1,7 +1,7 @@
 import FormData from "form-data";
 import Mailgun from "mailgun.js";
 
-export async function sendPermitPaymentConfirmation(email: string, name: string, nameOfProduct: string, costOfProduct: number, metadata: Record<string, unknown>) {
+export async function sendPermitPaymentConfirmation(email: string, name: string, nameOfProduct: string, costOfProduct: number, permitTypeId: string, vehicleId: string) {
   const mailgun = new Mailgun(FormData);
   const mg = mailgun.client({
     username: "api",
@@ -17,8 +17,8 @@ export async function sendPermitPaymentConfirmation(email: string, name: string,
 
       Permit: ${nameOfProduct}
       Amount Paid: $${(costOfProduct / 100).toFixed(2)}
-      Permit ID: ${metadata.permitTypeId}
-      Vehicle ID: ${metadata.vehicleId}
+      Permit ID: ${permitTypeId}
+      Vehicle ID: ${vehicleId}
 
       If you have any questions or need assistance, please do not contact us. 
 
@@ -33,6 +33,7 @@ export async function sendPermitPaymentConfirmation(email: string, name: string,
   }
 }
 
+/*
 export async function sendTicketPaymentConfirmation(email: string, name: string, nameOfProduct: string, costOfProduct: number, metadata: Record<string, unknown>) {
   const mailgun = new Mailgun(FormData);
   const mg = mailgun.client({
@@ -63,3 +64,4 @@ export async function sendTicketPaymentConfirmation(email: string, name: string,
     console.log(error);
   }
 }
+  */

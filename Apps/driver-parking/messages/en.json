@@ -63,7 +63,8 @@
     "Staff": "Staff",
     "Visitor": "Visitor",
     "Motorcycle": "Motorcycle",
-    "Remote": "Remote"
+    "Remote": "Remote",
+    "hours": "Hours"
   },
   "vehicle": {
     "title": "Vehicles",
