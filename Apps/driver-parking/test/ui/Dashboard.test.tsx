@@ -25,8 +25,20 @@ vi.mock('next/headers', () => ({
 }));
 
 beforeEach(() => {
-  vi.stubGlobal('fetch', vi.fn());
+  vi.stubGlobal('fetch', vi.fn(() =>
+    Promise.resolve(
+      new Response(JSON.stringify({
+        data: {
+          primaryVehicle: null,
+        },
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    )
+  ));
 });
+
 
 afterEach(() => {
   cleanup();

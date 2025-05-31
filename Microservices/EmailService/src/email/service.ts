@@ -33,8 +33,7 @@ export async function sendPermitPaymentConfirmation(email: string, name: string,
   }
 }
 
-/*
-export async function sendTicketPaymentConfirmation(email: string, name: string, nameOfProduct: string, costOfProduct: number, metadata: Record<string, unknown>) {
+export async function sendTicketPaymentConfirmation(email: string, name: string, nameOfProduct: string, costOfProduct: number, ticketId: string) {
   const mailgun = new Mailgun(FormData);
   const mg = mailgun.client({
     username: "api",
@@ -50,7 +49,7 @@ export async function sendTicketPaymentConfirmation(email: string, name: string,
 
       Ticket: ${nameOfProduct}
       Amount Paid: $${(costOfProduct / 100).toFixed(2)}
-      Ticket ID: ${metadata.id}
+      Ticket ID: ${ticketId}
 
       If you have any questions or need assistance, please do not contact us. 
 
@@ -64,4 +63,3 @@ export async function sendTicketPaymentConfirmation(email: string, name: string,
     console.log(error);
   }
 }
-  */

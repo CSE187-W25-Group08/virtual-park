@@ -1,10 +1,6 @@
 import { issuePermit } from "./service";
 
-export async function setPermitTypePaid(metadata: Record<string, unknown>): Promise<void> {
-  const permitTypeId = metadata.permitTypeId as string;
-  const vehicleId = metadata.vehicleId as string;
-  const dataCookie = metadata.cookie as string;
-  const price = Number(metadata.price);
+export async function setPermitTypePaid(permitTypeId: string, vehicleId: string, dataCookie: string, price: number): Promise<void> {
   console.log("Permit Type ID:", permitTypeId);
   console.log("VehicleId:", vehicleId);
   console.log("Cookie:", dataCookie);
