@@ -15,7 +15,8 @@ export class Lot {
     isActive: boolean,
     type: string,
     created: string,
-    updated: string
+    updated: string,
+    validPermits: string[] = [],
   ) {
     this.id = id;
     this.name = name;
@@ -29,6 +30,7 @@ export class Lot {
     this.type = type;
     this.created = created;
     this.updated = updated;
+    this.validPermits = validPermits;
   }
 
   @Field(() => ID)
@@ -78,6 +80,9 @@ export class Lot {
   @Field()
   @IsDateString()
   updated!: string;
+
+  @Field(() => [String])
+  validPermits!: string[];
 }
 
 @ObjectType()
@@ -136,4 +141,7 @@ export class UpdateLotData {
   @Field({ nullable: true })
   @IsDateString()
   updated?: string;
+
+  @Field(() => [String], { nullable: true })
+  validPermits?: string[];
 }
