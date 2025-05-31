@@ -20,7 +20,8 @@ export class LotService {
         isActive: data.isActive,
         type: data.type,
         created: data.created,
-        updated: data.updated
+        updated: data.updated,
+        validPermits: data.validPermits
       };
       return lotObj;
     }));
