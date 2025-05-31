@@ -1,7 +1,6 @@
 'use client'
 
 import Box from '@mui/material/Box'
-import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
