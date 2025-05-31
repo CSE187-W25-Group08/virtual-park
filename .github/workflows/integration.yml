@@ -57,7 +57,6 @@ jobs:
           node-version: "lts/*"
       - name: Recreate ocr-service-account.json
         run: base64 -d > /Micorservices/VehicleService/credentials/ocr-service-account.json
-      - run: echo $POSTGRES_USER
       - run: npm install
       - run: npm run installs
       - name: Start DB via Docker Compose

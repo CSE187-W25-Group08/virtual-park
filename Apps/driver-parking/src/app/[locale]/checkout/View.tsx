@@ -50,7 +50,7 @@ export default function View({
       <Box
         sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
-        <CheckCircleIcon color="success" sx={{ fontSize: 80 }} />
+        <CheckCircleIcon color="success" sx={{ fontSize: 80, mt:5 }} />
         <Typography variant="h4" sx = {{mt : 1}} gutterBottom >
           {t('purchase')} {status}
         </Typography>
@@ -59,6 +59,7 @@ export default function View({
         </Typography>
         <Box>
           <Button
+            sx = {{mt: 1.5}}
             variant="contained"
             color="primary"
             onClick={() => router.push("/dashboard")}

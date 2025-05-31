@@ -41,7 +41,6 @@ VALUES (
   )
 );
 
-
 INSERT INTO lot(id, data)
 VALUES (
   '9929291f-bdb4-4fd7-887d-8a8de33b0ae1',
