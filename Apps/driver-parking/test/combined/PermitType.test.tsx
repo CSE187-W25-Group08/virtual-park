@@ -47,6 +47,7 @@ it('renders permit types returned from permitTypes()', async () => {
   vi.mocked(fetch).mockImplementation((url, options) => {
     const body = JSON.parse(options?.body as string)
     // Match PermitType query
+
     if (body.query.includes('PermitType')) {
       return Promise.resolve({
         ok: true,
@@ -75,6 +76,19 @@ it('renders permit types returned from permitTypes()', async () => {
         }),
       } as Response)
     }
+
+    if (body.query.includes('primaryVehicle')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: () => Promise.resolve({
+        data: {
+          primaryVehicle: null, // or a mock object if needed
+        },
+      }),
+    } as Response)
+  }
+
     return Promise.reject(new Error('Unknown GraphQL query'))
   }) as typeof fetch
 

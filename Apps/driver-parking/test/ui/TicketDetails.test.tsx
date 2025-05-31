@@ -1,4 +1,4 @@
-import { it, afterEach, vi, expect} from 'vitest'
+import { it, afterEach, beforeEach, vi, expect} from 'vitest'
 import { fireEvent, render, screen, cleanup} from '@testing-library/react'
 import { useRouter } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl'
@@ -72,6 +72,28 @@ vi.mock('next/headers', () => ({
 }))
 
 vi.stubGlobal('scrollTo', vi.fn())
+
+beforeEach(() => {
+  vi.stubGlobal('fetch', vi.fn((url) => {
+    if (url.includes('/auth')) {
+      return Promise.resolve(new Response(JSON.stringify({
+        id: 'user123',
+        email: 'john@example.com',
+      }), { status: 200 }));
+    }
+
+    if (url.includes('/vehicle')) {
+      return Promise.resolve(new Response(JSON.stringify({
+        data: {
+          primaryVehicle: null,
+        },
+      }), { status: 200 }));
+    }
+
+    return Promise.resolve(new Response(JSON.stringify({}), { status: 404 }));
+  }));
+});
+
 
 afterEach(() => {
   cleanup()

@@ -12,6 +12,6 @@
         "test-admin": "cd admin && npm run test",
         "test-driver": "cd driver-parking && npm run test",
         "test-enforcement": "cd enforcement && npm run test",
-        "test": "npm run test-admin && npm run test-driver && test-enforcement"
+        "test": "npm run test-admin && npm run test-driver && npm run test-enforcement"
     }
 }

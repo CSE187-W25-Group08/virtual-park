@@ -31,6 +31,15 @@ vi.mock('next/headers', () => ({
   }),
 }))
 
+vi.mock('../../src/app/[locale]/login/action', () => ({
+  getUserInfoAction: () => Promise.resolve({
+    id: 'user-abc',
+    email: 'test@example.com',
+    name: 'Test User',
+  }),
+}));
+
+
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
 })
@@ -142,27 +151,44 @@ it('Renders ticket details page', async () => {
   mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
 
   vi.stubGlobal('fetch', vi.fn((url, options) => {
-    const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
-    const query = body.query || '';
+  const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
+  const query = body.query || '';
 
-    if (query.includes('getVehicleById')) {
-      return Promise.resolve({
-        ok: true,
-        status: 200,
-        json: async () => ({ data: { getVehicleById: testVehicle } }),
-      });
-    }
+  if (query.includes('getVehicleById')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { getVehicleById: testVehicle } }),
+    });
+  }
 
-    if (query.includes('ticketId')) {
-      return Promise.resolve({
-        ok: true,
-        status: 200,
-        json: async () => ({ data: { ticketId: testTicket } }),
-      });
-    }
+  if (query.includes('ticketId')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { ticketId: testTicket } }),
+    });
+  }
 
-    return Promise.reject(new Error('Unhandled GraphQL query'));
+  if (query.includes('getUserInfo')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        data: {
+          getUserInfo: {
+            id: 'user-abc',
+            email: 'test@example.com',
+            name: 'Test User',
+          },
+        },
+      }),
+    } as Response);
+  }
+
+  return Promise.reject(new Error('Unhandled GraphQL query'));
   }));
+
 
   renderWithIntl(<View ticketId={'t3'}/>)
   await screen.findByText(/Did not pay/)
