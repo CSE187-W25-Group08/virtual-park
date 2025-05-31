@@ -1,5 +1,6 @@
-import { vi, test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
-import supertest from 'supertest'
+import { vi, beforeAll, afterAll, beforeEach } from 'vitest'
+// test, expect
+// import supertest from 'supertest'
 import * as http from 'http'
 
 import * as db from './db'
