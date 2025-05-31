@@ -27,11 +27,17 @@ export default function PermitList() {
       <Typography variant="h4" color="text.primary" align="center" sx={{marginTop: '20px'}}>
         {t('title')}
       </Typography>
-      <List sx={{bgcolor: 'background.paper', alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
+      <Box sx={{bgcolor: 'background.paper',
+        alignItems: 'start',
+        justifyContent: 'center',
+        display: 'grid',
+        gridTemplateColumns: {xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)'},
+        gap: 2,
+        mt: 2}}>
         {permits && permits.map((permit, index) => (
           <PermitListCard key={index} permit={permit} />
         ))}
-      </List>
+      </Box>
     </Box>
   );
 }
