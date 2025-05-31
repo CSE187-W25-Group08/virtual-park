@@ -264,6 +264,7 @@ test('should issue a weekly permit', async () => {
 //     })
 // })
 
+
 const hour = '9c50b4f9-fc75-4a1f-85c2-44b204e6f285';
 const FifthVehicleId = 'ca755b1a-975c-4543-983f-888897db3cab';
 test('should issue a hourly permit', async () => {
