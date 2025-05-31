@@ -31,6 +31,10 @@ COPY Microservices/WebhookService/build/ /home/app/Microservices/WebhookService/
 COPY Microservices/WebhookService/package.json /home/app/Microservices/WebhookService/
 COPY Microservices/WebhookService/package-lock.json /home/app/Microservices/WebhookService/
 
+COPY Microservices/EmailService/build/ /home/app/Microservices/EmailService/build/
+COPY Microservices/EmailService/package.json /home/app/Microservices/EmailService/
+COPY Microservices/EmailService/package-lock.json /home/app/Microservices/EmailService/
+
 COPY Microservices/TicketService/build/ /home/app/Microservices/TicketService/build/
 COPY Microservices/TicketService/package.json /home/app/Microservices/TicketService/
 COPY Microservices/TicketService/package-lock.json /home/app/Microservices/TicketService/
