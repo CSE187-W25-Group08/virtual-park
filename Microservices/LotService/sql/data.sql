@@ -17,7 +17,7 @@ VALUES (
     'type', 'Top Secret',
     'updated', '2025-05-10T00:00:00Z',
     'created', '2025-01-01T00:00:00Z',
-    'validPermits', '["Staff"]'
+    'validPermits', to_jsonb(ARRAY['Staff'])
   )
 );
 
@@ -36,10 +36,10 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-10T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
-
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle'])
   )
 );
+
 
 INSERT INTO lot(id, data)
 VALUES (
@@ -56,8 +56,7 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle", "Remote"]'
-
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle', 'Remote'])
   )
 );
 
@@ -76,8 +75,7 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-30T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle", "Remote"]'
-
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle', 'Remote'])
   )
 );
 
@@ -96,7 +94,7 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );
 
@@ -115,7 +113,7 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle'])
   )
 );
 
@@ -134,7 +132,7 @@ VALUES (
     'type', 'Staff Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle'])
   )
 );
 
@@ -153,7 +151,7 @@ VALUES (
     'type', 'Staff Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle'])
   )
 );
 
@@ -172,7 +170,7 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle'])
   )
 );
 
@@ -191,7 +189,7 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );
 
@@ -210,7 +208,7 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );
 
@@ -229,7 +227,7 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );
 
@@ -248,7 +246,7 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );
 
@@ -267,7 +265,7 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );
 
@@ -286,7 +284,7 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );
 
@@ -305,7 +303,7 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );
 
@@ -324,7 +322,7 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );
 
@@ -343,7 +341,7 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );
 
@@ -362,6 +360,6 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
   )
 );

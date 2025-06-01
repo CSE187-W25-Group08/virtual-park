@@ -39,7 +39,7 @@ export default async function LocaleLayout({
   
   return (
     <html lang={locale}>
-      <body>
+      <body style={{margin:0, padding: 0}}>
       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
         <NextIntlClientProvider locale={locale}>
             {isLoggedIn && (
