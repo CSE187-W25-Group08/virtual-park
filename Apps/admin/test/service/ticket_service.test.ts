@@ -1,6 +1,7 @@
 import { it, expect, vi} from "vitest";
 import { TicketService } from "../../src/ticket/service";
 import { Ticket } from "../../src/ticket";
+import { getDriverContactInfo } from "../../src/auth/service";
 
 const mockTickets: Ticket[] = [
   {
@@ -76,3 +77,16 @@ it("Unauthorized on pay tickets", async () => {
   await expect(new TicketService().getAllTicket("dummy")).rejects.toThrow('Unauthorized');
 });
 
+
+it("Unauthorized on pay tickets", async () => {
+  vi.spyOn(global, "fetch").mockResolvedValueOnce({
+    status: 200,
+    json: async () => ({
+      email: 'ji@boko.com',
+      name: 'jin boko'
+    })
+  } as Response);
+
+  const result = await getDriverContactInfo("dummy", "dummy");
+  expect(result!.email).toEqual('ji@boko.com');
+});

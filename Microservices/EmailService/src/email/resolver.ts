@@ -1,6 +1,7 @@
 import { Authorized, Query, Resolver, Mutation, Arg } from "type-graphql";
 import {
   sendPermitPaymentConfirmation,
+  sendTicketAppealRejected,
   sendTicketPaymentConfirmation,
 } from "./service";
 
@@ -46,6 +47,22 @@ export class StripeResolver {
       nameOfProduct,
       costOfProduct,
       ticketId
+    );
+    return true;
+  }
+  @Authorized()
+  @Mutation(() => String)
+  async sendTicketAppealRejectedEmail(
+    @Arg("email") email: string,
+    @Arg("name") name: string,
+    @Arg("ticketId") ticketId: string,
+    @Arg("violation") violation: string,
+  ): Promise<boolean> {
+    await sendTicketAppealRejected(
+      email,
+      name,
+      ticketId,
+      violation
     );
     return true;
   }

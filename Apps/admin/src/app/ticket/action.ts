@@ -5,6 +5,9 @@ import { LotService } from "../../lot/service";
 import { VehicleService } from "../../vehicle/service";
 import { cookies } from 'next/headers'
 import { Vehicle } from "@/vehicle";
+import { UserContact } from "../../auth";
+import { getDriverContactInfo } from "../../auth/service";
+import { sendTicketAppealEmail } from "../../email/service";
 
 export async function listAll(jwt: string): Promise<Ticket[]> {
   return new TicketService().getAllTicket(jwt)
@@ -53,4 +56,16 @@ export async function rejectAppeal(ticketId: string): Promise<Ticket> {
   ticket.vehicle = ticketVehicle.licensePlate
   ticket.driver = ticketVehicle.driver
   return ticket;
+}
+
+
+export async function getUserContactAction(driverId: string): Promise<UserContact | undefined> {
+  const cookie = (await cookies()).get('session')?.value;
+  const userContact = await getDriverContactInfo(cookie, driverId)
+  return userContact;
+}
+
+export async function sendTicketAppealEmailAction(email: string, name: string, ticketId: string, violation: string): Promise<void> {
+  const cookie = (await cookies()).get('session')?.value;
+  await sendTicketAppealEmail(email, name, ticketId, violation, cookie)
 }

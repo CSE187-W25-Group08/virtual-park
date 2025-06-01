@@ -83,3 +83,25 @@ test("A payment confirmation is sent involving ticket", async () => {
       expect(res.body.data.sendTicketPaymentEmail).toBeTruthy()
     });
 });
+
+test("A rejected appeal is sent involving ticket", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          sendTicketAppealRejectedEmail(
+            email: "jiqle@ucsc.edu",
+            name: "John Doe",
+            ticketId: "ticket-123",
+            violation: "Parked illegally",
+          )
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.errors)
+      expect(res.body.data.sendTicketAppealRejectedEmail).toBeTruthy()
+    });
+});

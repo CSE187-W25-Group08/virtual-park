@@ -2,7 +2,9 @@
 import { Ticket } from '@/ticket';
 import {getTicketDetails,
    approveAppeal,
-    rejectAppeal
+    rejectAppeal,
+    getUserContactAction,
+    sendTicketAppealEmailAction,
   } from '../action'
 import {useState, useEffect} from 'react'
 import { useRouter } from 'next/navigation';
@@ -23,12 +25,13 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 export default function TicketInfo({ ticketId }: { ticketId: string }) {
     const [ticket, setTicket] = useState<Ticket>();
     const router = useRouter();
+
     useEffect(() => {
       const fetchData = async () => {
-        const result = await getTicketDetails(ticketId);
-        if (result) {
-          setTicket(result);
-          // console.log(result);
+        const ticketDetails = await getTicketDetails(ticketId);
+
+        if (ticketDetails) {
+          setTicket(ticketDetails);
         }
       };
       fetchData();
@@ -43,8 +46,12 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
 
     const handleRejectAppeal = async (ticketId : string) => {
       const new_ticket = await rejectAppeal(ticketId);
+
       if (new_ticket) {
         setTicket(new_ticket);
+        const driverId = new_ticket.driver;
+        const driver = await getUserContactAction(driverId!)
+        await sendTicketAppealEmailAction(driver?.email || 'Placeholder', driver?.name || 'Placeholder', new_ticket.id, new_ticket.violation);
       }
     }
 

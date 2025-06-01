@@ -143,13 +143,18 @@ export class AuthController extends Controller {
   @Security("jwt")
   @Response('401', 'Unauthorized')
   @Response('404', 'User not found')
+  @SuccessResponse('200', 'User found')
   public async getUser(
     @Request() request: Express.Request,
     @Query() id: string,
   ): Promise<User | undefined> {
     const requester = request.user as SessionUser;
     if (requester.roles?.includes('enforcement') || requester.roles?.includes('admin')) {
+
+      console.log('Getting user by ID:', id);
       const user = await new AuthService().getUserById(id);
+      console.log(user);
+
       if (!user) {
         this.setStatus(404);
       }
