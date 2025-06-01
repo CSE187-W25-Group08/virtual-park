@@ -16,6 +16,7 @@ import { Permit, PermitType } from "@/permit"
 import { getActivePermit, getDailyPermitType } from "../dashboard/actions"
 import { Vehicle } from '@/register'
 import { getPrimaryVehicle } from '../register/actions'
+import { createCheckout } from '@/stripe/helper'
 
 export default function Dashboard() {
   const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([])
@@ -36,6 +37,7 @@ export default function Dashboard() {
       if (activePermit) {
         setActivePermit(activePermit)
       }
+      console.log(activePermit)
       const vehicle = await getPrimaryVehicle()
       if (vehicle) {
         setVehicle(vehicle)
@@ -55,6 +57,14 @@ export default function Dashboard() {
     }
 
     console.log('This would buy a daily permit of type ', dailyPermitType)
+    const metaData = {
+      permitTypeId: dailyPermitType?.id,
+      type: "permit",
+      vehicleId: vehicle?.id,
+    }
+    const amount = dailyPermitType?.price || 0
+
+    await createCheckout("PermitPurchese", amount, metaData)
   }
 
   const handleRegisterModalClose = () => {
