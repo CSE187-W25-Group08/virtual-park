@@ -21,7 +21,8 @@ export class LotService {
         type: data.type,
         created: data.created,
         updated: data.updated,
-        validPermits: data.validPermits ?? []
+        validPermits: data.validPermits ?? [],
+        ticketPrice: data.ticketPrice
       };
       return lotObj;
     }));

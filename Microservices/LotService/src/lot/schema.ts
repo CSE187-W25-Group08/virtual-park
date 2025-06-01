@@ -17,6 +17,7 @@ export class Lot {
     created: string,
     updated: string,
     validPermits: string[] = [],
+    ticketPrice: number
   ) {
     this.id = id;
     this.name = name;
@@ -31,6 +32,7 @@ export class Lot {
     this.created = created;
     this.updated = updated;
     this.validPermits = validPermits;
+    this.ticketPrice = ticketPrice;
   }
 
   @Field(() => ID)
@@ -83,6 +85,9 @@ export class Lot {
 
   @Field(() => [String])
   validPermits!: string[];
+  
+  @Field()
+  ticketPrice!: number;
 }
 
 @ObjectType()
@@ -144,4 +149,7 @@ export class UpdateLotData {
 
   @Field(() => [String], { nullable: true })
   validPermits?: string[];
+  
+  @Field()
+  ticketPrice!: number;
 }

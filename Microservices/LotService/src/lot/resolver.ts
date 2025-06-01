@@ -35,5 +35,4 @@ export class LotResolver {
     return await new LotService().getById(id);
   }
 
-
 }

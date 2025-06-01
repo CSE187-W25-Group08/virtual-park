@@ -24,6 +24,7 @@ export async function getAllLots(cookie: string | undefined): Promise<Lot[]> {
               type
               created
               updated
+              ticketPrice
             }
           }
         `,

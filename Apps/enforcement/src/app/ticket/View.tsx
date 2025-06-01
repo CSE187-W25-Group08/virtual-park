@@ -49,7 +49,7 @@ export default function TicketView({
 
   React.useEffect (() => {
     if (open) {
-    loadLots()
+      loadLots()
     }
   }, [open])
 
@@ -58,10 +58,6 @@ export default function TicketView({
     setLotOptions(lots)
   }
   
-  // const lotOptions = [
-  //   {  name: 'Area 51 Lot' },
-  //   { name: 'Lot 101' }
-  {/* reference: https://www.meje.dev/blog/handle-change-in-ts */}
   const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setTicketInfo({
@@ -69,21 +65,17 @@ export default function TicketView({
       [name]: value
     });
   };
-  {/* reference: https://mui.com/material-ui/api/select/ */}
+
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
     const { name, value } = event.target;
-    setTicketInfo({
-      ...ticketInfo,
-      [name as string]: value
-    });
-  };
-
-  const handleNumberInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setTicketInfo({
-      ...ticketInfo,
-      [name]: parseFloat(value)
-    });
+    if (name === 'lot') {
+      const selectedLot = lotOptions.find(lot => lot.id === value);
+      setTicketInfo({
+        ...ticketInfo,
+        [name]: value,
+        cost: selectedLot?.ticketPrice || 0
+      });
+    }
   };
   
   const handleSubmitTicket = async () => {
@@ -128,7 +120,8 @@ export default function TicketView({
     })
     close()
   }
-  
+  /* reference: https://www.meje.dev/blog/handle-change-in-ts */
+  /* reference: https://mui.com/material-ui/api/select/ */
   return (
     <Dialog 
       open={open} 
@@ -155,7 +148,6 @@ export default function TicketView({
             </Select>
           </FormControl>
           
-          {/* I should have the permit type api call here */}
           <TextField
             name="violation"
             label="Violation Type (Required)"
@@ -189,12 +181,16 @@ export default function TicketView({
           
           <TextField
             name="cost"
-            label="Fine (Required)"
+            label="Fine (Auto-populated)"
             type="number"
             fullWidth
             required
             value={ticketInfo.cost || 0}
-            onChange={handleNumberInputChange}
+            slotProps={{
+              input: {
+                readOnly: true,
+              },
+            }}
           />
         </Stack>
       </DialogContent>

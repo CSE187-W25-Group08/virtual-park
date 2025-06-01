@@ -17,7 +17,8 @@ VALUES (
     'type', 'Top Secret',
     'updated', '2025-05-10T00:00:00Z',
     'created', '2025-01-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff'])
+    'validPermits', to_jsonb(ARRAY['Staff']),
+    'ticketPrice', '40'
   )
 );
 
@@ -36,7 +37,8 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-10T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle']),
+    'ticketPrice', '45'
   )
 );
 
@@ -56,7 +58,8 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle', 'Remote'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle', 'Remote']),
+    'ticketPrice', '50'
   )
 );
 
@@ -75,7 +78,8 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-30T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle', 'Remote'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle', 'Remote']),
+    'ticketPrice', '55'
   )
 );
 
@@ -94,7 +98,8 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '60'
   )
 );
 
@@ -113,7 +118,8 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle']),
+    'ticketPrice', '63'
   )
 );
 
@@ -132,7 +138,8 @@ VALUES (
     'type', 'Staff Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle']),
+    'ticketPrice', '69'
   )
 );
 
@@ -151,7 +158,8 @@ VALUES (
     'type', 'Staff Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle']),
+    'ticketPrice', '75'
   )
 );
 
@@ -170,7 +178,8 @@ VALUES (
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Motorcycle']),
+    'ticketPrice', '80'
   )
 );
 
@@ -189,7 +198,8 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '84'
   )
 );
 
@@ -208,7 +218,8 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '93'
   )
 );
 
@@ -227,7 +238,8 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '66'
   )
 );
 
@@ -246,7 +258,8 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '68'
   )
 );
 
@@ -265,7 +278,8 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '77'
   )
 );
 
@@ -284,7 +298,8 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '79'
   )
 );
 
@@ -303,7 +318,8 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '81'
   )
 );
 
@@ -322,7 +338,8 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '43'
   )
 );
 
@@ -341,7 +358,8 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '53'
   )
 );
 
@@ -360,6 +378,7 @@ VALUES (
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
     'created', '2024-09-01T00:00:00Z',
-    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle'])
+    'validPermits', to_jsonb(ARRAY['Staff', 'Visitor', 'Student', 'Motorcycle']),
+    'ticketPrice', '71'
   )
 );

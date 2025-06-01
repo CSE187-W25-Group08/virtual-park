@@ -11,4 +11,5 @@ export interface Lot {
   type: string;
   created: string;
   updated: string;
+  ticketPrice: number;
 }
