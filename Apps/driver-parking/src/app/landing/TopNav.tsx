@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation'
 import { logout } from '../[locale]/login/action'
 import { useTranslations } from "next-intl";
 
-import logo from '../public/img/transparent-logo.svg'
+import logo from '../public/img/sprite-logo.svg'
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -60,7 +60,7 @@ export default function TopNav() {
         <img
           src={logo.src}
           alt="Virtual Park Logo"
-          style={{ width: '15vw', height: '15vw', cursor: 'pointer' }}
+          style={{ width: '12vw', height: '12vw', cursor: 'pointer' }}
           onClick={() => router.push('/')}
         />
 
