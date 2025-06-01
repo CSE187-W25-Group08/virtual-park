@@ -217,14 +217,14 @@ VALUES (
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
     'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
     'paid', false,
-    'description', 'Blocking a fire lane entrance.',
+    'description', 'Driver blew up fire hydrant.',
     'due', '2025-05-25T12:00:00Z',
     'issue', '2025-05-05T11:45:00Z',
-    'violation', 'Fire Lane Violation',
-    'image', 'https://i.pinimg.com/736x/94/9e/84/949e84cb203e27b0a5ec7cb25755f028.jpg',
+    'violation', 'Really Bad Violation',
+    'image', 'https://i.ytimg.com/vi/0a57PVsEESA/maxresdefault.jpg',
     'cost', 75.00,
     'appeal', 'submitted',
-    'appealReason', 'I swear I did not mean to crash my car into the fire hydrant. Times were tough. I just needed to efficiently arrive at my location to pickup my package. It was for a good cause. Should I be punished for a good cause? It was a bag of dog food I bought. I didnt mean for it to become like this. I only wanted to make things right. Please respond and make it so that I dont have to pay. Christmas is around the corner and my 2 children need to be able to play the next generation console ps29
+    'appealReason', 'I swear I did not mean to crash my car into the fire hydrant. Times were tough. I just needed to efficiently arrive at my location to pickup my package. It was for a good cause. Should I be punished for a good cause? It was a bag of dog food I bought. Had I not so efficiently bought the dog food my children would have starved. I didnt mean for it to become like this. I only wanted to make things right. Please respond and make it so that I dont have to pay. Christmas is around the corner and my 2 children need to be able to play the next generation console ps29. Look listen I know its just your job and all but for me this is reality. I highly doubt this will affect your job status. Its not like you will be fired or anything. Be a decent human being and help me out here. I know this is a lot to ask but please consider my situation. I promise I will never do it again. I just need this one time to not have to pay for this ticket.
     .'
   )
 );

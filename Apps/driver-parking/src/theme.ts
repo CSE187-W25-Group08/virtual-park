@@ -8,6 +8,9 @@ const customTheme = createTheme({
   },
   typography: {
     fontFamily: `"Manrope", "Roboto", "Helvetica", sans-serif`,
+    fontWeightMedium: 400, 
+    fontWeightRegular: 400,  
+    fontSize: 13, 
   },
 })
 
