@@ -185,7 +185,7 @@ export default function PermitView() {
     })
   }
 
-  const hasPermitViolation = error && (
+  const permitViolation = error && (
     error.includes('No permits found') || 
     error.includes('Expired permit') || 
     error.includes('valid permits for Lot')
@@ -194,7 +194,7 @@ export default function PermitView() {
   return (
     <Container maxWidth="md" sx={{py: 4}}>
       <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
-        Vehicle Permit Checker
+        Vehicle Permit
       </Typography>
 
       <FormControl fullWidth sx={{ mb: 3 }}>
@@ -276,7 +276,7 @@ export default function PermitView() {
         </Box>
       )}
 
-      {hasPermitViolation && (
+      {permitViolation && (
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Button
             variant="contained"
