@@ -52,11 +52,13 @@ export default function View({
       >
         <CheckCircleIcon color="success" sx={{ fontSize: 80, mt:5 }} />
         <Typography variant="h4" sx = {{mt : 1}} gutterBottom >
-          {t('purchase')} {status}
+          {t('purchase')} {t(`${status}`)}
         </Typography>
-        <Typography sx = {{mt : 1}}>
-          {t('message', {type: type})} <strong>${amount}</strong>.
-        </Typography>
+        {status === "success" && (
+          <Typography sx = {{mt : 1}}>
+            {t('message', {type: type})} <strong>${amount}</strong>.
+          </Typography>
+        )}
         <Box>
           <Button
             sx = {{mt: 1.5}}

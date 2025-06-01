@@ -152,6 +152,8 @@
     "goBack": "Go Back",
     "purchase": "Purchase",
     "message": "You've purchased a {type} for ",
-    "dashboard": "Go to Dashboard"
+    "dashboard": "Go to Dashboard",
+    "success": "Successful",
+    "cancel": "Cancelled"
   }
 }

@@ -153,6 +153,8 @@
     "goBack": "Volver",
     "purchase": "Comprar",
     "message": "Has comprado un {type} para ",
-    "dashboard": "Ir al tablero"
+    "dashboard": "Ir al tablero",
+    "success": "Exitosa",
+    "cancel": "Cancelada"
   }
 }
