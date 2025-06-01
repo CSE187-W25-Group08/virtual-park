@@ -1,6 +1,6 @@
 // import 'server-only'
 
-import { Authenticated, Credentials } from './'
+import { Authenticated, Credentials, UserContact } from './'
 
 export async function check(cookie: string | undefined): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -43,6 +43,29 @@ export async function authenticate(credentials: Credentials): Promise<Authentica
   } catch (err) {
     console.error("Authentication failed:", err);
     return undefined;
+  }
+}
+
+export async function getDriverContactInfo(cookie: string | undefined, driverId: string): Promise<UserContact | undefined> {
+  try {
+    const res = await fetch(`http://localhost:3010/api/v0/auth/user?id=${driverId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookie}`,
+      },
+    })
+
+    console.log(res)
+
+    if (res.status != 200) {
+      throw new Error(res.statusText)
+    }
+
+    return await res.json()
+  } catch (err) {
+    console.error('Retrieval failed:', err)
+    return undefined
   }
 }
 

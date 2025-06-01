@@ -223,7 +223,8 @@ VALUES (
     'violation', 'Fire Lane Violation',
     'image', 'https://i.pinimg.com/736x/94/9e/84/949e84cb203e27b0a5ec7cb25755f028.jpg',
     'cost', 75.00,
-    'appeal', 'rejected',
-    'appealReason', 'I was only parked there for a minute to grab coffee.'
+    'appeal', 'submitted',
+    'appealReason', 'I swear I did not mean to crash my car into the fire hydrant. Times were tough. I just needed to efficiently arrive at my location to pickup my package. It was for a good cause. Should I be punished for a good cause? It was a bag of dog food I bought. I didnt mean for it to become like this. I only wanted to make things right. Please respond and make it so that I dont have to pay. Christmas is around the corner and my 2 children need to be able to play the next generation console ps29
+    .'
   )
 );

@@ -12,3 +12,9 @@ export interface Credentials {
   email: string,
   password: string
 }
+
+
+export interface UserContact {
+  email: string
+  name: string
+}
