@@ -7,10 +7,20 @@
     "spanish": "󠁢🇪🇸 Spanish"
   },
   "landing": {
+    "notSure": "Not sure where to park?",
+    "seeAll": "See all available lots",
+    "about": "About Virtual Park",
+    "noLots": "No lots found",
+    "searchLot": "Search by lot name",
+    "moto": "Park smarter, not harder",
+    "parkNow": "Park Now",
+    "buyPermit": "Buy Permit",
+    "validPermits": "Valid Permits:",
+    "zone": "Zone:",
     "signup": "Sign Up",
-    "login": "Login",
+    "login": "Log In",
     "welcome": "Welcome to Virtual-Park!",
-    "logout": "Logout"
+    "logout": "Log Out"
   },
   "signup": {
     "createAccount": "Create an Account",
@@ -19,15 +29,17 @@
     "password": "password ",
     "signup": "sign up",
     "accountExist": "Already have an account? ",
-    "login": "Login",
+    "login": "Log In",
     "emailTaken": "Email already taken"
   },
   "login": {
-    "title": "Welcome to Virtual-Park!",
+    "title": " Virtual Park Login",
     "email": "email",
     "password": "password",
     "signin": "Sign In",
-    "error": "Incorrect login credentials, please try again"
+    "error": "Incorrect login credentials, please try again",
+    "newTo": "New to Virtual Park? ",
+    "signup": "Sign Up"
   },
   "permit_history": {
     "title": "Purchase History",

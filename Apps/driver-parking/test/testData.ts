@@ -144,6 +144,6 @@ export const testLots = [
     type: 'General Parking',
     updated: '2025-05-20T10:30:00Z',
     created: '2024-10-15T00:00:00Z',
-    validPermits: ["Staff"],
+    validPermits: ["Staff", "Visitor"],
   }
 ];

@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Box, TextField, Autocomplete, ListItemIcon, ListItem, ListItemText} from '@mui/material';
+import { useTranslations } from "next-intl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { getLots } from '../[locale]/lot/action';
 import { Lot } from '@/lot';
@@ -8,6 +9,8 @@ import LotDetails from './LotDetails';
 export default function LotList() {
   const [lots, setLots] = useState<Lot[]>([]);
   const [selectedLot, setSelectedLot] = useState<Lot | null>(null);
+
+  const t = useTranslations('landing')
 
   useEffect(() => {
     const setLotData = async () => {
@@ -25,7 +28,7 @@ export default function LotList() {
         onChange={(_, newValue) => setSelectedLot(newValue)}
         autoHighlight
         renderInput={(params) => (
-            <TextField {...params} label="Search by lot name" variant="outlined" />
+            <TextField {...params} label={t("searchLot")} variant="outlined" />
         )}
         // https://mui.com/material-ui/react-autocomplete/
         renderOption={(props, option) => {
@@ -39,7 +42,7 @@ export default function LotList() {
             </ListItem>
           );
         }}
-        noOptionsText="No lots found"
+        noOptionsText={t("noLots")}
         fullWidth
       />
       {selectedLot && (<LotDetails selectedLot={selectedLot} /> )}

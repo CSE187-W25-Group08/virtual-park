@@ -6,6 +6,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Navbar from '../../components/Navbar';
 import BottomNavbar from '../../components/BottomNavbar';
 import { Toolbar } from '@mui/material';
+import Box from '@mui/material/Box'
 
 import { cookies } from 'next/headers';
 
@@ -52,7 +53,9 @@ export default async function LocaleLayout({
                 <BottomNavbar />
               </>
             )}
-            <main>{children}</main>
+            <Box sx={isLoggedIn ? {p:1} : {}}>
+              <main>{children}</main>
+            </Box>
           </ThemeWrapper>
         </NextIntlClientProvider>
       </GoogleOAuthProvider>

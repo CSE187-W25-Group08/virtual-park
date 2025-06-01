@@ -11,13 +11,21 @@ import {
   Box, 
   Button, 
   TextField,
-  Alert
+  Alert,
+  Divider,
+  Link,
+  IconButton,
+  InputAdornment
 } from '@mui/material'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import logo from '../..//public/img/no-circle-logo.svg'
 import { login, loginWithGoogle } from './action'
 
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
   const [failedLogin, setFailedLogin] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const t = useTranslations('login')
   const router = useRouter()
 
@@ -58,7 +66,7 @@ export default function LoginView() {
       }}
     >
       {failedLogin &&
-            <Alert severity="error">{t('error')}</Alert>}
+            <Alert severity="error" sx={{width:'300px'}}>{t('error')}</Alert>}
       <Box
         sx={{
           display: 'flex',
@@ -67,18 +75,28 @@ export default function LoginView() {
           mt: 4,
         }}
       >
-        <Typography variant="h5">
-          {t('title')}
-        </Typography>
+      <Box sx={{display:'flex', flexDirection:'row', mt:5, alignItems: 'center', justifyContent:'space-between', width:'300px', mb:0}}>
+        <picture  style={{margin: 0, padding: 0, width: '50px', height: '50px'}}>
+        <img
+          src={logo.src}
+          alt="Virtual Park Logo"
+          style={{ width: '50px', height: '50px', cursor: 'pointer' }}
+          onClick={() => router.push('/')}
+        />
+        </picture>
+        <Typography variant="h5" sx={{fontSize:'28px'}}>{t("title")}</Typography>
+      </Box>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            mt: 2,
+            mt: '20px',
+            mb:0,
           }}
         >
         <GoogleLogin
+          width='300px'
           onSuccess={async (credentialResponse) => {
             if (credentialResponse.credential) {
               await handleClick(credentialResponse.credential);
@@ -89,14 +107,10 @@ export default function LoginView() {
           }}
         />
       </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            mt: 5,
-          }}
-        >
+      <Divider sx={{ width: '300px', marginTop: '20px' }}>
+        <Typography>OR</Typography>
+      </Divider>
+
           <TextField
             name="email"
             type="email"
@@ -104,42 +118,51 @@ export default function LoginView() {
             onChange={handleInputChange}
             fullWidth
             required
+            sx={{
+              marginTop: '20px',
+              width: '300px',
+            }}
           />
-        </Box>
         
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            mt: 5,
-          }}
-        >
           <TextField
             name="password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             placeholder={t('password')}
             onChange={handleInputChange}
             fullWidth
             required
+            sx={{
+              marginTop: '20px',
+              width: '300px',
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                    aria-label='Toggle Password Visibility'
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
-        </Box>
         
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            mt: 5,
-          }}
-        >
           <Button
             variant="contained"
             onClick={() => handleClick()}
+            sx={{
+              marginTop: '20px',
+              width: '300px',
+            }}
           >
             {t('signin')}
           </Button>
-        </Box>
+          <Typography variant="body1" sx={{
+            marginTop: '20px',
+          }}>{t("newTo")}<Link href="/signup">{t("signup")}</Link></Typography>
       </Box>
     </Container>
   )

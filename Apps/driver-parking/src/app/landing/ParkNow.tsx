@@ -39,16 +39,16 @@ export default function ParkNow() {
         }}
       >
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>
-          Park smarter, not harder
+          {t("moto")}
         </Typography>
         <Button
           variant="contained"
           color="primary"
           onClick={() => router.push('/permit/purchase')}
-          sx={{ mt: 2, backgroundColor: '#035084', width: "50vw", height:"8vh"}}
+          sx={{ mt: 2, width: "50vw", height:"8vh", maxWidth: 500, borderRadius: 2}}
         >
           <Typography sx={{fontSize:'18px'}}>
-            Park Now
+            {t("parkNow")}
           </Typography>
         </Button>
       </Box>

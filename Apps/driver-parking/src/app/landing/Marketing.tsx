@@ -4,7 +4,7 @@ import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import Image from 'next/image'
-import logo from '../public/img/logo.png'
+import logo from '../public/img/no-circle-logo.svg'
 
 export default function Marketing() {
   return (

@@ -11,12 +11,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import InputAdornment from '@mui/material/InputAdornment'
 import Alert from '@mui/material/Alert'
+import logo from '../..//public/img/no-circle-logo.svg'
 import { useTranslations } from "next-intl";
 import { GoogleLogin } from '@react-oauth/google'
-
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-
 import { signup } from './actions'
 import { loginWithGoogle } from '../login/action'
 
@@ -66,10 +65,21 @@ export default function Signup() {
       flexDirection: 'column',
       alignItems: 'center'}}>
       {failedSignup &&
-        <Alert severity="error" aria-label="sign up error">{t("emailTaken")}</Alert>}
-      <Typography variant="h4" sx={{mt:3}}>{t("createAccount")}</Typography>
-      <Box sx={{m:2}}>
+        <Alert severity="error" aria-label="sign up error" sx={{width:'300px'}}>{t("emailTaken")}</Alert>}
+      <Box sx={{display:'flex', flexDirection:'row', mt:5, alignItems: 'center', justifyContent:'space-between', width:'300px', mb: 0}}>
+        <picture style={{margin: 0, padding: 0, width: '50px', height: '50px'}}>
+        <img
+          src={logo.src}
+          alt="Virtual Park Logo"
+          style={{ width: '50px', height: '50px', cursor: 'pointer' }}
+          onClick={() => router.push('/')}
+        />
+        </picture>
+        <Typography variant="h5" sx={{fontSize:'28px'}}>{t("createAccount")}</Typography>
+      </Box>
+      <Box sx={{m:'20px', mb:0}}>
         <GoogleLogin
+            width='300px'
             onSuccess={async (credentialResponse) => {
               if (credentialResponse.credential) {
                 await handleClick(credentialResponse.credential);
@@ -80,6 +90,9 @@ export default function Signup() {
             }}
         />
       </Box>
+      <Divider sx={{ width: '300px', marginTop: '20px' }}>
+        <Typography>OR</Typography>
+      </Divider>
       <TextField
         required
         name='email'
@@ -137,9 +150,6 @@ export default function Signup() {
           marginTop: '20px',
           width: '300px',
         }}>{t("signup")}</Button>
-      <Divider sx={{ width: '300px', marginTop: '20px' }}>
-        <Typography>OR</Typography>
-      </Divider>
       <Typography variant="body1" sx={{
         marginTop: '20px',
       }}>{t("accountExist")}<Link href="/login">{t("login")}</Link></Typography>

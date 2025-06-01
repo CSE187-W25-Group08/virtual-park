@@ -2,6 +2,7 @@
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import MapIcon from '@mui/icons-material/Map';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import { useTranslations } from "next-intl";
 import { Lot } from '@/lot';
 import {
   Chip,
@@ -18,6 +19,7 @@ type LotDetailsProps = {
   selectedLot: Lot;
 };
 export default function LotDetails({ selectedLot }: LotDetailsProps) {
+  const t = useTranslations('landing')
   const router = useRouter()
   return (
     <Box mt={4} display="flex" justifyContent="center">
@@ -37,18 +39,18 @@ export default function LotDetails({ selectedLot }: LotDetailsProps) {
 
           <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             <MapIcon fontSize="small" sx={{ mr: 1 }} />
-            <strong>Zone:</strong>&nbsp;{selectedLot.zone}
+            <strong>{t("zone")}</strong>&nbsp;{selectedLot.zone}
           </Typography>
 
           <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{display:'flex', flexDirection:'column'}}>
               <Box sx={{display:'flex', alignItems:'center', mb: 1}}>
                 <VerifiedUserIcon fontSize="small" sx={{ mr: 1 }} />
-                <strong>Valid Permits:</strong>
+                <strong>{t("validPermits")}</strong>
               </Box>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                 {selectedLot.validPermits.map((permit: string) => (
-                  <Chip key={permit} label={permit} color="info" variant="outlined" />
+                  <Chip key={permit} label={permit} color="primary" variant="outlined" />
                 ))}
               </Box>
             </Box>
@@ -57,7 +59,7 @@ export default function LotDetails({ selectedLot }: LotDetailsProps) {
 
         <CardActions sx={{ justifyContent: 'center' }}>
           <Button variant="contained" color="primary" onClick={() => router.push('/permit/purchase')}>
-            Buy Permit
+            {t("buyPermit")}
           </Button>
         </CardActions>
       </Card>

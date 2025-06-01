@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation'
 import { logout } from '../[locale]/login/action'
 import { useTranslations } from "next-intl";
 
-import logo from '../public/img/sprite-logo.svg'
+import logo from '../public/img/no-circle-logo.svg'
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -57,19 +57,21 @@ export default function TopNav() {
           borderBottom: '2px solid #ccc',
         }}
       >
-        <img
-          src={logo.src}
-          alt="Virtual Park Logo"
-          style={{ width: '12vw', height: '12vw', cursor: 'pointer' }}
-          onClick={() => router.push('/')}
-        />
-
+        <picture style={{margin: 0, padding: 0, width: '12vw', height: '12vw'}}>
+          <img
+            src={logo.src}
+            alt="Virtual Park Logo"
+            style={{ width: '12vw', height: '12vw', cursor: 'pointer' }}
+            onClick={() => router.push('/')}
+          />
+        </picture>
         <IconButton
           edge="end"
           color="inherit"
           onClick={handleMenuOpen}
           aria-controls="menu-appbar"
           aria-haspopup="true"
+          aria-label="menu options"
         >
           <MenuIcon />
         </IconButton>

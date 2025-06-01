@@ -7,10 +7,20 @@
     "spanish": "🇪🇸 Español"
   },
   "landing": {
-    "signup": "Registrarse",
-    "login": "Entrar",
-    "welcome": "Bienvenido a Virtual-Park!",
-    "logout": "Salir"
+    "notSure": "¿No estás seguro de dónde aparcar?",
+    "seeAll": "Ver todos los lotes disponibles",
+    "about": "Acerca de Virtual Park",
+    "noLots": "No se encontraron lotes",
+    "searchLot": "Buscar por nombre del lote",
+    "moto": "Aparca de forma más inteligente, no más difícil",
+    "parkNow": "Aparcar ahora",
+    "buyPermit": "Comprar permiso",
+    "validPermits": "Permisos válidos:",
+    "zone": "Zona:",
+    "signup": "Regístrate",
+    "login": "Iniciar sesión",
+    "welcome": "¡Bienvenido a Virtual-Park!",
+    "logout": "Cerrar sesión"
   },
   "signup": {
     "createAccount": "Crear una cuenta",
@@ -23,11 +33,13 @@
     "emailTaken": "El correo electrónico ya está en uso"
   },
   "login": {
-    "title": "Bienvenido a Virtual-Park!",
-    "email": "Correo electrónico",
-    "password": "Contraseña",
-    "signin": "Entrar",
-    "error": "Credenciales de inicio de sesión incorrectas, por favor inténtelo de nuevo"
+    "title": " Virtual Park Iniciar sesión",
+    "email": "correo electrónico",
+    "password": "contraseña",
+    "signin": "Iniciar sesión",
+    "error": "Credenciales incorrectas, por favor inténtalo de nuevo",
+    "newTo": "¿Nuevo en Virtual Park? ",
+    "signup": "Regístrate"
   },
   "permit_history": {
     "title": "Historial de compras",
