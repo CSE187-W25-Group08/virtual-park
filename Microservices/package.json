@@ -38,10 +38,20 @@
     "test-ticket": "cd TicketService && npm run test",
     "test-vehicle": "cd VehicleService && npm run test",
     "test-stripe": "cd StripeService && npm run test",
-    "test": "npm run test-stripe && npm run test-auth && npm run test-ticket && npm run test-permit&& npm run test-vehicle && npm run test-lot"
+    "test-coverage": "npm run test-stripe && npm run test-auth && npm run test-ticket && npm run test-permit && npm run test-vehicle && npm run test-lot",
+    "combine-coverage": "ts-node coverage-combiner.ts",
+    "test": "npm run test-coverage && npm run combine-coverage"
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",
-    "concurrently": "^9.1.2"
+    "@types/istanbul-lib-coverage": "^2.0.6",
+    "@types/node": "^22.15.29",
+    "concurrently": "^9.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "istanbul-api": "^2.1.7",
+    "istanbul-lib-coverage": "^3.2.2"
   }
 }
