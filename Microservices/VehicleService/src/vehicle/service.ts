@@ -50,7 +50,7 @@ export class VehicleService {
   public async registerVehicle(userId: string | undefined, input: RegisterVehicle) {
     const query = {
       text: queries.registerVehicle,
-      values: [userId, input.licensePlate, input.make, input.model, input.color, input.active]
+      values: [userId, input.licensePlate, input.make, input.model, input.color, input.vehicleType, input.active]
     }
     const { rows } = await pool.query(query)
 
@@ -61,6 +61,7 @@ export class VehicleService {
       'make': rows[0].data.make,
       'model': rows[0].data.model,
       'color': rows[0].data.color,
+      'vehicleType': rows[0].data.vehicleType,
       'active': rows[0].data.active
     }
     return vehicleObj;
@@ -96,6 +97,7 @@ export class VehicleService {
       'make': rows[0].data.make,
       'model': rows[0].data.model,
       'color': rows[0].data.color,
+      'vehicleType': rows[0].data.vehicleType,
       'active': rows[0].data.active
     }
     return vehicleObj;
@@ -118,6 +120,7 @@ export class VehicleService {
       'make': rows[0].data.make,
       'model': rows[0].data.model,
       'color': rows[0].data.color,
+      'vehicleType': rows[0].data.vehicleType,
       'active': rows[0].data.active
     }
     return vehicleObj;
@@ -137,6 +140,7 @@ export class VehicleService {
       'make': rows[0].data.make,
       'model': rows[0].data.model,
       'color': rows[0].data.color,
+      'vehicleType': rows[0].data.vehicleType,
       'active': rows[0].data.active
     }
     return vehicleObj;
@@ -157,6 +161,7 @@ export class VehicleService {
         'make': rows[0].data.make,
         'model': rows[0].data.model,
         'color': rows[0].data.color,
+        'vehicleType': rows[0].data.vehicleType,
         'active': rows[0].data.active
       }
 
@@ -179,6 +184,7 @@ export class VehicleService {
       'make': rows[0].data.make,
       'model': rows[0].data.model,
       'color': rows[0].data.color,
+      'vehicleType': rows[0].data.vehicleType,
       'active': rows[0].data.active
     }
 
@@ -188,7 +194,7 @@ export class VehicleService {
   public async editVehicle(userId: string | undefined, input: EditVehicleInput) {
     const query = {
       text: queries.editVehicle,
-      values: [userId, input?.id, input?.licensePlate, input?.make, input?.model, input?.color, input?.active]
+      values: [userId, input?.id, input?.licensePlate, input?.make, input?.model, input?.color, input?.vehicleType, input?.active]
     }
 
     const { rows } = await pool.query(query)
@@ -200,6 +206,7 @@ export class VehicleService {
       make: rows[0].data.make,
       model: rows[0].data.model,
       color: rows[0].data.color,
+      vehicleType: rows[0].data.vehicleType,
       active: rows[0].data.active
     }
 

@@ -3,13 +3,14 @@ import { Field, ID, ObjectType, InputType } from 'type-graphql'
 
 @ObjectType()
 export class Vehicle {
-  constructor(id: string, licensePlate: string, driver: string, make: string, model: string, color: string, active: boolean) {
+  constructor(id: string, licensePlate: string, driver: string, make: string, model: string, color: string, vehicleType: string, active: boolean) {
     this.id = id
     this.licensePlate = licensePlate
     this.driver = driver
     this.make = make
     this.model = model
     this.color = color
+    this.vehicleType = vehicleType
     this.active = active
   }
 
@@ -28,6 +29,8 @@ export class Vehicle {
   model?: string
   @Field({nullable:true})
   color?: string
+  @Field({nullable:true})
+  vehicleType?: string
   @Field({nullable:true})
   active?: boolean;
 }
@@ -59,6 +62,10 @@ export class RegisterVehicle {
 
   @Field()
   color!: string
+
+  @Field()
+  vehicleType!: string
+  
   @Field()
   active!: boolean;
 }

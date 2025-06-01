@@ -29,7 +29,8 @@ VALUES (
     'make', $3::text,
     'model', $4::text,
     'color', $5::text,
-    'active', $6::bool
+    'vehicleType', $6::text,
+    'active', $7::bool
   )
 )
 RETURNING id, driver, data;
@@ -103,7 +104,8 @@ SET
     'make', $4::text,
     'model', $5::text,
     'color', $6::text,
-    'active', $7::boolean
+    'vehicleType', $7::text,
+    'active', $8::boolean
 )
 WHERE driver = $1 AND id = $2
 RETURNING id, driver, data;
