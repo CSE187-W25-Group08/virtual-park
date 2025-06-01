@@ -18,6 +18,7 @@ export async function getPermitByPlate(cookie: string | undefined, carplate: str
             isValid
             driverID
             vehicleID
+            permitClass
           }
         }
       `,

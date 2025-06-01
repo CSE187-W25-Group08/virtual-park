@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, ChangeEvent } from 'react'
-import { SelectChangeEvent } from '@mui/material/Select'
 import { 
   Button, 
   TextField,
@@ -9,16 +8,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
   Stack,
 } from '@mui/material'
 import {TicketViewProps, TicketInfo } from '../../ticket/index'
-import {issueTicketForCar, getallLots, getDriverDetails, sendEmail} from './action'
-import {Lot} from '../../lot/index'
-
+import {issueTicketForCar, getDriverDetails, sendEmail} from './action'
 
 export default function TicketView({
   open,
@@ -26,7 +19,9 @@ export default function TicketView({
   driverID,
   vehicleID,
   success,
-  error
+  error,
+  LotName,
+  ticketPrice
 }: TicketViewProps) {
   const [ticketInfo, setTicketInfo] = useState<TicketInfo>({
     driverID: driverID,
@@ -37,26 +32,16 @@ export default function TicketView({
     image: '',
     cost: 0
   })
-  const [lotOptions, setLotOptions] = useState<Lot[]>([])
-  
+
   React.useEffect(() => {
     setTicketInfo(prev => ({
       ...prev,
       driverID,
-      vehicleID
+      vehicleID,
+      lot: LotName,
+      cost: ticketPrice
     }))
-  }, [driverID, vehicleID])
-
-  React.useEffect (() => {
-    if (open) {
-      loadLots()
-    }
-  }, [open])
-
-  const loadLots = async () => {
-    const lots = await getallLots()
-    setLotOptions(lots)
-  }
+  }, [driverID, vehicleID, LotName, ticketPrice])
   
   const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -65,18 +50,6 @@ export default function TicketView({
       [name]: value
     });
   };
-
-  const handleSelectChange = (event: SelectChangeEvent<string>) => {
-    const { name, value } = event.target;
-    if (name === 'lot') {
-      const selectedLot = lotOptions.find(lot => lot.id === value);
-      setTicketInfo({
-        ...ticketInfo,
-        [name]: value,
-        cost: selectedLot?.ticketPrice || 0
-      });
-    }
-  };
   
   const handleSubmitTicket = async () => {
     try {
@@ -84,6 +57,9 @@ export default function TicketView({
         error('Please fill in all required fields *')
         return
       }
+      
+      console.log('Submitting ticket with lot:', ticketInfo.lot)
+      
       const ticket = await issueTicketForCar(
         ticketInfo.driverID,
         ticketInfo.vehicleID,
@@ -112,16 +88,15 @@ export default function TicketView({
     setTicketInfo({
       driverID: driverID,
       vehicleID: vehicleID,
-      lot: '',
+      lot: LotName,
       description: '',
       violation: '',
       image: '',
-      cost: 0
+      cost: ticketPrice
     })
     close()
   }
-  /* reference: https://www.meje.dev/blog/handle-change-in-ts */
-  /* reference: https://mui.com/material-ui/api/select/ */
+
   return (
     <Dialog 
       open={open} 
@@ -134,19 +109,17 @@ export default function TicketView({
         <Stack spacing={3} sx={{ mt: 1 }}>
           <input type="hidden" name="driverID" value={ticketInfo.driverID} />
           <input type="hidden" name="vehicleID" value={ticketInfo.vehicleID} />
-          <FormControl fullWidth required>
-            <InputLabel id = 'lotSelection'>Parking Lot</InputLabel>
-            <Select
-              labelId = 'lotSelection (Required)'
-              name="lot"
-              value={ticketInfo.lot}
-              onChange={handleSelectChange}
-            >
-              {(lotOptions).map(lot => (
-                <MenuItem key={lot.id} value={lot.id} aria-label={lot.name}>{lot.name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          
+          <TextField
+            label="Parking Lot"
+            fullWidth
+            value={LotName}
+            slotProps={{
+              input: {
+                readOnly: true,
+              },
+            }}
+          />
           
           <TextField
             name="violation"
@@ -155,7 +128,7 @@ export default function TicketView({
             required
             value={ticketInfo.violation}
             onChange={handleTextInputChange}
-            placeholder="Permit expired?"
+            placeholder="e.g., No permit, Expired permit, Wrong lot"
           />
           
           <TextField
@@ -172,20 +145,18 @@ export default function TicketView({
           
           <TextField
             name="image"
-            label="Violation Image"
+            label="Violation Image URL"
             fullWidth
             value={ticketInfo.image}
             onChange={handleTextInputChange}
-            placeholder="violation image"
+            placeholder="Optional: URL to violation photo"
           />
           
           <TextField
-            name="cost"
-            label="Fine (Auto-populated)"
+            label="Fine Amount ($)"
             type="number"
             fullWidth
-            required
-            value={ticketInfo.cost || 0}
+            value={ticketInfo.cost}
             slotProps={{
               input: {
                 readOnly: true,

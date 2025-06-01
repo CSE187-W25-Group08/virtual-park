@@ -12,4 +12,5 @@ export interface Lot {
   created: string;
   updated: string;
   ticketPrice: number;
+  validPermits: string[];
 }

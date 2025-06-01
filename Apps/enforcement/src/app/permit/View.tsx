@@ -8,24 +8,25 @@ import {
   Box, 
   Button, 
   TextField,
-  // TableContainer,
-  // Table,
-  // TableHead,
-  // TableCell,
-  // TableRow,
-  // Paper,
-  // TableBody,
   Alert,
-  CircularProgress 
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent
 } from '@mui/material'
-import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate, UnregisteredVehicle} from './action'
+import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate, UnregisteredVehicle, getallLots} from './action'
 import { Permit } from '../../permit/index'
+import { Lot } from '../../lot/index'
 import TicketView from '../ticket/View'
 
 export default function PermitView() {
   const [carPlate, setCarPlate] = useState('')
+  const [currentLot, setCurrentLot] = useState('')
+  const [lotOptions, setLotOptions] = useState<Lot[]>([])
   const [permits, setPermits] = useState<Permit[]>([])
-  const [validPermit, setvalidPermit] = useState('')
+  const [validPermit, setValidPermit] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [ticketSuccess, setTicketSuccess] = useState<string | null>(null)
   const [ticketDialog, setTicketDialog] = useState(false)
@@ -33,15 +34,37 @@ export default function PermitView() {
   const [loading, setLoading] = useState(false)
   const [vehicleID, setVehicleID] = useState('')
   
-  // const formatDate = (dateString: string) => {
-  //   const date = new Date(dateString)
-  //   return date.toLocaleDateString()
-  // }
+
+  React.useEffect(() => {
+    loadLots()
+  }, [])
+
+  const loadLots = async () => {
+    const lots = await getallLots()
+    setLotOptions(lots)
+  }
   
   const handleCarPlateChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCarPlate(event.target.value)
   }
+
+  const handleLotChange = (event: SelectChangeEvent<string>) => {
+    setCurrentLot(event.target.value)
+    resetSearch()
+  }
+
+  const resetSearch = () => {
+    setPermits([])
+    setError(null)
+    setTicketSuccess(null)
+    setDriverID('')
+    setValidPermit('')
+    setVehicleID('')
+  }
   
+  const getCurrentLotInfo = () => {
+    return lotOptions.find(lot => lot.id === currentLot)
+  }
   const handleSearch = async (plateInput?: string) => {
     const plateToUse = plateInput || carPlate;
     if (!plateToUse) {
@@ -54,13 +77,12 @@ export default function PermitView() {
     
     try {
       const permitInfo = await getpermitByPlateNum(plateToUse);
-
       const validPermits = permitInfo.filter(permit => permit.permitID != null);
       
       setPermits(validPermits);
       
       if (validPermits.length === 0) {
-        setvalidPermit('');
+        setValidPermit('');
         setError('No permits found for this vehicle');
         const driverID = await getDriverFromVehiclePlate(plateToUse);
         if (driverID) {
@@ -69,22 +91,40 @@ export default function PermitView() {
           setDriverID('');
         }
       } else {
-        const validActivePermits = validPermits.filter(permit => permit.isValid);
-        if (validActivePermits.length > 0) {
-          setvalidPermit(`Valid permit found for vehicle ${plateToUse}`);
-        } else {
+        const currentLotInfo = getCurrentLotInfo()
+        const validPermit = validPermits.filter(permit => permit.isValid);
+        
+        if ( validPermit.length === 0) {
           setError('Expired permit found for this vehicle');
+          setDriverID(String(validPermits[0].driverID));
+          setVehicleID(String(validPermits[0].vehicleID));
+        } else {
+          /* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some */
+          const permitValidForLot =  validPermit.some(permit => 
+            currentLotInfo?.validPermits.includes(permit.permitClass)
+          );
+          
+          if (permitValidForLot) {
+            setValidPermit(`Valid permit found for vehicle ${plateToUse} in ${currentLotInfo?.name}`);
+          } else {
+            const permitClasses = validPermit.map(p => p.permitClass).join(', ');
+            const allowedTypes = currentLotInfo?.validPermits.join(', ');
+            setError(`Vehicle has ${permitClasses} permit(s), valid permits for ${currentLotInfo?.name}: ${allowedTypes}`);
+          }
+          
+          setDriverID(String(validPermit[0].driverID));
+          setVehicleID(String(validPermit[0].vehicleID));
         }
-        setDriverID(String(validPermits[0].driverID));
-        setVehicleID(String(validPermits[0].vehicleID));
       }
     } catch (err) {
       console.error("Error during permit search:", err);
       setPermits([]);
       setDriverID('');
       setVehicleID('');
+      setError('Error searching for permits');
     }
   };
+
   const ticketDialogHandler = async () => {
     if (permits.length === 0) {
        const unregisterVeh = await UnregisteredVehicle(carPlate);
@@ -106,18 +146,17 @@ export default function PermitView() {
 
   const clearScreen = () => {
     setCarPlate('')
-    setPermits([])
-    setError(null)
-    setTicketSuccess(null)
-    setDriverID('')
-    setvalidPermit('')
+    setCurrentLot('')
+    resetSearch()
   }
 
   const handleOCR = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    if (!file) return
+    if (!file) {
+      return
+    }
 
-    clearScreen()
+    resetSearch()
     setLoading(true)
 
     const base64 = await toBase64(file)
@@ -146,15 +185,36 @@ export default function PermitView() {
     })
   }
 
-  const noPermitError = error === 'No permits found for this vehicle' || error === 'Expired permit found for this vehicle'
+  const hasPermitViolation = error && (
+    error.includes('No permits found') || 
+    error.includes('Expired permit') || 
+    error.includes('valid permits for Lot')
+  )
   
   return (
     <Container maxWidth="md" sx={{py: 4}}>
       <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
-        Vehicle Permit
+        Vehicle Permit Checker
       </Typography>
+
+      <FormControl fullWidth sx={{ mb: 3 }}>
+        <InputLabel id="currentLot-label">Current Parking Lot</InputLabel>
+        <Select
+          labelId="currentLot-label"
+          value={currentLot}
+          onChange={handleLotChange}
+          label="Current Parking Lot"
+          required
+        >
+          {lotOptions.map(lot => (
+            <MenuItem key={lot.id} value={lot.id}>
+              {lot.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       
-      <Box sx={{ mb: 4, display: 'flex', alignItems: 'flex-start' }}>
+      <Box sx={{mb: 4, display: 'flex', alignItems: 'flex-start'}}>
         <TextField
           variant="outlined"
           value={carPlate}
@@ -167,13 +227,15 @@ export default function PermitView() {
           variant="contained"
           color="primary"
           onClick={() => handleSearch()}
-          sx={{height: 50}}
+          sx={{height: 56}}
+          disabled={!currentLot}
         >
-          {'Search'}
+          Search
         </Button>
       </Box>
 
-      <input
+      <Box sx={{ mb: 3, display: 'flex', gap: 2 }}>
+        <input
           type="file"
           accept="image/*"
           id="upload-photo"
@@ -181,16 +243,15 @@ export default function PermitView() {
           onChange={handleOCR}
         />
         <label htmlFor="upload-photo">
-          <Button variant="outlined" component="span" sx={{ height: 50 }}>
+          <Button variant="outlined" component="span" sx={{height: 50}} disabled={!currentLot}>
             Upload Image
           </Button>
         </label>
-        <Button variant="outlined" component="span" sx={{ height: 50 }} onClick={clearScreen}>
-            Clear
+        <Button variant="outlined" sx={{height: 50}} onClick={clearScreen}>
+          Clear
         </Button>
+      </Box>
 
-      {/* reference: https://mui.com/material-ui/react-alert/ */}
-       {/* reference: https://mui.com/material-ui/react-table/ */}
       {ticketSuccess && (
         <Alert severity="success" sx={{mb: 3}}>
           {ticketSuccess}
@@ -214,11 +275,9 @@ export default function PermitView() {
           <CircularProgress />
         </Box>
       )}
-      {noPermitError && (
+
+      {hasPermitViolation && (
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          {/* <Typography variant="h6">
-            Permit not exist for carPlate: {carPlate}
-          </Typography> */}
           <Button
             variant="contained"
             color="error"
@@ -229,7 +288,6 @@ export default function PermitView() {
         </Box>
       )}
 
-      
       {ticketDialog && (
         <TicketView
           open={ticketDialog}
@@ -238,6 +296,8 @@ export default function PermitView() {
           vehicleID={vehicleID}
           success={handleTicketSuccess}
           error={handleTicketError}
+          LotName ={getCurrentLotInfo()?.name || ''}
+          ticketPrice={getCurrentLotInfo()?.ticketPrice || 0}
         />
       )}
     </Container>

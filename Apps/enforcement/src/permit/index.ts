@@ -5,5 +5,6 @@ export interface Permit {
   permitType: string,
   issueDate: string,
   expDate: string,
-  isValid: boolean
+  isValid: boolean,
+  permitClass: string
 }

@@ -7,6 +7,8 @@ import { Permit } from '../../permit'
 import { getPermitByPlate, recognizePlateFromImage } from '../../permit/service'
 import { getVehicleByPlate, UnregisterVehicle } from '../../vehicle/service'
 import { UnregisterVeh } from '@/vehicle'
+import { getAllLots } from '../../lot/service'
+import { Lot } from '../../lot/index'
 
 export async function getpermitByPlateNum(carPlate: string) : Promise<Permit[]> {
   const cookie = (await cookies()).get('session')?.value
@@ -38,5 +40,11 @@ export async function UnregisteredVehicle(carPlate: string) : Promise<Unregister
   const cookie = (await cookies()).get('session')?.value
   const vehicleID = await UnregisterVehicle(cookie, carPlate)
   return vehicleID
+}
+
+export async function getallLots(): Promise<Lot[]> {
+  console.log("enforcement get all lots action called");
+  const cookie = (await cookies()).get('session')?.value
+  return getAllLots(cookie)
 }
 

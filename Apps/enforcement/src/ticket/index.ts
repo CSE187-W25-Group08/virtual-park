@@ -31,4 +31,6 @@ driverID: string | '';
 vehicleID: string | '';
 success: (ticketId: string) => void;
 error: (errorMessage: string) => void;
+LotName: string;
+ticketPrice: number;
 }

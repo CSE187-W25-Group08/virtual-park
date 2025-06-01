@@ -20,7 +20,7 @@ export async function issueTicketForCar(
   violation: string,
   image: string,
   cost: number,
-  paid: boolean
+  paid: boolean,
 ): Promise<Ticket> {
   const cookie = (await cookies()).get('session')?.value
   return issueTicketForVehicle(
