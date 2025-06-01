@@ -9,6 +9,8 @@ import { Toolbar } from '@mui/material';
 
 import { cookies } from 'next/headers';
 
+import ThemeWrapper from '@/components/ThemeWrapper';
+
 // npm build
 type Params = Promise<{ locale: string }>
 /* https://medium.com/hackernoon/follow-single-argument-principle-in-typescript-with-parameter-objects-c8a259dd7191 */
@@ -42,6 +44,7 @@ export default async function LocaleLayout({
       <body style={{margin:0, padding: 0}}>
       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
         <NextIntlClientProvider locale={locale}>
+          <ThemeWrapper>
             {isLoggedIn && (
               <>
                 <Navbar />
@@ -50,8 +53,9 @@ export default async function LocaleLayout({
               </>
             )}
             <main>{children}</main>
-          </NextIntlClientProvider>
-        </GoogleOAuthProvider>
+          </ThemeWrapper>
+        </NextIntlClientProvider>
+      </GoogleOAuthProvider>
       </body>
     </html>
   );
