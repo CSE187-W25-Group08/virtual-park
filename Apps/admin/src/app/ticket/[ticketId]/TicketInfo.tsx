@@ -4,7 +4,8 @@ import {getTicketDetails,
    approveAppeal,
     rejectAppeal,
     getUserContactAction,
-    sendTicketAppealEmailAction,
+    sendTicketAppealRejectedEmailAction,
+    sendTicketAppealAcceptedEmailAction,
   } from '../action'
 import {useState, useEffect} from 'react'
 import { useRouter } from 'next/navigation';
@@ -41,6 +42,9 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
       const new_ticket = await approveAppeal(ticketId);
       if (new_ticket) {
         setTicket(new_ticket);
+        const driverId = new_ticket.driver;
+        const driver = await getUserContactAction(driverId!)
+        await sendTicketAppealAcceptedEmailAction(driver?.email || 'Placeholder', driver?.name || 'Placeholder', new_ticket.id, new_ticket.violation);
       }
     }
 
@@ -51,7 +55,7 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
         setTicket(new_ticket);
         const driverId = new_ticket.driver;
         const driver = await getUserContactAction(driverId!)
-        await sendTicketAppealEmailAction(driver?.email || 'Placeholder', driver?.name || 'Placeholder', new_ticket.id, new_ticket.violation);
+        await sendTicketAppealRejectedEmailAction(driver?.email || 'Placeholder', driver?.name || 'Placeholder', new_ticket.id, new_ticket.violation);
       }
     }
 

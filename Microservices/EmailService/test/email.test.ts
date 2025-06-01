@@ -44,7 +44,7 @@ test("A payment confirmation is sent involving permit", async () => {
       query: `
         mutation {
           sendPermitPaymentEmail(
-            email: "jiqle@ucsc.edu",
+            email: "dog@ucsc.edu",
             name: "John Doe",
             nameOfProduct: "Monthly Permit",
             costOfProduct: 1999,
@@ -69,7 +69,7 @@ test("A payment confirmation is sent involving ticket", async () => {
       query: `
         mutation {
           sendTicketPaymentEmail(
-            email: "jiqle@ucsc.edu",
+            email: "HopefullySomeRandomEmail@gmail.com",
             name: "John Doe",
             nameOfProduct: "Monthly ticket",
             costOfProduct: 1999,
@@ -92,7 +92,7 @@ test("A rejected appeal is sent involving ticket", async () => {
       query: `
         mutation {
           sendTicketAppealRejectedEmail(
-            email: "jiqle@ucsc.edu",
+            email: "ItsAMeMario@ucsc.edu",
             name: "John Doe",
             ticketId: "ticket-123",
             violation: "Parked illegally",
@@ -103,5 +103,27 @@ test("A rejected appeal is sent involving ticket", async () => {
     .then((res) => {
       console.log(res.body.errors)
       expect(res.body.data.sendTicketAppealRejectedEmail).toBeTruthy()
+    });
+});
+
+test("A accepted appeal is sent involving ticket", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          sendTicketAppealAcceptedEmail(
+            email: "jiqle@ucsc.edu",
+            name: "John Doe",
+            ticketId: "ticket-123",
+            violation: "Parked illegally",
+          )
+        }
+      `,
+    })
+    .then((res) => {
+      console.log(res.body.errors)
+      expect(res.body.data.sendTicketAppealAcceptedEmail).toBeTruthy()
     });
 });

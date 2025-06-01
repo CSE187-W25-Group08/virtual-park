@@ -7,7 +7,7 @@ import { cookies } from 'next/headers'
 import { Vehicle } from "@/vehicle";
 import { UserContact } from "../../auth";
 import { getDriverContactInfo } from "../../auth/service";
-import { sendTicketAppealEmail } from "../../email/service";
+import { sendTicketAppealEmailAccepted, sendTicketAppealEmailRejected } from "../../email/service";
 
 export async function listAll(jwt: string): Promise<Ticket[]> {
   return new TicketService().getAllTicket(jwt)
@@ -65,7 +65,12 @@ export async function getUserContactAction(driverId: string): Promise<UserContac
   return userContact;
 }
 
-export async function sendTicketAppealEmailAction(email: string, name: string, ticketId: string, violation: string): Promise<void> {
+export async function sendTicketAppealRejectedEmailAction(email: string, name: string, ticketId: string, violation: string): Promise<void> {
   const cookie = (await cookies()).get('session')?.value;
-  await sendTicketAppealEmail(email, name, ticketId, violation, cookie)
+  await sendTicketAppealEmailRejected(email, name, ticketId, violation, cookie)
+}
+
+export async function sendTicketAppealAcceptedEmailAction(email: string, name: string, ticketId: string, violation: string): Promise<void> {
+  const cookie = (await cookies()).get('session')?.value;
+  await sendTicketAppealEmailAccepted(email, name, ticketId, violation, cookie)
 }
