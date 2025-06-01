@@ -112,8 +112,6 @@ export default function Vehicles() {
     }
   };
 
-  console.log(selectedVehicle)
-
   return (
     <Box sx={{
       display: 'flex',
@@ -221,10 +219,10 @@ export default function Vehicles() {
               sx={{ mb: 2 }}
             />
             <FormControl fullWidth required sx={{ mb: 2 }}>
-              <InputLabel>{'vehicleType'}</InputLabel>
+              <InputLabel>{t('vehicleType')}</InputLabel>
               <Select
                 required
-                label={'vehicleType'}
+                label={t('vehicleType')}
                 name='vehicleType'
                 fullWidth
                 displayEmpty
@@ -235,8 +233,8 @@ export default function Vehicles() {
                 } : null)}
                 sx={{ mb: 2 }}
               >
-                <MenuItem value='Car'>{'car'}</MenuItem>
-                <MenuItem value='Motorcycle'>{'motorcycle'}</MenuItem>
+                <MenuItem value='Car'>{t('car')}</MenuItem>
+                <MenuItem value='Motorcycle'>{t('motorcycle')}</MenuItem>
               </Select>
             </FormControl>
             {!selectedIsActive && (<FormControlLabel
@@ -308,10 +306,10 @@ export default function Vehicles() {
               sx={{ mb: 2 }}
             />
             <FormControl fullWidth required sx={{ mb: 2 }}>
-              <InputLabel>{'vehicleType'}</InputLabel>
+              <InputLabel>{t('vehicleType')}</InputLabel>
               <Select
                 required
-                label='vehicleType'
+                label={t('vehicleType')}
                 name='vehicleType'
                 fullWidth
                 displayEmpty
@@ -322,8 +320,8 @@ export default function Vehicles() {
                 }))}
                 sx={{ mb: 2 }}
               >
-                <MenuItem value='Car'>{'car'}</MenuItem>
-                <MenuItem value='Motorcycle'>{'motorcycle'}</MenuItem>
+                <MenuItem value='Car'>{t('car')}</MenuItem>
+                <MenuItem value='Motorcycle'>{t('motorcycle')}</MenuItem>
               </Select>
             </FormControl>
             {vehicles.length != 0 && (<FormControlLabel
