@@ -212,7 +212,7 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
     );
   };
 
-            {/* pay and appeald button */}
+  {/* pay and appeald button */}
   const bottomHalf = () => {
     return (
       <React.Fragment>
@@ -246,6 +246,7 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
                     onClick={() => {
                       handleOpenAppealModal();
                     }}
+                    sx={{ mx: 'auto'}}
                   >
                     <FrontHandIcon sx={{ mr: 1 }} />
                     {t("appealTicket")}
@@ -270,7 +271,7 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
     <React.Fragment>
       <Box>
         <Grid
-          style={{ height: "73vh", overflow: "auto" }}
+          sx={{ height: { xs: "73vh", sm: "80vh" }, overflow: "auto" }}
           size={{ xs: 12, sm: 12, md: 12 }}
         >
           {topHalf()}
