@@ -10,7 +10,7 @@
     "signup": "Sign Up",
     "login": "Login",
     "welcome": "Welcome to Virtual-Park!",
-    "logout": "Log out"
+    "logout": "Logout"
   },
   "signup": {
     "createAccount": "Create an Account",
@@ -63,7 +63,8 @@
     "Staff": "Staff",
     "Visitor": "Visitor",
     "Motorcycle": "Motorcycle",
-    "Remote": "Remote"
+    "Remote": "Remote",
+    "hours": "Hours"
   },
   "vehicle": {
     "title": "Vehicles",
@@ -121,7 +122,7 @@
     "buyPermit": "Buy Permit",
     "tickets": "Tickets",
     "noTickets": "You have no unpaid tickets.",
-    "manageTickets": "Manage Tickets",
+    "manageTickets": "Manage tickets",
     "unpaidTickets": "You have {count} unpaid tickets.",
     "payTickets": "Pay Tickets"
   },

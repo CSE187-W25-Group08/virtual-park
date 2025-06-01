@@ -25,8 +25,20 @@ vi.mock('next/headers', () => ({
 }));
 
 beforeEach(() => {
-  vi.stubGlobal('fetch', vi.fn());
+  vi.stubGlobal('fetch', vi.fn(() =>
+    Promise.resolve(
+      new Response(JSON.stringify({
+        data: {
+          primaryVehicle: null,
+        },
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    )
+  ));
 });
+
 
 afterEach(() => {
   cleanup();
@@ -50,7 +62,7 @@ it('renders the active permit section with no active permit', async () => {
 it('renders the unpaid tickets section', async () => {
   renderWithIntl(<Dashboard />);
 
-  await screen.getByText('Manage Tickets');
+  await screen.getByLabelText('Manage Tickets');
 });
 
 // it('clicks "Buy Permit" button', async () => {
@@ -71,7 +83,7 @@ it('goes to ticket page when "Manage Tickets" is clicked', async () => {
 
   renderWithIntl(<Dashboard />);
 
-  const manageTickets = await screen.findByText('Manage Tickets');
+  const manageTickets = await screen.findByLabelText('Manage Tickets');
 
   fireEvent.click(manageTickets);
   expect(mockPush).toHaveBeenCalledWith("/ticket");

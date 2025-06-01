@@ -35,7 +35,7 @@ export class PermitResolver {
 
   /* should Only allow officer to do that, and in the future, I might consider adding a member with the role of enforcement officer */
   @Authorized('enforcement')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   @Query(() => [PermitValid])
   async getPermitBycarPlate(@Arg("input") carPlate: string): Promise<PermitValid[]> {
     const result = await new PermitService().getPermitByCar(carPlate);
@@ -55,6 +55,7 @@ export class PermitResolver {
   async issuePermit(
     @Arg("permitTypeId") permitTypeId: string,
     @Arg("vehicleId") vehicleId: string,
+    @Arg("price") price: number,
     @Ctx() Request: Request
   ): Promise<PermitIssue> {
     const driverId = Request.user?.id;
@@ -67,9 +68,9 @@ export class PermitResolver {
     const issueDate = new Date();
     const expDate = new Date(issueDate);
     if (permitType.type === 'Daily') {
-      expDate.setHours(23, 59, 59, 999);
+      expDate.setHours(16, 59, 0, 0);
     } else if (permitType.type === 'Hourly') {
-      expDate.setHours(expDate.getHours() + 4);
+      expDate.setHours(expDate.getHours() + (price / 2));
     } else if (permitType.type === 'Week') {
       expDate.setDate(expDate.getDate() + 7);
     } else if (permitType.type === 'Month') {
@@ -92,7 +93,7 @@ export class PermitResolver {
       issueDate: issueDate.toISOString(),
       expDate: expDate.toISOString(),
       isValid: true,
-      price: permitType.price,
+      price: price,
       permitClass: permitType.permitClass
     });
     console.log("issued new permit in resolver", newPermit)

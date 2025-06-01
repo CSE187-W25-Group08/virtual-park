@@ -63,7 +63,7 @@ export default function SideBarNav() {
             {window.sessionStorage.getItem('name')}
           </Typography> */}
         </Box>
-        <IconButton onClick={() => handleLogout()}>
+        <IconButton aria-hidden="false" aria-label="logout" onClick={() => handleLogout()}>
           <LogoutIcon />
         </IconButton>
       </Stack>

@@ -48,13 +48,17 @@ jobs:
       STRIPE_PUBLISHABLE_KEY : ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
       POSTGRES_DB: testdb
-
+      JSON_LIMIT: 15mb
+      GOOGLE_CREDENTIALS_PATH: ${{ secrets.GOOGLE_CREDENTIALS_PATH }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-      - run: echo $POSTGRES_USER
+      - name: Recreate ocr-service-account.json
+        run: | 
+          mkdir -p Micorservices/VehicleService/credentials
+          echo "${{ secrets.OCR_SERVICE_ACCOUNT_BASE64 }}" | base64 -d > Micorservices/VehicleService/credentials/ocr-service-account.json
       - run: npm install
       - run: npm run installs
       - name: Start DB via Docker Compose

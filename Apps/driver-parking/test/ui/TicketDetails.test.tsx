@@ -1,4 +1,4 @@
-import { it, afterEach, vi, expect} from 'vitest'
+import { it, afterEach, beforeEach, vi, expect} from 'vitest'
 import { fireEvent, render, screen, cleanup} from '@testing-library/react'
 import { useRouter } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl'
@@ -73,6 +73,28 @@ vi.mock('next/headers', () => ({
 
 vi.stubGlobal('scrollTo', vi.fn())
 
+beforeEach(() => {
+  vi.stubGlobal('fetch', vi.fn((url) => {
+    if (url.includes('/auth')) {
+      return Promise.resolve(new Response(JSON.stringify({
+        id: 'user123',
+        email: 'john@example.com',
+      }), { status: 200 }));
+    }
+
+    if (url.includes('/vehicle')) {
+      return Promise.resolve(new Response(JSON.stringify({
+        data: {
+          primaryVehicle: null,
+        },
+      }), { status: 200 }));
+    }
+
+    return Promise.resolve(new Response(JSON.stringify({}), { status: 404 }));
+  }));
+});
+
+
 afterEach(() => {
   cleanup()
   vi.clearAllMocks()
@@ -109,12 +131,12 @@ it('render details page', async () => {
 
   renderWithIntl(page);
 
-  await screen.findByText('Violation: Expired meter');
+  await screen.findByText('Expired meter');
 });
 
 it('contains Violation Text', async () => {
   renderWithIntl(<TicketCard ticketId = {'e5fd7cb1-75b0-4d23-a7bc-361e2d0621da'}/>)
-  await screen.findByText('Violation: Expired meter');
+  await screen.findByText('Expired meter');
 })
 
 it('contains image', async () => {

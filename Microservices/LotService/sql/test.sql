@@ -16,7 +16,8 @@ VALUES (
     'isActive', true,
     'type', 'Top Secret',
     'updated', '2025-05-10T00:00:00Z',
-    'created', '2025-01-01T00:00:00Z'
+    'created', '2025-01-01T00:00:00Z',
+    'validPermits', '["Staff"]'
   )
 );
 
@@ -32,8 +33,9 @@ VALUES (
     'capacity', 650,
     'availableSpots', 142,
     'isActive', true,
-    'type', 'Student Parking',
+    'type', 'General Parking',
     'updated', '2025-05-10T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
   )
 );

@@ -158,4 +158,31 @@ export class AuthController extends Controller {
       this.setStatus(401);
     }
   }
+
+
+  @Get('driverinfo')
+  @Security("jwt")
+  @Response('401', 'Unauthorized')
+  @Response('404', 'User not found')
+  public async getEmailAndName(
+    @Request() request: Express.Request,
+  ): Promise<User | undefined> {
+    const requester = request.user as SessionUser;
+    if (requester.roles?.includes('driver')) {
+      const user = await new AuthService().getUserById(requester.id);
+      if (!user) {
+        this.setStatus(404);
+      }
+      return user;
+    } else {
+      this.setStatus(401);
+    }
+  }
+
+
+
+
+
+
+
 }

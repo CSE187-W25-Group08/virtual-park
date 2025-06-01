@@ -1,4 +1,7 @@
 FROM node:23-alpine
+
+ENV NODE_OPTIONS=--max-old-space-size=4096
+
 EXPOSE 3000
 
 WORKDIR /home/app
@@ -27,6 +30,10 @@ COPY Microservices/StripeService/package-lock.json /home/app/Microservices/Strip
 COPY Microservices/WebhookService/build/ /home/app/Microservices/WebhookService/build/
 COPY Microservices/WebhookService/package.json /home/app/Microservices/WebhookService/
 COPY Microservices/WebhookService/package-lock.json /home/app/Microservices/WebhookService/
+
+COPY Microservices/EmailService/build/ /home/app/Microservices/EmailService/build/
+COPY Microservices/EmailService/package.json /home/app/Microservices/EmailService/
+COPY Microservices/EmailService/package-lock.json /home/app/Microservices/EmailService/
 
 COPY Microservices/TicketService/build/ /home/app/Microservices/TicketService/build/
 COPY Microservices/TicketService/package.json /home/app/Microservices/TicketService/

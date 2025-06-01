@@ -8,8 +8,9 @@ import { Lot } from '../../lot'
 import { issueTicketForVehicle } from '../../ticket/service'
 import { getAllLots } from '../../lot/service'
 import { getDriver } from '../../auth/service'
-import { Driver } from '../../auth'
+// import { Driver } from '../../auth'
 import { sendTicketNotification } from '../../email/service'
+
 
 export async function issueTicketForCar(
   driverId: string,

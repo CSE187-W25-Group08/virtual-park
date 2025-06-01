@@ -67,9 +67,8 @@ const renderWithIntl = (component: React.ReactElement) => {
 it('should log out user when clicking logout button', async () => {
   renderWithIntl(<HomePage />);
 
-  const logoutButton = screen.getByText('Log out');
+  const logoutButton = screen.getByText('Logout');
   await userEvent.click(logoutButton);
-
 
   expect(mockDelete).toHaveBeenCalledWith('session');
 });

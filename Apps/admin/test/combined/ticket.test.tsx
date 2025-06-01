@@ -1,5 +1,5 @@
 import { it, afterEach, vi, expect, beforeEach, } from 'vitest' 
-import { render, screen, cleanup, act} from '@testing-library/react'
+import { render, screen, cleanup, act, fireEvent} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useRouter } from 'next/navigation'
 import { testTicket } from '../MockData'
@@ -112,6 +112,14 @@ it('Displays Ticket Details with correct lot', async () => {
   await screen.findByText('test lot');
 })
 
+it('Hit back button', async () => { 
+  mockFetchGraphQL();
+  render(<TicketView ticketId = "mockid" />)
+  const backButton = await screen.findByLabelText('back');
+  await fireEvent.click(backButton);
+  expect(mockPush).toHaveBeenCalledWith('/');
+})
+
 it('Displays Ticket Details with correct licenseplate', async () => { 
   mockFetchGraphQL();
   render(<TicketView ticketId = "mockid" />)
@@ -126,7 +134,7 @@ it('Admin approves appeal', async () => {
   await screen.findByText("Appeal: approved");
 })
 
-it('Admin approves appeal', async () => {
+it('Admin rejects appeal', async () => {
   testTicket.appeal = "rejected";
   mockFetchGraphQL();
   render(<TicketView ticketId = "mockid" />)
@@ -134,3 +142,4 @@ it('Admin approves appeal', async () => {
   await userEvent.click(rejectButton);
   await screen.findByText('Appeal: rejected');
 })
+

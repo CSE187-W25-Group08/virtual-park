@@ -55,7 +55,7 @@ it('mocks clicking logout button', () => {
   })
   window.sessionStorage.setItem('name', 'Test User')
   renderWithIntl(<Landing />)
-  const logoutButton = screen.getByText('Log out')
+  const logoutButton = screen.getByText('Logout')
   fireEvent.click(logoutButton)
   expect(mockLogout).toHaveBeenCalled()
 })

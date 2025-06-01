@@ -1,5 +1,5 @@
-import { it, expect, vi} from "vitest";
-import { Vehicle } from "../../src/driver";
+import { it, expect, vi } from "vitest";
+import { Vehicle } from "../../../driver";
 import { VehicleService } from "../../src/vehicle/service";
 
 const mockVehicles: Vehicle[] = [

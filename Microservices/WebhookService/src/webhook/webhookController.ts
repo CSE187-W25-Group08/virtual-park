@@ -3,8 +3,8 @@ import { Request, Controller, Post, Route, Body } from "tsoa";
 import express from "express";
 import Stripe from "stripe";
 import { setTicketPaidAction } from "../ticket/action";
-import { sendPermitPaymentConfirmation, sendTicketPaymentConfirmation } from "../email/service";
 import { setPermitTypePaid } from "../permit/action";
+import { sendPermitEmailAction, sendTicketEmailAction } from "../email/action";
 
 const stripeSecretkey = process.env.STRIPE_SECRET_KEY;
 if (!stripeSecretkey) {
@@ -83,14 +83,31 @@ export class WebhookController extends Controller {
             switch(dataType) {
               case "ticket": {
                 const metadata = product.metadata;
-                await sendTicketPaymentConfirmation(customerEmail || "Customer@email", customerName || "Customer", dataName, dataAmount || 0, metadata);
+                const email = customerEmail || "test@books.com";
+                const name = customerName || "Test User";
+                const productName = dataName || "Test Product name";
+                const costOfProduct = dataAmount || 0;
+                const ticketId = metadata.id as string;
+                const cookie = metadata.cookie as string;
+                await sendTicketEmailAction(email, name, productName, costOfProduct, ticketId, cookie);
                 await setTicketPaidAction(metadata);
                 break;
               }
               case "permit": {
+                // parse data for email
                 const metadata = product.metadata;
-                await sendPermitPaymentConfirmation(customerEmail || "Customer@email", customerName || "Customer", dataName, dataAmount || 0, metadata);
-                await setPermitTypePaid(metadata);
+                const email = customerEmail || "test@books.com";
+                const name = customerName || "Test User";
+                const productName = dataName || "Test Product name";
+                const costOfProduct = dataAmount || 0;
+                const permitTypeId = metadata.permitTypeId as string;
+                const vehicleId = metadata.vehicleId as string;
+                const cookie = metadata.cookie as string;
+
+                // email
+                await sendPermitEmailAction(email, name, productName, costOfProduct, permitTypeId, vehicleId, cookie);
+                // databsae
+                await setPermitTypePaid(permitTypeId, vehicleId, cookie, costOfProduct);
                 break;
               }
               default: {

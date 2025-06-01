@@ -207,3 +207,23 @@ VALUES (
     'appealReason', 'I was only parked there for a minute to grab coffee.'
   )
 );
+
+
+INSERT INTO ticket(driver, data)
+VALUES (
+  'c852b1b6-dc7c-48b2-84f1-fe8aa828a929',
+  jsonb_build_object(
+    'vehicle', '18fa94fc-4783-42df-a904-7ec17efadcb9',
+    'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
+    'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
+    'paid', false,
+    'description', 'Blocking a fire lane entrance.',
+    'due', '2025-05-25T12:00:00Z',
+    'issue', '2025-05-05T11:45:00Z',
+    'violation', 'Fire Lane Violation',
+    'image', 'https://i.pinimg.com/736x/94/9e/84/949e84cb203e27b0a5ec7cb25755f028.jpg',
+    'cost', 75.00,
+    'appeal', 'rejected',
+    'appealReason', 'I was only parked there for a minute to grab coffee.'
+  )
+);

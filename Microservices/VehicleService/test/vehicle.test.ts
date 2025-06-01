@@ -345,3 +345,67 @@ test('Edits a vehicle', async () => {
       expect(res.body.data.editVehicle.licensePlate).toEqual("newplate")
     })
 })
+
+test('Member UnRegister Vehicle', async () => {
+  const res1 = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
+        mutation {
+          UnregisterVehicle(input: "testingLP") {
+            id
+            licensePlate
+          }
+        }
+      `
+    })
+
+  const vehicle = res1;
+  console.log('vehicel: ', vehicle.body)
+})
+
+test('Member calls getAnyVehicleById', async () => {
+  const res1 = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `{
+        getAnyVehicleById(id: "18fa94fc-4783-42df-a904-7ec17efadca5") {
+          id
+          licensePlate
+          make
+          model
+          color
+          driver
+          active
+        }
+      }
+    `
+    })
+  expect(res1.body.data.getAnyVehicleById.licensePlate).toBe('123BC4A')
+})
+
+test('No existing plate for getVehicleByPlate', async () => {
+  const res1 = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', `Bearer Placeholder`)
+    .send({
+      query: `
+        {
+          getVehicleByPlate(plate: "badPlate") {
+            id
+            driver
+            licensePlate
+            make
+            model
+            color
+            active
+          }
+        }
+      `
+    })
+    
+    expect(res1.body.errors[0].message).toBe('Vehicle with license plate badPlate not found');
+})
+

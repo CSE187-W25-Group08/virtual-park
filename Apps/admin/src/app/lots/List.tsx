@@ -22,11 +22,11 @@ export default function LotList() {
   }, [])
   
   // based on MUI https://mui.com/material-ui/react-list/
-  const columns: GridColDef[] = [
+const columns: GridColDef[] = [
   {
     field: 'name',
     headerName: 'Name',
-    width: 200,
+    width: 130,
     renderCell: (params) => (
       <Tooltip title={params.value}>
         <Typography noWrap sx={{ maxWidth: 180 }}>
@@ -38,69 +38,91 @@ export default function LotList() {
   {
     field: 'zone',
     headerName: 'Zone',
-    width: 100,
+    width: 200,
+    renderCell: (params) => (
+      <Tooltip title={params.value}>
+        <Typography noWrap>{params.value}</Typography>
+      </Tooltip>
+    ),
   },
   {
     field: 'address',
     headerName: 'Address',
-    width: 250,
+    width: 320,
+    flex: 1,
     renderCell: (params) => (
       <Tooltip title={params.value}>
-        <Typography noWrap sx={{ maxWidth: 230 }}>
-          {params.value}
-        </Typography>
+        <Typography noWrap>{params.value}</Typography>
       </Tooltip>
     ),
   },
   {
     field: 'latitude',
     headerName: 'Latitude',
-    width: 130,
+    width: 100,
+    renderCell: (params) => (
+      <Typography noWrap>{params.value}</Typography>
+    ),
   },
   {
     field: 'longitude',
     headerName: 'Longitude',
-    width: 130,
+    width: 100,
+    renderCell: (params) => (
+      <Typography noWrap>{params.value}</Typography>
+    ),
   },
   {
     field: 'capacity',
     headerName: 'Capacity',
-    width: 110,
+    width: 100,
+    renderCell: (params) => (
+      <Typography noWrap>{params.value}</Typography>
+    ),
   },
   {
     field: 'isActive',
     headerName: 'Active',
     width: 100,
-    renderCell: (params) => (params.value ? 'Yes' : 'No'),
+    renderCell: (params) => (
+      <Typography noWrap>{params.value ? 'Yes' : 'No'}</Typography>
+    ),
   },
   {
     field: 'type',
     headerName: 'Type',
-    width: 120,
+    width: 200,
+    renderCell: (params) => (
+      <Tooltip title={params.value}>
+        <Typography noWrap>{params.value}</Typography>
+      </Tooltip>
+    ),
   },
   {
     field: 'created',
     headerName: 'Created At',
-    width: 200,
+    width: 120,
     renderCell: (params) => {
       const date = new Date(params.value);
-      return date.toLocaleString() || 'Invalid date';
+      const formatted = date.toLocaleDateString('en-US');
+      return <Typography noWrap>{formatted}</Typography>;
     },
   },
   {
     field: 'updated',
     headerName: 'Updated At',
-    width: 200,
+    width: 120,
     renderCell: (params) => {
       const date = new Date(params.value);
-      return date.toLocaleString() || 'Invalid date';
+      const formatted = date.toLocaleDateString('en-US');
+      return <Typography noWrap>{formatted}</Typography>;
     },
   },
 ];
   
   return (
     <Box>
-      <Typography>Parking Lots</Typography>
+      <Typography variant='h4' sx={{mb:4}}>Parking Lots</Typography>
       {(lots && lots.length != 0) ? <DataGrid
         rows={lots}
         columns={columns}
@@ -110,7 +132,7 @@ export default function LotList() {
         pageSizeOptions={[10, 20, 50]}
         density="compact"
         disableColumnResize
-        getRowId={(row) => row.id || Math.random().toString()}
+        getRowId={(row) => row.id}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
         }

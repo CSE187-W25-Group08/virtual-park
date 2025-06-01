@@ -7,6 +7,8 @@ import { Typography, Box, Button, Divider } from "@mui/material"
 import Modal from '@mui/material/Modal'
 import Paper from '@mui/material/Paper'
 import { useTranslations } from "next-intl"
+import { useMediaQuery } from "@mui/material"
+import Link from "next/link"
 
 import TicketCard from "../ticket/card"
 import PermitListCard from "../permit/history/PermitListCard"
@@ -26,6 +28,8 @@ export default function Dashboard() {
   const [registerModalOpen, setRegisterModalOpen] = useState(false)
   const router = useRouter()
   const t = useTranslations("dashboard")
+  const isMobile = useMediaQuery('(max-width:600px)')
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,14 +89,21 @@ export default function Dashboard() {
         {unpaidTickets.length === 0 && (
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Typography variant="h6" sx={{ marginLeft: 1 }}>
-              {t('noTickets')}
+              {t('noTickets')} {!isMobile &&(
+                <Link href="/ticket" onClick={() => router.push("/ticket")} style={{color: '#1976d2'}} aria-label="Manage Tickets">
+                  {t('manageTickets')}.
+                </Link>
+              )}
             </Typography>
-            <Button
-              variant="contained"
-              sx={{ marginTop: 2, marginLeft: 1 }}
-              onClick={() => router.push("/ticket")}>
-              {t('manageTickets')}
-            </Button>
+            {isMobile && (
+              <Button
+                variant="contained"
+                sx={{ marginTop: 2, marginLeft: 1 }}
+                onClick={() => router.push("/ticket")}
+                aria-label="Manage Tickets">
+                {t('manageTickets')}
+              </Button>
+            )}
           </Box>
         )}
         {unpaidTickets.length > 0 && (
@@ -123,15 +134,17 @@ export default function Dashboard() {
         {activePermit === null && (
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" sx={{ marginLeft: 1 }}>
-              {t('noPermit')}
+              {t('noPermit')} {!isMobile && (<Link href="#" style={{color: '#1976d2'}} onClick={handleBuyPermit}>{t('buyPermit')}.</Link>)}
             </Typography>
-            <Button
-              variant="contained"
-              sx={{ marginTop: 4 }}
-              onClick={handleBuyPermit}
-            >
-              {t('buyPermit')}
-            </Button>
+            {isMobile && (
+              <Button
+                variant="contained"
+                sx={{ marginTop: 2, marginLeft: 1 }}
+                onClick={handleBuyPermit}
+              >
+                {t('buyPermit')}
+              </Button>
+            )}
           </Box>
         )}
       </Box>

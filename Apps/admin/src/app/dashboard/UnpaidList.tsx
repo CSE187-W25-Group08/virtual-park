@@ -35,7 +35,8 @@ export default function UnpaidList() {
       width: 200,
       renderCell: (params) => {
         const date = new Date(params.value);
-        return date.toLocaleString() || 'Invalid date';
+        const formatted = date.toLocaleString();
+        return <Typography noWrap>{formatted}</Typography>;
       },
     },
     {
@@ -44,13 +45,14 @@ export default function UnpaidList() {
       width: 200,
       renderCell: (params) => {
         const date = new Date(params.value);
-        return date.toLocaleString() || 'Invalid date';
+        const formatted = date.toLocaleString();
+        return <Typography noWrap>{formatted}</Typography>;
       },
     },
     {
       field: 'description',
       headerName: 'Description',
-      width: 250,
+      width: 150,
       renderCell: (params) => (
         <Tooltip title={params.value}>
           <Typography noWrap sx={{ maxWidth: 230 }}>
@@ -62,7 +64,7 @@ export default function UnpaidList() {
     {
       field: 'violation',
       headerName: 'Violation',
-      width: 200,
+      width: 150,
       renderCell: (params) => (
         <Tooltip title={params.value}>
           <Typography noWrap sx={{ maxWidth: 180 }}>
@@ -74,11 +76,11 @@ export default function UnpaidList() {
     {
       field: 'appeal',
       headerName: 'Appeal',
-      width: 200,
+      width: 100,
       renderCell: (params) => (
         <Tooltip title={params.value}>
           <Typography noWrap sx={{ maxWidth: 180 }}>
-            {(!params.value || params.value == 'null') ? "none" : params.value}
+            {!params.value || params.value === 'null' ? 'none' : params.value}
           </Typography>
         </Tooltip>
       ),
@@ -87,23 +89,28 @@ export default function UnpaidList() {
       field: 'cost',
       headerName: 'Cost',
       width: 120,
-      renderCell: (params) => `$${params.value.toFixed(2)}`,
+      renderCell: (params) => (
+        <Typography noWrap>${params.value.toFixed(2)}</Typography>
+      ),
     },
     {
       field: 'actions',
       headerName: '',
       width: 180,
+      flex: 1,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
-        <Button
-          variant="outlined"
-          color="primary"
-          size="small"
-          onClick={() => handleManageTicket(params.row)}
-        >
-          Manage Ticket
-        </Button>
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={() => handleManageTicket(params.row)}
+          >
+            Manage Ticket
+          </Button>
+        </Box>
       ),
     },
   ];
@@ -119,7 +126,7 @@ export default function UnpaidList() {
         pageSizeOptions={[10, 20, 50]}
         density="compact"
         disableColumnResize
-        getRowId={(row) => row.id || Math.random().toString()}
+        getRowId={(row) => row.id}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
         }
@@ -150,6 +157,7 @@ export default function UnpaidList() {
           },
         }}
         sx={{
+          flex: 1,
           // '& .MuiDataGrid-cell': {
           //   borderBottom: '2px solid black',
           // },

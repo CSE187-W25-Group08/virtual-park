@@ -16,7 +16,8 @@ VALUES (
     'isActive', true,
     'type', 'Top Secret',
     'updated', '2025-05-10T00:00:00Z',
-    'created', '2025-01-01T00:00:00Z'
+    'created', '2025-01-01T00:00:00Z',
+    'validPermits', '["Staff"]'
   )
 );
 
@@ -32,12 +33,13 @@ VALUES (
     'capacity', 450,
     'availableSpots', 142,
     'isActive', true,
-    'type', 'Student Parking',
+    'type', 'General Parking',
     'updated', '2025-05-10T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
+
   )
 );
-
 
 INSERT INTO lot(id, data)
 VALUES (
@@ -53,7 +55,29 @@ VALUES (
     'isActive', true,
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle", "Remote"]'
+
+  )
+);
+
+INSERT INTO lot(id, data)
+VALUES (
+  '740b3e9a-d1db-4756-9376-ca16d8f739a1',
+  jsonb_build_object(
+    'name', 'Lot 104',
+    'zone', 'East Remote',
+    'address', 'East Remote Parking Lot, Santa Cruz, CA 95064',
+    'latitude', 36.9912,
+    'longitude', -122.0531,
+    'capacity', 300,
+    'availableSpots', 75,
+    'isActive', true,
+    'type', 'General Parking',
+    'updated', '2025-05-30T08:00:00Z',
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle", "Remote"]'
+
   )
 );
 
@@ -71,7 +95,8 @@ VALUES (
     'isActive', true,
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
 
@@ -87,9 +112,10 @@ VALUES (
     'capacity', 50,
     'availableSpots', 4,
     'isActive', true,
-    'type', 'Student Parking',
+    'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
   )
 );
 
@@ -107,7 +133,8 @@ VALUES (
     'isActive', true,
     'type', 'Staff Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
   )
 );
 
@@ -125,7 +152,8 @@ VALUES (
     'isActive', true,
     'type', 'Staff Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
   )
 );
 
@@ -143,7 +171,8 @@ VALUES (
     'isActive', true,
     'type', 'General Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Motorcycle"]'
   )
 );
 
@@ -161,7 +190,8 @@ VALUES (
     'isActive', true,
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
 
@@ -179,7 +209,8 @@ VALUES (
     'isActive', true,
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
 
@@ -197,7 +228,8 @@ VALUES (
     'isActive', true,
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
 
@@ -215,7 +247,8 @@ VALUES (
     'isActive', true,
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
 
@@ -233,7 +266,8 @@ VALUES (
     'isActive', true,
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
 
@@ -251,7 +285,8 @@ VALUES (
     'isActive', true,
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
 
@@ -269,7 +304,8 @@ VALUES (
     'isActive', true,
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
 
@@ -287,7 +323,8 @@ VALUES (
     'isActive', true,
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
 
@@ -305,7 +342,8 @@ VALUES (
     'isActive', true,
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
 
@@ -323,6 +361,7 @@ VALUES (
     'isActive', true,
     'type', 'Student Parking',
     'updated', '2025-05-26T08:00:00Z',
-    'created', '2024-09-01T00:00:00Z'
+    'created', '2024-09-01T00:00:00Z',
+    'validPermits', '["Staff", "Visitor", "Student", "Motorcycle"]'
   )
 );
