@@ -40,7 +40,8 @@
     "mailgun.js": "^12.0.1",
     "pg": "^8.15.6",
     "swagger-ui-express": "^5.0.1",
-    "tsoa": "^6.6.0"
+    "tsoa": "^6.6.0",
+    "unplugin-swc": "^1.5.3"
   },
   "nodemonConfig": {
     "watch": [
