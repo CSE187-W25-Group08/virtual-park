@@ -12,6 +12,8 @@ export default defineConfig({
       ],
       exclude: [
         'src/app/\\[locale\\]/layout.tsx',
+        'src/theme.ts',
+        'src/components/ThemeWrapper.tsx',
       ],
     },
   },

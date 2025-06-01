@@ -5,6 +5,7 @@ export interface Vehicle {
     make: string,
     model: string,
     color: string,
+    vehicleType: string,
     active: boolean,
     type?: string,
 }
@@ -14,5 +15,6 @@ export interface VehicleForm {
     make: string,
     model: string,
     color: string,
+    vehicleType: string,
     active: boolean
 }

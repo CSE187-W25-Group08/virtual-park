@@ -2,7 +2,11 @@
 import { useEffect, useState } from 'react';
 import { Box, Card, Typography, Button, TextField,
    Switch, 
-   FormControlLabel 
+   FormControlLabel, 
+   Select,
+   MenuItem,
+   FormControl,
+   InputLabel
   } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
@@ -37,6 +41,7 @@ export default function Vehicles() {
     make: '',
     model: '',
     color: '',
+    vehicleType: '',
     isDefault: false,
   };
 
@@ -63,13 +68,15 @@ export default function Vehicles() {
   licensePlate?: string,
   make?: string,
   model?: string,
-  color?: string
+  color?: string,
+  vehicleType?: string,
 ): boolean => {
   return (
     !!licensePlate?.trim() &&
     !!make?.trim() &&
     !!model?.trim() &&
-    !!color?.trim()
+    !!color?.trim() &&
+    !!vehicleType?.trim()
   );
 };
 
@@ -88,6 +95,7 @@ export default function Vehicles() {
       model: formData.model,
       licensePlate: formData.licensePlate,
       color: formData.color,
+      vehicleType: formData.vehicleType,
       active: vehicles.length == 0 ? true : formData.isDefault
     };
 
@@ -210,6 +218,24 @@ export default function Vehicles() {
               onChange={(e) => setSelectedVehicle(prev => ({ ...prev!, color: e.target.value }))}
               sx={{ mb: 2 }}
             />
+            <FormControl fullWidth required sx={{ mb: 2 }}>
+              <InputLabel>{'vehicleType'}</InputLabel>
+              <Select
+                required
+                label={'vehicleType'}
+                name='vehicleType'
+                fullWidth
+                displayEmpty
+                onChange={(e) => setSelectedVehicle(prev => prev ? {
+                  ...prev,
+                  vehicleType: e.target.value as string
+                } : null)}
+                sx={{ mb: 2 }}
+              >
+                <MenuItem value='Car'>{'car'}</MenuItem>
+                <MenuItem value='Motorcycle'>{'motorcycle'}</MenuItem>
+              </Select>
+            </FormControl>
             {!selectedIsActive && (<FormControlLabel
               control={<Switch
                         checked={selectedVehicle?.active}
@@ -233,7 +259,7 @@ export default function Vehicles() {
               </Button>
               <Button variant="contained"
                 onClick={handleEditSubmit}
-                disabled={!isFormValid(selectedVehicle?.licensePlate, selectedVehicle?.make, selectedVehicle?.model, selectedVehicle?.color)}
+                disabled={!isFormValid(selectedVehicle?.licensePlate, selectedVehicle?.make, selectedVehicle?.model, selectedVehicle?.color, selectedVehicle?.vehicleType)}
               >
                 {t('save')}
               </Button>
@@ -278,6 +304,25 @@ export default function Vehicles() {
               onChange={handleChange}
               sx={{ mb: 2 }}
             />
+            <FormControl fullWidth required sx={{ mb: 2 }}>
+              <InputLabel>{'vehicleType'}</InputLabel>
+              <Select
+                required
+                label='vehicleType'
+                name='vehicleType'
+                fullWidth
+                displayEmpty
+                value={formData.vehicleType}
+                onChange={(e) => setFormData(prev => ({
+                  ...prev,
+                  vehicleType: e.target.value as string
+                }))}
+                sx={{ mb: 2 }}
+              >
+                <MenuItem value='Car'>{'car'}</MenuItem>
+                <MenuItem value='Motorcycle'>{'motorcycle'}</MenuItem>
+              </Select>
+            </FormControl>
             {vehicles.length != 0 && (<FormControlLabel
               control={<Switch checked={formData.isDefault} onChange={handleToggle} />}
               label={t('default')}
@@ -294,7 +339,7 @@ export default function Vehicles() {
               </Button>
               <Button variant="contained"
                 onClick={handleSubmit}
-                disabled={!isFormValid(formData.licensePlate, formData.make, formData.model, formData.color)}
+                disabled={!isFormValid(formData.licensePlate, formData.make, formData.model, formData.color, formData.vehicleType)}
               >
                 {t('save')}
               </Button>

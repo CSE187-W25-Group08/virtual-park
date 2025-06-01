@@ -77,6 +77,7 @@ export class RegisterService {
                 make: "${vehicle.make}",
                 model: "${vehicle.model}",
                 color: "${vehicle.color}",
+                vehicleType: "${vehicle.vehicleType}",
                 active: ${vehicle.active}
               }) {
                 id
@@ -84,6 +85,7 @@ export class RegisterService {
                 make
                 model
                 color
+                vehicleType
                 driver
                 active
               }
@@ -146,6 +148,7 @@ export class RegisterService {
                 make
                 model
                 color
+                vehicleType
                 driver
                 active
               }
@@ -183,6 +186,7 @@ export class RegisterService {
                 make: "${vehicle?.make}",
                 model: "${vehicle?.model}",
                 color: "${vehicle?.color}",
+                vehicleType: "${vehicle?.vehicleType}",
                 active: ${vehicle?.active}
               }) {
                 id
