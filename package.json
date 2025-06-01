@@ -19,7 +19,7 @@
     "install-permit": "cd Microservices/PermitService && npm install",
     "install-stripe": "cd Microservices/StripeService && npm install",
     "install-webhook": "cd Microservices/WebhookService && npm install",
-    "install-email": "cd Microservices/EmailService && npm install",
+    "install-email": "cd Microservices/EmailService && npm install", 
     "install-ticket": "cd Microservices/TicketService && npm install",
     "install-vehicle": "cd Microservices/VehicleService && npm install",
     "install-driver-app": "cd Apps/driver-parking && npm install",
