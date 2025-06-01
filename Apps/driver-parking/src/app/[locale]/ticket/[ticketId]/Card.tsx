@@ -218,14 +218,14 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
       <React.Fragment>
         {ticket ? (
           <Box >
-            {!ticket?.paid && ticket?.appeal != "approved" && (
+            {!ticket?.paid && (
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
                   gap: 1,
                   ml:3,
-                  mr:3
+                  mr:3,
                 }}
               >
                 <Fab
@@ -234,21 +234,23 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
                   onClick={() => {
                     handleClickPaid();
                   }}
+                  sx={{ mx: 'auto'}}
                 >
                   <CurrencyExchangeIcon sx={{ mr: 1 }} />
                   {t("payTicket")}
                 </Fab>
-
-                <Fab
-                  color="secondary"
-                  variant="extended"
-                  onClick={() => {
-                    handleOpenAppealModal();
-                  }}
-                >
-                  <FrontHandIcon sx={{ mr: 1 }} />
-                  {t("appealTicket")}
-                </Fab>
+                { ticket?.appeal === "null" && (
+                  <Fab
+                    color="secondary"
+                    variant="extended"
+                    onClick={() => {
+                      handleOpenAppealModal();
+                    }}
+                  >
+                    <FrontHandIcon sx={{ mr: 1 }} />
+                    {t("appealTicket")}
+                  </Fab>
+                )}
               </Box>
             )}
             <AppealModal
@@ -268,7 +270,7 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
     <React.Fragment>
       <Box>
         <Grid
-          style={{ height: "76vh", overflow: "auto" }}
+          style={{ height: "73vh", overflow: "auto" }}
           size={{ xs: 12, sm: 12, md: 12 }}
         >
           {topHalf()}
