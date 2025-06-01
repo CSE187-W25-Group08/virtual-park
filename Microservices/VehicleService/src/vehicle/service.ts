@@ -17,6 +17,7 @@ export class VehicleService {
         'make': data.make,
         'model': data.model,
         'color': data.color,
+        'vehicleType': data.vehicleType,
         'active': rows[0].data.active
       }
       return vehicleObj
@@ -39,6 +40,7 @@ export class VehicleService {
         'make': data.make,
         'model': data.model,
         'color': data.color,
+        'vehicleType': data.vehicleType,
         'active': data.active
       }
       return vehicleObj

@@ -19,6 +19,7 @@ export class RegisterService {
                 make
                 model
                 color
+                vehicleType
               }
             }
           `,
@@ -46,7 +47,7 @@ export class RegisterService {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${cookie}`,
         },
-        body: JSON.stringify({query: `{userVehicle {id, licensePlate, driver, make, model, color, active}}`}),
+        body: JSON.stringify({query: `{userVehicle {id, licensePlate, driver, make, model, color, vehicleType, active}}`}),
       })
       .then(response => {
         if (response.status != 200) {
@@ -194,6 +195,7 @@ export class RegisterService {
                 make
                 model
                 color
+                vehicleType
                 driver
                 active
               }

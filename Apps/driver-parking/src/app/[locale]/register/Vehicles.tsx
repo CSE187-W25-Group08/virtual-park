@@ -112,6 +112,8 @@ export default function Vehicles() {
     }
   };
 
+  console.log(selectedVehicle)
+
   return (
     <Box sx={{
       display: 'flex',
@@ -226,6 +228,7 @@ export default function Vehicles() {
                 name='vehicleType'
                 fullWidth
                 displayEmpty
+                value={selectedVehicle?.vehicleType}
                 onChange={(e) => setSelectedVehicle(prev => prev ? {
                   ...prev,
                   vehicleType: e.target.value as string
