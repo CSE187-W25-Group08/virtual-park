@@ -8,6 +8,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Jeep',
     'model', 'Trailhawk',
     'color', 'cyan',
+    'vehicleType', 'Car',
     'active', true
   )
 );
@@ -21,6 +22,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Honda',
     'model', 'Pilot',
     'color', 'White',
+    'vehicleType', 'Car',
     'active', true
   )
 );
@@ -34,6 +36,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Honda',
     'model', 'Civic',
     'color', 'Gold',
+    'vehicleType', 'Car',
     'active', true
   )
 );
@@ -47,6 +50,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Subaru',
     'model', 'BRZ',
     'color', 'White',
+    'vehicleType', 'Car',
     'active', false
   )
 );
@@ -60,6 +64,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Toyota',
     'model', 'Corolla',
     'color', 'Silver',
+    'vehicleType', 'Car',
     'active', true
   )
 );
@@ -71,6 +76,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Honda',
     'model', 'Accord',
     'color', 'Black',
+    'vehicleType', 'Car',
     'active', false
   )
 );
@@ -82,6 +88,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Tesla',
     'model', 'Model Y',
     'color', 'Red',
+    'vehicleType', 'Car',
     'active', false
   )
 );
@@ -94,6 +101,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Toyota',
     'model', 'Corolla',
     'color', 'Silver',
+    'vehicleType', 'Car',
     'active', true
   )
 );
@@ -106,6 +114,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'arf',
     'model', 'bark',
     'color', 'bark',
+    'vehicleType', 'Motorcycle',
     'active', true
   )
 );
@@ -119,6 +128,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'benz',
     'model', 'amg',
     'color', 'black',
+    'vehicleType', 'Motorcycle',
     'active', true
   )
 );

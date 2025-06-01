@@ -11,6 +11,7 @@ VALUES (
     'make', 'Jeep',
     'model', 'Trailhawk',
     'color', 'cyan',
+    'vehicleType', 'Car',
     'active', true
   )
 );
@@ -25,6 +26,7 @@ VALUES (
     'make', 'Make',
     'model', 'Model',
     'color', 'Blue',
+    'vehicleType', 'Car',
     'active', false
   )
 );
@@ -39,6 +41,7 @@ VALUES (
     'make', 'Honda',
     'model', 'Civic',
     'color', 'Blue',
+    'vehicleType', 'Car',
     'active', true
   )
 );
@@ -51,6 +54,7 @@ VALUES (
     'make', 'Chevy',
     'model', 'Tahoe',
     'color', 'Black',
+    'vehicleType', 'Car',
     'active', false
   )
 );
@@ -63,6 +67,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Toyota',
     'model', 'Corolla',
     'color', 'Silver',
+    'vehicleType', 'Car',
     'active', true
   )
 );
@@ -75,6 +80,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'make', 'Toyota',
     'model', 'Corolla',
     'color', 'Silver',
+    'vehicleType', 'Car',
     'active', true
   )
 );

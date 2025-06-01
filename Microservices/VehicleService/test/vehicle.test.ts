@@ -171,7 +171,8 @@ test('Member Registers a Vehicle', async () => {
             licensePlate: "TEST123",
             make: "Toyota",
             model: "Corolla",
-            color: "Silver"
+            color: "Silver",
+            vehicleType: "Car",
             active: false
           }) {
             id
@@ -180,6 +181,7 @@ test('Member Registers a Vehicle', async () => {
             model
             color
             driver
+            vehicleType
             active
           }
         }
@@ -188,7 +190,7 @@ test('Member Registers a Vehicle', async () => {
   // .then((res) => {
   //   expect(res.body.data.registerVehicle.active).toBe(false)
   // })
-
+  console.log(res1.body)
   const vehicleId = res1.body.data.registerVehicle.id;
 
   await supertest(server)
@@ -244,6 +246,7 @@ test('user who has primary car adds a new car selected as primary', async () => 
             make: "Toyota",
             model: "Corolla",
             color: "Silver",
+            vehicleType: "Car",
             active: true
           }) {
             id
@@ -252,6 +255,7 @@ test('user who has primary car adds a new car selected as primary', async () => 
             model
             color
             driver
+            vehicleType
             active
           }
         }
@@ -309,7 +313,7 @@ test('Edits a vehicle', async () => {
     .send({
       query: `{
         userVehicle
-        { id, driver, licensePlate, make, model, color, active }
+        { id, driver, licensePlate, make, model, color, vehicleType, active }
       }`
     })
     .then((res) => {
@@ -327,7 +331,8 @@ test('Edits a vehicle', async () => {
             licensePlate: "newplate",
             make: "${vehicle.make}",
             model: "${vehicle.model}",
-            color: "${vehicle.color}"
+            color: "${vehicle.color}",
+            vehicleType: "${vehicle.vehicleType}",
             active: ${vehicle.active}
           }) {
             id
@@ -336,6 +341,7 @@ test('Edits a vehicle', async () => {
             model
             color
             driver
+            vehicleType
             active
           }
         }
