@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Badge, Box, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import { useTranslations } from "next-intl";
-import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 
-import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import TicketCard from "./card";
 import { Ticket } from "../../../ticket";
 import { listPaid, listUnpaid, listAppealed } from "./actions";
-
 
 export default function TicketList() {
   const [paidTicketList, setPaidTicketList] = useState<Ticket[]>([]);
@@ -36,7 +35,7 @@ export default function TicketList() {
     fetchData();
   }, []);
 
-  const TableHeader = (title: string, type: string) => (
+  const TableHeader = (length: number, title: string, type: string) => (
     <Box
       sx={{
         mt: 1,
@@ -45,15 +44,30 @@ export default function TicketList() {
         justifyContent: "space-between",
       }}
     >
-      <Typography>{title}</Typography>
-      <Box>
+      <Box sx = {{display: "flex", gap: 1}}>
       {type === "unpaid" ? (
-        <Typography>{t('issueDate')}</Typography>
+        <Badge badgeContent={unpaidTicket.length}>
+          <SentimentVeryDissatisfiedIcon />
+        </Badge>
       ) : type === "paid" ? (
-        <Typography>{t('datePaid')}</Typography>
+        <Badge badgeContent={paidTicketList.length}>
+          <EmojiEmotionsIcon />
+        </Badge>
       ) : (
-        <Typography>{t('status')}</Typography>
+        <Badge badgeContent={appealedTickets.length}>
+          <SentimentDissatisfiedIcon />
+        </Badge>
       )}
+      <Typography>{title}</Typography>
+  `   </Box>
+      <Box>
+        {type === "unpaid" ? (
+          <Typography>{t("issueDate")}</Typography>
+        ) : type === "paid" ? (
+          <Typography>{t("datePaid")}</Typography>
+        ) : (
+          <Typography>{t("status")}</Typography>
+        )}
       </Box>
     </Box>
   );
@@ -66,17 +80,16 @@ export default function TicketList() {
         </Toolbar>
       </AppBar> */}
       <Box sx={{ px: 2, mb: 10 }}>
-        <List sx={{ width: '100%' }}>
-          {unpaidTicket.length <= 0 ?
-           (<Box sx={{display:'flex', width:'100%', justifyContent:'center'}}>
-              <Typography sx={{mt: 7}}>{t('noTickets')}</Typography>
-            </Box>) : (
+        <List sx={{ width: "100%" }}>
+          {unpaidTicket.length <= 0 ? (
+            <Box
+              sx={{ display: "flex", width: "100%", justifyContent: "center" }}
+            >
+              <Typography sx={{ mt: 7 }}>{t("noTickets")}</Typography>
+            </Box>
+          ) : (
             <>
-
-            <Badge badgeContent={unpaidTicket.length}>
-              <SentimentVeryDissatisfiedIcon/>
-            </Badge>
-              {TableHeader(t('unpaid'), "unpaid")}
+              {TableHeader(unpaidTicket.length, t("unpaid"), "unpaid")}
               {unpaidTicket.map((ticket, index) => (
                 <TicketCard key={index} ticket={ticket} />
               ))}
@@ -85,10 +98,7 @@ export default function TicketList() {
 
           {paidTicketList.length > 0 && (
             <>
-            <Badge badgeContent={paidTicketList.length}>
-              <EmojiEmotionsIcon/>
-            </Badge>
-              {TableHeader(t('paid'), "paid")}
+              {TableHeader(paidTicketList.length, t("paid"), "paid")}
               {paidTicketList.map((ticket, index) => (
                 <TicketCard key={index} ticket={ticket} />
               ))}
@@ -97,10 +107,7 @@ export default function TicketList() {
 
           {appealedTickets.length > 0 && (
             <>
-            <Badge badgeContent={appealedTickets.length}>
-              <SentimentDissatisfiedIcon/>
-            </Badge>
-              {TableHeader(t('appeal'), "appeal")}
+              {TableHeader(appealedTickets.length, t("appeal"), "appeal")}
               {appealedTickets.map((ticket, index) => (
                 <TicketCard key={index} ticket={ticket} />
               ))}

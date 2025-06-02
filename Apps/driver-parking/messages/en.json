@@ -103,9 +103,9 @@
     "datePaid": "Date Paid",
     "status": "Status",
     "noTickets": "No current violations on file.",
-    "unpaid": "🔴 Unpaid Violations",
-    "paid": "🟢 Paid Violations",
-    "appeal": "🟡 Appealed Violations"
+    "unpaid": "Unpaid Violations",
+    "paid": "Paid Violations",
+    "appeal": "Appealed Violations"
   },
   "ticket_details": {
     "violation": "Violation:",
