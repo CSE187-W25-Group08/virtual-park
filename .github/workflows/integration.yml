@@ -50,6 +50,7 @@ jobs:
       POSTGRES_DB: testdb
       JSON_LIMIT: 15mb
       GOOGLE_CREDENTIALS_PATH: ${{ secrets.GOOGLE_CREDENTIALS_PATH }}
+      MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
