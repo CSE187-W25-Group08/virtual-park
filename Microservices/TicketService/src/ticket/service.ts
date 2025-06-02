@@ -192,4 +192,16 @@ export class TicketService {
     const tickets = await this.rowToTicket(rows)
     return tickets[0]
   }
+
+  public async getUnpaidPayroll(userId: string | undefined): Promise<number> {
+    const query = {
+      text: queries.unpaidTicketsPayroll,
+      values: [userId],
+    }
+
+    const { rows } = await pool.query(query)
+
+
+    return rows[0].count
+  }
 }

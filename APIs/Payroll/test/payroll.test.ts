@@ -19,7 +19,7 @@ afterAll(() => {
 })
 
 test('User can query if they have tickets they have to pay', async () => {
-  const email ='tommy@books.com';
+  const email ='matt@books.com';
   await supertest(server)
     .get('/api/v0/payroll?email=' + email)
     .send(email)

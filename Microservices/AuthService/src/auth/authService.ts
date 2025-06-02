@@ -160,4 +160,14 @@ export class AuthService {
       return undefined;
     }
   }
+
+
+  public async getUserIdByEmail(email: string): Promise<string | undefined> {
+    const user = await db.getUserByEmail(email);
+    if (user) {
+      return user.id
+    } else {
+      return undefined;
+    }
+  }
 }

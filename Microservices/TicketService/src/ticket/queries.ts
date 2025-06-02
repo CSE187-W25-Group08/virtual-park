@@ -148,3 +148,15 @@ export const respondAppealApproved =
   )
   SELECT id, driver, data FROM UPDATED
   `
+
+  export const unpaidTicketsPayroll =
+  `
+    SELECT COUNT(*) AS count
+
+  FROM ticket
+
+  WHERE (data->>'paid' = 'false')
+  
+  AND (driver = $1)
+  
+`;

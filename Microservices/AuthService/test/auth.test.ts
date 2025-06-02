@@ -423,3 +423,9 @@ test('User logged in can retrieve their info', async () => {
   console.log(res.body)
 })
 
+
+test('Payroll/Registrar can retrieve their id', async () => {
+  const res = await supertest(server)
+    .get('/api/v0/auth/id?email=anna@books.com')
+  console.log(res.body)
+})

@@ -4,7 +4,8 @@ import {
   Mutation,
   Arg,
   Authorized,
-  Ctx
+  Ctx,
+  Int
 } from "type-graphql"
 import { Ticket } from "./schema"
 import { TicketService } from "./service"
@@ -127,4 +128,14 @@ export class TicketResolver {
       image, cost
     );
   }
+
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(returns => Int)
+  async unpaidTicketPayrollCount(
+    @Arg("driverId") driverId: string,
+  ): Promise<number> {
+    return await new TicketService().getUnpaidPayroll(driverId)
+  }
+
 }

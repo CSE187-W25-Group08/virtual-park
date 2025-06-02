@@ -1,9 +1,9 @@
 import { vi, test, beforeAll, afterAll, expect } from "vitest";
 import * as http from "http";
 import supertest from "supertest";
-import * as db from './db'
+import * as db from "./db";
 import { app, bootstrap } from "../src/app";
-import { Ticket } from '../src/ticket/schema';
+import { Ticket } from "../src/ticket/schema";
 
 let server: http.Server<
   typeof http.IncomingMessage,
@@ -13,33 +13,31 @@ let server: http.Server<
 beforeAll(async () => {
   server = http.createServer(app);
   server.listen();
-  await db.reset()
+  await db.reset();
   await bootstrap();
 });
 
 afterAll(() => {
-  db.shutdown()
+  db.shutdown();
   server.close();
 });
 
-
-vi.mock('../src/auth/service', () => {
+vi.mock("../src/auth/service", () => {
   return {
     AuthService: class {
       async check() {
-        return { id: '03845709-4d40-45fe-9e51-11789f6f209a' }
+        return { id: "03845709-4d40-45fe-9e51-11789f6f209a" };
       }
-    }
-  }
-})
+    },
+  };
+});
 
-const accessToken = 'Placeholder before authenticated implementation'
-
+const accessToken = "Placeholder before authenticated implementation";
 
 test("Gets all tickets through admin", async () => {
   await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -51,13 +49,12 @@ test("Gets all tickets through admin", async () => {
     })
     .then((res) => {
       expect(res.body.data.ticket[0].violation).toEqual("expired meter");
-
     });
 });
 test("Gets all tickets through admin", async () => {
   await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -69,14 +66,13 @@ test("Gets all tickets through admin", async () => {
     })
     .then((res) => {
       expect(res.body.data.allTicket.length).toEqual(4);
-
     });
 });
 
 test("Get all paid tickets", async () => {
   await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -88,14 +84,13 @@ test("Get all paid tickets", async () => {
     })
     .then((res) => {
       expect(res.body.data.paidTicket.length).toEqual(0);
-
     });
 });
 
 test("Get all unpaid tickets", async () => {
   await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -113,7 +108,7 @@ test("Get all unpaid tickets", async () => {
 test("Get ticket with id", async () => {
   await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -124,15 +119,14 @@ test("Get ticket with id", async () => {
       `,
     })
     .then((res) => {
-      expect(res.body.data.ticketId.violation).toBe('expired meter')
-
+      expect(res.body.data.ticketId.violation).toBe("expired meter");
     });
 });
 
 test("Update ticket paid status", async () => {
   await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         mutation {
@@ -143,14 +137,14 @@ test("Update ticket paid status", async () => {
       `,
     })
     .then((res) => {
-      expect(res.body.data.setTicketPaid.paid).toBeTruthy()
+      expect(res.body.data.setTicketPaid.paid).toBeTruthy();
     });
 });
 
 test("Get all active appeals", async () => {
   await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -162,17 +156,18 @@ test("Get all active appeals", async () => {
       `,
     })
     .then((res) => {
-      expect(res.body.data.appealedTicket[0].description).toEqual("a ticket you might want to appeal");
-
+      expect(res.body.data.appealedTicket[0].description).toEqual(
+        "a ticket you might want to appeal"
+      );
     });
 });
 
-test('Update a ticket to be appealed', async () => {
-  let initialAppealCount: number
-  let unappealedTicketId = null
+test("Update a ticket to be appealed", async () => {
+  let initialAppealCount: number;
+  let unappealedTicketId = null;
   await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
+    .post("/graphql")
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -182,18 +177,21 @@ test('Update a ticket to be appealed', async () => {
             appealReason
           }
         }
-      `
+      `,
     })
     .then((res) => {
-      unappealedTicketId = res.body.data.allTicket.filter((ticket: Ticket) => ticket.appeal == 'null')[0].id
+      unappealedTicketId = res.body.data.allTicket.filter(
+        (ticket: Ticket) => ticket.appeal == "null"
+      )[0].id;
       initialAppealCount = res.body.data.allTicket.filter(
-        (ticket: Ticket) => ticket.appeal != 'null' && ticket.appeal != 'rejected'
-      ).length
-    })
+        (ticket: Ticket) =>
+          ticket.appeal != "null" && ticket.appeal != "rejected"
+      ).length;
+    });
 
   await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
+    .post("/graphql")
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         mutation {
@@ -203,12 +201,12 @@ test('Update a ticket to be appealed', async () => {
             appealReason
           }
         }
-      `
-    })
+      `,
+    });
 
   await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
+    .post("/graphql")
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -218,17 +216,19 @@ test('Update a ticket to be appealed', async () => {
             appealReason
           }
         }
-      `
+      `,
     })
     .then((res) => {
-      expect(res.body.data.appealedTicket.length).toEqual(initialAppealCount + 1)
-    })
-})
+      expect(res.body.data.appealedTicket.length).toEqual(
+        initialAppealCount + 1
+      );
+    });
+});
 
 test("Get all unpaid tickets", async () => {
   await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -241,15 +241,14 @@ test("Get all unpaid tickets", async () => {
     })
     .then((res) => {
       expect(res.body.data.allUnpaidTickets.length).toEqual(3);
-
     });
 });
 
 test("Get spefic ticket with admin endpoint", async () => {
   let ticketId;
   await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
+    .post("/graphql")
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -258,14 +257,14 @@ test("Get spefic ticket with admin endpoint", async () => {
             appeal
           }
         }
-      `
+      `,
     })
     .then((res) => {
       ticketId = res.body.data.allTicket[0].id;
-    })
+    });
   await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
+    .post("/graphql")
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -276,7 +275,7 @@ test("Get spefic ticket with admin endpoint", async () => {
             appeal
           }
         }
-      `
+      `,
     })
     .then((res) => {
       console.log(res.body.errors);
@@ -293,13 +292,14 @@ test("Issue a new ticket", async () => {
     paid: false,
     description: "no valid permit exist",
     violation: "No permit",
-    image: 'https://krcrtv.com/resources/media2/16x9/full/1015/center/80/6918a95f-2801-4fa8-b65f-51c46a5395a5-large16x9_crash.jpg',
+    image:
+      "https://krcrtv.com/resources/media2/16x9/full/1015/center/80/6918a95f-2801-4fa8-b65f-51c46a5395a5-large16x9_crash.jpg",
     cost: 50,
   };
 
   await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         mutation IssueTicket(
@@ -335,18 +335,18 @@ test("Issue a new ticket", async () => {
           }
         }
       `,
-      variables: testTicketData
+      variables: testTicketData,
     })
     .then((res) => {
-      console.log('the details of the ticketissue:', res.body.data.ticketIssue)
+      console.log("the details of the ticketissue:", res.body.data.ticketIssue);
       expect(res.body.data.ticketIssue).toBeDefined();
     });
 });
 
 test("Approve an appeal", async () => {
   const appealedTicket = await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
+    .post("/graphql")
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -356,16 +356,18 @@ test("Approve an appeal", async () => {
             appealReason
           }
         }
-      `
+      `,
     });
   const appealedTicketId = appealedTicket.body.data.appealedTicket[0].id;
-  expect(appealedTicket.body.data.appealedTicket[0].appeal).not.toBe('approved');
-  
-  console.log('Using ticket ID:', appealedTicketId);
+  expect(appealedTicket.body.data.appealedTicket[0].appeal).not.toBe(
+    "approved"
+  );
+
+  console.log("Using ticket ID:", appealedTicketId);
 
   const approveTicket = await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         mutation {
@@ -382,8 +384,8 @@ test("Approve an appeal", async () => {
 
 test("reject an appeal", async () => {
   const appealedTicket = await supertest(server)
-    .post('/graphql')
-    .set('Authorization', 'Bearer ' + accessToken)
+    .post("/graphql")
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         query {
@@ -393,14 +395,16 @@ test("reject an appeal", async () => {
             appealReason
           }
         }
-      `
+      `,
     });
   const appealedTicketId = appealedTicket.body.data.appealedTicket[0].id;
-  expect(appealedTicket.body.data.appealedTicket[0].appeal).not.toBe('rejected');
+  expect(appealedTicket.body.data.appealedTicket[0].appeal).not.toBe(
+    "rejected"
+  );
 
   const rejectTicket = await supertest(server)
     .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
+    .set("Authorization", "Bearer " + accessToken)
     .send({
       query: `
         mutation {
@@ -413,4 +417,24 @@ test("reject an appeal", async () => {
       `,
     });
   expect(rejectTicket.body.data.rejectAppeal.appeal).toEqual("rejected");
+});
+
+test("Get all unpaid tickets for payroll", async () => {
+  const driverId = "03845709-4d40-45fe-9e51-11789f6f209a";
+  await supertest(server)
+    .post("/graphql")
+    .send({
+      query: `
+        query ($id: String!) {
+          unpaidTicketPayrollCount(driverId: $id)
+        }
+      `,
+      variables: {
+        id: driverId,
+      },
+    })
+    .then((res) => {
+      console.log(res.body)
+      expect(res.body.data.unpaidTicketPayrollCount).toEqual(3);
+    });
 });
