@@ -128,7 +128,7 @@ export default function TicketView({
             required
             value={ticketInfo.violation}
             onChange={handleTextInputChange}
-            placeholder="e.g., No permit, Expired permit, Wrong lot"
+            placeholder="No Permit, Wrong Lot, Expired Permit"
           />
           
           <TextField
