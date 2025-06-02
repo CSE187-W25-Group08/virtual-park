@@ -113,7 +113,19 @@ export const testVehicle = {
   licensePlate: "ABC-123",
   make: "Toyota",
   model: "Camry",
-  color: "Blue"
+  color: "Blue",
+  vehicleType: 'Car'
+}
+
+export const testVehicle2 = {
+  id: 'v1',
+  licensePlate: 'ABC123',
+  driver: 'testDriver',
+  make: 'Nissan',
+  model: 'Leaf',
+  color: 'Green',
+  vehicleType: 'Car',
+  active: true
 }
 
 export const testLots = [

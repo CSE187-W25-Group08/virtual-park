@@ -1,5 +1,5 @@
 import { it, afterEach, vi, beforeEach } from 'vitest' 
-import { render, screen, cleanup } from '@testing-library/react'
+import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 
@@ -7,6 +7,8 @@ import Page from '../../src/app/[locale]/dashboard/page'
 import { dashboard as dashboardMessages } from '../../messages/en.json'
 import { ticket as ticketMessages } from '../../messages/en.json'
 import { listUnpaid } from '@/app/[locale]/ticket/actions'
+import { getActivePermit, getDailyPermitType } from '@/app/[locale]/dashboard/actions'
+import { getPrimaryVehicle } from '@/app/[locale]/register/actions'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -22,6 +24,15 @@ vi.mock('next/headers', () => ({
 
 vi.mock('../../src/app/[locale]/ticket/actions', () => ({
   listUnpaid: vi.fn(),
+}))
+
+vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
+  getActivePermit: vi.fn(),
+  getDailyPermitType: vi.fn(),
+}))
+
+vi.mock('../../src/app/[locale]/register/actions', () => ({
+  getPrimaryVehicle: vi.fn(),
 }))
 
 vi.mocked(listUnpaid).mockResolvedValue([
@@ -41,6 +52,17 @@ vi.mocked(listUnpaid).mockResolvedValue([
     appealReason: "i did nothing wrong"
   }
 ])
+
+vi.mocked(getDailyPermitType).mockResolvedValue(
+  {
+    id: 'p1',
+    type: 'Daily',
+    price: 6.00,
+    permitClass: 'Remote'
+  }
+)
+
+vi.mocked(getActivePermit).mockResolvedValue(null)
 
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
@@ -96,10 +118,17 @@ it('should fetch user\'s unpaid tickets', async () => {
   renderWithIntl(<Page />)
 
   await screen.findByText('dab')
+})
 
-  // const payTickets = await screen.findByText('Pay Tickets')
+it('Prompts for vehicle registration when user tries to buy a permit without one', async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(getPrimaryVehicle).mockResolvedValue(undefined)
 
-  // fireEvent.click(payTickets)
+  renderWithIntl(<Page />)
 
-  // expect(alert).toHaveBeenCalledWith('All tickets paid. \nTotal: $50.02');
+  await screen.findByText('dab')
+  fireEvent.click(screen.getByLabelText('Buy Daily Permit'))
+  
+  await screen.findByText(/You do not have a registered vehicle./)
 })
