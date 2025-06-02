@@ -39,12 +39,12 @@ it('Renders Page', async () => {
 
 it('contains Violation Text', async () => {
   renderWithIntl(<TicketList/>)
-  await screen.findByText('🔴 Unpaid Violations');
+  await screen.findByText('Unpaid Violations');
 })
 
 it('contains Paid Text', async () => {
     renderWithIntl(<TicketList/>)
-    await screen.findByText('🟢 Paid Violations');
+    await screen.findByText('Paid Violations');
 })
 
 it('contains expired meter violation', async () => {
