@@ -184,6 +184,19 @@ export class AuthController extends Controller {
     }
   }
 
+  //used for payroll and registrar api
+  @Get('id')
+  @Response('401', 'Unauthorized')
+  @Response('404', 'User not found')
+  @SuccessResponse('200', 'User id found')
+  public async getIdFromEmail(
+      @Query() email: string
+  ): Promise<string | undefined> {
+      const user = await new AuthService().getUserIdByEmail(email);
+      return user;
+    
+  }
+
 
 
 
