@@ -134,7 +134,15 @@ export default function Dashboard() {
         {activePermit === null && (
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" sx={{ marginLeft: 1 }}>
-              {t('noPermit')} {!isMobile && (<Link href="#" style={{color: '#1976d2'}} onClick={handleBuyPermit}>{t('buyPermit')}.</Link>)}
+              {t('noPermit')} {!isMobile && (<Link href="#" style={{color: '#1976d2'}} onClick={handleBuyPermit}>
+                {vehicle?.vehicleType ?
+                  (vehicle.vehicleType == 'Motorcycle' ? 
+                    t('buyDailyMotorcycle') :
+                    t('buyDailyRemote')
+                  ) :
+                  t('buyPermit')
+                }
+              </Link>)}
             </Typography>
             {isMobile && (
               <Button
