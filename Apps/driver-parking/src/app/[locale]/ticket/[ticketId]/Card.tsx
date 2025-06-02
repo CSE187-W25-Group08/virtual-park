@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import ErrorIcon from '@mui/icons-material/Error';
 import CardMedia from "@mui/material/CardMedia";
-import { Box, Typography, Alert, Grid } from "@mui/material";
-import Fab from "@mui/material/Fab";
+import { Box, Typography, Alert, Grid, Card, Button, CardActions } from "@mui/material";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import FrontHandIcon from "@mui/icons-material/FrontHand";
 import { useRouter } from "next/navigation";
@@ -180,30 +179,30 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
               image={`${ticket.image}?w=164&h=164&fit=crop&auto=format`}
               alt="Invalid image"
               loading="lazy"
-              style={{ width: "100%", height: "auto" }}
+              sx={{ width: "95%", height: "auto", mx: "auto", borderRadius: 2, mb: 2, mt: 2 }}
               aria-label={"image_" + ticketId}
-              sx = {{ borderRadius: 2, mb: 2}}
             />
-            <Typography>
-              <strong>{t("violation")} </strong>
-              {ticket?.violation}
-            </Typography>
-            <Typography>
-              <strong>{t("description")}</strong> {ticket?.description}
-            </Typography>
+            <Box sx={{ mx: 3 }}>
+              <Typography>
+                <strong>{t("violation")} </strong>
+                {ticket?.violation}
+              </Typography>
+              <Typography>
+                <strong>{t("description")}</strong> {ticket?.description}
+              </Typography>
 
-            <Typography>
-              <strong>{t("licensePlate")}</strong> {vehicle?.licensePlate}
-            </Typography>
+              <Typography>
+                <strong>{t("licensePlate")}</strong> {vehicle?.licensePlate}
+              </Typography>
 
-            <Typography>
-              <strong>{t("issued")}</strong> {handleHourDate(ticket?.issue)}
-            </Typography>
+              <Typography>
+                <strong>{t("issued")}</strong> {handleHourDate(ticket?.issue)}
+              </Typography>
 
-            <Typography>
-              <strong>{t("cost")}</strong> ${ticket?.cost}
-            </Typography>
-
+              <Typography>
+                <strong>{t("cost")}</strong> ${ticket?.cost}
+              </Typography>
+            </Box>
           </Box>
         ) : (
           <div>{t("loading")}</div>
@@ -219,38 +218,30 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
         {ticket ? (
           <Box >
             {!ticket?.paid && (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: 1,
-                  ml:3,
-                  mr:3,
-                }}
-              >
-                <Fab
+              <Box>
+                <Button
                   color="primary"
-                  variant="extended"
+                  variant="contained"
                   onClick={() => {
                     handleClickPaid();
                   }}
-                  sx={{ mx: 'auto'}}
+                  sx={{ borderRadius: 4, mr: 1 }}
                 >
                   <CurrencyExchangeIcon sx={{ mr: 1 }} />
                   {t("payTicket")}
-                </Fab>
+                </Button>
                 { ticket?.appeal === "null" && (
-                  <Fab
+                  <Button
                     color="secondary"
-                    variant="extended"
+                    variant="contained"
                     onClick={() => {
                       handleOpenAppealModal();
                     }}
-                    sx={{ mx: 'auto'}}
+                    sx={{ borderRadius: 4 }}
                   >
                     <FrontHandIcon sx={{ mr: 1 }} />
                     {t("appealTicket")}
-                  </Fab>
+                  </Button>
                 )}
               </Box>
             )}
@@ -269,15 +260,21 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
 
   return (
     <React.Fragment>
-      <Box>
-        <Grid
-          sx={{ height: { xs: "73vh", sm: "80vh" }, overflow: "auto" }}
-          size={{ xs: 12, sm: 12, md: 12 }}
-        >
-          {topHalf()}
-        </Grid>
-        {bottomHalf()}
-      </Box>
+      <Card sx = {{
+        width: { xs: "100%", sm: "400px" },
+        mx: "auto",
+        borderRadius: 4,
+        height: "auto",
+        mb: {xs: "64px", sm: 0},
+        mt: {xs: 0, sm: 1},
+        overflow: "auto",
+        '&::-webkit-scrollbar': { display: 'none' },
+        }} raised>
+        {topHalf()}
+        <CardActions sx={{ justifyContent: "center", alignItems: "center" }}>
+          {bottomHalf()}
+        </CardActions>
+      </Card>
     </React.Fragment>
   );
 }
