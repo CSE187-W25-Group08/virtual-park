@@ -65,18 +65,6 @@ it('renders the unpaid tickets section', async () => {
   await screen.getByLabelText('Manage Tickets');
 });
 
-// it('clicks "Buy Permit" button', async () => {
-//   renderWithIntl(<Dashboard />);
-
-//   const buyPermit = screen.getByText('Buy Permit');
-
-//   const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
-//   fireEvent.click(buyPermit);
-
-//   expect(alertMock).toHaveBeenCalledWith('You have bought a permit.');
-//   alertMock.mockRestore();
-// });
-
 it('goes to ticket page when "Manage Tickets" is clicked', async () => {
   const mockPush = vi.fn();
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any);
@@ -128,4 +116,10 @@ it('renders active permit', async () => {
   renderWithIntl(<Dashboard />)
 
   await screen.findByText('Daily')
+})
+
+it('Renders the Buy Permit button', async () => {
+  renderWithIntl(<Dashboard />)
+
+  await screen.findByLabelText('Buy Daily Permit')
 })

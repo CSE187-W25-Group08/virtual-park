@@ -134,7 +134,9 @@ export default function Dashboard() {
         {activePermit === null && (
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" sx={{ marginLeft: 1 }}>
-              {t('noPermit')} {!isMobile && (<Link href="#" style={{color: '#1976d2'}} onClick={handleBuyPermit}>
+              {t('noPermit')}
+              {!isMobile && (
+                <Link href="#" style={{color: '#1976d2'}} onClick={handleBuyPermit} aria-label='Buy Daily Permit'>
                 {vehicle?.vehicleType ?
                   (vehicle.vehicleType == 'Motorcycle' ? 
                     t('buyDailyMotorcycle') :
@@ -142,13 +144,15 @@ export default function Dashboard() {
                   ) :
                   t('buyPermit')
                 }
-              </Link>)}
+                </Link>
+              )}
             </Typography>
             {isMobile && (
               <Button
                 variant="contained"
                 sx={{ marginTop: 2, marginLeft: 1 }}
                 onClick={handleBuyPermit}
+                aria-label='Buy Daily Permit'
               >
                 {vehicle?.vehicleType ?
                   (vehicle.vehicleType == 'Motorcycle' ? 
