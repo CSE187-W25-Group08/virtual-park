@@ -1,5 +1,5 @@
-import { it, afterEach, vi, beforeEach } from 'vitest' 
-import { render, screen, cleanup, fireEvent } from '@testing-library/react'
+import { it, afterEach, vi, beforeEach, expect } from 'vitest' 
+import { render, screen, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 
@@ -131,4 +131,35 @@ it('Prompts for vehicle registration when user tries to buy a permit without one
   fireEvent.click(screen.getByLabelText('Buy Daily Permit'))
   
   await screen.findByText(/You do not have a registered vehicle./)
+})
+
+it('Closes the registration prompt upon clicking No', async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(getPrimaryVehicle).mockResolvedValue(undefined)
+
+  renderWithIntl(<Page />)
+
+  await screen.findByText('dab')
+  fireEvent.click(screen.getByLabelText('Buy Daily Permit'))
+  await screen.findByText(/You do not have a registered vehicle./)
+  fireEvent.click(screen.getByText('No'))
+  const promptText = screen.queryByText(/You do not have a registered vehicle./)
+  expect(promptText).toBeNull()
+})
+
+it('Navigates to the registration page upon clicking Yes', async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(getPrimaryVehicle).mockResolvedValue(undefined)
+
+  renderWithIntl(<Page />)
+
+  await screen.findByText('dab')
+  fireEvent.click(screen.getByLabelText('Buy Daily Permit'))
+  await screen.findByText(/You do not have a registered vehicle./)
+  fireEvent.click(screen.getByText('Yes'))
+  waitFor(() => {
+    expect(mockPush).toHaveBeenCalledWith('/register')
+  })
 })
