@@ -47,6 +47,10 @@ COPY APIs/CampusPolice/build/ /home/app/APIs/CampusPolice/build/
 COPY APIs/CampusPolice/package.json /home/app/APIs/CampusPolice/
 COPY APIs/CampusPolice/package-lock.json /home/app/APIs/CampusPolice/
 
+COPY APIs/Payroll/build/ /home/app/APIs/Payroll/build/
+COPY APIs/Payroll/package.json /home/app/APIs/Payroll/
+COPY APIs/Payroll/package-lock.json /home/app/APIs/Payroll/
+
 COPY APIs/Registrar/build/ /home/app/APIs/Registrar/build/
 COPY APIs/Registrar/package.json /home/app/APIs/Registrar/
 COPY APIs/Registrar/package-lock.json /home/app/APIs/Registrar/
