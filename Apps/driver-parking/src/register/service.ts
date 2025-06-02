@@ -115,7 +115,7 @@ export class RegisterService {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${cookie}`,
         },
-        body: JSON.stringify({query: `{primaryVehicle {id, licensePlate, driver, make, model, color}}`}),
+        body: JSON.stringify({query: `{primaryVehicle {id, licensePlate, driver, make, model, vehicleType, color}}`}),
       })
       .then(response => {
         if (response.status != 200) {

@@ -41,11 +41,11 @@ export default function Dashboard() {
       if (activePermit) {
         setActivePermit(activePermit)
       }
-      console.log(activePermit)
       const vehicle = await getPrimaryVehicle()
       if (vehicle) {
+        console.log(vehicle)
         setVehicle(vehicle)
-        const driverClass = vehicle.type ? vehicle.type : 'Remote'
+        const driverClass = vehicle.vehicleType ? vehicle.vehicleType : 'Remote'
         const dailyPermitType = await getDailyPermitType(driverClass)
         setDailyPermitType(dailyPermitType)
       }
@@ -60,7 +60,7 @@ export default function Dashboard() {
       return
     }
 
-    console.log('This would buy a daily permit of type ', dailyPermitType)
+    console.log('Buying a daily permit of the following type: ', dailyPermitType)
     const metaData = {
       permitTypeId: dailyPermitType?.id,
       type: "permit",
@@ -68,7 +68,7 @@ export default function Dashboard() {
     }
     const amount = dailyPermitType?.price || 0
 
-    await createCheckout("PermitPurchese", amount, metaData)
+    await createCheckout("PermitPurchase", amount, metaData)
   }
 
   const handleRegisterModalClose = () => {
