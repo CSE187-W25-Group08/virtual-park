@@ -54,6 +54,7 @@ export class PermitService {
 
     const { rows } = await pool.query(query)
     const row = rows[0]
+    console.log(driverClass)
     return new PermitType(
       row.id,
       row.data.price,

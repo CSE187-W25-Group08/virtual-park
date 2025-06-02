@@ -77,6 +77,7 @@ export async function getSpecificDailyPermit(cookie: string | undefined, driverC
         return response.json()
       })
       .then(json => {
+        console.log('JSON: ', json)
         resolve(json.data.getDailyPermitType)
       })
       .catch((err) => reject(err))

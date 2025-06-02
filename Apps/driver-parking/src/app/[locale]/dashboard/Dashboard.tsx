@@ -43,9 +43,9 @@ export default function Dashboard() {
       }
       const vehicle = await getPrimaryVehicle()
       if (vehicle) {
-        console.log(vehicle)
         setVehicle(vehicle)
-        const driverClass = vehicle.vehicleType ? vehicle.vehicleType : 'Remote'
+        let driverClass = vehicle.vehicleType ? vehicle.vehicleType : 'Remote'
+        driverClass = driverClass == 'Car' ? 'Remote' : driverClass
         const dailyPermitType = await getDailyPermitType(driverClass)
         setDailyPermitType(dailyPermitType)
       }
@@ -142,7 +142,13 @@ export default function Dashboard() {
                 sx={{ marginTop: 2, marginLeft: 1 }}
                 onClick={handleBuyPermit}
               >
-                {t('buyPermit')}
+                {vehicle?.vehicleType ?
+                  (vehicle.vehicleType == 'Motorcycle' ? 
+                    t('buyDailyMotorcycle') :
+                    t('buyDailyRemote')
+                  ) :
+                  t('buyPermit')
+                }
               </Button>
             )}
           </Box>

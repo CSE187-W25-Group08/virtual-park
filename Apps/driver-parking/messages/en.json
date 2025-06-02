@@ -139,7 +139,9 @@
     "noTickets": "You have no unpaid tickets.",
     "manageTickets": "Manage tickets",
     "unpaidTickets": "You have {count} unpaid tickets.",
-    "payTickets": "Pay Tickets"
+    "payTickets": "Pay Tickets",
+    "buyDailyRemote": "Buy Daily Permit: Remote",
+    "buyDailyMotorcycle": "Buy Daily Permit: Motorcycle"
   },
   "labels": {
     "cancel": "Cancel",
