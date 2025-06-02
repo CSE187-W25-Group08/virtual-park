@@ -20,7 +20,7 @@ export async function registerVehicle(vehicle: VehicleForm) : Promise<Vehicle> {
   return new RegisterService().registerVehicle(cookie, vehicle)
 }
 
-export async function getPrimaryVehicle() : Promise<Vehicle> {
+export async function getPrimaryVehicle() : Promise<Vehicle | undefined> {
   const cookie = (await cookies()).get('session')?.value
   return new RegisterService().getPrimaryVehicle(cookie)
 }
