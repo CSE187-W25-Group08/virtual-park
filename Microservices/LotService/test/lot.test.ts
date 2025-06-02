@@ -78,7 +78,7 @@ test("Update lot at id", async () => {
     .send({
       query: `
         mutation {
-          putId(id: "${lotId}", data: {name: "Dragon", zone: "North"}) {
+          putId(id: "${lotId}", data: {name: "Dragon", zone: "North", ticketPrice: 10.0}) {
             id,
             name,
             zone, 
@@ -88,6 +88,7 @@ test("Update lot at id", async () => {
       `,
     })
     .then((res) => {
+      console.log('res: ', res.body)
       expect(res.body.data.putId.name).toBe("Dragon");
     });
 
