@@ -9,6 +9,9 @@ import { ticket as ticketMessages } from '../../messages/en.json'
 import { listUnpaid } from '@/app/[locale]/ticket/actions'
 import { getActivePermit, getDailyPermitType } from '@/app/[locale]/dashboard/actions'
 import { getPrimaryVehicle } from '@/app/[locale]/register/actions'
+import { createCheckout } from '@/stripe/helper'
+
+import { testVehicle2 } from '../testData'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -33,6 +36,10 @@ vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
 
 vi.mock('../../src/app/[locale]/register/actions', () => ({
   getPrimaryVehicle: vi.fn(),
+}))
+
+vi.mock('../../src/stripe/helper', () => ({
+  createCheckout: vi.fn(),
 }))
 
 vi.mocked(listUnpaid).mockResolvedValue([
@@ -161,5 +168,21 @@ it('Navigates to the registration page upon clicking Yes', async () => {
   fireEvent.click(screen.getByText('Yes'))
   waitFor(() => {
     expect(mockPush).toHaveBeenCalledWith('/register')
+  })
+})
+
+it('Starts a stripe checkout session when Buy Permit is clicked', async () => {
+  const mockPush = vi.fn()
+  const mockCreateCheckout = vi.mocked(createCheckout)
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  mockCreateCheckout.mockResolvedValue(undefined)
+  vi.mocked(getPrimaryVehicle).mockResolvedValue(testVehicle2) 
+
+  renderWithIntl(<Page />)
+
+  await screen.findByText('dab')
+  fireEvent.click(screen.getByText(/Buy Daily Permit: Remote/))
+  waitFor(() => {
+    expect(mockCreateCheckout).toHaveBeenCalled()
   })
 })
