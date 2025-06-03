@@ -128,6 +128,17 @@ export const testVehicle2 = {
   active: true
 }
 
+export const testMotorcycle = {
+  id: 'm1',
+  licensePlate: 'ABC123',
+  driver: 'testDriver',
+  make: 'Yamaha',
+  model: 'MT-07',
+  color: 'Green',
+  vehicleType: 'Motorcycle',
+  active: true
+}
+
 export const testLots = [
   {
     id: 'uuid-1',

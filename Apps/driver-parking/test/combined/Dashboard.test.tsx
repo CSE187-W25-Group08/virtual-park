@@ -11,7 +11,7 @@ import { getActivePermit, getDailyPermitType } from '@/app/[locale]/dashboard/ac
 import { getPrimaryVehicle } from '@/app/[locale]/register/actions'
 import { createCheckout } from '@/stripe/helper'
 
-import { testVehicle2 } from '../testData'
+import { testMotorcycle, testVehicle2 } from '../testData'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -184,5 +184,34 @@ it('Starts a stripe checkout session when Buy Permit is clicked', async () => {
   fireEvent.click(screen.getByText(/Buy Daily Permit: Remote/))
   waitFor(() => {
     expect(mockCreateCheckout).toHaveBeenCalled()
+  })
+})
+
+it('Creates the checkout session with the correct permit values', async () => {
+  const mockPush = vi.fn()
+  const mockCreateCheckout = vi.mocked(createCheckout)
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  mockCreateCheckout.mockResolvedValue(undefined)
+  vi.mocked(getPrimaryVehicle).mockResolvedValue(testMotorcycle)
+  vi.mocked(getDailyPermitType).mockResolvedValue(
+  {
+    id: 'p2',
+    type: 'Daily',
+    price: 4.00,
+    permitClass: 'Motorcycle'
+  }
+)
+
+  renderWithIntl(<Page />)
+
+  await screen.findByText('dab')
+  fireEvent.click(screen.getByText(/Buy Daily Permit: Motorcycle/))
+  const expectedMetadata = {
+    permitTypeId: 'p2',
+    type: "permit",
+    vehicleId: 'm1'
+  }
+  waitFor(() => {
+    expect(mockCreateCheckout).toHaveBeenCalledWith("PermitPurchase", 4.00, expectedMetadata)
   })
 })
