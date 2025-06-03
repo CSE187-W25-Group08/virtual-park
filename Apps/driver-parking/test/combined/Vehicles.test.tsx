@@ -39,18 +39,18 @@ const renderWithIntl = (component: React.ReactElement) => {
 it('should call registerVehicle() on save', async () => {
   renderWithIntl(<RegisterVehiclesPage />)
 
-  const registerVehicle = screen.getByText('+ Register Vehicle')
+  const registerVehicle = await screen.findByText('+ Register Vehicle')
   await userEvent.click(registerVehicle)
 
-  const licensePlate = screen.getByLabelText(/License Plate/i)
+  const licensePlate = await screen.findByLabelText(/License Plate/i)
   await userEvent.type(licensePlate, 'TEST123')
-  const make = screen.getByLabelText(/Make/i)
+  const make = await screen.findByLabelText(/Make/i)
   await userEvent.type(make, 'Toyota')
-  const model = screen.getByLabelText(/Model/i)
+  const model = await screen.findByLabelText(/Model/i)
   await userEvent.type(model, 'Corolla')
-  const color = screen.getByLabelText(/Color/i)
+  const color = await screen.findByLabelText(/Color/i)
   await userEvent.type(color, 'Silver')
 
-  const save = screen.getByText('Save')
+  const save = await screen.findByText('Save')
   await userEvent.click(save)
 })
