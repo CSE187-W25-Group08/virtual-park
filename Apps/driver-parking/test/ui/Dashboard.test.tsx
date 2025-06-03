@@ -6,7 +6,9 @@ import { NextIntlClientProvider } from 'next-intl';
 import Dashboard from '../../src/app/[locale]/dashboard/Dashboard';
 import { dashboard as dashboardMessages } from '../../messages/en.json';
 import { permit_history as permitHistoryMessages } from '../../messages/en.json';
-import { getActivePermit } from '../../src/app/[locale]/dashboard/actions';
+import { getActivePermit, getDailyPermitType } from '../../src/app/[locale]/dashboard/actions';
+import { getPrimaryVehicle } from '@/app/[locale]/register/actions';
+import { testMotorcycle, testVehicle2 } from '../testData';
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
@@ -126,4 +128,70 @@ it('Renders the Buy Permit button', async () => {
   renderWithIntl(<Dashboard />)
 
   await screen.findByLabelText('Buy Daily Permit')
+})
+
+it('Mobile: Renders the Buy Daily Motorcycle Permit button', async () => {
+  vi.mock('@mui/material', async () => {
+    const actual = await vi.importActual('@mui/material')
+    return {
+      ...actual,
+      useMediaQuery: () => true
+    }
+  })
+
+  vi.mock('../../src/app/[locale]/register/actions', () => ({
+    getPrimaryVehicle: vi.fn()
+  }));
+  vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
+    getActivePermit: vi.fn(),
+    getDailyPermitType: vi.fn()
+  }));
+
+  vi.mocked(getActivePermit).mockResolvedValue(null)
+  vi.mocked(getPrimaryVehicle).mockResolvedValue(testMotorcycle)
+  vi.mocked(getDailyPermitType).mockResolvedValue(
+    {
+      id: 'p2',
+      type: 'Daily',
+      price: 4.00,
+      permitClass: 'Motorcycle'
+    }
+  )
+
+  renderWithIntl(<Dashboard />)
+
+  await screen.findByText(/Buy Daily Permit: Motorcycle/)
+})
+
+it('Mobile: Renders the Buy Daily Remote Permit button', async () => {
+  vi.mock('@mui/material', async () => {
+    const actual = await vi.importActual('@mui/material')
+    return {
+      ...actual,
+      useMediaQuery: () => true
+    }
+  })
+
+  vi.mock('../../src/app/[locale]/register/actions', () => ({
+    getPrimaryVehicle: vi.fn()
+  }));
+  vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
+    getActivePermit: vi.fn(),
+    getDailyPermitType: vi.fn()
+  }));
+
+  vi.mocked(getActivePermit).mockResolvedValue(null)
+  vi.mocked(getPrimaryVehicle).mockResolvedValue(testVehicle2)
+  vi.mocked(getDailyPermitType).mockResolvedValue(
+    {
+      id: 'p1',
+      type: 'Daily',
+      price: 6.00,
+      permitClass: 'Remote'
+    }
+  )
+
+  renderWithIntl(<Dashboard />)
+
+  await screen.findByText(/Buy Daily Permit: Remote/)
 })
