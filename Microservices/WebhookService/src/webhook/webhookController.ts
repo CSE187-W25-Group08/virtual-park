@@ -103,11 +103,12 @@ export class WebhookController extends Controller {
                 const permitTypeId = metadata.permitTypeId as string;
                 const vehicleId = metadata.vehicleId as string;
                 const cookie = metadata.cookie as string;
+                const price = Number(metadata.price);
 
                 // email
                 await sendPermitEmailAction(email, name, productName, costOfProduct, permitTypeId, vehicleId, cookie);
                 // databsae
-                await setPermitTypePaid(permitTypeId, vehicleId, cookie, costOfProduct);
+                await setPermitTypePaid(permitTypeId, vehicleId, cookie, price);
                 break;
               }
               default: {

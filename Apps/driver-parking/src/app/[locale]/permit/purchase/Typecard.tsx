@@ -13,7 +13,7 @@ import {
   Select,
   InputLabel,
   FormControl,
-  SelectChangeEvent
+  SelectChangeEvent,
 } from '@mui/material'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import { useTranslations } from 'next-intl'
@@ -38,7 +38,11 @@ export default function PermitCard({permit}: { permit: PermitType }) {
 
    React.useEffect(() => {
     const getActiveVehicle = async () => {
-      setVehicle(await getPrimaryVehicle());
+      const vehicleResult = await getPrimaryVehicle()
+      if (!vehicleResult) {
+        throw (Error)
+      }
+      setVehicle(vehicleResult);
     }
     getActiveVehicle();
   }, []);
