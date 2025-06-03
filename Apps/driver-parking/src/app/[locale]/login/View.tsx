@@ -20,6 +20,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import logo from '../..//public/img/no-circle-logo.svg'
+import corner from '../..//public/img/corner.png'
 import { login, loginWithGoogle } from './action'
 
 export default function LoginView() {
@@ -57,12 +58,14 @@ export default function LoginView() {
   }
   
   return (
+    <Box sx = {{display: 'flex', flexDirection:'column',   minHeight: '100vh' }}>
     <Container
       maxWidth="xs"
       sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'space-between'
       }}
     >
       {failedLogin &&
@@ -75,7 +78,7 @@ export default function LoginView() {
           mt: 4,
         }}
       >
-      <Box sx={{display:'flex', flexDirection:'row', mt:5, alignItems: 'center', justifyContent:'space-between', width:'300px', mb:0}}>
+      <Box sx={{display:'flex', flexDirection:'row', mt:5, alignItems: 'center',  gap: 2, width:'300px', mb:0}}>
         <picture  style={{margin: 0, padding: 0, width: '50px', height: '50px'}}>
         <img
           src={logo.src}
@@ -165,5 +168,19 @@ export default function LoginView() {
           }}>{t("newTo")}<Link href="/signup">{t("signup")}</Link></Typography>
       </Box>
     </Container>
+
+    <Box
+  component="img"
+  src={corner.src}
+  alt="Logo"
+  sx={{
+    width: 200,
+    height: 200,
+    alignSelf: 'flex-end',
+      mt: 'auto',
+      ml: 'auto'
+  }}
+/>
+</Box>
   )
 }
