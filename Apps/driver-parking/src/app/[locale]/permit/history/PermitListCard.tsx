@@ -14,7 +14,7 @@ const PermitListCard = ({permit}: {permit: Permit}) => {
 
   return (
     <ListItem disablePadding>
-      <Card sx={{ width: { xs: '100%', sm: '400px' }, marginTop: '20px', borderRadius: 3, boxShadow: 2, border: '1px solid #ccc', p: 2, mx: 'auto' }}>
+      <Card sx={{ width: { xs: '100%', sm: '400px' }, borderRadius: 3, boxShadow: 2, border: '1px solid #ccc', p: 2, mx: 'auto' }}>
         <CardContent>
           <Typography variant="h5" color="text.primary" align="center" gutterBottom>
             {t(permit.type)}

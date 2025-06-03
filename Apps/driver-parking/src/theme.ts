@@ -4,7 +4,11 @@ const customTheme = createTheme({
   palette: {
     primary: {
       main: "#008343",
+      contrastText: "#ffffff",
     },
+  background: {
+      default: "#f8f8f8", // Off-white background
+  },
   },
   typography: {
     fontFamily: `"Manrope", "Roboto", "Helvetica", sans-serif`,
