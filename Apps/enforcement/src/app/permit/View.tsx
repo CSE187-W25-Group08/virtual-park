@@ -75,53 +75,45 @@ export default function PermitView() {
     setTicketSuccess(null);
     setVehicleID('');
     
-    try {
-      const permitInfo = await getpermitByPlateNum(plateToUse);
-      const validPermits = permitInfo.filter(permit => permit.permitID != null);
-      
-      setPermits(validPermits);
-      
-      if (validPermits.length === 0) {
-        setValidPermit('');
-        setError('No permits found for this vehicle');
-        const driverID = await getDriverFromVehiclePlate(plateToUse);
-        if (driverID) {
-          setDriverID(String(driverID));
-        } else {
-          setDriverID('');
-        }
+    const permitInfo = await getpermitByPlateNum(plateToUse);
+    const validPermits = permitInfo.filter(permit => permit.permitID != null);
+    
+    setPermits(validPermits);
+    
+    if (validPermits.length === 0) {
+      setValidPermit('');
+      setError('No permits found for this vehicle');
+      const driverID = await getDriverFromVehiclePlate(plateToUse);
+      if (driverID) {
+        setDriverID(String(driverID));
       } else {
-        const currentLotInfo = getCurrentLotInfo()
-        const validPermit = validPermits.filter(permit => permit.isValid);
-        
-        if ( validPermit.length === 0) {
-          setError('Expired permit found for this vehicle');
-          setDriverID(String(validPermits[0].driverID));
-          setVehicleID(String(validPermits[0].vehicleID));
-        } else {
-          /* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some */
-          const permitValidForLot =  validPermit.some(permit => 
-            currentLotInfo?.validPermits.includes(permit.permitClass)
-          );
-          
-          if (permitValidForLot) {
-            setValidPermit(`Valid permit found for vehicle ${plateToUse} in ${currentLotInfo?.name}`);
-          } else {
-            const permitClasses = validPermit.map(p => p.permitClass).join(', ');
-            const allowedTypes = currentLotInfo?.validPermits.join(', ');
-            setError(`Vehicle has ${permitClasses} permit(s), valid permits for ${currentLotInfo?.name}: ${allowedTypes}`);
-          }
-          
-          setDriverID(String(validPermit[0].driverID));
-          setVehicleID(String(validPermit[0].vehicleID));
-        }
+        setDriverID('');
       }
-    } catch (err) {
-      console.error("Error during permit search:", err);
-      setPermits([]);
-      setDriverID('');
-      setVehicleID('');
-      setError('Error searching for permits');
+    } else {
+      const currentLotInfo = getCurrentLotInfo()
+      const validPermit = validPermits.filter(permit => permit.isValid);
+      
+      if ( validPermit.length === 0) {
+        setError('Expired permit found for this vehicle');
+        setDriverID(String(validPermits[0].driverID));
+        setVehicleID(String(validPermits[0].vehicleID));
+      } else {
+        /* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some */
+        const permitValidForLot =  validPermit.some(permit => 
+          currentLotInfo?.validPermits.includes(permit.permitClass)
+        );
+        
+        if (permitValidForLot) {
+          setValidPermit(`Valid permit found for vehicle ${plateToUse} in ${currentLotInfo?.name}`);
+        } else {
+          const permitClasses = validPermit.map(p => p.permitClass).join(', ');
+          const allowedTypes = currentLotInfo?.validPermits.join(', ');
+          setError(`Vehicle has ${permitClasses} permit(s), valid permits for ${currentLotInfo?.name}: ${allowedTypes}`);
+        }
+        
+        setDriverID(String(validPermit[0].driverID));
+        setVehicleID(String(validPermit[0].vehicleID));
+      }
     }
   };
 
