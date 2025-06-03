@@ -255,11 +255,8 @@ it("issue ticket successfully", async () => {
   const dialog = await screen.findByRole('dialog')
   console.log(prettyDOM(dialog)) 
   
-
   const violation = screen.getByPlaceholderText('No Permit, Wrong Lot, Expired Permit')
   await userEvent.type(violation, 'Expired Permit')
-  
-
   const description = screen.getByLabelText(/Description.*Required/i)
   await userEvent.type(description, 'no valid permit')
   
