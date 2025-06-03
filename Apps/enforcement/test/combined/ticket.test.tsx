@@ -265,330 +265,133 @@ it("issue ticket successfully", async () => {
 
   await screen.findByText('Ticket issued successfully')
 }, 10000)
-// it("issue ticket successfully", async () => {
-//   const mockPush = vi.fn()
-//   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-//   vi.mocked(fetch).mockImplementation((url, options) => {
-//     if (url === 'http://localhost:4000/graphql') {
-//       return Promise.resolve({
-//         status: 200,
-//         json: () =>
-//           Promise.resolve({
-//             data: {
-//               getPermitBycarPlate: [
-//                 {
-//                   permitID: '123',
-//                   permitType: 'Student',
-//                   issueDate: '2025-05-01',
-//                   expDate: '2025-06-01',
-//                   isValid: false
-//                 }
-//               ]
-//             }
-//           }),
-//       } as Response)
-//     }
-//     if (url === 'http://localhost:4040/graphql') {
-//       return Promise.resolve({ 
-//         status: 200,
-//         json: () => Promise.resolve({
-//           data: {
-//             getAll: [
-//               {
-//                 id: 'l1',
-//                 name: 'Area 51 Lot',
-//                 zone: 'A',
-//                 address: '123 Desert Rd',
-//                 latitude: 0,
-//                 longitude: 0,
-//                 capacity: 100,
-//                 availableSpots: 42,
-//                 isActive: true,
-//                 type: 'public',
-//                 created: '2025-01-01T00:00:00Z',
-//                 updated: '2025-01-02T00:00:00Z',
-//                 validPermits: ['Student'],
-//                 ticketPrice: 75
-//               },
-//             ]
-//           }
-//         }),
-//       } as Response)
-//     }
 
-//     return Promise.reject(new Error('Unknown fetch'))
-//   })
-
-//   render(<PermitPage />)
-
-//   const lotSelect = screen.getByLabelText('Current Parking Lot')
-//   await userEvent.click(lotSelect)
-
-//   await userEvent.click(screen.getByRole('option'))
-//   await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '1XXX000')
-//   await userEvent.click(screen.getByText('Search'))
-//   await userEvent.click(await screen.findByText('Issue Ticket'))
-//   const dialog = screen.getByRole('dialog')
-//   console.log(prettyDOM(dialog)) 
+it("not all the required fields get filled out in the ticket ", async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(fetch).mockImplementation((url, options) => {
+    if (url === 'http://localhost:4000/graphql') {
+      console.log('fetch called with permit:', url, options)
+      return Promise.resolve({
+        status: 200,
+        json: () =>
+          Promise.resolve({
+            data: {
+              getPermitBycarPlate: [
+                {
+                  permitID: '123',
+                  permitType: 'Student',
+                  issueDate: '2025-05-01',
+                  expDate: '2025-06-01',
+                  isValid: false,
+                  driverID: 'driver-123',
+                  vehicleID: 'vehicle-123'
+                }
+              ]
+            }
+          }),
+      } as Response)
+    }
+    if (url === 'http://localhost:4010/graphql') {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            ticketIssue: {
+              id: '1234',
+              driverID: 'driver-123',
+              enforcer: '1111',
+              lot: 'Area 51 Lot',
+              paid: false,
+              description: 'no valid permit',
+              due: '2025-06-20',
+              issue: '2025-05-24',
+              violation: 'Expired Permit',
+              image: 'car.jpg',
+              cost: 50,
+            }
+          }
+        }),
+      } as Response)
+    }
+    if (url === 'http://localhost:4040/graphql') {
+      return Promise.resolve({ 
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getAll: [
+              {
+                id: 'l1',
+                name: 'Area 51 Lot',
+                zone: 'A',
+                address: '123 Desert Rd',
+                latitude: 0,
+                longitude: 0,
+                capacity: 100,
+                availableSpots: 42,
+                isActive: true,
+                type: 'public',
+                created: '2025-01-01T00:00:00Z',
+                updated: '2025-01-02T00:00:00Z',
+                validPermits: ['Student'],
+                ticketPrice: 75
+              },
+            ]
+          }
+        }),
+      } as Response)
+    }
+    if (url === 'http://localhost:4020/graphql') {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getVehicleByPlate: {
+              id: '123',
+              licensePlate: '1XXX000',
+              driver: 'driver-123',
+              make: 'Toyota',
+              model: 'Corolla',
+              color: 'white'
+            }
+          }
+        })
+      } as Response)
+    }
+    if (String(url).startsWith('http://localhost:3010/api/v0/auth/user')) {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          id: '123',
+          name: 'nickdriver',
+          email: 'nick@books.com'
+        }),
+      } as Response)
+    }
+    console.log('Unknown fetch URL:', url)
+    return Promise.reject(new Error('Unknown fetch: ' + url))
+  })
+  render(<PermitPage />)
+  const lotSelect = screen.getByLabelText('Current Parking Lot')
+  await userEvent.click(lotSelect)
+  await userEvent.click(screen.getByRole('option'))
+  await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '1XXX000')
+  await userEvent.click(screen.getByText('Search'))
+  await userEvent.click(screen.getByText('Issue Ticket'))
+  /* https://testing-library.com/docs/dom-testing-library/api-within/ */
+  const dialog = screen.getByRole('dialog')
+  console.log(prettyDOM(dialog)) 
   
-//   const violation = screen.getByPlaceholderText('No Permit, Wrong Lot, Expired Permit')
-//   await userEvent.type(violation, 'Expired Permit')
+  const violation = screen.getByPlaceholderText('No Permit, Wrong Lot, Expired Permit')
+  await userEvent.type(violation, 'No Permit')
   
-//   const description = screen.getByPlaceholderText('Provide details about the violation')
-//   await userEvent.type(description, 'no valid permit')
+  const fine = screen.getByLabelText(/fine/i)
+  await userEvent.type(fine, '12')
   
-//   const issueButton = within(dialog).getByText('Issue Ticket')
-//   await userEvent.click(issueButton)
-//   await screen.findByText('Ticket issued successfully')
-// }, { timeout: 10000 })
-
-// it("issue ticket successfully", async () => {
-//   const mockPush = vi.fn()
-//   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-  
-//   vi.mocked(fetch).mockImplementation((url, options) => {
-    
-//     if (url === 'http://localhost:4000/graphql') {
-//       console.log('fetch called with permit:', url, options)
-//       return Promise.resolve({
-//         status: 200,
-//         json: () =>
-//           Promise.resolve({
-//             data: {
-//               getPermitBycarPlate: [
-//                 {
-//                   permitID: '123',
-//                   permitType: 'Student',
-//                   issueDate: '2025-05-01',
-//                   expDate: '2025-06-01',
-//                   isValid: false,
-//                   driverID: 'driver-123',
-//                   vehicleID: 'vehicle-123'
-//                 }
-//               ]
-//             }
-//           }),
-//       } as Response)
-//     }
-
-//     if (url === 'http://localhost:4010/graphql') {
-//       return Promise.resolve({
-//         status: 200,
-//         json: () => Promise.resolve({
-//           data: {
-//             ticketIssue: {
-//               id: '1234',
-//               driverID: 'driver-123',
-//               enforcer: '1111',
-//               lot: 'Area 51 Lot',
-//               paid: false,
-//               description: 'no valid permit',
-//               due: '2025-06-20',
-//               issue: '2025-05-24',
-//               violation: 'Expired Permit',
-//               image: 'car.jpg',
-//               cost: 50,
-//             }
-//           }
-//         }),
-//       } as Response)
-//     }
-
-//     if (url === 'http://localhost:4040/graphql') {
-//       return Promise.resolve({ 
-//         status: 200,
-//         json: () => Promise.resolve({
-//           data: {
-//             getAll: [
-//               {
-//                 id: 'l1',
-//                 name: 'Area 51 Lot',
-//                 zone: 'A',
-//                 address: '123 Desert Rd',
-//                 latitude: 0,
-//                 longitude: 0,
-//                 capacity: 100,
-//                 availableSpots: 42,
-//                 isActive: true,
-//                 type: 'public',
-//                 created: '2025-01-01T00:00:00Z',
-//                 updated: '2025-01-02T00:00:00Z',
-//               },
-//             ]
-//           }
-//         }),
-//       } as Response)
-//     }
-
-//     if (url === 'http://localhost:4020/graphql') {
-//       return Promise.resolve({
-//         status: 200,
-//         json: () => Promise.resolve({
-//           data: {
-//             getVehicleByPlate: {
-//               id: '123',
-//               licensePlate: '000000',
-//               driver: 'driver-123',
-//               make: 'Toyota',
-//               model: 'Corolla',
-//               color: 'white'
-//             }
-//           }
-//         })
-//       } as Response)
-//     }
-
-//     if (String(url).startsWith('http://localhost:3010/api/v0/auth/user')) {
-//       return Promise.resolve({
-//         status: 200,
-//         json: () => Promise.resolve({
-//           id: '123',
-//           name: 'nickdriver',
-//           email: 'nick@books.com'
-//         }),
-//       } as Response)
-//     }
-    
-//     if (url === 'http://localhost:3011/api/v0/ocr/scan') {
-//       console.log('OCR API called with:', options?.body)
-//       return Promise.resolve({
-//         status: 200,
-//         json: () => Promise.resolve({
-//           licensePlate: '123ABC'
-//         }),
-//       } as Response)
-//     }
-
-//     console.log('Unknown fetch URL:', url)
-//     return Promise.reject(new Error('Unknown fetch: ' + url))
-//   })
-
-//   render(<PermitPage />)
-
-//   await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '000000')
-//   await userEvent.click(screen.getByText('Search'))
-//   await userEvent.click(screen.getByText('Issue Ticket'))
-//   /* https://testing-library.com/docs/dom-testing-library/api-within/ */
-//   const dialog = screen.getByRole('dialog')
-//   console.log(prettyDOM(dialog)) 
-//   const lotSelect = within(dialog).getByRole('combobox')
-//   await userEvent.click(lotSelect)
-  
-//   const lotOption = await screen.findByText('Area 51 Lot')
-//   await userEvent.click(lotOption)
-  
-//   const violation = screen.getByPlaceholderText('Permit expired?')
-//   await userEvent.type(violation, 'Expired Permit')
-  
-//   const description = screen.getByPlaceholderText('Provide details about the violation')
-//   await userEvent.type(description, 'no valid permit')
-  
-//   const issueButton = within(dialog).getByText('Issue Ticket')
-//   await userEvent.click(issueButton)
-//   await screen.findByText('Ticket issued successfully')
-// }, { timeout: 10000 })
-
-// it("not all the required fields get filled out in the ticket ", async () => {
-//   const mockPush = vi.fn()
-//   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
-//   vi.mocked(fetch).mockImplementation((url, options) => {
-//     if (
-//       url === 'http://localhost:4000/graphql' 
-//     ) {
-//       console.log('fetch called with permit:', url, options)
-//       return Promise.resolve({
-//         status: 200,
-//         json: () =>
-//           Promise.resolve({
-//             data: {
-//               getPermitBycarPlate: [
-//                 {
-//                   permitID: '123',
-//                   permitType: 'Student',
-//                   issueDate: '2025-05-01',
-//                   expDate: '2025-06-01',
-//                   isValid: false
-//                 }
-//               ]
-//             }
-//           }),
-//       } as Response)
-//     }
-
-//     if (url === 'http://localhost:4010/graphql') {
-//       return Promise.resolve({
-//         status: 200,
-//         json: () => Promise.resolve({
-//           data: {
-//             ticketIssue: {
-//               id: '1234',
-//               driverID: '1222',
-//               enforcer: '1111',
-//               lot: 'lot 101',
-//               paid: false,
-//               description: 'no permit',
-//               due: '4/20/2025',
-//               issue: '5/20/2025',
-//               violation: 'no permit',
-//               image: 'car.jpg',
-//               cost: 12,
-//             }
-//           }
-//         }),
-//       } as Response)
-//     }
-//     if (url === 'http://localhost:4040/graphql') {
-//       return Promise.resolve({ 
-//         status: 200,
-//         json: () => Promise.resolve({
-//           data: {
-//             getAll: [
-//               {
-//                 id: 'l1',
-//                 name: 'Area 51 Lot',
-//                 zone: 'A',
-//                 address: '123 Desert Rd',
-//                 latitude: 0,
-//                 longitude: 0,
-//                 capacity: 100,
-//                 availableSpots: 42,
-//                 isActive: true,
-//                 type: 'public',
-//                 created: '2025-01-01T00:00:00Z',
-//                 updated: '2025-01-02T00:00:00Z',
-//               },
-//             ]
-//           }
-//         }),
-//       } as Response)
-//     }
-//     return Promise.reject(new Error('Unknown fetch'))
-//   })
-
-//   render(<PermitPage />)
-
-//   await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '1XXX000')
-//   await userEvent.click(screen.getByText('Search'))
-//   await userEvent.click(screen.getByText('Issue Ticket'))
-//   /* https://testing-library.com/docs/dom-testing-library/api-within/ */
-//   const dialog = screen.getByRole('dialog')
-//   console.log(prettyDOM(dialog)) 
-//   const lotSelect = within(dialog).getByRole('combobox')
-//   await userEvent.click(lotSelect)
-  
-//   const lotOption = await screen.findByText('Area 51 Lot')
-//   await userEvent.click(lotOption)
-  
-//   const violation = screen.getByPlaceholderText('Permit expired?')
-//   await userEvent.type(violation, 'Expired Permit')
-  
-//   const fine = screen.getByLabelText(/fine/i)
-//   await userEvent.type(fine, '12')
-  
-//   const issueButton = within(dialog).getByText('Issue Ticket')
-//   await userEvent.click(issueButton)
-//   await screen.findByText('Please fill in all required fields *')
-// })
+  const issueButton = within(dialog).getByText('Issue Ticket')
+  await userEvent.click(issueButton)
+  await screen.findByText('Please fill in all required fields *')
+})
 
 // it("failed to issue ticket", async () => {
 //   const mockPush = vi.fn()
