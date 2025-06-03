@@ -47,11 +47,11 @@ export async function logout() {
   cookieStore.delete('session')
 }
 
-export async function getUserInfoAction() : Promise<UserInfo> {
+export async function getUserInfoAction(): Promise<UserInfo> {
   const cookie = (await cookies()).get('session')?.value
   const userInfo = await getUserInfo(cookie)
   if (!userInfo) {
     throw Error();
-  } 
+  }
   return userInfo
 }

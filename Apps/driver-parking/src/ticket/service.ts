@@ -1,162 +1,87 @@
-import { Ticket } from "."
+import { Ticket } from ".";
 
 export class TicketService {
-  public async getPaidTicket(cookie: string | undefined): Promise<Ticket[]> {
-    return new Promise((resolve, reject) => {
-      fetch('http://localhost:4010/graphql', {
+  private async fetchGraphQL<T>(cookie: string | undefined, query: string, key: string): Promise<T> {
+    try {
+      const response = await fetch('http://localhost:4010/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${cookie}`,
         },
-        body: JSON.stringify({ query: `{paidTicket {id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal}}` }),
-      })
-        .then(response => {
-          if (response.status != 200) {
-            reject('Unauthorized')
-          }
-          return response.json()
+        body: JSON.stringify({ query }),
+      });
+
+      if (!response.ok) {
+        console.error(`Fetch failed with status ${response.status} for query: ${key}`);
+        throw new Error('Unauthorized');
+      }
+
+      const json = await response.json();
+
+      if (!json?.data || !json.data[key]) {
+        console.error(`No data returned for query: ${key}`, json);
+        throw new Error('Malformed response');
+      }
+
+      return json.data[key];
+    } catch (err) {
+      console.error(`Error during fetch for "${key}":`, err);
+      throw new Error('Failed to fetch ' + key);
+    }
+  }
+
+  public async getPaidTicket(cookie: string | undefined): Promise<Ticket[]> {
+    return this.fetchGraphQL<Ticket[]>(cookie, `
+      {
+        paidTicket {
+          id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal
         }
-        )
-        .then(json => {
-          resolve(json.data.paidTicket)
-        })
-        .catch(() => reject('Unauthorized'))
-    })
+      }`, 'paidTicket');
   }
 
   public async getUnpaidTicket(cookie: string | undefined): Promise<Ticket[]> {
-    return new Promise((resolve, reject) => {
-      fetch('http://localhost:4010/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${cookie}`,
-        },
-        body: JSON.stringify({ query: `{unpaidTicket {id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal}}` }),
-      })
-        .then(response => {
-          if (response.status != 200) {
-            reject('Unauthorized')
-          }
-          return response.json()
+    return this.fetchGraphQL<Ticket[]>(cookie, `
+      {
+        unpaidTicket {
+          id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal
         }
-        )
-        .then(json => {
-          resolve(json.data.unpaidTicket)
-        })
-        .catch(() => reject('Unauthorized'))
-    })
+      }`, 'unpaidTicket');
   }
 
   public async getAppealedTicket(cookie: string | undefined): Promise<Ticket[]> {
-    return new Promise((resolve, reject) => {
-      fetch('http://localhost:4010/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${cookie}`,
-        },
-        body: JSON.stringify({ query: `{appealedTicket {id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal}}` }),
-      })
-        .then(response => {
-          if (response.status != 200) {
-            reject('Unauthorized')
-          }
-          return response.json()
+    return this.fetchGraphQL<Ticket[]>(cookie, `
+      {
+        appealedTicket {
+          id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal
         }
-        )
-        .then(json => {
-          resolve(json.data.appealedTicket)
-        })
-        .catch(() => reject('Unauthorized'))
-    })
+      }`, 'appealedTicket');
   }
 
   public async getUserTicket(cookie: string | undefined, ticketId: string): Promise<Ticket> {
-    return new Promise((resolve, reject) => {
-      fetch('http://localhost:4010/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${cookie}`,
-        },
-        body: JSON.stringify({ query: `{ticketId (id : "` + ticketId + `") {id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal}}` }),
-      })
-        .then(response => {
-          if (response.status != 200) {
-            reject('Unauthorized')
-          }
-          return response.json()
+    return this.fetchGraphQL<Ticket>(cookie, `
+      {
+        ticketId(id: "${ticketId}") {
+          id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal
         }
-        )
-        .then(json => {
-          resolve(json.data.ticketId)
-        })
-        .catch(() => reject('Unauthorized'))
-    })
+      }`, 'ticketId');
   }
+
   public async updatePaidTicket(cookie: string | undefined, ticketId: string, paid: boolean): Promise<Ticket> {
-    return new Promise((resolve, reject) => {
-      fetch('http://localhost:4010/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${cookie}`,
-        },
-        body: JSON.stringify({
-          query: `
-            mutation {
-              setTicketPaid(id: "${ticketId}", paid: ${paid}) {
-                id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal
-              }
-            }
-          `
-        })
-      })
-        .then(response => {
-          if (response.status != 200) {
-            reject('Unauthorized')
-          }
-          return response.json()
+    return this.fetchGraphQL<Ticket>(cookie, `
+      mutation {
+        setTicketPaid(id: "${ticketId}", paid: ${paid}) {
+          id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal
         }
-        )
-        .then(json => {
-          resolve(json.data.setTicketPaid)
-        })
-        .catch(() => reject('Unauthorized'))
-    })
+      }`, 'setTicketPaid');
   }
 
   public async updateAppealedTicket(cookie: string | undefined, ticketId: string, appealed: string, appealReason: string): Promise<Ticket> {
-    return new Promise((resolve, reject) => {
-      fetch('http://localhost:4010/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${cookie}`,
-        },
-        body: JSON.stringify({
-          query: `
-            mutation {
-              setTicketAppealed(id: "${ticketId}", appealStatus: "${appealed}", appealReason: "${appealReason}") {
-                id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal, appealReason
-              }
-            }
-          `
-        })
-      })
-        .then(response => {
-          if (response.status != 200) {
-            reject('Unauthorized')
-          }
-          return response.json()
+    return this.fetchGraphQL<Ticket>(cookie, `
+      mutation {
+        setTicketAppealed(id: "${ticketId}", appealStatus: "${appealed}", appealReason: "${appealReason}") {
+          id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal, appealReason
         }
-        )
-        .then(json => {
-          resolve(json.data.setTicketAppealed)
-        })
-        .catch(() => reject('Unauthorized'))
-    })
+      }`, 'setTicketAppealed');
   }
 }

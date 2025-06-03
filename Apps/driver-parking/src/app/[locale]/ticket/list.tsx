@@ -1,12 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Badge, Box, Typography } from "@mui/material";
+import { CircularProgress , Box, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import { useTranslations } from "next-intl";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-
-import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import GavelIcon from '@mui/icons-material/Gavel';
 import TicketCard from "./card";
 import { Ticket } from "../../../ticket";
 import { listPaid, listUnpaid, listAppealed } from "./actions";
@@ -15,6 +14,7 @@ export default function TicketList() {
   const [paidTicketList, setPaidTicketList] = useState<Ticket[]>([]);
   const [unpaidTicket, setUnpaidTicket] = useState<Ticket[]>([]);
   const [appealedTickets, setAppealedTickets] = useState<Ticket[]>([]);
+  const [dataFetched, setDataFeteched] = useState(false);
   const t = useTranslations("ticket");
 
   useEffect(() => {
@@ -31,11 +31,12 @@ export default function TicketList() {
       if (resultAppealed) {
         setAppealedTickets(resultAppealed);
       }
+      setDataFeteched(true);
     };
     fetchData();
   }, []);
 
-  const TableHeader = (length: number, title: string, type: string) => (
+  const TableHeader = (title: string, type: string) => (
     <Box
       sx={{
         mt: 1,
@@ -44,77 +45,52 @@ export default function TicketList() {
         justifyContent: "space-between",
       }}
     >
-      <Box sx = {{display: "flex", gap: 1}}>
-      {type === "unpaid" ? (
-        <Badge badgeContent={unpaidTicket.length}>
-          <SentimentVeryDissatisfiedIcon />
-        </Badge>
-      ) : type === "paid" ? (
-        <Badge badgeContent={paidTicketList.length}>
-          <EmojiEmotionsIcon />
-        </Badge>
-      ) : (
-        <Badge badgeContent={appealedTickets.length}>
-          <SentimentDissatisfiedIcon />
-        </Badge>
-      )}
-      <Typography>{title}</Typography>
-  `   </Box>
-      <Box>
-        {type === "unpaid" ? (
-          <Typography>{t("issueDate")}</Typography>
-        ) : type === "paid" ? (
-          <Typography>{t("datePaid")}</Typography>
-        ) : (
-          <Typography>{t("status")}</Typography>
-        )}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+        {type === "unpaid" && <ErrorOutlineIcon color="error" />}
+        {type === "appeal" && <GavelIcon color="warning" />}
+        {type === "paid" && <CheckCircleOutlineIcon color="success" />}
+        <Typography variant="h5">
+          {title}
+        </Typography>
       </Box>
     </Box>
   );
 
   return (
-    <>
-      {/* <AppBar>
-        <Toolbar>
-          <Typography>Tickets</Typography>
-        </Toolbar>
-      </AppBar> */}
-      <Box sx={{ px: 2, mb: 10 }}>
-        <List sx={{ width: "100%" }}>
-          {unpaidTicket.length <= 0 ? (
-            <Box
-              sx={{ display: "flex", width: "100%", justifyContent: "center" }}
-            >
+    <Box sx={{ px: 2, mb: 10}}>
+      <List sx={{ width: "100%", display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+        {(!dataFetched) && <CircularProgress sx = {{mt: 3}} color="success" />}
+        {(dataFetched && unpaidTicket.length <= 0 && appealedTickets.length <= 0 && paidTicketList.length <= 0) && (
+            <Box sx={{ display: "flex", width: "100%", justifyContent: "center" }}>
               <Typography sx={{ mt: 7 }}>{t("noTickets")}</Typography>
             </Box>
-          ) : (
-            <>
-              {TableHeader(unpaidTicket.length, t("unpaid"), "unpaid")}
-              {unpaidTicket.map((ticket, index) => (
-                <TicketCard key={index} ticket={ticket} />
-              ))}
-            </>
           )}
 
-          {paidTicketList.length > 0 && (
-            <>
-              {TableHeader(paidTicketList.length, t("paid"), "paid")}
-              {paidTicketList.map((ticket, index) => (
-                <TicketCard key={index} ticket={ticket} />
-              ))}
-            </>
+        {(unpaidTicket.length > 0) &&  
+          <>
+            {TableHeader(t("unpaid"), "unpaid")}
+            {unpaidTicket.map((ticket, index) => (
+              <TicketCard key={index} ticket={ticket} />
+            ))}
+          </>}
+        {appealedTickets.length > 0 && (
+          <>
+            {TableHeader(t("appeal"), "appeal")}
+            {appealedTickets.map((ticket, index) => (
+              <TicketCard key={index} ticket={ticket} />
+            ))}
+          </>
           )}
-
-          {appealedTickets.length > 0 && (
-            <>
-              {TableHeader(appealedTickets.length, t("appeal"), "appeal")}
-              {appealedTickets.map((ticket, index) => (
-                <TicketCard key={index} ticket={ticket} />
-              ))}
-            </>
-          )}
-        </List>
-      </Box>
-    </>
+        
+        {paidTicketList.length > 0 && (
+          <>
+            {TableHeader(t("paid"), "paid")}
+            {paidTicketList.map((ticket, index) => (
+              <TicketCard key={index} ticket={ticket} />
+            ))}
+          </>
+        )}
+      </List>
+    </Box>
   );
 }

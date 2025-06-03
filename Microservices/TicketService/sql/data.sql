@@ -109,7 +109,7 @@ VALUES (
     'issue', '2025-04-30T12:00:00Z',
     'violation', 'Violation but appeal approved',
     'image', 'https://krcrtv.com/resources/media2/16x9/full/1015/center/80/6918a95f-2801-4fa8-b65f-51c46a5395a5-large16x9_crash.jpg',
-    'cost', 39.16,
+    'cost', 10.00,
     'appeal', 'approved'
   )
 );
@@ -122,7 +122,7 @@ VALUES (
     'vehicle', '18fa94fc-4783-42df-a904-7ec17efadca5',
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
         'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
-    'paid', false,
+    'paid', true,
     'description', 'Lol Molly',
     'due', '2025-05-15T12:00:00Z',
     'issue', '2025-04-30T12:00:00Z',
@@ -177,13 +177,13 @@ VALUES (
     'vehicle', '18fa94fc-4783-42df-a904-7ec17efadca5',
     'enforcer', 'a83cbe2a-4a23-4ef6-90fb-38ce7c5a6f94',
     'lot', '196142bb-86d1-43ed-a823-0a6f48c1b525',
-    'paid', false,
+    'paid', true,
     'description', 'Exceeded maximum parking duration by 15 minutes.',
     'due', '2025-05-20T12:00:00Z',
     'issue', '2025-05-01T14:15:00Z',
     'violation', 'Overtime Parking',
     'image', 'https://www.myparkingsign.com/blog/wp-content/uploads/Bad-parking-2.jpg',
-    'cost', 25.00,
+    'cost', 10.00,
     'appeal', 'approved',
     'appealReason', 'The parking meter was malfunctioning and wouldn’t accept payment after the first hour.'
   )
