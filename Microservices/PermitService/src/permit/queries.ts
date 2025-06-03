@@ -56,6 +56,8 @@ JOIN
     permitType pt ON dp.permitType = pt.id
 WHERE 
     dp.driverID = $1
+ORDER BY
+    dp.data->>'issuedate' DESC
 `;
 
 /* reference: https://www.postgresql.org/docs/current/contrib-dblink-function.html 
