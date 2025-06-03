@@ -4,7 +4,6 @@ import express, {
   Response as ExResponse, 
   Request as ExRequest, 
   ErrorRequestHandler,
-  NextFunction
 } from 'express'
 import cors from 'cors'
 import swaggerUi from 'swagger-ui-express'
@@ -24,14 +23,12 @@ app.use('/api/v0/docs', swaggerUi.serve, async (_req: ExRequest, res: ExResponse
 const router = Router()
 RegisterRoutes(router)
 app.use('/api/v0', router);
-
-const errorHandler: ErrorRequestHandler = (err, _req, res, _next: NextFunction) => {
+const errorHandler: ErrorRequestHandler = (err, _req, res) => {
   res.status(err.status).json({
     message: err.message,
     errors: err.errors,
     status: err.status,
   })
-  _next()
 }
 app.use(errorHandler)
 
