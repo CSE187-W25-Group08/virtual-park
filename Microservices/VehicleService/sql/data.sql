@@ -13,7 +13,6 @@ INSERT INTO vehicle (id, driver, data) VALUES (
   )
 );
 
--- jentest1 vehicle
 INSERT INTO vehicle (id, driver, data) VALUES (
   'f94b39b3-fcc3-4f00-a02a-29ffc06a9365',
   'ced418e8-af5c-4a95-9896-374082a80117',
@@ -27,7 +26,6 @@ INSERT INTO vehicle (id, driver, data) VALUES (
   )
 );
 
--- jentest2 vehicle
 INSERT INTO vehicle (id, driver, data) VALUES (
   'a74ab65d-f1ec-48b0-852b-5e9a486fc323',
   'd8ae74ff-f0c8-4837-8690-d3e9471fe283',
@@ -41,7 +39,6 @@ INSERT INTO vehicle (id, driver, data) VALUES (
   )
 );
 
--- jentest3 vehicle
 INSERT INTO vehicle (id, driver, data) VALUES (
   'ca755b1a-975c-4543-983f-888897db3cab',
   'e38d15bc-5f7d-4f66-9e17-b4827bd8371c',
@@ -55,7 +52,6 @@ INSERT INTO vehicle (id, driver, data) VALUES (
   )
 );
 
---molly 3 vehicles
 INSERT INTO vehicle (id, driver, data) VALUES (
   '18fa94fc-4783-42df-a904-7ec17efadca5',
   'bea45ed8-aa83-4c49-a201-4625baa0e91a',
@@ -102,7 +98,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'model', 'Corolla',
     'color', 'Silver',
     'vehicleType', 'Car',
-    'active', true
+    'active', false
   )
 );
 
@@ -118,7 +114,6 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'active', true
   )
 );
-
 
 INSERT INTO vehicle (id, driver, data) VALUES (
   '18fa94fc-4783-42df-a904-7ec17efadcb1',

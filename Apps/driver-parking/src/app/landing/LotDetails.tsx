@@ -37,9 +37,10 @@ export default function LotDetails({ selectedLot }: LotDetailsProps) {
             {selectedLot.address}
           </Typography>
 
-          <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+          <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center', mb: 1}}>
             <MapIcon fontSize="small" sx={{ mr: 1 }} />
-            <strong>{t("zone")}</strong>&nbsp;{selectedLot.zone}
+            <strong style={{marginRight: '4px'}}>{t("zone")}</strong>
+            {" " + selectedLot.zone}
           </Typography>
 
           <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center' }}>
