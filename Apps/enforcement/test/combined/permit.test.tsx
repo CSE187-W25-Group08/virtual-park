@@ -76,6 +76,32 @@ it("should show a valid permit message when there is a valid permit belong to th
   screen.getByText('Valid permit found for vehicle 123ABC in Lot 139A')
 })
 
+it("should show a error saying please enter a carplate number", async () => {
+    vi.mocked(fetch).mockResolvedValue({
+    ok: true,
+    status: 200,
+    json: () => Promise.resolve({
+      data: {
+        getAll: [{ id: 'lot-123', name: 'Lot 139A', validPermits: ['Student'] }],
+        // getPermitBycarPlate: [{ permitID: '123', permitClass: 'Student', isValid: true }]
+      }
+    })
+  } as Response)
+
+  render(<PermitPage />)
+  const lotSelect = screen.getByLabelText('Current Parking Lot')
+  await userEvent.click(lotSelect)
+
+  const option = screen.getByRole('option')
+  await userEvent.click(option)
+  await userEvent.click(screen.getByPlaceholderText('Enter car plate number'))
+  await userEvent.tab() 
+  await userEvent.tab()
+  const searchButton = screen.getByRole('button', { name: 'Search' })
+  await userEvent.click(searchButton)
+  screen.getByText('Please enter a car plate number')
+})
+
 
 it("the search button was disabled when carplate number not enter", async () => {
   const mockPush = vi.fn()
