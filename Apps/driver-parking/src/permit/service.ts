@@ -84,7 +84,7 @@ export async function getSpecificDailyPermit(cookie: string | undefined, driverC
   })
 }
 
-export async function getValidPermit(cookie: string | undefined): Promise<Permit | null> {
+export async function getValidPermit(cookie: string | undefined): Promise<Permit[] | null> {
   return new Promise((resolve, reject) => {
     fetch('http://localhost:4000/graphql', {
       method: 'POST',

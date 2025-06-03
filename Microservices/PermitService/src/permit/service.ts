@@ -160,7 +160,7 @@ export class PermitService {
     }))
   }
 
-  public async getValidPermit(driverID: string | undefined): Promise<Permit | null> {
+  public async getValidPermit(driverID: string | undefined): Promise<Permit[] | null> {
     const query = {
       text: queries.getActivePermit,
       values: [driverID]
@@ -169,13 +169,13 @@ export class PermitService {
     // if (result.rowCount === 0) {
     //   return null
     // }
-    return {
-      id: result.rows[0].id,
-      issueDate: result.rows[0].issuedate,
-      expDate: result.rows[0].expdate,
-      type: result.rows[0].type,
-      price: result.rows[0].price,
-      permitClass: result.rows[0].permitclass
-    }
+    return result.rows.map(row => new Permit(
+      row.id,
+      row.issuedate,
+      row.expdate,
+      row.type,
+      row.price,
+      row.permitclass
+    ))
   }
 }

@@ -43,10 +43,10 @@ export class PermitResolver {
   }
 
   @Authorized()
-  @Query(() => Permit, { nullable: true })
+  @Query(() => [Permit], { nullable: true })
   async validPermit(
     @Ctx() Request: Request
-  ): Promise<Permit | null> {
+  ): Promise<Permit[] | null> {
     return await new PermitService().getValidPermit(Request.user?.id)
   }
 

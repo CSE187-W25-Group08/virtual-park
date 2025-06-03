@@ -6,7 +6,7 @@ import { cookies } from 'next/headers'
 import { Permit, PermitType } from '../../../permit'
 import { getValidPermit, getSpecificDailyPermit } from '../../../permit/service'
 
-export async function getActivePermit() : Promise<Permit | null> {
+export async function getActivePermit() : Promise<Permit[] | null> {
   const cookie = (await cookies()).get('session')?.value
   return getValidPermit(cookie)
 }

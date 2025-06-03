@@ -22,7 +22,7 @@ import { createCheckout } from '@/stripe/helper'
 
 export default function Dashboard() {
   const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([])
-  const [activePermit, setActivePermit] = useState<Permit | null>(null)
+  const [activePermits, setActivePermits] = useState<Permit[] | null>(null)
   const [vehicle, setVehicle] = useState<Vehicle | null>(null)
   const [dailyPermitType, setDailyPermitType] = useState<PermitType | null>(null)
   const [registerModalOpen, setRegisterModalOpen] = useState(false)
@@ -34,12 +34,12 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await listUnpaid()
-      const activePermit = await getActivePermit()
+      const activePermits = await getActivePermit()
       if (result) {
         setUnpaidTickets(result)
       }
-      if (activePermit) {
-        setActivePermit(activePermit)
+      if (activePermits) {
+        setActivePermits(activePermits)
       }
       const vehicle = await getPrimaryVehicle()
       if (vehicle) {
@@ -128,10 +128,20 @@ export default function Dashboard() {
         <Typography variant="h4" sx={{ marginLeft: 1}}>
           {t('permit')}
         </Typography>
-        {activePermit && (
-          <PermitListCard permit={activePermit} />
+        {activePermits && (
+          <Box sx={{bgcolor: 'background.paper',
+            alignItems: 'start',
+            justifyContent: 'center',
+            display: 'grid',
+            gridTemplateColumns: {xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)'},
+            gap: 2,
+            mt: 2}}>
+            {activePermits.map((permit, index) => (
+              <PermitListCard key={index} permit={permit} />
+            ))}
+          </Box>
         )}
-        {activePermit === null && (
+        {activePermits === null && (
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" sx={{ marginLeft: 1 }}>
               {t('noPermit')}
