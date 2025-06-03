@@ -32,10 +32,10 @@ export async function getVehicleByPlate(cookie: string|undefined, plate: string)
       return response.json()} 
     )
     .then(json => {
-      if (json.errors) {
-        reject(json.errors[0].message)
-        return
-      }
+      // if (json.errors) {
+      //   reject(json.errors[0].message)
+      //   return
+      // }
       resolve(json.data.getVehicleByPlate)
     })
     .catch((error) => reject(error))
@@ -70,10 +70,10 @@ export async function UnregisterVehicle(cookie: string|undefined, plate: string)
       return response.json()
     })
     .then(json => {
-      if (json.errors) {
-        reject(json.errors[0].message)
-        return
-      }
+      // if (json.errors) {
+      //   reject(json.errors[0].message)
+      //   return
+      // }
       resolve(json.data.UnregisterVehicle)
     })
     .catch((error) => reject(error))

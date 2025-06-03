@@ -36,24 +36,15 @@ export async function issueTicketForCar(
   )
 }
 
-export async function getallLots(): Promise<Lot[]> {
-  console.log("enforcement get all lots action called");
-  const cookie = (await cookies()).get('session')?.value
-  return getAllLots(cookie)
-}
-
 export async function getDriverDetails(id: string) {
-  try {
-    const cookie = (await cookies()).get('session')?.value
-    if (!cookie) {
-      return null
-    }
-    const driver = await getDriver(id, cookie)
-    return driver
-  } catch (error) {
-    console.error('Error in getDriverDetails:', error)
-    return null
-  }
+  // try {
+  const cookie = (await cookies()).get('session')?.value
+  const driver = await getDriver(id, cookie)
+  return driver
+  // } catch (error) {
+  //   console.error('Error in getDriverDetails:', error)
+  //   return null
+  // }
 }
 
 export async function sendEmail(

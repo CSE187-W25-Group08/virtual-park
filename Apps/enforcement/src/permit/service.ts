@@ -31,11 +31,11 @@ export async function getPermitByPlate(cookie: string | undefined, carplate: str
     throw 'Unauthorized';
   }
   const json = await response.json();
-  if (json.errors || !json.data) {
-    console.error("GraphQL Error:", json.errors);
-    return [];
-  }
-  return json.data.getPermitBycarPlate ?? [];
+  // if (json.errors || !json.data) {
+  //   console.error("GraphQL Error:", json.errors);
+  //   return [];
+  // }
+  return json.data.getPermitBycarPlate;
 }
 
 export async function recognizePlateFromImage(cookie: string | undefined, base64Image: string): Promise<string> {

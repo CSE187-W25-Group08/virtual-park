@@ -31,7 +31,7 @@ export default function PermitView() {
   const [ticketSuccess, setTicketSuccess] = useState<string | null>(null)
   const [ticketDialog, setTicketDialog] = useState(false)
   const [driverID, setDriverID] = useState('')
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [vehicleID, setVehicleID] = useState('')
   
 
@@ -149,12 +149,12 @@ export default function PermitView() {
     }
 
     resetSearch()
-    setLoading(true)
+    // setLoading(true)
 
     const base64 = await toBase64(file)
     const plate = await googleVision(base64)
 
-    setLoading(false)
+    // setLoading(false)
 
     if (!plate) {
       setError('Failed to recognize license plate')
@@ -262,11 +262,11 @@ export default function PermitView() {
         </Alert>
       )}
 
-      {loading && (
+      {/* {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
           <CircularProgress />
         </Box>
-      )}
+      )} */}
 
       {permitViolation && (
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -280,7 +280,7 @@ export default function PermitView() {
         </Box>
       )}
 
-      {ticketDialog && (
+      {ticketDialog &&  (
         <TicketView
           open={ticketDialog}
           close={() => setTicketDialog(false)}
@@ -288,8 +288,8 @@ export default function PermitView() {
           vehicleID={vehicleID}
           success={handleTicketSuccess}
           error={handleTicketError}
-          LotName ={getCurrentLotInfo()?.name || ''}
-          ticketPrice={getCurrentLotInfo()?.ticketPrice || 0}
+          LotName ={getCurrentLotInfo()!.name}
+          ticketPrice={getCurrentLotInfo()!.ticketPrice}
         />
       )}
     </Container>
