@@ -97,7 +97,7 @@ it("should show a error saying please enter a carplate number", async () => {
   await userEvent.click(screen.getByPlaceholderText('Enter car plate number'))
   await userEvent.tab() 
   await userEvent.tab()
-  const searchButton = screen.getByRole('button', { name: 'Search' })
+  const searchButton = screen.getByText('Search')
   await userEvent.click(searchButton)
   screen.getByText('Please enter a car plate number')
 })
@@ -155,6 +155,93 @@ it('getpermitBycarplate rejects and return authorized error', async () => {
   await expect(getPermitByPlate('invalidCookie', 'abc12')).rejects.toBe('Unauthorized')
 })
 
+it("should show error and get driver info when no permits found", async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+
+  vi.mocked(fetch).mockImplementation((url) => {
+    if (url === 'http://localhost:4040/graphql') {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getAll: [
+              {
+                id: 'l1',
+                name: 'Area 51 Lot',
+                zone: 'A',
+                address: 'ucsc Rd',
+                latitude: 0,
+                longitude: 0,
+                capacity: 0,
+                availableSpots: 10,
+                isActive: true,
+                type: 'public',
+                created: '2025-01-01T00:00:00Z',
+                updated: '2025-01-02T00:00:00Z',
+                validPermits: ['Student'],
+                ticketPrice: 75
+              }
+            ]
+          }
+        }),
+      } as Response)
+    }
+    if (url === 'http://localhost:4000/graphql') {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getPermitBycarPlate: []
+          }
+        }),
+      } as Response)
+    }
+
+    if (url === 'http://localhost:4020/graphql') {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getVehicleByPlate: {
+              id: '123',
+              licensePlate: '1234BC4',
+              driver: 'driver111',
+              make: 'Toyota',
+              model: 'Corolla',
+              color: 'white'
+            }
+          }
+        })
+      } as Response)
+    }
+    if (String(url).startsWith('http://localhost:3010/api/v0/auth/user')) {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          id: '111',
+          name: 'nickenforcement',
+          email: 'nick@books.com'
+        }),
+      } as Response)
+    }
+    return Promise.reject(new Error('Unknown fetch: ' + url))
+  })
+
+  render(<PermitPage />)
+
+  const lotSelect = screen.getByLabelText('Current Parking Lot')
+  await userEvent.click(lotSelect)
+  await userEvent.click(screen.getByText('Area 51 Lot'))
+  const plateInput = screen.getByPlaceholderText('Enter car plate number')
+  await userEvent.clear(plateInput)
+  await userEvent.type(plateInput, '123BC4')
+
+  await userEvent.click(await screen.findByText('Search'))
+  await screen.findByText('No permits found for this vehicle')
+
+  await screen.findByText('Issue Ticket')
+})
 // it('test recognizePlateFromImage no license', async () => {
 //   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
 //     status: 401,

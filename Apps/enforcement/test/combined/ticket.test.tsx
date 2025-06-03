@@ -125,7 +125,7 @@ it("issue ticket button test", async () => {
   const lotSelect = screen.getByLabelText('Current Parking Lot')
   await userEvent.click(lotSelect)
 
-  await userEvent.click(screen.getByRole('option'))
+  await userEvent.click(screen.getByText('Area 51 Lot'))
   await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '1XXX000')
   await userEvent.click(screen.getByText('Search'))
   await userEvent.click(await screen.findByText('Issue Ticket'))
@@ -241,7 +241,7 @@ it("issue ticket successfully", async () => {
 
   const lotSelect = screen.getByLabelText('Current Parking Lot')
   await userEvent.click(lotSelect)
-  await userEvent.click(screen.getByRole('option'))
+  await userEvent.click(screen.getByText('Area 51 Lot'))
 
 
   await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '1XXX000')
@@ -369,7 +369,7 @@ it("not all the required fields get filled out in the ticket ", async () => {
   render(<PermitPage />)
   const lotSelect = screen.getByLabelText('Current Parking Lot')
   await userEvent.click(lotSelect)
-  await userEvent.click(screen.getByRole('option'))
+  await userEvent.click(screen.getByText('Area 51 Lot'))
   await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '1XXX000')
   await userEvent.click(screen.getByText('Search'))
   await userEvent.click(screen.getByText('Issue Ticket'))
@@ -478,7 +478,7 @@ it("failed to issue ticket", async () => {
   render(<PermitPage />)
   const lotSelect = screen.getByLabelText('Current Parking Lot')
   await userEvent.click(lotSelect)
-  await userEvent.click(screen.getByRole('option'))
+  await userEvent.click(screen.getByText('Area 51 Lot'))
 
   await userEvent.type(screen.getByPlaceholderText('Enter car plate number'), '1XXX000')
   await userEvent.click(screen.getByText('Search'))
