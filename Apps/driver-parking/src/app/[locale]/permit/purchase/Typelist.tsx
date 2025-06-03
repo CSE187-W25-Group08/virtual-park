@@ -11,6 +11,7 @@ import { useTranslations } from 'next-intl'
 import { permitTypes, getUserPermits} from '../actions'
 import PermitCard from './Typecard'
 import { PermitType } from '../../../../permit'
+import { Fade } from '@mui/material';
 
 export default function TypeList() {
   const [permitTypeList, setpermitTypeList] = useState<PermitType[]>([])
@@ -53,6 +54,7 @@ const classes = permitTypeList.reduce((array, permit) => {
 }, {} as Record<string, PermitType[]>);
 
   return (
+    <Fade in = {true} timeout={500}>
     <div style={{ padding: '1rem' }}>
     {Object.entries(classes).map(([permitClass, permits]) => (
       <Accordion key={permitClass}>
@@ -63,11 +65,12 @@ const classes = permitTypeList.reduce((array, permit) => {
         </AccordionSummary>
         <AccordionDetails>
           {permits.map((permit) => (
-            <PermitCard key={`${permit.type} - ${permit.permitClass}`} permit={permit} />
+              <PermitCard key={`${permit.type} - ${permit.permitClass}`} permit={permit} />
           ))}
         </AccordionDetails>
       </Accordion>
     ))}
   </div>
+</Fade>
   )
 }

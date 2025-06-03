@@ -44,7 +44,7 @@ export default function Dashboard() {
       const vehicle = await getPrimaryVehicle()
       if (vehicle) {
         setVehicle(vehicle)
-        let driverClass = vehicle.vehicleType ? vehicle.vehicleType : 'Remote'
+        let driverClass = vehicle.vehicleType
         driverClass = driverClass == 'Car' ? 'Remote' : driverClass
         const dailyPermitType = await getDailyPermitType(driverClass)
         setDailyPermitType(dailyPermitType)

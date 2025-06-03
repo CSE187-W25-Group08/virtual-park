@@ -31,40 +31,40 @@ const renderWithIntl = (component: React.ReactElement) => {
 
 it('Register Button Exists', async () => {
     renderWithIntl(<RegisterVehiclesPage/>)
-    const registerButton = screen.getByText('+ Register Vehicle');
+    const registerButton = await screen.findByText('+ Register Vehicle');
     expect(registerButton).not.toBeNull();
 })
 
 it('Click on Register Vehicle then Click Cancel', async () => {
   renderWithIntl(<Vehicles/>)
-  const registerButton = screen.getByText('+ Register Vehicle');
+  const registerButton = await screen.findByText('+ Register Vehicle');
   fireEvent.click(registerButton);
 
-  const cancelButton = screen.getByText('Cancel');
+  const cancelButton = await screen.findByText('Cancel');
   fireEvent.click(cancelButton);
 })
 
 it('Click on Register Vehicle and access registration form', async () => {
   renderWithIntl(<Vehicles/>)
-  const registerButton = screen.getByText('+ Register Vehicle');
+  const registerButton = await screen.findByText('+ Register Vehicle');
   fireEvent.click(registerButton);
 
   // Fill inputs
-  fireEvent.change(screen.getByLabelText(/License Plate/i), {
+  fireEvent.change(await screen.findByLabelText(/License Plate/i), {
     target: { value: 'TEST123' },
   })
-  fireEvent.change(screen.getByLabelText(/Make/i), {
+  fireEvent.change(await screen.findByLabelText(/Make/i), {
     target: { value: 'Toyota' },
   })
-  fireEvent.change(screen.getByLabelText(/Model/i), {
+  fireEvent.change(await screen.findByLabelText(/Model/i), {
     target: { value: 'Corolla' },
   })
-  fireEvent.change(screen.getByLabelText(/Color/i), {
+  fireEvent.change(await screen.findByLabelText(/Color/i), {
     target: { value: 'Silver' },
   })
   // fireEvent.click(screen.getByText(/Default Vehicle/i))
 
-  const saveButton = screen.getByText(/Save/i)
+  const saveButton = await screen.findByText(/Save/i)
   expect(saveButton.hasAttribute('disabled')).toBe(false)
   fireEvent.click(saveButton)
 
