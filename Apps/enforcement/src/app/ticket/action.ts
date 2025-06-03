@@ -4,9 +4,9 @@ import { cookies } from 'next/headers'
 
 
 import { Ticket } from '../../ticket'
-import { Lot } from '../../lot'
+// import { Lot } from '../../lot'
 import { issueTicketForVehicle } from '../../ticket/service'
-import { getAllLots } from '../../lot/service'
+// import { getAllLots } from '../../lot/service'
 import { getDriver } from '../../auth/service'
 // import { Driver } from '../../auth'
 import { sendTicketNotification } from '../../email/service'
