@@ -22,7 +22,7 @@ import { createCheckout } from '@/stripe/helper'
 
 export default function Dashboard() {
   const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([])
-  const [activePermits, setActivePermits] = useState<Permit[] | null>(null)
+  const [activePermits, setActivePermits] = useState<Permit[]>([])
   const [vehicle, setVehicle] = useState<Vehicle | null>(null)
   const [dailyPermitType, setDailyPermitType] = useState<PermitType | null>(null)
   const [registerModalOpen, setRegisterModalOpen] = useState(false)
@@ -128,7 +128,7 @@ export default function Dashboard() {
         <Typography variant="h4" sx={{ marginLeft: 1}}>
           {t('permit')}
         </Typography>
-        {activePermits && (
+        {activePermits.length > 0 && (
           <Box sx={{bgcolor: 'background.paper',
             alignItems: 'start',
             justifyContent: 'center',
@@ -141,7 +141,7 @@ export default function Dashboard() {
             ))}
           </Box>
         )}
-        {activePermits === null && (
+        {activePermits.length == 0 && (
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" sx={{ marginLeft: 1 }}>
               {t('noPermit')}

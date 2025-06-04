@@ -69,7 +69,7 @@ vi.mocked(getDailyPermitType).mockResolvedValue(
   }
 )
 
-vi.mocked(getActivePermit).mockResolvedValue(null)
+vi.mocked(getActivePermit).mockResolvedValue([])
 
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
