@@ -98,7 +98,7 @@
   "ticket": {
     "accepted": "Aceptado",
     "submitted": "Enviado",
-    "rejected": "Apelación rechazada",
+    "rejected": "Rechazada",
     "issueDate": "Fecha de emisión",
     "datePaid": "Fecha de pago",
     "status": "Estado",

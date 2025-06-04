@@ -98,7 +98,7 @@
   "ticket": {
     "accepted": "Accepted",
     "submitted": "Submitted",
-    "rejected": "Appeal Rejected",
+    "rejected": "Rejected",
     "issueDate": "Issue Date",
     "datePaid": "Date Paid",
     "status": "Status",

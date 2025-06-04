@@ -1,6 +1,7 @@
 
 import { Card, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
+import GavelIcon from '@mui/icons-material/Gavel';
 import ListItemButton from '@mui/material/ListItemButton';
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl';
@@ -29,17 +30,35 @@ export default function TicketCard({ ticket }: { ticket: Ticket }) {
     const submitted = ticket.appeal === "submitted"
     const approved =  ticket.appeal === "approved"
     const rejected =  ticket.appeal === "rejected"
-  
-    if (approved) {
-      return <Typography color="success.dark">{t("accepted")}</Typography>
-    }
 
-    if (submitted) {
-      return <Typography color="warning.dark">{t("submitted")}</Typography>
-    }
-
-    if (rejected) {
-      return <Typography sx={{}} color='red'>{t('rejected')}</Typography>
+    if (ticket.appeal != 'null') {
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <GavelIcon sx={{
+            color:
+              approved ? "success.dark" :
+              submitted ? "warning.dark" :
+              rejected ? "error.dark" : 
+              "text.primary"
+            }}
+          />
+          <Typography sx={{
+            color:
+              approved ? "success.dark" :
+              submitted ? "warning.dark" :
+              rejected ? "error.dark" :
+              "text.primary"
+            }}
+          >
+            {
+              approved ? t("accepted") :
+              submitted ? t("submitted") :
+              rejected ? t("rejected"):
+              ""
+            }
+          </Typography>
+        </Box>
+      );
     }
   };
 
