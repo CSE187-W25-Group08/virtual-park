@@ -26,7 +26,7 @@ export default function TicketList() {
         const unpaid = result.filter(
           (value) =>
             value.paid === false &&
-            (value.appeal == null || value.appeal === "rejected")
+            (value.appeal == 'null' || value.appeal === "rejected")
         );
         setUnpaidTicket(unpaid);
         const appealed = result.filter(
