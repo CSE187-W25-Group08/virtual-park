@@ -5,3 +5,6 @@ CSE 187 Group Project!
 ### Features
 - Parking Permit
 - purchasing permit
+- Enforcer app
+- Admin App
+- Driver App
