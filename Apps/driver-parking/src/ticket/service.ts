@@ -30,6 +30,14 @@ export class TicketService {
       throw new Error('Failed to fetch ' + key);
     }
   }
+  public async getUserTickets(cookie: string | undefined): Promise<Ticket[]> {
+    return this.fetchGraphQL<Ticket[]>(cookie, `
+      {
+        allTicket {
+          id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal
+        }
+      }`, 'allTicket');
+  }
 
   public async getPaidTicket(cookie: string | undefined): Promise<Ticket[]> {
     return this.fetchGraphQL<Ticket[]>(cookie, `

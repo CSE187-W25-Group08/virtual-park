@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from 'next-intl'
 
 import View from '../../src/app/[locale]/ticket/[ticketId]/View'
 import TicketList from '../../src/app/[locale]/ticket/list'
-import {paidList, unpaidList, appealedList, testTicket, testTicketAppealed, testVehicle} from '../testData'
+import {ticketList, testTicket, testTicketAppealed, testVehicle} from '../testData'
 import {
   labels as labelMessages,
   ticket_details as ticketDetailsMessages,
@@ -51,24 +51,10 @@ afterEach(() => {
 
 // https://mswjs.io/docs/network-behavior/graphql/
 export const handlers = [
-  graphql.query('paidTicket', () => {
+  graphql.query('allTicket', () => {
     return HttpResponse.json({
       data: {
-        paidTicket: paidList,
-      },
-    })
-  }),
-  graphql.query('unpaidTicket', () => {
-    return HttpResponse.json({
-      data: {
-        unpaidTicket: unpaidList,
-      },
-    })
-  }),
-  graphql.query('appealedTicket', () => {
-    return HttpResponse.json({
-      data: {
-        appealedTicket: appealedList,
+        allTicket: ticketList,
       },
     })
   }),
@@ -114,29 +100,14 @@ it('Renders list of tickets', async () => {
     const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
     const query = body.query || '';
 
-    if (query.includes('paidTicket')) {
+    if (query.includes('allTicket')) {
       return Promise.resolve({
         ok: true,
         status: 200,
-        json: async () => ({ data: { paidTicket: paidList } }),
+        json: async () => ({ data: { allTicket: ticketList } }),
       });
     }
 
-    if (query.includes('unpaidTicket')) {
-      return Promise.resolve({
-        ok: true,
-        status: 200,
-        json: async () => ({ data: { unpaidTicket: unpaidList } }),
-      });
-    }
-
-    if (query.includes('appealedTicket')) {
-      return Promise.resolve({
-        ok: true,
-        status: 200,
-        json: async () => ({ data: { appealedTicket: appealedList } }),
-      });
-    }
 
     return Promise.reject(new Error('Unhandled GraphQL query'));
   }));

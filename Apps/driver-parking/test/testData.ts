@@ -1,4 +1,4 @@
-export const paidList = [
+export const ticketList = [
   {
     id: "t2",
     vehicle: "XYZ5678",
@@ -40,10 +40,7 @@ export const paidList = [
     image: "/images/tickets/t2.jpg",
     cost: 50.02,
     appeal: "rejected"
-  }
-];
-
-export const unpaidList = [
+  },
   {
     id: "t3",
     vehicle: "XYZ5678",
@@ -56,11 +53,8 @@ export const unpaidList = [
     violation: "Did not pay",
     image: "/images/tickets/t2.jpg",
     cost: 50.02,
-    appeal: "null"
-  }
-];
-
-export const appealedList = [
+    appeal: null
+  },
   {
     id: "t3",
     vehicle: "XYZ5678",

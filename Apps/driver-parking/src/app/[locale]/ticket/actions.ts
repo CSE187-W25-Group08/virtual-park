@@ -5,7 +5,6 @@ import { cookies } from "next/headers";
 import { Ticket } from "../../../ticket";
 import { TicketService } from "../../../ticket/service";
 
-/* Currently unused
 export async function list(): Promise<Ticket[] | undefined> {
   try {
     const cookie = (await cookies()).get("session")?.value;
@@ -14,7 +13,6 @@ export async function list(): Promise<Ticket[] | undefined> {
     return [];
   }
 }
-*/
 
 export async function listPaid(): Promise<Ticket[] | undefined> {
   try {

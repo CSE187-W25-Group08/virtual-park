@@ -7,7 +7,7 @@ import TicketList from '../../src/app/[locale]/ticket/list'
 import Page from '../../src/app/[locale]/ticket/page'
 import { ticket as ticketMessages } from '../../messages/en.json'
 
-import {paidList, unpaidList, appealedList} from '../testData'
+import {ticketList} from '../testData'
 
 afterEach(() => {
   cleanup()
@@ -18,9 +18,7 @@ vi.mock('next/navigation', () => ({
 }))
 
 vi.mock('../../src/app/[locale]/ticket/actions', () => ({
-  listPaid: vi.fn(() => paidList),
-  listUnpaid: vi.fn(() => unpaidList),
-  listAppealed: vi.fn(() => appealedList),
+  list: vi.fn(() => ticketList),
   getTicketById: vi.fn(() => {}),
   setTicketPaid: vi.fn(() => {})
 }))
