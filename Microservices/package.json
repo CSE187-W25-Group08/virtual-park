@@ -41,9 +41,8 @@
     "test-ticket": "cd TicketService && npm run test",
     "test-vehicle": "cd VehicleService && npm run test",
     "test-stripe": "cd StripeService && npm run test",
-    "test-coverage": "npm run test-stripe && npm run test-auth && npm run test-ticket && npm run test-permit && npm run test-vehicle && npm run test-lot && npm run test-email",
-    "combine-coverage": "ts-node coverage-combiner.ts",
-    "test": "npm run test-coverage && npm run combine-coverage"
+    "test": "npm run test-stripe && npm run test-auth && npm run test-ticket && npm run test-permit && npm run test-vehicle && npm run test-lot && npm run test-email",
+    "combine-coverage": "ts-node coverage-combiner.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",
