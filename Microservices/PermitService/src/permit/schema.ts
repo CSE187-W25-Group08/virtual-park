@@ -1,5 +1,5 @@
-import { Field, ObjectType, GraphQLISODateTime, ID} from 'type-graphql'
-import { IsNumber, IsUUID} from 'class-validator'
+import { Field, ObjectType, GraphQLISODateTime, ID } from 'type-graphql'
+import { IsNumber, IsUUID } from 'class-validator'
 
 @ObjectType()
 export class Permit {
@@ -34,11 +34,12 @@ export class Permit {
 
 @ObjectType()
 export class PermitType {
-  constructor( id: string, price: number, type: string, permitClass: string) {
+  constructor(id: string, price: number, type: string, permitClass: string, purchased?: boolean) {
     this.id = id
     this.type = type
     this.price = price
     this.permitClass = permitClass
+    if (purchased) { this.purchased = purchased }
   }
   @Field(() => ID)
   @IsUUID()
@@ -53,11 +54,14 @@ export class PermitType {
 
   @Field()
   permitClass!: string;
+
+  @Field()
+  purchased?: boolean
 }
 
 @ObjectType()
 export class PermitValid {
-  constructor( driverID: string, vehicleID: string, permitID: string | null, permitType: string | null, issueDate: string, expDate: string, isValid: boolean, permitClass: string) {
+  constructor(driverID: string, vehicleID: string, permitID: string | null, permitType: string | null, issueDate: string, expDate: string, isValid: boolean, permitClass: string) {
     this.driverID = driverID
     this.vehicleID = vehicleID
     this.permitID = permitID
@@ -68,7 +72,7 @@ export class PermitValid {
     this.permitClass = permitClass
   }
 
-  @Field(() => ID, {nullable: true})
+  @Field(() => ID, { nullable: true })
   @IsUUID()
   permitID!: string | null
 
@@ -98,7 +102,7 @@ export class PermitValid {
 
 @ObjectType()
 export class PermitIssue {
-  constructor( driverID: string, vehicleID: string, permitID: string, permitType: string, issueDate: string, expDate: string, isValid: boolean, permitClass: string) {
+  constructor(driverID: string, vehicleID: string, permitID: string, permitType: string, issueDate: string, expDate: string, isValid: boolean, permitClass: string) {
     this.driverID = driverID
     this.vehicleID = vehicleID
     this.permitID = permitID

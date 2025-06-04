@@ -32,7 +32,9 @@ export class TicketResolver {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => [Ticket])
   async paidTicket(@Ctx() request: Request): Promise<Ticket[]> {
-    return await new TicketService().getPaid(request.user?.id)
+    const tickets = await new TicketService().getPaid(request.user?.id)
+    console.log("paid tickets resolver", tickets);
+    return tickets;
   }
 
   @Authorized()

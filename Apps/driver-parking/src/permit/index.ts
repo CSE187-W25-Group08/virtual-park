@@ -11,8 +11,8 @@ export interface PermitType {
   id: string,
   type: string,
   price: number,
-  purchased?: boolean,
   permitClass: string,
+  purchased?: boolean,
 }
 
 export interface PermitPurchase {

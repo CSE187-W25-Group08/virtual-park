@@ -61,7 +61,7 @@ INSERT INTO vehicle (id, driver, data) VALUES (
     'model', 'Corolla',
     'color', 'Silver',
     'vehicleType', 'Car',
-    'active', false
+    'active', true
   )
 );
 INSERT INTO vehicle (id, driver, data) VALUES (

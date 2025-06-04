@@ -42,6 +42,22 @@ export const issuePermit = `
   RETURNING *;
 `;
 
+export const selectBuyablePermits = `
+SELECT
+  pt.id,
+  pt.data->>'type' AS type,
+  pt.data->>'price' AS price,
+  pt.data->>'class' AS permitclass,
+  EXISTS (
+    SELECT 1
+    FROM driverPermit dp
+    WHERE dp.permitType = pt.id
+      AND dp.driverID = $1
+      AND (dp.data->>'expdate')::timestamp > now()
+  ) AS purchased
+FROM permitType pt;`
+
+
 export const selectDriverPermits = `
 SELECT 
     dp.id AS id,

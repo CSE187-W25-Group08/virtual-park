@@ -25,33 +25,20 @@ import { createCheckout } from '../../../../stripe/helper';
 // import { getCheckoutSessionUrlAction } from '../../stripe/action'
 // import { redirect } from 'next/navigation'
 
+interface PermitCardProps {
+  permit: PermitType;
+  vehicle: Vehicle | undefined;
+}
+
 /* reference: https://www.typescriptlang.org/docs/handbook/functions.html */
-export default function PermitCard({permit}: { permit: PermitType }) {
+export default function PermitCard({ permit, vehicle }: PermitCardProps) {
   const t = useTranslations('purchase_permit')
 
-  const [vehicle, setVehicle] = React.useState<Vehicle | null>(null);
   const [showWarning, setShowWarning] = React.useState(false);
   const [hours, setHours] = React.useState(1);
 
   const isHourly = permit.type === 'Hourly';
   const adjustedPrice = isHourly ? permit.price * hours : permit.price;
-
-   React.useEffect(() => {
-    const getActiveVehicle = async () => {
-      const vehicleResult = await getPrimaryVehicle()
-      if (!vehicleResult) {
-        throw (Error)
-      }
-      setVehicle(vehicleResult);
-    }
-    getActiveVehicle();
-  }, []);
-
-  //const convertToSubCurrency = (amount: number, factor = 100) => {
-  //  return Math.round(amount * factor);
-  //};
-
-  //const priceCurrency = convertToSubCurrency(permit.price);
 
   const handleHourChange = (event: SelectChangeEvent<number>) => {
     setHours(Number(event.target.value));
@@ -64,16 +51,13 @@ export default function PermitCard({permit}: { permit: PermitType }) {
     }
     const name = "PermitPurchese";
     const amount = adjustedPrice;
-    // meta data includes cookie as well
+    // Could switch to userId / JWT from cookie ?
     const metaData = {
       permitTypeId: permit?.id,
       type: "permit",
       vehicleId: vehicle?.id,
       price: adjustedPrice,
     }
-    // console.log("name", name)
-    // console.log("amount", amount)
-    // console.log("metaData", metaData)
     await createCheckout(name, amount, metaData)
   }
   

@@ -18,8 +18,44 @@ export async function getPermitByDriver(cookie: string | undefined): Promise<Per
       }
       )
       .then(json => {
-        console.log("permits by user json", json, json.error);
+        // console.log("permits by user json", json, json.error);
         resolve(json.data.permitsByDriver)
+      })
+      .catch((error) => reject(error))
+  })
+}
+
+export async function fetchBuyablePermits(cookie: string | undefined): Promise<Permit[]> {
+  console.log("fetchBuyablePermits called")
+  return new Promise((resolve, reject) => {
+    fetch('http://localhost:4000/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookie}`,
+      },
+      body: JSON.stringify({
+        query: `{
+            buyablePermits {
+              id
+              type
+              price
+              permitClass
+              purchased
+            }
+          }`
+      }),
+    })
+      .then(response => {
+        if (response.status != 200) {
+          reject('Unauthorized')
+        }
+        return response.json()
+      }
+      )
+      .then(json => {
+        // console.log("buyable permits", json, "errors", json.error);
+        resolve(json.data.buyablePermits)
       })
       .catch((error) => reject(error))
   })
@@ -43,7 +79,7 @@ export async function getPermitType(cookie: string | undefined): Promise<PermitT
       }
       )
       .then(json => {
-        console.log("permits by type json", json, json.error);
+        // console.log("permits by type json", json, json.error);
         resolve(json.data.PermitType)
       })
       .catch((error) => reject(error))
@@ -77,7 +113,7 @@ export async function getSpecificDailyPermit(cookie: string | undefined, driverC
         return response.json()
       })
       .then(json => {
-        console.log('JSON: ', json)
+        // console.log('JSON: ', json)
         resolve(json.data.getDailyPermitType)
       })
       .catch((err) => reject(err))

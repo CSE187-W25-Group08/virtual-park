@@ -13,16 +13,16 @@ export async function sendPermitPaymentConfirmation(email: string, name: string,
       from: "Virtual Park <noreply@yourdomain.com>", // Use a verified sender
       to: [`${name} <${email}>`],
       subject: "Purchase Confirmation",
-      text: `Thank you for your purchase! Here are the details of your transaction. Enjoy your parking permit while it lasts:
+      text: `Thank you for your purchase! Here are the details of your transaction.
 
       Permit: ${nameOfProduct}
       Amount Paid: $${(costOfProduct / 100).toFixed(2)}
       Permit ID: ${permitTypeId}
       Vehicle ID: ${vehicleId}
 
-      If you have any questions or need assistance, please do not contact us. 
+      If you have any questions or need assistance, please do not hesitate to contact us. 
 
-      Best regards, the Virtualest of Parkest Virual Parketh eth doth Virtual Parketh Team.
+      Best regards, the Virtual Park Team.
       `,
 
     });
@@ -44,16 +44,16 @@ export async function sendTicketPaymentConfirmation(email: string, name: string,
     const data = await mg.messages.create("virtual-park.net", {
       from: "Virtual Park <noreply@yourdomain.com>", // Use a verified sender
       to: [`${name} <${email}>`],
-      subject: "Purchase Confirmation",
-      text: `Thank you for your purchase! Here are the details of your transaction:
+      subject: "Payment Confirmation",
+      text: `Thank you for your payment! Here are the details of your transaction:
 
       Ticket: ${nameOfProduct}
       Amount Paid: $${(costOfProduct / 100).toFixed(2)}
       Ticket ID: ${ticketId}
 
-      If you have any questions or need assistance, please do not contact us. 
+      If you have any questions or need assistance, please do not hesitate to contact us. 
 
-      Best regards, the Virtualest of Parkest Virual Parketh eth doth Virtual Parketh Team.
+      Best regards, the Virtual Park Team.
       `,
 
     });
@@ -74,16 +74,15 @@ export async function sendTicketAppealRejected(email: string, name: string, tick
     const data = await mg.messages.create("virtual-park.net", {
       from: "Virtual Park <noreply@yourdomain.com>", // Use a verified sender
       to: [`${name} <${email}>`],
-      subject: "Ticket Appeal Rejected",
+      subject: "Ticket Appeal Rejection Notice",
       text: `Your appeal for the ticket has been rejected. Here are the details:
 
       Ticket ID: ${ticketId}
       Ticket Violation: ${violation}
 
-      If you have any questions or need assistance, please do not contact us. 
-      You will have to pay the full amount of the ticket illegal scum. 
+      If you have any questions or need assistance, please do not hesitate to contact us. 
 
-      Best regards, the Virtualest of Parkest Virual Parketh eth doth Virtual Parketh Team.
+      Best regards, the Virtual Park Team.
       `,
 
     });
@@ -111,10 +110,11 @@ export async function sendTicketAppealAccepted(email: string, name: string, tick
       Ticket ID: ${ticketId}
       Ticket Violation: ${violation}
 
-      You were lucky this time, your appeal has been accepted. You will instead pay a reduced fine. 
-      If you have any questions or need assistance, please do not contact us. 
+      You can pay the reduced fine at virtual-park.net.
 
-      Best regards, the Virtualest of Parkest Virual Parketh eth doth Virtual Parketh Team.
+      If you have any questions or need assistance, please do not hesitate to contact us. 
+
+      Best regards, the Virtual Park Team.
       `,
 
     });

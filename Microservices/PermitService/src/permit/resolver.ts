@@ -6,13 +6,22 @@ import { PermitService } from './service'
 @Resolver()
 export class PermitResolver {
   @Authorized()
-
   @Query(() => [Permit])
   async permitsByDriver(
     @Ctx() Request: Request
   ): Promise<Permit[]> {
     const perms = await new PermitService().getPermitByDriver(Request.user?.id)
-    console.log("users permits", perms)
+    // console.log("users permits", perms)
+    return perms
+  }
+
+  @Authorized()
+  @Query(() => [PermitType])
+  async buyablePermits(
+    @Ctx() Request: Request
+  ): Promise<PermitType[]> {
+    const perms = await new PermitService().getBuyablePermits(Request.user?.id)
+    console.log("Buyable permits resolver: ", perms[0])
     return perms
   }
 
@@ -35,7 +44,7 @@ export class PermitResolver {
 
   /* should Only allow officer to do that, and in the future, I might consider adding a member with the role of enforcement officer */
   @Authorized('enforcement')
-   
+
   @Query(() => [PermitValid])
   async getPermitBycarPlate(@Arg("input") carPlate: string): Promise<PermitValid[]> {
     const result = await new PermitService().getPermitByCar(carPlate);
@@ -62,7 +71,7 @@ export class PermitResolver {
     if (!driverId) {
       throw new Error("UserID invalid");
     }
-    console.log("issued new permit called")
+    // console.log("issued new permit called")
     const permitType = await new PermitService().getSpecificPermitType(permitTypeId)
     /* academic year, year, quarter, month, week, daily, hourly */
     const issueDate = new Date();
@@ -96,7 +105,7 @@ export class PermitResolver {
       price: price,
       permitClass: permitType.permitClass
     });
-    console.log("issued new permit in resolver", newPermit)
+    // console.log("issued new permit in resolver", newPermit)
     return newPermit;
   }
 }

@@ -66,11 +66,37 @@ test('retrieve all the permits belong to the specific user', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      expect(res.body.data.permitsByDriver.length).toEqual(4)
+      expect(res.body.data.permitsByDriver.length).toEqual(5)
     })
 })
 
-test('retrieve the active permit belonging to the specific user', async () => {
+test('Should get buyable permits', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `{
+        buyablePermits {
+          type
+          price
+          permitClass
+          purchased
+        }
+      }`
+    })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      const dailyRemotePermit = res.body.data.buyablePermits.find(
+        (perm) => perm.type === 'Daily' && perm.permitClass === 'Remote'
+      );
+      console.log("dailyRemotePermit", dailyRemotePermit)
+      expect(dailyRemotePermit.purchased).toBe(true);
+    })
+})
+
+test('Should get valud Permits', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
@@ -115,7 +141,7 @@ test('retrieve the permit info based on the vehicle car plate', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      expect(res.body.data.getPermitBycarPlate.length).toEqual(4)
+      expect(res.body.data.getPermitBycarPlate.length).toEqual(5)
     })
 })
 

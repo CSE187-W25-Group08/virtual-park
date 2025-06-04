@@ -19,6 +19,22 @@ export class PermitService {
     }))
   }
 
+  public async getBuyablePermits(driverID: string | undefined): Promise<PermitType[]> {
+    const query = {
+      text: queries.selectBuyablePermits,
+      values: [driverID]
+    }
+    const { rows } = await pool.query(query);
+    console.log("buyable permit row", rows[0]);
+    return rows.map(result => ({
+      id: result.id,
+      price: result.price,
+      type: result.type,
+      permitClass: result.permitclass,
+      purchased: result.purchased
+    }))
+  }
+
   public async getPermitType(): Promise<PermitType[]> {
     const query = {
       text: queries.permitType,
@@ -32,6 +48,7 @@ export class PermitService {
       permitClass: result.data.class
     }))
   }
+
   public async getSpecificPermitType(permitID: string): Promise<PermitType> {
     const query = {
       text: queries.getSpecificPermitType,
@@ -54,7 +71,7 @@ export class PermitService {
 
     const { rows } = await pool.query(query)
     const row = rows[0]
-    console.log(driverClass)
+    // console.log(driverClass)
     return new PermitType(
       row.id,
       row.data.price,
@@ -73,7 +90,7 @@ export class PermitService {
     price: number;
     permitClass: string;
   }): Promise<PermitIssue> {
-    console.log("inserting pertmit data in permitservice", permitData)
+    // console.log("inserting pertmit data in permitservice", permitData)
     const query = {
       text: queries.issuePermit,
       values: [
@@ -91,7 +108,7 @@ export class PermitService {
 
     const { rows } = await pool.query(query);
     const row = rows[0];
-    console.log("row that was inserted by permitIssue in permit service", row)
+    // console.log("row that was inserted by permitIssue in permit service", row)
     return new PermitIssue(
       row.driverid,
       row.data.vehicleid,

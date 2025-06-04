@@ -14,6 +14,7 @@ export default function PermitList() {
   const t = useTranslations('permit_history')
 
   useEffect(() => {
+    console.log("permit history useEffect");
     const fetchData = async () => {
       const fetch = await getUserPermits()
       setPermits(fetch)

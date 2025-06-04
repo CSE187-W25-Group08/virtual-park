@@ -68,8 +68,6 @@ export default function LoginView() {
         justifyContent: 'space-between'
       }}
     >
-      {failedLogin &&
-            <Alert severity="error" sx={{width:'300px'}}>{t('error')}</Alert>}
       <Box
         sx={{
           display: 'flex',
@@ -78,6 +76,8 @@ export default function LoginView() {
           mt: 4,
         }}
       >
+        {failedLogin &&
+      <Alert severity="error" sx={{width:'300px'}}>{t('error')}</Alert>}
       <Box sx={{display:'flex', flexDirection:'row', mt:5, alignItems: 'center',  gap: 2, width:'300px', mb:0}}>
         <picture  style={{margin: 0, padding: 0, width: '50px', height: '50px'}}>
         <img

@@ -229,3 +229,12 @@ INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
     'expdate', '2025-07-21T08:00:00.000Z'
   )
 );
+
+INSERT INTO driverPermit (driverID, permitType, data) VALUES (
+  'bea45ed8-aa83-4c49-a201-4625baa0e91a',
+  '9d62b330-5c1b-4ae6-93ea-95330f719050',
+  jsonb_build_object(
+    'issuedate', to_jsonb((now() - interval '1 hour')::timestamptz),
+    'expdate', to_jsonb((now() + interval '23 hours')::timestamptz)
+  )
+);
