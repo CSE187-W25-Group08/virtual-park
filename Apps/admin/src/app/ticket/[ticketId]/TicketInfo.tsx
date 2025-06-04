@@ -116,12 +116,15 @@ export default function TicketInfo({ ticketId }: { ticketId: string }) {
           />
           </Box>
         </Box>
-          <CardMedia
-            component="img"
-            height="300"
-            image={ticket.image}
-            alt="Violation image"
-          />
+          {ticket.image && ticket.image.trim() !== '' && (
+            <CardMedia
+              component="img"
+              height="300"
+              image={ticket.image}
+              alt="Violation image"
+            />
+          )}
+
           <CardContent sx={{p:5}}>
             <Typography variant="h4" gutterBottom>
               Violation: {ticket.violation}
