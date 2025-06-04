@@ -3,7 +3,7 @@
 INSERT INTO vehicle (driver, data) VALUES (
   '2264f03f-cc25-4fe1-a2ba-dffb10c71ee9',
   jsonb_build_object(
-    'license_plate', 'DRIVERA',
+    'license_plate', '7ZJN054',
     'make', 'Jeep',
     'model', 'Grand Cherokee',
     'color', 'black',
