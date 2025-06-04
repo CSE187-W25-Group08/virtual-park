@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Page from '../../src/app/login/page'
 import React from 'react'
 
-// mock next.js stuff navigation and cookies
+
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
 }))
