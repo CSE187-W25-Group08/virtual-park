@@ -27,20 +27,20 @@ export default function TicketCard({ ticket }: { ticket: Ticket }) {
 
   const displayInfo = (ticket: Ticket) => {
     const submitted = ticket.appeal === "submitted"
-    const approved =  ticket.appeal === "approved";
-    // const rejected =  ticket.appeal === "rejected";
+    const approved =  ticket.appeal === "approved"
+    const rejected =  ticket.appeal === "rejected"
   
     if (approved) {
-      return <Typography color="success.dark">{t("accepted")}</Typography>;
+      return <Typography color="success.dark">{t("accepted")}</Typography>
     }
 
     if (submitted) {
-      return <Typography color="warning.dark">{t("submitted")}</Typography>;
+      return <Typography color="warning.dark">{t("submitted")}</Typography>
     }
 
-    return (
-      <Typography sx={{}} color='red'>{t('rejected')}</Typography>
-    )
+    if (rejected) {
+      return <Typography sx={{}} color='red'>{t('rejected')}</Typography>
+    }
   };
 
   return (
