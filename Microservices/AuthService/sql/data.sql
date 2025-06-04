@@ -25,6 +25,59 @@ VALUES (
   )
 );
 
+INSERT INTO member(id, data) 
+VALUES (
+  '2264f03f-cc25-4fe1-a2ba-dffb10c71ee9',
+  jsonb_build_object(
+    'email','driverA@books.com',
+    'name','Driver A',
+    'pwhash',crypt('drivera',gen_salt('bf')),
+    'roles','["driver"]',
+    'joindate', '2025-04-16T04:59:03+00:00',
+    'suspended', false
+  )
+);
+
+INSERT INTO member(id, data) 
+VALUES (
+  '8a6187c8-bf3f-4d75-97fb-ede1a4da702d',
+  jsonb_build_object(
+    'email','driverB@books.com',
+    'name','Driver B',
+    'pwhash',crypt('driverb',gen_salt('bf')),
+    'roles','["driver"]',
+    'joindate', '2025-04-16T04:59:03+00:00',
+    'suspended', false
+  )
+);
+
+
+INSERT INTO member(id, data) 
+VALUES (
+  'ac485241-bc6e-4fa3-9e54-89add5468a64',
+  jsonb_build_object(
+    'email','driverC@books.com',
+    'name','Driver C',
+    'pwhash',crypt('driverc',gen_salt('bf')),
+    'roles','["driver"]',
+    'joindate', '2025-04-16T04:59:03+00:00',
+    'suspended', false
+  )
+);
+
+INSERT INTO member(id, data) 
+VALUES (
+  'e2c47a36-9047-41df-bb4c-3935b30a3863',
+  jsonb_build_object(
+    'email','driverD@books.com',
+    'name','Driver D',
+    'pwhash',crypt('driverd',gen_salt('bf')),
+    'roles','["driver"]',
+    'joindate', '2025-04-16T04:59:03+00:00',
+    'suspended', false
+  )
+);
+
 INSERT INTO member(data) 
 VALUES (
   jsonb_build_object(

@@ -1,5 +1,53 @@
 \c vehicle
 
+INSERT INTO vehicle (driver, data) VALUES (
+  '2264f03f-cc25-4fe1-a2ba-dffb10c71ee9',
+  jsonb_build_object(
+    'license_plate', 'DRIVERA',
+    'make', 'Jeep',
+    'model', 'Grand Cherokee',
+    'color', 'black',
+    'vehicleType', 'Car',
+    'active', true
+  )
+);
+
+INSERT INTO vehicle (driver, data) VALUES (
+  '8a6187c8-bf3f-4d75-97fb-ede1a4da702d',
+  jsonb_build_object(
+    'license_plate', 'DRIVERB',
+    'make', 'Toyota',
+    'model', 'Camry',
+    'color', 'silver',
+    'vehicleType', 'Car',
+    'active', true
+  )
+);
+
+INSERT INTO vehicle (driver, data) VALUES (
+  'ac485241-bc6e-4fa3-9e54-89add5468a64',
+  jsonb_build_object(
+    'license_plate', 'DRIVERC',
+    'make', 'Ford',
+    'model', 'F-150',
+    'color', 'blue',
+    'vehicleType', 'Car',
+    'active', true
+  )
+);
+
+INSERT INTO vehicle (driver, data) VALUES (
+  'e2c47a36-9047-41df-bb4c-3935b30a3863',
+  jsonb_build_object(
+    'license_plate', 'DRIVERD',
+    'make', 'Honda',
+    'model', 'Civic',
+    'color', 'white',
+    'vehicleType', 'Car',
+    'active', true
+  )
+);
+
 INSERT INTO vehicle (id, driver, data) VALUES (
   '93b35c24-3ad2-4ec9-8404-f50d8e357ace',
   '45c90975-92e0-4a51-b5ea-2fe5f8613b54',
