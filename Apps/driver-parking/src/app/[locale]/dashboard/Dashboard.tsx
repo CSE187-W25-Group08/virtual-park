@@ -19,6 +19,7 @@ import { getActivePermit, getDailyPermitType } from "../dashboard/actions"
 import { Vehicle } from '@/register'
 import { getPrimaryVehicle } from '../register/actions'
 import { createCheckout } from '@/stripe/helper'
+import LocaleSwitcher from '../../languageSwitcher/LocaleSwitcher'
 
 export default function Dashboard() {
   const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([])
@@ -83,6 +84,9 @@ export default function Dashboard() {
   return (
     <Box sx={{mb: 10}}>
       <Box sx={{display: 'flex', flexDirection: 'column', marginTop: 2 }}>
+          <Box sx={{ position: 'absolute', top: 15, right: 15, zIndex: 9999 }}>
+            <LocaleSwitcher />
+          </Box>
         <Typography variant="h4" sx={{ marginLeft: 1}}>
           {t('tickets')}
         </Typography>

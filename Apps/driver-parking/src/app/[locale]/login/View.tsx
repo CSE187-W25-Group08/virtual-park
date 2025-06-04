@@ -22,6 +22,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import logo from '../..//public/img/no-circle-logo.svg'
 import corner from '../..//public/img/corner.png'
 import { login, loginWithGoogle } from './action'
+import LocaleSwitcher from '../../languageSwitcher/LocaleSwitcher'
 
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
@@ -59,6 +60,9 @@ export default function LoginView() {
   
   return (
     <Box sx = {{display: 'flex', flexDirection:'column',   minHeight: '100vh' }}>
+      <Box sx={{ position: 'absolute', top: 15, right: 15, zIndex: 9999 }}>
+        <LocaleSwitcher />
+      </Box>
     <Container
       maxWidth="xs"
       sx={{
