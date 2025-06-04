@@ -62,13 +62,14 @@ it('Click on Register Vehicle and access registration form', async () => {
   fireEvent.change(await screen.findByLabelText(/Color/i), {
     target: { value: 'Silver' },
   })
-  // fireEvent.click(screen.getByText(/Default Vehicle/i))
 
+  const dropdownTrigger = screen.getByRole('combobox')
+fireEvent.mouseDown(dropdownTrigger)
+
+const option = await screen.findByText('Car')
+fireEvent.click(option)
+
+  
   const saveButton = await screen.findByText(/Save/i)
   expect(saveButton.hasAttribute('disabled')).toBe(false)
-  fireEvent.click(saveButton)
-
-  // await screen.findByText(/Toyota, Corolla - Silver/i)
-
-  // expect(screen.queryByText(/Register Vehicle/i)).toBeNull()
 })
