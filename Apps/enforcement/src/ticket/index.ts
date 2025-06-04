@@ -34,4 +34,5 @@ error: (errorMessage: string) => void;
 LotName: string;
 LotID: string | '';
 ticketPrice: number;
+plate: string;
 }

@@ -74,5 +74,28 @@ export class VehicleResolver {
   async getAnyVehicleById(@Arg("id") id: string): Promise<Vehicle> {
     return await new VehicleService().getVehicleByIdAdmin(id)
   }
+
+  @Authorized("enforcement")
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @Query(returns => Vehicle, { nullable: true })
+  async getVehicleByDriverOrPlate(@Arg("driver") driver: string, @Arg("plate") plate: string): Promise<Vehicle | null> {
+    // if unregistered vehicle, search from plate
+    if (!driver) {
+      return null
+    } else {
+      // match user and plate
+      const userVehicles = await new VehicleService().getUserVehicles(driver)
+      const matchedVehicle = userVehicles.find(
+        vehicle => vehicle.licensePlate.toLowerCase() === plate.toLowerCase()
+      );
+
+      if (!matchedVehicle) {
+        throw new Error("Vehicle with that plate not found for this driver.");
+      }
+
+      console.log('matched: ', matchedVehicle)
+      return matchedVehicle;
+    }
+  }
 }
 

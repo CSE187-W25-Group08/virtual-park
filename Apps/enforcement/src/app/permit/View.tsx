@@ -16,8 +16,8 @@ import {
   MenuItem,
   SelectChangeEvent
 } from '@mui/material'
-import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate, UnregisteredVehicle, getallLots} from './action'
-import { Permit } from '../../permit/index'
+import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate, getallLots} from './action'
+// import { Permit } from '../../permit/index'
 import { Lot } from '../../lot/index'
 import TicketView from '../ticket/View'
 
@@ -25,7 +25,7 @@ export default function PermitView() {
   const [carPlate, setCarPlate] = useState('')
   const [currentLot, setCurrentLot] = useState('')
   const [lotOptions, setLotOptions] = useState<Lot[]>([])
-  const [permits, setPermits] = useState<Permit[]>([])
+  // const [permits, setPermits] = useState<Permit[]>([])
   const [validPermit, setValidPermit] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [ticketSuccess, setTicketSuccess] = useState<string | null>(null)
@@ -54,7 +54,7 @@ export default function PermitView() {
   }
 
   const resetSearch = () => {
-    setPermits([])
+    // setPermits([])
     setError(null)
     setTicketSuccess(null)
     setDriverID('')
@@ -78,7 +78,7 @@ export default function PermitView() {
     const permitInfo = await getpermitByPlateNum(plateToUse);
     const validPermits = permitInfo.filter(permit => permit.permitID != null);
     
-    setPermits(validPermits);
+    // setPermits(validPermits);
     
     if (validPermits.length === 0) {
       setValidPermit('');
@@ -89,6 +89,7 @@ export default function PermitView() {
       } else {
         setDriverID('');
       }
+
     } else {
       const currentLotInfo = getCurrentLotInfo()
       const validPermit = validPermits.filter(permit => permit.isValid);
@@ -118,17 +119,24 @@ export default function PermitView() {
   };
 
   const ticketDialogHandler = async () => {
-    if (permits.length === 0) {
-       const unregisterVeh = await UnregisteredVehicle(carPlate);
-       setVehicleID(unregisterVeh.id);
-    }
+    // if (permits.length === 0) {
+    //    const unregisterVeh = await UnregisteredVehicle(carPlate);
+    //    setVehicleID(unregisterVeh.id);
+    // }
     setTicketDialog(true)
   }
   
-  const handleTicketSuccess = () => {
+  const handleTicketSuccess = async () => {
     setTicketDialog(false)
     setError(null)
     setTicketSuccess(`Ticket issued successfully`)
+
+    // insert row to vehicle db with vehicle id and plate
+    // if car doesn't exist in db
+    // if (!driverID) {
+    //    const unregisterVeh = await UnregisteredVehicle(carPlate);
+    //    setVehicleID(unregisterVeh.id);
+    // }
   }
 
   const handleTicketError = (errorMessage: string) => {
@@ -291,6 +299,7 @@ export default function PermitView() {
           LotName ={getCurrentLotInfo()!.name}
           LotID={currentLot}
           ticketPrice={getCurrentLotInfo()!.ticketPrice}
+          plate={carPlate}
         />
       )}
     </Container>

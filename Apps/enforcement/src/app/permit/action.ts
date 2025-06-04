@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 
 import { Permit } from '../../permit'
 import { getPermitByPlate, recognizePlateFromImage } from '../../permit/service'
-import { getVehicleByPlate, UnregisterVehicle } from '../../vehicle/service'
+import { getVehicleByPlate, UnregisterVehicle, getVehicle } from '../../vehicle/service'
 import { UnregisterVeh } from '@/vehicle'
 import { getAllLots } from '../../lot/service'
 import { Lot } from '../../lot/index'
@@ -48,3 +48,7 @@ export async function getallLots(): Promise<Lot[]> {
   return getAllLots(cookie)
 }
 
+export async function getVehicleFromDriverOrPlate(driver: string, plate: string): Promise<string | null> {
+  const cookie = (await cookies()).get('session')?.value
+  return getVehicle(cookie, driver, plate)
+}

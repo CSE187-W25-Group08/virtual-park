@@ -80,3 +80,41 @@ export async function UnregisterVehicle(cookie: string|undefined, plate: string)
   })
 }
 
+export async function getVehicle(cookie: string|undefined, driver: string, plate: string): Promise<string | null>  {
+  return new Promise((resolve, reject) => {
+    fetch('http://localhost:4020/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookie}`,
+      },
+      body: JSON.stringify({
+        query: `
+          query ($driver: String!, $plate: String!) {
+            getVehicleByDriverOrPlate(driver: $driver, plate: $plate) {
+              id
+              licensePlate
+              driver
+              make
+              model
+              color
+            }
+          }
+        `,
+        variables: { driver, plate },
+      }),
+    })
+    .then(response => {
+      if (response.status != 200) {
+        reject('Unauthorized')
+        return
+      }
+      return response.json()} 
+    )
+    .then(json => {
+      const vehicle = json.data?.getVehicleByDriverOrPlate;
+      resolve(vehicle ? vehicle.id : null);
+    })
+    .catch((error) => reject(error))
+  })
+}

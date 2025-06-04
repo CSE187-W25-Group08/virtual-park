@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 import {TicketViewProps, TicketInfo } from '../../ticket/index'
 import {issueTicketForCar, getDriverDetails, sendEmail} from './action'
+import { UnregisteredVehicle, getVehicleFromDriverOrPlate} from '../permit/action'
 
 export default function TicketView({
   open,
@@ -22,7 +23,8 @@ export default function TicketView({
   error,
   LotName,
   ticketPrice,
-  LotID
+  LotID,
+  plate
 }: TicketViewProps) {
   const [ticketInfo, setTicketInfo] = useState<TicketInfo>({
     driverID: driverID,
@@ -58,12 +60,33 @@ export default function TicketView({
         error('Please fill in all required fields *')
         return
       }
+
+      let updatedVehicleID;
+
+      const vehicle = await getVehicleFromDriverOrPlate(driverID, plate);
+      console.log('driver: ', driverID)
+      console.log('plate: ', plate)
+      console.log('vehicle ret: ', vehicle)
+      // insert row to vehicle db with vehicle id and plate
+      // if car doesn't exist in db
+      if (!vehicle) {
+        const unregisterVeh = await UnregisteredVehicle(plate);
+        updatedVehicleID = unregisterVeh.id
+      } else {
+        updatedVehicleID = vehicle
+      }
+
+      if (!updatedVehicleID) {
+        updatedVehicleID = ticketInfo.vehicleID
+      }
+
+      console.log('updated vehicle: ', updatedVehicleID)
       
       console.log('Submitting ticket with lot:', ticketInfo.lot)
       
       const ticket = await issueTicketForCar(
         ticketInfo.driverID,
-        ticketInfo.vehicleID,
+        updatedVehicleID,
         ticketInfo.lot,
         ticketInfo.description,
         ticketInfo.violation,
@@ -78,6 +101,8 @@ export default function TicketView({
       
       success(ticket.id)
       resetDialog()
+
+      console.log('ticket: ', ticket)
       
     } catch (err) {
       console.log(err)
