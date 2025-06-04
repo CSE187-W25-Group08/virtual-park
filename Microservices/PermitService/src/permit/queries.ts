@@ -105,7 +105,7 @@ FROM (
   SELECT *
   FROM dblink(
     'dbname=vehicle user=postgres',
-    $$SELECT id::uuid, driver::uuid, data FROM vehicle WHERE data->>'license_plate' = '${carPlateNum}'$$
+    $$SELECT id::uuid, driver::uuid, data FROM vehicle WHERE data->>'license_plate' = '${carPlateNum}' AND (data->>'active')::boolean = true$$
   ) AS vehicle(id uuid, driver uuid, data jsonb)
 ) AS v
 LEFT JOIN driverpermit dp ON dp.driverID = v.driver
