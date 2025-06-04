@@ -32,5 +32,6 @@ vehicleID: string | '';
 success: (ticketId: string) => void;
 error: (errorMessage: string) => void;
 LotName: string;
+LotID: string | '';
 ticketPrice: number;
 }

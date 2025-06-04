@@ -3,6 +3,7 @@ import { Ticket } from ".";
 export class TicketService {
   private async fetchGraphQL<T>(cookie: string | undefined, query: string, key: string): Promise<T> {
     try {
+      console.log(`Making GraphQL request for: ${key}`);
       const response = await fetch('http://localhost:4010/graphql', {
         method: 'POST',
         headers: {
@@ -74,11 +75,11 @@ export class TicketService {
         }
       }`, 'ticketId');
   }
-
+// setTicketPaid(id: "${ticketId}", paid: ${paid}) {
   public async updatePaidTicket(cookie: string | undefined, ticketId: string, paid: boolean): Promise<Ticket> {
     return this.fetchGraphQL<Ticket>(cookie, `
       mutation {
-        setTicketPaid(id: "${ticketId}", paid: ${paid}) {
+        setTicketPaid(id: "${ticketId}", paid: ${paid ? 'true' : 'false'}) {
           id, vehicle, enforcer, lot, paid, description, due, issue, violation, image, cost, appeal
         }
       }`, 'setTicketPaid');

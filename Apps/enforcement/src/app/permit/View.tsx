@@ -289,6 +289,7 @@ export default function PermitView() {
           success={handleTicketSuccess}
           error={handleTicketError}
           LotName ={getCurrentLotInfo()!.name}
+          LotID={currentLot}
           ticketPrice={getCurrentLotInfo()!.ticketPrice}
         />
       )}

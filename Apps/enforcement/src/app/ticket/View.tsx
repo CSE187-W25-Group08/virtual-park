@@ -21,12 +21,13 @@ export default function TicketView({
   success,
   error,
   LotName,
-  ticketPrice
+  ticketPrice,
+  LotID
 }: TicketViewProps) {
   const [ticketInfo, setTicketInfo] = useState<TicketInfo>({
     driverID: driverID,
     vehicleID: vehicleID,
-    lot: '',
+    lot: LotID,
     description: '',
     violation: '',
     image: '',
@@ -38,10 +39,10 @@ export default function TicketView({
       ...prev,
       driverID,
       vehicleID,
-      lot: LotName,
+      lot: LotID,
       cost: ticketPrice
     }))
-  }, [driverID, vehicleID, LotName, ticketPrice])
+  }, [driverID, vehicleID, LotID, ticketPrice])
   
   const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -88,11 +89,11 @@ export default function TicketView({
     setTicketInfo({
       driverID: driverID,
       vehicleID: vehicleID,
-      lot: LotName,
+      lot: LotID,
       description: '',
       violation: '',
       image: '',
-      cost: ticketPrice
+      cost: ticketPrice,
     })
     close()
   }
