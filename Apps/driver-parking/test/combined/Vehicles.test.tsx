@@ -1,5 +1,5 @@
 import { it, afterEach, vi, expect, beforeEach } from 'vitest' 
-import { render, screen, cleanup } from '@testing-library/react'
+import { render, screen, cleanup, fireEvent  } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { NextIntlClientProvider } from 'next-intl'
 
@@ -50,6 +50,11 @@ it('should call registerVehicle() on save', async () => {
   await userEvent.type(model, 'Corolla')
   const color = await screen.findByLabelText(/Color/i)
   await userEvent.type(color, 'Silver')
+
+  const vehicleTypeDropdown = screen.getByRole('combobox', { name: '' })
+  fireEvent.mouseDown(vehicleTypeDropdown)
+  const option = await screen.findByText('Car') // or whatever one of the valid options is
+  fireEvent.click(option)
 
   const save = await screen.findByText('Save')
   await userEvent.click(save)
