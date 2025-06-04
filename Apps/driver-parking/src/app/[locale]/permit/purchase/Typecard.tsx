@@ -19,7 +19,6 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import { useTranslations } from 'next-intl'
 
 import { PermitType } from '../../../../permit/index'
-import { getPrimaryVehicle } from '../../register/actions';
 import { Vehicle } from '../../../../register';
 import { createCheckout } from '../../../../stripe/helper';
 // import { getCheckoutSessionUrlAction } from '../../stripe/action'
