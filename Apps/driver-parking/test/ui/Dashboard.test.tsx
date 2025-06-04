@@ -147,7 +147,7 @@ it('Mobile: Renders the Buy Daily Motorcycle Permit button', async () => {
     getDailyPermitType: vi.fn()
   }));
 
-  vi.mocked(getActivePermit).mockResolvedValue(null)
+  vi.mocked(getActivePermit).mockResolvedValue([])
   vi.mocked(getPrimaryVehicle).mockResolvedValue(testMotorcycle)
   vi.mocked(getDailyPermitType).mockResolvedValue(
     {
@@ -180,7 +180,7 @@ it('Mobile: Renders the Buy Daily Remote Permit button', async () => {
     getDailyPermitType: vi.fn()
   }));
 
-  vi.mocked(getActivePermit).mockResolvedValue(null)
+  vi.mocked(getActivePermit).mockResolvedValue([])
   vi.mocked(getPrimaryVehicle).mockResolvedValue(testVehicle2)
   vi.mocked(getDailyPermitType).mockResolvedValue(
     {
