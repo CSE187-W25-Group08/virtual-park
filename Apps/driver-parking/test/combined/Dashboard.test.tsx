@@ -89,6 +89,7 @@ const renderWithIntl = (component: React.ReactElement) => {
   )
 }
 
+
 it('should fetch user\'s unpaid tickets', async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
