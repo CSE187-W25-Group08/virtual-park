@@ -218,6 +218,14 @@ it("issue ticket successfully", async () => {
               make: 'Toyota',
               model: 'Corolla',
               color: 'white'
+            },
+            getVehicleByDriverOrPlate: {
+              id: '123',
+              licensePlate: '1XXX000',
+              driver: 'driver111',
+              make: 'Toyota',
+              model: 'Corolla',
+              color: 'white'
             }
           }
         })
