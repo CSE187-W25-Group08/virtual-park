@@ -99,6 +99,30 @@ function mockFetchGraphQL(overrides: Record<string, any> = {}) {
       } as Response);
     }
 
+    if (match('sendTicketAppealAcceptedEmail')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({
+          data: {
+            sendTicketAppealAcceptedEmail: true
+          }
+        }),
+      } as Response)
+    }
+
+    if (match('sendTicketAppealRejectedEmail')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({
+          data: {
+            sendTicketAppealRejectedEmail: true
+          }
+        }),
+      } as Response)
+    }
+
     return Promise.reject(new Error('Unhandled GraphQL query'));
   }) as any;
 }
