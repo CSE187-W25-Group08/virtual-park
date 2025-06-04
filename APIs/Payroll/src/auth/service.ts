@@ -10,7 +10,7 @@ export async function getUserIdFromEmail(email: string): Promise<string> {
     });
 
     if (response.status !== 200) {
-      throw new Error("Error sending email: " + response.statusText);
+      throw new Error("Error email: " + response.statusText);
     }
 
     const text = await response.text();
@@ -22,8 +22,7 @@ export async function getUserIdFromEmail(email: string): Promise<string> {
 
     const cleaned = JSON.parse(text); // expect e.g. "1234"
     return cleaned;
-  } catch (error) {
-    console.error("getUserIdFromEmail error:", error);
-    throw error;
+  } catch  {
+    throw new Error();
   }
 }

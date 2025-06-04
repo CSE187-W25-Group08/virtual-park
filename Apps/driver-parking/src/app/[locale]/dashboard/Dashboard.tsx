@@ -62,12 +62,13 @@ export default function Dashboard() {
     }
 
     console.log('Buying a daily permit of the following type: ', dailyPermitType)
+    const amount = dailyPermitType?.price || 0
     const metaData = {
       permitTypeId: dailyPermitType?.id,
       type: "permit",
       vehicleId: vehicle?.id,
+      price: amount
     }
-    const amount = dailyPermitType?.price || 0
 
     await createCheckout("PermitPurchase", amount, metaData)
   }
