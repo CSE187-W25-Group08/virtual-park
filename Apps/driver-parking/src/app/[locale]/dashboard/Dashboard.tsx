@@ -3,6 +3,8 @@
 import React from "react"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Card from '@mui/material/Card'
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import { Typography, Box, Button, Divider } from "@mui/material"
 import Modal from '@mui/material/Modal'
 import Paper from '@mui/material/Paper'
@@ -147,38 +149,51 @@ export default function Dashboard() {
           </Box>
         )}
         {activePermits.length == 0 && (
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography variant="h6" sx={{ marginLeft: 1 }}>
-              {t('noPermit')}
-              {!isMobile && (
-                <Link href="#" style={{color: '#1976d2'}} onClick={handleBuyPermit} aria-label='Buy Daily Permit'>
-                {vehicle?.vehicleType ?
-                  (vehicle.vehicleType == 'Motorcycle' ? 
-                    t('buyDailyMotorcycle') :
-                    t('buyDailyRemote')
-                  ) :
-                  t('buyPermit')
-                }
-                </Link>
+          <Card 
+            sx={{ 
+              borderRadius: 3,
+              boxShadow: 2,
+              p: 2,
+              border: '1px solid #ccc',
+              width: '100%'
+            }}
+          >
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Typography variant="h6" sx={{ marginLeft: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <ErrorOutlineIcon color="error" />
+                  {t('noPermit')}
+                </Box>
+                {!isMobile && (
+                  <Link href="#" style={{color: '#1976d2'}} onClick={handleBuyPermit} aria-label='Buy Daily Permit'>
+                  {vehicle?.vehicleType ?
+                    (vehicle.vehicleType == 'Motorcycle' ? 
+                      t('buyDailyMotorcycle') :
+                      t('buyDailyRemote')
+                    ) :
+                    t('buyPermit')
+                  }
+                  </Link>
+                )}
+              </Typography>
+              {isMobile && (
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 2, marginLeft: 1 }}
+                  onClick={handleBuyPermit}
+                  aria-label='Buy Daily Permit'
+                >
+                  {vehicle?.vehicleType ?
+                    (vehicle.vehicleType == 'Motorcycle' ? 
+                      t('buyDailyMotorcycle') :
+                      t('buyDailyRemote')
+                    ) :
+                    t('buyPermit')
+                  }
+                </Button>
               )}
-            </Typography>
-            {isMobile && (
-              <Button
-                variant="contained"
-                sx={{ marginTop: 2, marginLeft: 1 }}
-                onClick={handleBuyPermit}
-                aria-label='Buy Daily Permit'
-              >
-                {vehicle?.vehicleType ?
-                  (vehicle.vehicleType == 'Motorcycle' ? 
-                    t('buyDailyMotorcycle') :
-                    t('buyDailyRemote')
-                  ) :
-                  t('buyPermit')
-                }
-              </Button>
-            )}
-          </Box>
+            </Box>
+          </Card>
         )}
       </Box>
 
