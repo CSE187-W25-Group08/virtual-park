@@ -62,6 +62,22 @@ it('renders permit types returned from permitTypes()', async () => {
         }),
       } as Response)
     }
+
+    if (body.query.includes('buyablePermits')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            buyablePermits: [
+              { id: '1', type: 'Daily', price: 5, permitClass: 'Remote', purchased: false },
+              { id: '2', type: 'Month', price: 20, permitClass: 'Remote', purchased: false },
+            ],
+          },
+        }),
+      } as Response)
+    }
+
     // Match permitsByDriver query
     if (body.query.includes('permitsByDriver')) {
       return Promise.resolve({
