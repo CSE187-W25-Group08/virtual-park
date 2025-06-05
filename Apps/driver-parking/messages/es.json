@@ -143,8 +143,8 @@
     "manageTickets": "Gestionar multas",
     "unpaidTickets": "Tienes {count} multas pendientes.",
     "payTickets": "Pagar multas",
-    "buyDailyRemote": "Comprar permiso diario: Remoto",
-    "buyDailyMotorcycle": "Comprar permiso diario: Motocicleta"
+    "buyDailyRemote": "Comprar diario: Remoto",
+    "buyDailyMotorcycle": "Comprar diario: Motocicleta"
   },
   "labels": {
     "cancel": "Cancelar",

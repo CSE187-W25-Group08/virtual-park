@@ -3,14 +3,16 @@
 import React from "react"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import AssignmentLateIcon from '@mui/icons-material/AssignmentLate'
 import Card from '@mui/material/Card'
-import VerifiedIcon from '@mui/icons-material/Verified'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import { Typography, Box, Button, Divider, useTheme } from "@mui/material"
 import Modal from '@mui/material/Modal'
 import Paper from '@mui/material/Paper'
 import ReceiptIcon from '@mui/icons-material/Receipt'
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
+import VerifiedIcon from '@mui/icons-material/Verified'
 import { useTranslations } from "next-intl"
 import { useMediaQuery } from "@mui/material"
 import Link from "next/link"
@@ -112,6 +114,7 @@ export default function Dashboard() {
                 <Typography variant="h6">
                   {t('noTickets')} {!isMobile &&(
                     <Link href="/ticket" onClick={() => router.push("/ticket")} style={{color: '#1976d2'}} aria-label="Manage Tickets">
+                      <AssignmentLateIcon sx={{ mr: 1 }}/>
                       {t('manageTickets')}.
                     </Link>
                   )}
@@ -123,6 +126,7 @@ export default function Dashboard() {
                   sx={{ marginTop: 2, marginLeft: 1 }}
                   onClick={() => router.push("/ticket")}
                   aria-label="Manage Tickets">
+                  <AssignmentLateIcon sx={{ mr: 1 }}/>
                   {t('manageTickets')}
                 </Button>
               )}
@@ -140,15 +144,9 @@ export default function Dashboard() {
             {unpaidTickets.map((ticket, index) => (
               <TicketCard key={index} ticket={ticket} />
             ))}
-            {/* <Button
-              variant="contained"
-              sx={{ marginTop: 2, marginLeft: 1 }}
-              onClick={payTickets}>
-              {t('payTickets')}
-            </Button> */}
           </Box>
         )}
-        <Divider sx={{ width: "100%", marginTop: 4 }}/>
+        <Divider color={theme.palette.secondary.main} sx={{ width: "100%", marginTop: 4 }}/>
       </Box>
       <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1}}>
@@ -188,6 +186,7 @@ export default function Dashboard() {
                 </Box>
                 {!isMobile && (
                   <Link href="#" style={{color: '#1976d2'}} onClick={handleBuyPermit} aria-label='Buy Daily Permit'>
+                  <ShoppingCartCheckoutIcon sx={{ mr: 1 }}/>
                   {vehicle?.vehicleType ?
                     (vehicle.vehicleType == 'Motorcycle' ? 
                       t('buyDailyMotorcycle') :
@@ -205,6 +204,7 @@ export default function Dashboard() {
                   onClick={handleBuyPermit}
                   aria-label='Buy Daily Permit'
                 >
+                  <ShoppingCartCheckoutIcon sx={{ mr: 1 }}/>
                   {vehicle?.vehicleType ?
                     (vehicle.vehicleType == 'Motorcycle' ? 
                       t('buyDailyMotorcycle') :

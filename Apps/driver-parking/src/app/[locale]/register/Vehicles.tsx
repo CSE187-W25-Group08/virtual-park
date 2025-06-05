@@ -14,6 +14,7 @@ import {
   Switch,
   TextField,
   Typography,
+  useTheme,
 } from '@mui/material'
 import { useTranslations } from 'next-intl'
 
@@ -32,6 +33,7 @@ export default function Vehicles() {
   const [error, setError] = useState('')
   const [dataFetched, setDataFetched] = useState(false)
   const t = useTranslations('vehicle')
+  const theme = useTheme()
 
   // fetches user's registered vehicles
   useEffect(() => {
@@ -162,12 +164,12 @@ export default function Vehicles() {
                           py: 1,
                           borderBottom:
                             index !== vehicles.length - 1
-                              ? '1px dashed #ccc'
+                              ? `1px dashed ${theme.palette.secondary.main}`
                               : 'none',
                         }}
                       >
                         <Typography variant="body2">
-                          {vehicle.make}, {vehicle.model} - {vehicle.color}
+                          {vehicle.make} {vehicle.model} - {vehicle.color}
                           <br />({vehicle.licensePlate})
                         </Typography>
                         <Box
@@ -177,7 +179,7 @@ export default function Vehicles() {
                             <Typography
                               variant="caption"
                               sx={{
-                                backgroundColor: '#e0e0e0',
+                                backgroundColor: theme.palette.secondary.main,
                                 borderRadius: '8px',
                                 px: 1,
                                 fontWeight: 500,

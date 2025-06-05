@@ -6,6 +6,9 @@ const customTheme = createTheme({
       main: "#008343",
       contrastText: "#ffffff",
     },
+    secondary: {
+      main: "#FFD700",
+    },
   background: {
       default: "#f8f8f8", // Off-white background
   },
@@ -16,6 +19,15 @@ const customTheme = createTheme({
     fontWeightRegular: 400,  
     fontSize: 13, 
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+        }
+      }
+    }
+  }
 })
 
 export default customTheme
