@@ -439,7 +439,7 @@ test("Returns vehicle when driver's plate matches", async () => {
 });
 
 test("Returns GraphQL validation error if driver arg is empty", async () => {
-  const res = await supertest(server)
+  await supertest(server)
     .post("/graphql")
     .set("Authorization", "Bearer Placeholder")
     .send({

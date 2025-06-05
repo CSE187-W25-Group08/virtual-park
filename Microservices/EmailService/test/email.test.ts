@@ -132,7 +132,7 @@ test('sendPermitPaymentConfirmation logs error when Mailgun fails', async () => 
   // Temporarily unset the API key to force failure
   process.env.MAILGUN_API_KEY = '';
 
-  const res = await supertest(server)
+  await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
@@ -155,7 +155,7 @@ test('sendPermitPaymentConfirmation logs error when Mailgun fails', async () => 
   // Temporarily unset the API key to force failure
   process.env.MAILGUN_API_KEY = '';
 
-  const res = await supertest(server)
+  await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
@@ -179,7 +179,7 @@ test('sendPermitPaymentConfirmation logs error when Mailgun fails', async () => 
 
   process.env.MAILGUN_API_KEY = ''; // force failure
 
-  const res = await supertest(server)
+  await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
