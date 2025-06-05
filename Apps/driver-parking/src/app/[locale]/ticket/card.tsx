@@ -33,7 +33,7 @@ export default function TicketCard({ ticket }: { ticket: Ticket }) {
 
     if (ticket.appeal != 'null') {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, widht: "100%" }}>
           <GavelIcon sx={{
             color:
               approved ? "success.dark" :
