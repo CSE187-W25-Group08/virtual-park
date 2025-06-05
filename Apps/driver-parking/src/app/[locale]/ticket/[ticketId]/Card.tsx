@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import ErrorIcon from '@mui/icons-material/Error';
 import CardMedia from "@mui/material/CardMedia";
-import { Box, Typography, Alert, Card, Button, CardActions } from "@mui/material";
+import { Box, Typography, Alert, Card, Button, CardActions, Fade } from "@mui/material";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import FrontHandIcon from "@mui/icons-material/FrontHand";
 import { useRouter } from "next/navigation";
@@ -260,6 +260,7 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
 
   return (
     <React.Fragment>
+      <Fade in={true} timeout={500}>
       <Card sx = {{
         width: { xs: "100%", sm: "400px" },
         mx: "auto",
@@ -275,6 +276,7 @@ export default function TicketCard({ ticketId }: { ticketId: string }) {
           {bottomHalf()}
         </CardActions>
       </Card>
+</Fade>
     </React.Fragment>
   );
 }

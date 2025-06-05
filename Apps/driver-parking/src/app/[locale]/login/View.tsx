@@ -93,7 +93,7 @@ export default function LoginView() {
           onClick={() => router.push('/')}
         />
         </picture>
-        <Typography variant="h5" sx={{fontSize:'28px'}}>{t("title")}</Typography>
+        <Typography variant="h5" color = "primary" sx={{fontSize:'25px'}}><strong>{t("title")}</strong></Typography>
       </Box>
         <Box
           sx={{
