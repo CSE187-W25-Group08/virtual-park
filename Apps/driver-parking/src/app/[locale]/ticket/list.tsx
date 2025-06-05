@@ -1,11 +1,13 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import Card from '@mui/material/Card'
 import { CircularProgress, Box, Typography } from '@mui/material'
 import List from '@mui/material/List'
 import { useTranslations } from 'next-intl'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import GavelIcon from '@mui/icons-material/Gavel'
+
 import TicketCard from './card'
 import { Ticket } from '../../../ticket'
 import { list } from './actions'
@@ -90,11 +92,20 @@ export default function TicketList() {
           unpaidTicket.length <= 0 &&
           appealedTickets.length <= 0 &&
           paidTicketList.length <= 0 && (
-            <Box
-              sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}
-            >
-              <Typography sx={{ mt: 7 }}>{t('noTickets')}</Typography>
-            </Box>
+            <Card sx={{ 
+              borderRadius: 3,
+              boxShadow: 2,
+              p: 2,
+              border: '1px solid #ccc',
+              width: '100%'
+            }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <CheckCircleOutlineIcon color='success' />
+                  <Typography variant='h6'>{t('noTickets')}</Typography>
+                </Box>
+              </Box>
+            </Card>
           )}
 
         {unpaidTicket.length > 0 && (
