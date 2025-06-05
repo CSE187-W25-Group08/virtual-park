@@ -38,7 +38,7 @@ export default function Navbar() {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar >
         <Toolbar>
           <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
             

@@ -135,7 +135,7 @@ export default function Dashboard() {
           </Card>
         )}
         {unpaidTickets.length > 0 && (
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: 'center', marginTop: 2, width: '100%' }}>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: 'center', marginTop: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginBottom: 2 }}>
               <ErrorOutlineIcon color='error'/>
               <Typography variant="body1" color="error">
