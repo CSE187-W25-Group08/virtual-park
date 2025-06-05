@@ -11,8 +11,8 @@ import {
   Divider,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import LocaleSwitcher from '../../src/app/languageSwitcher/LocaleSwitcher';
@@ -98,7 +98,7 @@ export default function BottomMenu() {
         >
           <ListItemText>{t('permitHistory')}</ListItemText>
           <ListItemIcon sx={{ minWidth: 0, ml: 2 }}>
-            <HistoryRoundedIcon fontSize="small" />
+            <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
         </MenuItem>
 

@@ -4,10 +4,13 @@ import React from "react"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Card from '@mui/material/Card'
+import VerifiedIcon from '@mui/icons-material/Verified'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
-import { Typography, Box, Button, Divider } from "@mui/material"
+import { Typography, Box, Button, Divider, useTheme } from "@mui/material"
 import Modal from '@mui/material/Modal'
 import Paper from '@mui/material/Paper'
+import ReceiptIcon from '@mui/icons-material/Receipt'
 import { useTranslations } from "next-intl"
 import { useMediaQuery } from "@mui/material"
 import Link from "next/link"
@@ -31,6 +34,7 @@ export default function Dashboard() {
   const router = useRouter()
   const t = useTranslations("dashboard")
   const isMobile = useMediaQuery('(max-width:600px)')
+  const theme = useTheme()
   
 
   useEffect(() => {
@@ -85,35 +89,54 @@ export default function Dashboard() {
 
   return (
     <Box sx={{mb: 10}}>
-      <Box sx={{display: 'flex', flexDirection: 'column', marginTop: 2 }}>
-        <Typography variant="h4" sx={{ marginLeft: 1}}>
-          {t('tickets')}
-        </Typography>
+      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <ReceiptIcon fontSize='large' />
+          <Typography variant="h4">
+            {t('tickets')}
+          </Typography>
+        </Box>
         {unpaidTickets.length === 0 && (
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="h6" sx={{ marginLeft: 1 }}>
-              {t('noTickets')} {!isMobile &&(
-                <Link href="/ticket" onClick={() => router.push("/ticket")} style={{color: '#1976d2'}} aria-label="Manage Tickets">
-                  {t('manageTickets')}.
-                </Link>
+          <Card 
+            sx={{ 
+              borderRadius: 3,
+              boxShadow: 2,
+              p: 2,
+              border: '1px solid #ccc',
+              width: '100%'
+            }}
+          >
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <CheckCircleOutlineIcon color='success' />
+                <Typography variant="h6">
+                  {t('noTickets')} {!isMobile &&(
+                    <Link href="/ticket" onClick={() => router.push("/ticket")} style={{color: '#1976d2'}} aria-label="Manage Tickets">
+                      {t('manageTickets')}.
+                    </Link>
+                  )}
+                </Typography>
+              </Box>
+              {isMobile && (
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 2, marginLeft: 1 }}
+                  onClick={() => router.push("/ticket")}
+                  aria-label="Manage Tickets">
+                  {t('manageTickets')}
+                </Button>
               )}
-            </Typography>
-            {isMobile && (
-              <Button
-                variant="contained"
-                sx={{ marginTop: 2, marginLeft: 1 }}
-                onClick={() => router.push("/ticket")}
-                aria-label="Manage Tickets">
-                {t('manageTickets')}
-              </Button>
-            )}
-          </Box>
+            </Box>
+          </Card>
         )}
         {unpaidTickets.length > 0 && (
-          <Box sx={{ display: "flex", flexDirection: "column", marginTop: 2 }}>
-            <Typography variant="body1" color="error" sx={{ marginLeft: 1, marginBottom: 2 }}>
-              {t('unpaidTickets', { count: unpaidTickets.length })}
-            </Typography>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: 'center', marginTop: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginBottom: 2 }}>
+              <ErrorOutlineIcon color='error'/>
+              <Typography variant="body1" color="error">
+                {t('unpaidTickets', { count: unpaidTickets.length })}
+              </Typography>
+            </Box>
             {unpaidTickets.map((ticket, index) => (
               <TicketCard key={index} ticket={ticket} />
             ))}
@@ -123,14 +146,17 @@ export default function Dashboard() {
               onClick={payTickets}>
               {t('payTickets')}
             </Button> */}
-            <Divider sx={{ width: "100%", marginTop: 4 }}/>
           </Box>
         )}
+        <Divider sx={{ width: "100%", marginTop: 4 }}/>
       </Box>
-      <Box sx={{display: 'flex', flexDirection: 'column', marginTop: 2 }}>
-        <Typography variant="h4" sx={{ marginLeft: 1}}>
-          {t('permit')}
-        </Typography>
+      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1}}>
+          <VerifiedIcon fontSize='large' />
+          <Typography variant="h4">
+            {t('permit')}
+          </Typography>
+        </Box>
         {activePermits.length > 0 && (
           <Box sx={{bgcolor: 'background.paper',
             alignItems: 'start',
