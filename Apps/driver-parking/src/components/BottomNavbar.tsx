@@ -9,15 +9,22 @@ import ReceiptIcon from '@mui/icons-material/Receipt'
 import HomeIcon from '@mui/icons-material/Home'
 import Typography from '@mui/material/Typography'
 import { useMediaQuery } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
 import BottomMenu from './BottomMenu'
+import { useTheme } from '@mui/material'
 
 export default function BottomNavbar() {
   const router = useRouter()
+  const pathname = usePathname()
   const t = useTranslations('bottom_navbar')
   const isMobile = useMediaQuery('(max-width:600px)')
+  const theme = useTheme()
+
+  const isActive = (path: string) => {
+    return pathname.includes(path)
+  }
 
   return (
     isMobile && (
@@ -31,13 +38,14 @@ export default function BottomNavbar() {
         }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <IconButton
-            edge='start'
             color='inherit'
+            edge='start'
             aria-label='Home Button'
             onClick={() => router.push('/dashboard')}
             sx={{
               flexDirection: 'column',
               alignItems: 'center',
+              color: isActive('dashboard') ? theme.palette.primary.main : 'inherit',
             }}>
             <HomeIcon />
             <Typography variant="caption" sx={{ marginTop: '4px' }}>
@@ -51,6 +59,7 @@ export default function BottomNavbar() {
             sx={{
               flexDirection: 'column',
               alignItems: 'center',
+              color: isActive('register') ? theme.palette.primary.main : 'inherit',
             }}>
             <DirectionsCarIcon />
             <Typography variant="caption" sx={{ marginTop: '4px' }}>
@@ -64,6 +73,7 @@ export default function BottomNavbar() {
             sx={{
               flexDirection: 'column',
               alignItems: 'center',
+              color: isActive('permit') ? theme.palette.primary.main : 'permit',
             }}>
             <ShoppingCartIcon />
             <Typography variant="caption" sx={{ marginTop: '4px' }}>
@@ -77,6 +87,7 @@ export default function BottomNavbar() {
             sx={{
               flexDirection: 'column',
               alignItems: 'center',
+              color: isActive('ticket') ? theme.palette.primary.main : 'inherit',
             }}>
             <ReceiptIcon />
             <Typography variant="caption" sx={{ marginTop: '4px' }}>

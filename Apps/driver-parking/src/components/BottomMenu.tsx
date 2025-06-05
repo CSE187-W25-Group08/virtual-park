@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 import {
   IconButton,
   Menu,
@@ -9,34 +9,36 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import LocaleSwitcher from '../../src/app/languageSwitcher/LocaleSwitcher';
-import { logout } from '@/app/[locale]/login/action';
+  useTheme,
+} from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
+import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import LocaleSwitcher from '../../src/app/languageSwitcher/LocaleSwitcher'
+import { logout } from '@/app/[locale]/login/action'
 
 export default function BottomMenu() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const router = useRouter();
-  const t = useTranslations('bottom_navbar');
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const router = useRouter()
+  const t = useTranslations('bottom_navbar')
+  const theme = useTheme()
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   const handleLogout = async () => {
-    await logout();
-    window.sessionStorage.clear();
-    router.push('/');
-  };
+    await logout()
+    window.sessionStorage.clear()
+    router.push('/')
+  }
 
   return (
     <>
@@ -47,7 +49,8 @@ export default function BottomMenu() {
         onClick={handleClick}
         sx={{
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
+          color: open ? theme.palette.primary.main : 'inherit',
         }}
       >
         <MenuIcon />
@@ -83,8 +86,8 @@ export default function BottomMenu() {
 
         <MenuItem
           onClick={() => {
-            router.push('/permit/history');
-            handleClose();
+            router.push('/permit/history')
+            handleClose()
           }}
           sx={{
             borderRadius: 1,
@@ -106,8 +109,8 @@ export default function BottomMenu() {
 
         <MenuItem
           onClick={() => {
-            handleLogout();
-            handleClose();
+            handleLogout()
+            handleClose()
           }}
           sx={{
             borderRadius: 1,
@@ -126,5 +129,5 @@ export default function BottomMenu() {
         </MenuItem>
       </Menu>
     </>
-  );
+  )
 }
