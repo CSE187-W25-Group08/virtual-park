@@ -15,7 +15,8 @@ import {
   Divider,
   Link,
   IconButton,
-  InputAdornment
+  InputAdornment,
+  useTheme
 } from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
@@ -29,6 +30,7 @@ export default function LoginView() {
   const [failedLogin, setFailedLogin] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const t = useTranslations('login')
+  const theme = useTheme()
   const router = useRouter()
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -114,7 +116,7 @@ export default function LoginView() {
           }}
         />
       </Box>
-      <Divider sx={{ width: '300px', marginTop: '20px' }}>
+      <Divider sx={{ width: '300px', marginTop: '20px', '&::before, &::after': { borderColor: theme.palette.secondary.main } }}>
         <Typography>OR</Typography>
       </Divider>
 
