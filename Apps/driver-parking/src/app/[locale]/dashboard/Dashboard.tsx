@@ -149,7 +149,7 @@ export default function Dashboard() {
         )}
         <Divider color={theme.palette.secondary.main} sx={{ width: "100%", marginTop: 4 }}/>
       </Box>
-      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2 }}>
+      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2, m:1}}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1}}>
           <VerifiedIcon fontSize='large' />
           <Typography variant="h4">
@@ -163,7 +163,7 @@ export default function Dashboard() {
             display: 'grid',
             gridTemplateColumns: {xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)'},
             gap: 2,
-            mt: 2}}>
+            mt: 2, width: '100%'}}>
             {activePermits.map((permit, index) => (
               <PermitListCard key={index} permit={permit} />
             ))}
