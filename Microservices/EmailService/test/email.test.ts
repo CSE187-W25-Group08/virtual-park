@@ -127,3 +127,149 @@ test("A accepted appeal is sent involving ticket", async () => {
       expect(res.body.data.sendTicketAppealAcceptedEmail).toBeTruthy()
     });
 });
+
+test('sendPermitPaymentConfirmation logs error when Mailgun fails', async () => {
+  // Temporarily unset the API key to force failure
+  process.env.MAILGUN_API_KEY = '';
+
+  const res = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          sendPermitPaymentEmail(
+            email: "failtest@ucsc.edu",
+            name: "Broken Test",
+            nameOfProduct: "Monthly Permit",
+            costOfProduct: 1999,
+            permitTypeId: "permit-123",
+            vehicleId: "vehicle-456"
+          )
+        }
+      `,
+    });
+});
+
+test('sendPermitPaymentConfirmation logs error when Mailgun fails', async () => {
+  // Temporarily unset the API key to force failure
+  process.env.MAILGUN_API_KEY = '';
+
+  const res = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          sendPermitPaymentEmail(
+            email: "failtest@ucsc.edu",
+            name: "Broken Test",
+            nameOfProduct: "Monthly Permit",
+            costOfProduct: 1999,
+            permitTypeId: "permit-123",
+            vehicleId: "vehicle-456"
+          )
+        }
+      `,
+    });
+});
+
+test('sendPermitPaymentConfirmation logs error when Mailgun fails', async () => {
+  const logSpy = vi.spyOn(console, 'log');
+
+  process.env.MAILGUN_API_KEY = ''; // force failure
+
+  const res = await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          sendPermitPaymentEmail(
+            email: "failtest@ucsc.edu",
+            name: "Broken Test",
+            nameOfProduct: "Monthly Permit",
+            costOfProduct: 1999,
+            permitTypeId: "permit-123",
+            vehicleId: "vehicle-456"
+          )
+        }
+      `,
+    });
+
+  expect(logSpy).toHaveBeenCalled();
+  logSpy.mockRestore();
+});
+
+test('sendTicketPaymentConfirmation logs error when Mailgun fails', async () => {
+  const logSpy = vi.spyOn(console, 'log');
+  process.env.MAILGUN_API_KEY = '';
+
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          sendTicketPaymentEmail(
+            email: "failtest@ucsc.edu",
+            name: "Broken Test",
+            nameOfProduct: "Parking Ticket",
+            costOfProduct: 2500,
+            ticketId: "ticket-xyz"
+          )
+        }
+      `,
+    });
+
+  expect(logSpy).toHaveBeenCalled();
+  logSpy.mockRestore();
+});
+
+test('sendTicketAppealRejected logs error when Mailgun fails', async () => {
+  const logSpy = vi.spyOn(console, 'log');
+  process.env.MAILGUN_API_KEY = '';
+
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          sendTicketAppealRejectedEmail(
+            email: "failtest@ucsc.edu",
+            name: "Appeal Fail",
+            ticketId: "fail-id",
+            violation: "Parked sideways"
+          )
+        }
+      `,
+    });
+
+  expect(logSpy).toHaveBeenCalled();
+  logSpy.mockRestore();
+});
+
+test('sendTicketAppealAccepted logs error when Mailgun fails', async () => {
+  const logSpy = vi.spyOn(console, 'log');
+  process.env.MAILGUN_API_KEY = '';
+
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        mutation {
+          sendTicketAppealAcceptedEmail(
+            email: "failtest@ucsc.edu",
+            name: "Appeal Win",
+            ticketId: "appeal-win-id",
+            violation: "Parked nicely"
+          )
+        }
+      `,
+    });
+
+  expect(logSpy).toHaveBeenCalled();
+  logSpy.mockRestore();
+});

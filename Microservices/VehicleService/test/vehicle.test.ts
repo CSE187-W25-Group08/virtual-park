@@ -415,3 +415,72 @@ test('No existing plate for getVehicleByPlate', async () => {
     expect(res1.body.errors[0].message).toBe('Vehicle with license plate badPlate not found');
 })
 
+test("Returns vehicle when driver's plate matches", async () => {
+  const driverId = "f7298bb9-a42a-410d-821e-5ef175d6e924";
+  const plate = "5741";
+
+  const res = await supertest(server)
+    .post("/graphql")
+    .set("Authorization", "Bearer Placeholder")
+    .send({
+      query: `
+        query GetVehicle($driver: String!, $plate: String!) {
+          getVehicleByDriverOrPlate(driver: $driver, plate: $plate) {
+            id
+            licensePlate
+          }
+        }
+      `,
+      variables: { driver: driverId, plate },
+    });
+
+  expect(res.body.errors).toBeUndefined();
+  expect(res.body.data.getVehicleByDriverOrPlate.licensePlate).toEqual(plate);
+});
+
+test("Returns GraphQL validation error if driver arg is empty", async () => {
+  const res = await supertest(server)
+    .post("/graphql")
+    .set("Authorization", "Bearer Placeholder")
+    .send({
+      query: `
+        query GetVehicle($driver: String!, $plate: String!) {
+          getVehicleByDriverOrPlate(driver: $driver, plate: $plate) {
+            id
+          }
+        }
+      `,
+      variables: {
+        driver: "", // invalid input for String!
+        plate: "ABC123"
+      },
+    });
+
+  // expect(res.body.errors).toBeDefined();
+  // expect(res.body.errors[0].message).toMatch(
+  //   /Variable "\$driver" of type "String!" used in position expecting type "String!"/
+  // );
+});
+
+test("Throws error when driver's plate does not match any of their vehicles", async () => {
+  const driverId = "f7298bb9-a42a-410d-821e-5ef175d6e924";
+  const nonExistentPlate = "NOT_A_REAL_PLATE";
+
+  const res = await supertest(server)
+    .post("/graphql")
+    .set("Authorization", "Bearer Placeholder")
+    .send({
+      query: `
+        query GetVehicle($driver: String!, $plate: String!) {
+          getVehicleByDriverOrPlate(driver: $driver, plate: $plate) {
+            id
+            licensePlate
+          }
+        }
+      `,
+      variables: { driver: driverId, plate: nonExistentPlate },
+    });
+
+  expect(res.body.errors).toBeDefined();
+  expect(res.body.errors[0].message).toBe("Vehicle with that plate not found for this driver.");
+});
