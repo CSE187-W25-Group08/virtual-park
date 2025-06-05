@@ -153,7 +153,7 @@ export default function TicketView({
             placeholder="Optional: URL to violation photo"
           />
           
-          <TextField
+          {/* <TextField
             label="Fine Amount ($)"
             type="number"
             fullWidth
@@ -163,7 +163,7 @@ export default function TicketView({
                 readOnly: true,
               },
             }}
-          />
+          /> */}
         </Stack>
       </DialogContent>
       <DialogActions>
