@@ -5,6 +5,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
 import logo from "../public/img/sprite-logo.svg";
+import hoody from "../public/img/Front.png";
+import marketcard from "../public/img/300.png";
 import cat from "../public/img/bg-desktop.png";
 import { useTranslations } from "next-intl";
 
@@ -74,6 +76,31 @@ export default function Marketing() {
 
 
 <LotList/>
+<Box sx = {{display: 'flex', flexDirection: "column", alignItems: 'center'} }>
+
+<Typography>Our merch</Typography>
+
+      <Box
+        sx={{
+             width: "30%",
+          minHeight: "60vh",
+          backgroundImage: `url(${hoody.src})`,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+             backgroundPosition: "center",
+        }}
+      />
+      <Box
+        sx={{
+          width: "30%",
+          minHeight: "60vh",
+          backgroundImage: `url(${marketcard.src})`,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+             backgroundPosition: "center",
+        }}
+      />
+    </Box>
 
 
 
