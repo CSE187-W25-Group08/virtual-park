@@ -12,7 +12,6 @@ import {
 } from '@mui/material'
 import {TicketViewProps, TicketInfo } from '../../ticket/index'
 import {issueTicketForCar, getDriverDetails, sendEmail} from './action'
-import { UnregisteredVehicle, getVehicleFromDriverOrPlate} from '../permit/action'
 
 export default function TicketView({
   open,
@@ -23,8 +22,7 @@ export default function TicketView({
   error,
   LotName,
   ticketPrice,
-  LotID,
-  plate
+  LotID
 }: TicketViewProps) {
   const [ticketInfo, setTicketInfo] = useState<TicketInfo>({
     driverID: driverID,
@@ -60,37 +58,16 @@ export default function TicketView({
         error('Please fill in all required fields *')
         return
       }
-
-      let updatedVehicleID;
-
-      const vehicle = await getVehicleFromDriverOrPlate(driverID, plate);
-      console.log('driver: ', driverID)
-      console.log('plate: ', plate)
-      console.log('vehicle ret: ', vehicle)
-      // insert row to vehicle db with vehicle id and plate
-      // if car doesn't exist in db
-      if (!vehicle) {
-        const unregisterVeh = await UnregisteredVehicle(plate);
-        updatedVehicleID = unregisterVeh.id
-      } else {
-        updatedVehicleID = vehicle
-      }
-
-      if (!updatedVehicleID) {
-        updatedVehicleID = ticketInfo.vehicleID
-      }
-
-      console.log('updated vehicle: ', updatedVehicleID)
       
       console.log('Submitting ticket with lot:', ticketInfo.lot)
-      
+      const imageUrl = ticketInfo.image || 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Volkswagen_Golf_VIII_IMG_4023.jpg/1200px-Volkswagen_Golf_VIII_IMG_4023.jpg'
       const ticket = await issueTicketForCar(
         ticketInfo.driverID,
-        updatedVehicleID,
+        ticketInfo.vehicleID,
         ticketInfo.lot,
         ticketInfo.description,
         ticketInfo.violation,
-        ticketInfo.image,
+        imageUrl,
         ticketInfo.cost,
         false
       )
@@ -101,8 +78,6 @@ export default function TicketView({
       
       success(ticket.id)
       resetDialog()
-
-      console.log('ticket: ', ticket)
       
     } catch (err) {
       console.log(err)
