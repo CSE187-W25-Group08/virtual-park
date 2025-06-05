@@ -14,6 +14,7 @@ import { getBuyablePermits} from '../actions'
 import PermitCard from './Typecard'
 import { PermitType } from '../../../../permit'
 import { Vehicle } from '../../../../register'
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 
 export default function TypeList() {
   const [permitTypeList, setpermitTypeList] = useState<PermitType[]>([])
@@ -52,6 +53,8 @@ const classes = permitTypeList.reduce((array, permit) => {
 
   return (
                               <Fade in={true} timeout={500}>
+
+
     <Box sx={{ p: 1 }}>
       {!dataFetched && (
         <Box
@@ -70,6 +73,13 @@ const classes = permitTypeList.reduce((array, permit) => {
           <CircularProgress color="success" />
         </Box>
       )}
+
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 2}}>
+          <CreditCardIcon fontSize='large' />
+          <Typography variant="h4">
+            {t('permits')}
+          </Typography>
+        </Box>
       {Object.entries(classes).map(([permitClass, permits]) => (
         <Accordion key={permitClass}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>

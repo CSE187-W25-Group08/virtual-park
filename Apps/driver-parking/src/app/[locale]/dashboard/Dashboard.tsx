@@ -7,7 +7,7 @@ import AssignmentLateIcon from '@mui/icons-material/AssignmentLate'
 import Card from '@mui/material/Card'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
-import { Typography, Box, Button, Divider, useTheme } from "@mui/material"
+import { Typography, Box, Button, Divider, useTheme, Fade } from "@mui/material"
 import Modal from '@mui/material/Modal'
 import Paper from '@mui/material/Paper'
 import ReceiptIcon from '@mui/icons-material/Receipt'
@@ -90,6 +90,7 @@ export default function Dashboard() {
   }
 
   return (
+                              <Fade in={true} timeout={500}>
     <Box sx={{mb: 10}}>
       <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -262,5 +263,6 @@ export default function Dashboard() {
       </Modal>
 
     </Box>
+</Fade>
   )
 }
