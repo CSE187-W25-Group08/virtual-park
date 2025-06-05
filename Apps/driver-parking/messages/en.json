@@ -43,6 +43,7 @@
   },
   "permit_history": {
     "title": "Purchase History",
+    "noHistory": "No permit purchases yet",
     "issued": "Issue Date: ",
     "expires": "Expiry Date: ",
     "Hourly": "Hourly",
