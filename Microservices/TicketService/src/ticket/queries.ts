@@ -112,7 +112,7 @@ VALUES (
     'lot', $4::text,
     'paid', $5::boolean,
     'description', $6::text,
-    'due', (NOW() + INTERVAL '24 hours')::text,
+    'due', (NOW() + INTERVAL '3 weeks')::text,
     'issue', NOW()::text,
     'violation', $7::text,
     'image', $8::text,
