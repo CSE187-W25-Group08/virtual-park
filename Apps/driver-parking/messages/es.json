@@ -43,6 +43,7 @@
   },
   "permit_history": {
     "title": "Historial de compras",
+    "noHistory": "Aún no hay compras de permisos",
     "issued": "Fecha de emisión: ",
     "expires": "Fecha de caducidad: ",
     "Hourly": "Por hora",
