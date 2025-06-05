@@ -165,6 +165,7 @@
     "vehicles": "Vehicles",
     "purchase": "Purchase Permit",
     "tickets": "Tickets",
+    "title": "Virtual Park",
     "permitHistory": "Permit History"
   },
   "checkout": {

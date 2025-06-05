@@ -17,7 +17,9 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
+import logo from '../../src/app/public/img/logo-white.svg'
 import {logout} from '@/app/[locale]/login/action';
 
 
@@ -50,9 +52,13 @@ export default function Navbar() {
             </IconButton>
           )}
             
+            
+            <Box sx = {{display: 'flex', gap: 1, flexDirection: 'row'}}>
+            <Image width = {30} height = {30} src = {logo.src} alt = "test"></Image>
           <Typography variant="h6" component="div">
-              Virtual Park
+            {t('title')}
           </Typography>
+</Box>
         </Toolbar>
       </AppBar>
 
