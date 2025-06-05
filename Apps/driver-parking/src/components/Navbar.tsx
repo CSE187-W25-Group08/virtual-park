@@ -18,7 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-
+import LocaleSwitcher from '../../src/app/languageSwitcher/LocaleSwitcher'
 import logo from '../../src/app/public/img/logo-white.svg'
 import {logout} from '@/app/[locale]/login/action';
 
@@ -38,29 +38,35 @@ export default function Navbar() {
 
   return (
     <>
-      <AppBar>
+      <AppBar position="static">
         <Toolbar>
-          {!isMobile && (
-            <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={toggleDrawer}
-            sx={{ mr: 2 }}
-            >
-                <MenuIcon />
-            </IconButton>
-          )}
+          <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
             
-            
-            <Box sx = {{display: 'flex', gap: 1, flexDirection: 'row'}}>
-            <Image width = {30} height = {30} src = {logo.src} alt = "test"></Image>
-          <Typography variant="h6" component="div">
-            {t('title')}
-          </Typography>
-</Box>
+            {/* Left Side: Logo and Title */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              {!isMobile && (
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={toggleDrawer}
+                  sx={{ mr: 1 }}
+                >
+                  <MenuIcon />
+                </IconButton>
+              )}
+              <Image width={30} height={30} src={logo.src} alt="virtual park logo" />
+              <Typography variant="h6" component="div">
+                {t('title')}
+              </Typography>
+            </Box>
+
+            {/* Right Side: Locale Switcher */}
+            <LocaleSwitcher />
+          </Box>
         </Toolbar>
       </AppBar>
+
 
       <Drawer anchor="left" open={open} onClose={toggleDrawer}>
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
