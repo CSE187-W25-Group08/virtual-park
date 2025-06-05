@@ -8,14 +8,15 @@ import {
   Typography,
   ListItemIcon,
   ListItemText,
-  // Box
+  Box,
+  Divider,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-
+import LocaleSwitcher from '../../src/app/languageSwitcher/LocaleSwitcher';
 import { logout } from '@/app/[locale]/login/action';
 
 export default function BottomMenu() {
@@ -66,7 +67,7 @@ export default function BottomMenu() {
             sx: {
               borderRadius: 2,
               minWidth: 200,
-              mt: -8, // raise the menu above the bottom nav
+              mt: -8,
               mr: -2,
               py: 0.5,
             },
@@ -74,7 +75,13 @@ export default function BottomMenu() {
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-      >
+      > 
+        <MenuItem sx={{ px: 1, py: 0.5 }}>
+          <LocaleSwitcher />
+        </MenuItem>
+
+        <Divider sx={{ my: 1 }} />
+
         <MenuItem
           onClick={() => {
             router.push('/permit/history');
@@ -95,6 +102,8 @@ export default function BottomMenu() {
             <HistoryRoundedIcon fontSize="small" />
           </ListItemIcon>
         </MenuItem>
+
+        <Divider sx={{ my: 1 }} />
 
         <MenuItem
           onClick={() => {
