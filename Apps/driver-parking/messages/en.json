@@ -52,12 +52,14 @@
     "Quarter": "Quarter",
     "Year": "Year",
     "Academic Year": "Academic Year",
-    "timeLeft": "Time Remaining:",
+    "timeLeft": "Time Remaining: ",
     "Student": "Student",
     "Staff": "Staff",
     "Visitor": "Visitor",
     "Motorcycle": "Motorcycle",
-    "Remote": "Remote"
+    "Remote": "Remote",
+    "Cost": "Cost: ",
+    "Type": "Type: "
   },
   "purchase_permit": {
     "Hourly": "Hourly",

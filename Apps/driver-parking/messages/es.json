@@ -58,7 +58,9 @@
     "Visitor": "Visitante",
     "Motorcycle": "Motocicleta",
     "Remote": "Remoto",
-    "hours": "Horas"
+    "hours": "Horas",
+    "Cost": "Costa",
+    "Type": "Typa"
   },
   "purchase_permit": {
     "Hourly": "Por hora",

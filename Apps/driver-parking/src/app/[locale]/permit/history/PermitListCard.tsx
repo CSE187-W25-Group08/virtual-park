@@ -1,86 +1,126 @@
-'use client'
+"use client";
 
-import ListItem from '@mui/material/ListItem'
-import PropTypes from 'prop-types'
-import Typography from '@mui/material/Typography'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import { useTranslations } from 'next-intl'
+import PropTypes from "prop-types";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
 
-import { Permit } from '../../../../permit'
+import CardContent from "@mui/material/CardContent";
+import { useTranslations } from "next-intl";
 
-const PermitListCard = ({permit}: {permit: Permit}) => {
-  const t = useTranslations('permit_history')
+import { Alert } from "@mui/material";
+import { Permit } from "../../../../permit";
+
+const PermitListCard = ({ permit }: { permit: Permit }) => {
+  const t = useTranslations("permit_history");
 
   return (
-    <ListItem disablePadding>
-      <Card sx={{ width: { xs: '100%', sm: '400px' }, borderRadius: 3, boxShadow: 2, border: '1px solid #ccc', p: 2, mx: 'auto' }}>
-        <CardContent>
-          <Typography variant="h5" color="text.primary" align="center" gutterBottom>
-            {t(permit.type)}
+    <Card
+      sx={{
+        width: { xs: "100%", sm: "400px" },
+        borderRadius: 3,
+        boxShadow: 2,
+        border: "1px solid #ccc",
+        mx: "auto",
+      }}
+    >
+      <CardContent>
+        <Alert
+          icon={false}
+          sx={{ display: "flex", justifyContent: "center", p: 0, mb: 2 }}
+        >
+          <Typography variant={"h6"} color="primary">
+            <strong>{t(permit.type)}</strong>
           </Typography>
-          <Typography variant="body1" color="text.secondary" align="center" gutterBottom>
-            ${permit.price}
-          </Typography>
-          <Typography variant="body1" color="text.secondary" align="center" gutterBottom>
-            {t(permit.permitClass)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" align="center" gutterBottom>
-            {t('issued')}{timeFormatter(permit.issueDate)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" align="center" gutterBottom>
-            {t('expires')}{timeFormatter(permit.expDate)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" align="center">
-            {t('timeLeft')} {timeRemaining(permit.expDate)}
-          </Typography>
-        </CardContent>
-      </Card>
-    </ListItem>
-  )
-}
+        </Alert>
+        <Typography
+          variant="body1"
+          color="text"
+          gutterBottom
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <strong>{t("Cost")}</strong>${permit.price}
+        </Typography>
+        <Typography
+          variant="body1"
+          color="text"
+          gutterBottom
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <strong>{t("Type")}</strong>
+          {t(permit.permitClass)}
+        </Typography>
+        <Typography
+          variant="body1"
+          color="text"
+          gutterBottom
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <strong>{t("issued")}</strong>
+          {timeFormatter(permit.issueDate)}
+        </Typography>
+        <Typography
+          variant="body1"
+          color="text"
+          gutterBottom
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <strong>{t("expires")}</strong>
+          {timeFormatter(permit.expDate)}
+        </Typography>
+        <Typography
+          variant="body1"
+          color="text"
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <strong>{t("timeLeft")}</strong>
+          {timeRemaining(permit.expDate)}
+        </Typography>
+      </CardContent>
+    </Card>
+  );
+};
 
 function timeFormatter(date: string) {
-  const dateObj = new Date(date)
+  const dateObj = new Date(date);
   const dateStr = dateObj.toLocaleDateString([], {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    timeZone: 'America/Los_Angeles',
-  })
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: "America/Los_Angeles",
+  });
   const timeStr = dateObj.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-    timeZone: 'America/Los_Angeles',
-  })
-  return `${dateStr} at ${timeStr}`
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "America/Los_Angeles",
+  });
+  return `${dateStr} at ${timeStr}`;
 }
 
 function timeRemaining(date: string) {
-  const dateObj = new Date(date)
-  const now = new Date()
-  const diff = dateObj.getTime() - now.getTime()
+  const dateObj = new Date(date);
+  const now = new Date();
+  const diff = dateObj.getTime() - now.getTime();
 
-  let days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-  let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
   if (days < 0) {
-    days = 0
+    days = 0;
   }
   if (hours < 0) {
-    hours = 0
+    hours = 0;
   }
   if (minutes < 0) {
-    minutes = 0
+    minutes = 0;
   }
 
-  return `${days}d:${hours}h:${minutes}m`
+  return `${days}d:${hours}h:${minutes}m`;
 }
 
 PermitListCard.propTypes = {
   permit: PropTypes.any,
-}
+};
 
-export default PermitListCard
+export default PermitListCard;
