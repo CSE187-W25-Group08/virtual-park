@@ -1,35 +1,11 @@
-/*
-#######################################################################
-#
-# Copyright (C) 2025 David C. Harrison. All right reserved.
-#
-# You may not use, distribute, publish, or modify this code without 
-# the express written permission of the copyright holder.
-#
-#######################################################################
-*/
-
 'use client'
 
-import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from '@/i18n/navigation';
+import dynamic from 'next/dynamic'
 
-export default function LocaleSwitcher() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const t = useTranslations('common')
+// Dynamically loads the real switcher only on the client
+const LocaleSwitcherInner = dynamic(() => import('./_ActualLocaleSwitcher'), {
+  ssr: false,
+  loading: () => <div />, // Optional: what to render while it's loading
+})
 
-  const switchLocale = (locale: string) => {
-    router.replace(
-      {pathname},
-      {locale: locale}
-    )
-  }
-
-  return (
-    <div>
-      <button onClick={() => switchLocale('en')}>{t('english')}</button>
-      <button onClick={() => switchLocale('es')}>{t('spanish')}</button>
-    </div>
-  );
-};
+export default LocaleSwitcherInner
