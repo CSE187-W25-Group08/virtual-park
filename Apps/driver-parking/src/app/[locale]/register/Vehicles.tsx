@@ -126,6 +126,7 @@ export default function Vehicles() {
   }
 
   return (
+                    <Fade in={true} timeout={500}>
     <Box
       sx={{
         display: 'flex',
@@ -153,7 +154,6 @@ export default function Vehicles() {
               <>
                 {vehicles.map((vehicle, index) => (
                   <Box key={index}>
-                    <Fade in={true} timeout={500}>
                       <Box
                         sx={{
                           display: 'flex',
@@ -196,7 +196,6 @@ export default function Vehicles() {
                           </Typography>
                         </Box>
                       </Box>
-                    </Fade>
                   </Box>
                 ))}
 
@@ -445,5 +444,6 @@ export default function Vehicles() {
         )}
       </Card>
     </Box>
+                    </Fade>
   )
 }
