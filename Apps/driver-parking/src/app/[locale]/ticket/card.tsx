@@ -1,5 +1,5 @@
 
-import { Card, Typography} from '@mui/material';
+import { Card, Fade, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import GavelIcon from '@mui/icons-material/Gavel';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -63,6 +63,7 @@ export default function TicketCard({ ticket }: { ticket: Ticket }) {
   };
 
   return (
+                                <Fade in={true} timeout={500}>
     <ListItemButton 
       onClick={() => {handleClick(ticket.id)}}
       sx={{ width: '100%', p: 0, mb: 2, maxWidth: '1000px' }}
@@ -102,5 +103,6 @@ export default function TicketCard({ ticket }: { ticket: Ticket }) {
       </Box>
     </Card>
     </ListItemButton>
+</Fade>
   );
 }

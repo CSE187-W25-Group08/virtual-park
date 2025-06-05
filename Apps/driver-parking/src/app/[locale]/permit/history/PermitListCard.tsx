@@ -7,13 +7,14 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { useTranslations } from "next-intl";
 
-import { Alert } from "@mui/material";
+import { Alert, Fade } from "@mui/material";
 import { Permit } from "../../../../permit";
 
 const PermitListCard = ({ permit }: { permit: Permit }) => {
   const t = useTranslations("permit_history");
 
   return (
+                          <Fade in={true} timeout={500}>
     <Card
       sx={{
         width: { xs: "100%", sm: "400px" },
@@ -77,6 +78,7 @@ const PermitListCard = ({ permit }: { permit: Permit }) => {
         </Typography>
       </CardContent>
     </Card>
+</Fade>
   );
 };
 

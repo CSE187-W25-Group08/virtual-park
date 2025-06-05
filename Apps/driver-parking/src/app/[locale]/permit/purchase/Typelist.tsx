@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
-import { Box } from '@mui/material'
+import { Box, Fade } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -51,6 +51,7 @@ const classes = permitTypeList.reduce((array, permit) => {
 }, {} as Record<string, PermitType[]>)
 
   return (
+                              <Fade in={true} timeout={500}>
     <Box sx={{ p: 1 }}>
       {!dataFetched && (
         <Box
@@ -63,7 +64,6 @@ const classes = permitTypeList.reduce((array, permit) => {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
             zIndex: 9001,
           }}
         >
@@ -85,5 +85,6 @@ const classes = permitTypeList.reduce((array, permit) => {
         </Accordion>
       ))}
     </Box>
+</Fade>
   )
 }
