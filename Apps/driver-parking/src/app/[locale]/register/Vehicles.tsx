@@ -17,6 +17,7 @@ import {
   useTheme,
 } from '@mui/material'
 import { useTranslations } from 'next-intl'
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 
 import { Vehicle, VehicleForm } from '../../../register'
 import {
@@ -134,8 +135,15 @@ export default function Vehicles() {
         display: 'flex',
         width: '100%',
         justifyContent: 'center',
+        flexDirection: 'column'
       }}
     >
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 2, mt:1}}>
+                <DirectionsCarIcon fontSize='large'></DirectionsCarIcon>
+          <Typography variant="h4">
+            {t('title')}
+          </Typography>
+        </Box>
       <Card
         sx={{
           p: 2,
@@ -145,9 +153,6 @@ export default function Vehicles() {
       >
         {!showEditForm && !showForm ? (
           <>
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              {t('title')}
-            </Typography>
             {!dataFetched ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', py: 3 }}>
                 <CircularProgress color="success" size={24} />
@@ -168,7 +173,7 @@ export default function Vehicles() {
                               : 'none',
                         }}
                       >
-                        <Typography variant="body2">
+                        <Typography variant="body1">
                           {vehicle.make} {vehicle.model} - {vehicle.color}
                           <br />({vehicle.licensePlate})
                         </Typography>
@@ -190,7 +195,7 @@ export default function Vehicles() {
                             </Typography>
                           )}
                           <Typography
-                            variant="body2"
+                            variant="body1"
                             sx={{ color: 'primary.main', cursor: 'pointer' }}
                             onClick={() => handleEdit(vehicle)}
                           >
@@ -207,7 +212,9 @@ export default function Vehicles() {
                   sx={{ mt: 2, textTransform: 'none', fontWeight: 500 }}
                   onClick={() => setShowForm(true)}
                 >
+                  <Typography variant='body1'>
                   {t('register')}
+                  </Typography>
                 </Button>
                 <div>{error}</div>
               </>

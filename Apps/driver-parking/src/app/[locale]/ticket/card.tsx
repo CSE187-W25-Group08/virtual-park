@@ -95,10 +95,10 @@ export default function TicketCard({ ticket }: { ticket: Ticket }) {
         </Box>
         <Box sx={{display: 'flex' , flexDirection: 'row',  justifyContent: 'space-between' }}>
           <Box>
-            <Typography sx={{}}>Issued: {handleHourDate(ticket.issue)}</Typography>
-            <Typography sx={{}}>Due: {handleHourDate(ticket.due)}</Typography>
+            <Typography sx={{}}><strong>Issued:</strong> {handleHourDate(ticket.issue)}</Typography>
+            <Typography sx={{}}><strong>Due:</strong> {handleHourDate(ticket.due)}</Typography>
           </Box>
-          <Typography sx={{fontSize:'200%'}}>${ticket.cost}</Typography>
+          <Typography variant = {"h4"} sx={{mt: 1, color:"primary"}}>${ticket.cost}</Typography>
         </Box>
       </Box>
     </Card>

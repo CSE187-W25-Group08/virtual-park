@@ -45,17 +45,21 @@ export default function TicketList() {
   const TableHeader = (title: string, type: string) => (
     <Box
       sx={{
-        mt: 1,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-        {type === 'unpaid' && <ErrorOutlineIcon color="error" />}
-        {type === 'appeal' && <GavelIcon color="warning" />}
-        {type === 'paid' && <CheckCircleOutlineIcon color="success" />}
-        <Typography variant="h5">{title}</Typography>
+        {type === 'unpaid' && <ErrorOutlineIcon fontSize='large' color="error" />}
+        {type === 'appeal' && <GavelIcon fontSize='large' color="warning" />}
+        {type === 'paid' && <CheckCircleOutlineIcon fontSize='large' color="success" />}
+        <Typography variant="h4">{title}</Typography>
+
+
+
+
+
       </Box>
     </Box>
   )
