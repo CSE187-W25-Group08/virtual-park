@@ -20,6 +20,8 @@ const customTheme = createTheme({
     fontSize: 13, 
   },
   components: {
+    MuiCssBaseline: {
+},
     MuiButton: {
       styleOverrides: {
         root: {

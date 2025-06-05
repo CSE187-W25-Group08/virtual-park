@@ -157,7 +157,7 @@ export default function Dashboard() {
           </Typography>
         </Box>
         {activePermits.length > 0 && (
-          <Box sx={{bgcolor: 'background.paper',
+          <Box sx={{
             alignItems: 'start',
             justifyContent: 'center',
             display: 'grid',

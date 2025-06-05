@@ -31,7 +31,7 @@ export default function PermitList() {
       <Typography variant="h4" color="text.primary" align="center" sx={{marginTop: '20px'}}>
         {t('title')}
       </Typography>
-      <Box sx={{bgcolor: 'background.paper',
+      <Box sx={{
         alignItems: 'start',
         justifyContent: 'center',
         display: 'grid',
