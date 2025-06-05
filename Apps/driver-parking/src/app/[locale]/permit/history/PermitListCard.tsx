@@ -2,12 +2,11 @@
 
 import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
 
 import CardContent from "@mui/material/CardContent";
 import { useTranslations } from "next-intl";
 
-import { Alert, Fade } from "@mui/material";
+import { Alert, Box, Fade } from "@mui/material";
 import { Permit } from "../../../../permit";
 
 const PermitListCard = ({ permit }: { permit: Permit }) => {
@@ -15,8 +14,9 @@ const PermitListCard = ({ permit }: { permit: Permit }) => {
 
   return (
                           <Fade in={true} timeout={500}>
-    <Card
+    <Box
       sx={{
+        bgcolor: 'background.paper',
         width: { xs: "100%", sm: "400px" },
         borderRadius: 3,
         boxShadow: 2,
@@ -77,7 +77,7 @@ const PermitListCard = ({ permit }: { permit: Permit }) => {
           {timeRemaining(permit.expDate)}
         </Typography>
       </CardContent>
-    </Card>
+    </Box>
 </Fade>
   );
 };
