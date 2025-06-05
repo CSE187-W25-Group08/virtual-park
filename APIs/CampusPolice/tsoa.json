@@ -20,6 +20,6 @@
   },
   "routes": {
     "routesDir": "build",
-    "authenticationModule": "./src/auth/expressAuth.ts"
+    "authenticationModule": "./src/police/policeAuth.ts"
   }
 }
