@@ -3,8 +3,9 @@
     "title": "Virtual Park"
   },
   "common": {
-    "english": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 English",
-    "spanish": "󠁢🇪🇸 Spanish"
+    "english": "English",
+    "spanish": "Spanish",
+    "language": "Language"
   },
   "landing": {
     "notSure": "Not sure where to park?",

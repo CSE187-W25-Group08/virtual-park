@@ -3,8 +3,9 @@
     "title": "Parque Virtual"
   },
   "common": {
-    "english": "🏴󠁧󠁢󠁥󠁮Anglais",
-    "spanish": "🇪🇸 Español"
+    "english": "Anglais",
+    "spanish": "Español",
+    "language": "Idioma"
   },
   "landing": {
     "notSure": "¿No estás seguro de dónde aparcar?",
@@ -167,7 +168,8 @@
     "vehicles": "Vehículos",
     "purchase": "Comprar permiso",
     "tickets": "Multas",
-    "permitHistory": "Historial de permisos"
+    "permitHistory": "Historial de permisos",
+    "title": "Virtual Park"
   },
   "checkout": {
     "goBack": "Volver",

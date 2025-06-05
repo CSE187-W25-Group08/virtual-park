@@ -18,7 +18,7 @@ import {
   Fab,
 } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout';
-import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate, getallLots} from './action'
+import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate, getallLots, getVehicleId} from './action'
 // import { Permit } from '../../permit/index'
 import { Lot } from '../../lot/index'
 import TicketView from '../ticket/View'
@@ -95,8 +95,10 @@ export default function PermitView() {
       setValidPermit('');
       setError('No permits found for this vehicle');
       const driverID = await getDriverFromVehiclePlate(plateToUse);
+      const vehicleID = await getVehicleId(plateToUse);
       if (driverID) {
         setDriverID(String(driverID));
+        setVehicleID(vehicleID);
       } else {
         setDriverID('');
       }

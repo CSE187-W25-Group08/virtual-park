@@ -16,7 +16,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import LocaleSwitcher from '../../src/app/languageSwitcher/LocaleSwitcher'
+// import LocaleSwitcher from '../../src/app/languageSwitcher/LocaleSwitcher'
 import { logout } from '@/app/[locale]/login/action'
 
 export default function BottomMenu() {
@@ -78,9 +78,9 @@ export default function BottomMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       > 
-        <MenuItem sx={{ px: 1, py: 0.5 }}>
+        {/* <MenuItem sx={{ px: 1, py: 0.5 }}>
           <LocaleSwitcher />
-        </MenuItem>
+        </MenuItem> */}
 
         <Divider sx={{ my: 1 }} />
 
