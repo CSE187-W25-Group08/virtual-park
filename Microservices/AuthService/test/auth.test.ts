@@ -429,3 +429,76 @@ test('Payroll/Registrar can retrieve their id', async () => {
     .get('/api/v0/auth/id?email=anna@books.com')
   console.log(res.body)
 })
+
+test('enforcementCheck passes for enforcement role', async () => {
+  // Admin creates enforcement officer
+  let adminToken;
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then(res => adminToken = res.body.accessToken);
+
+  await supertest(server)
+    .post('/api/v0/auth/enforcement')
+    .set('Authorization', 'Bearer ' + adminToken)
+    .send(edna)
+    .expect(201);
+
+  // Officer logs in
+  let enforcementToken;
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: edna.email, password: edna.password })
+    .then(res => enforcementToken = res.body.accessToken);
+
+  await supertest(server)
+    .get('/api/v0/auth/enforcementCheck?scope=enforcementonly')
+    .set('Authorization', 'Bearer ' + enforcementToken)
+    .expect(200);
+});
+
+test('enforcementCheck sets 401 and returns empty body for non-enforcement user', async () => {
+  // Sign up and log in as regular driver
+  let token;
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send(tommy);
+
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: tommy.email, password: tommy.password })
+    .then(res => token = res.body.accessToken);
+
+  const res = await supertest(server)
+    .get('/api/v0/auth/enforcementCheck?scope=enforcementonly')
+    .set('Authorization', `Bearer ${token}`)
+    .expect(401);
+
+  // Confirm body is empty
+  expect(res.body).toEqual({});
+});
+
+test('driverinfo returns 401 if requester is not a driver', async () => {
+  // Admin logs in
+  let token;
+  await supertest(server)
+    .post('/api/v0/auth/login')
+    .send({ email: anna.email, password: anna.password })
+    .then(res => token = res.body.accessToken);
+
+  const res = await supertest(server)
+    .get('/api/v0/auth/driverinfo')
+    .set('Authorization', `Bearer ${token}`)
+    .expect(401);
+
+  expect(res.body).toEqual({});
+});
+
+test('google-login returns 401 for invalid token', async () => {
+  const res = await supertest(server)
+    .post('/api/v0/auth/google-login')
+    .send({ token: 'invalid-google-token' })
+    .expect(401);
+
+  expect(res.body).toEqual({});
+});

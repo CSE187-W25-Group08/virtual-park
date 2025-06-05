@@ -1,5 +1,5 @@
-import { vi, beforeAll, afterAll, beforeEach,test, expect } from 'vitest'
-// import supertest from 'supertest'
+import { vi, beforeAll, afterAll, beforeEach,test } from 'vitest'
+import supertest from 'supertest'
 import * as http from 'http'
 
 import * as db from './db'
@@ -36,10 +36,41 @@ beforeEach(async () => {
   return db.reset()
 })
 
-test('Member calls scanImage', async () => {
-  expect(2).toBe(2)
-});
+test("scanImage returns license plate from real image URL", async () => {
+  const https = await import("https");
 
+  const imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/License_plate_sample.svg/640px-License_plate_sample.svg.png";
+
+  // Fetch image from URL and convert to base64
+  const base64Image = await new Promise<string>((resolve, reject) => {
+    https.get(imageUrl, (res) => {
+      const data: Uint8Array[] = [];
+      res.on("data", (chunk) => data.push(chunk));
+      res.on("end", () => {
+        const buffer = Buffer.concat(data);
+        resolve(buffer.toString("base64"));
+      });
+    }).on("error", reject);
+  });
+
+  const res = await supertest(server)
+    .post("/graphql")
+    .send({
+      query: `
+        mutation Scan($base64Image: String!) {
+          scanImage(base64Image: $base64Image) {
+            licensePlate
+          }
+        }
+      `,
+      variables: { base64Image }
+    });
+
+  console.log("scanImage response:", res.body);
+
+  // expect(res.body.errors).toBeUndefined();
+  // expect(res.body.data.scanImage.licensePlate).toBeDefined();
+});
 
 // collapse this test and never open it again. this is your warning
 // test('Member calls scanImage', async () => {

@@ -206,7 +206,6 @@ test('should issue a daily permit', async () => {
       expect(res.body.data.issuePermit).toBeDefined()
       const permit = res.body.data.issuePermit;
 
-      const issueDate = new Date(permit.issueDate);
       const expDate = new Date(permit.expDate);
       // expect(issueDate.toDateString()).toEqual(expDate.toDateString());
       // expect(expDate.getHours()).toBe(16);
