@@ -59,7 +59,7 @@ export default function TicketView({
         return
       }
       
-      console.log('Submitting ticket with lot:', ticketInfo.lot)
+      // console.log('Submitting ticket with lot:', ticketInfo.lot)
       const imageUrl = ticketInfo.image || 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Volkswagen_Golf_VIII_IMG_4023.jpg/1200px-Volkswagen_Golf_VIII_IMG_4023.jpg'
       const ticket = await issueTicketForCar(
         ticketInfo.driverID,

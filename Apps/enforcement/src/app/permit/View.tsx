@@ -14,12 +14,17 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  SelectChangeEvent
+  SelectChangeEvent,
+  Fab,
 } from '@mui/material'
+import LogoutIcon from '@mui/icons-material/Logout';
 import { getpermitByPlateNum, googleVision, getDriverFromVehiclePlate, getallLots} from './action'
 // import { Permit } from '../../permit/index'
 import { Lot } from '../../lot/index'
 import TicketView from '../ticket/View'
+import { useRouter } from 'next/navigation';
+
+import {logout} from '@/app//login/action';
 
 export default function PermitView() {
   const [carPlate, setCarPlate] = useState('')
@@ -33,8 +38,8 @@ export default function PermitView() {
   const [driverID, setDriverID] = useState('')
   // const [loading, setLoading] = useState(false)
   const [vehicleID, setVehicleID] = useState('')
+  const router = useRouter();
   
-
   React.useEffect(() => {
     loadLots()
   }, [])
@@ -52,6 +57,12 @@ export default function PermitView() {
     setCurrentLot(event.target.value)
     resetSearch()
   }
+
+  const handleLogout = async () => {
+    await logout();
+    window.sessionStorage.clear();
+    router.push('/');
+  };
 
   const resetSearch = () => {
     // setPermits([])
@@ -302,6 +313,18 @@ export default function PermitView() {
           plate={carPlate}
         />
       )}
+      {/* reference: https://mui.com/material-ui/react-floating-action-button/ */}
+      <Fab
+        aria-label="exit"
+        onClick={handleLogout}
+        sx={{
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
+        }}
+      >
+        <LogoutIcon />
+      </Fab>
     </Container>
   )
 }
