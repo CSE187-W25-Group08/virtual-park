@@ -85,6 +85,21 @@ export const testTicket = {
   cost: 50.02,
   appeal: "null"
 }
+export const testTicketUnknownAppeal = {
+  id: "t3",
+  vehicle: "XYZ5678",
+  enforcer: "E456",
+  lot: "Lot B",
+  paid: false,
+  description: "Does not matter",
+  due: "2025-04-25T23:59:59Z",
+  issue: "2025-04-25T09:00:00Z",
+  violation: "Did not pay",
+  image: "/images/tickets/t2.jpg",
+  cost: 50.02,
+  appeal: "dragon",
+  appealReason: "That\'s not me"
+}
 
 export const testTicketAppealed = {
   id: "t3",
@@ -99,6 +114,36 @@ export const testTicketAppealed = {
   image: "/images/tickets/t2.jpg",
   cost: 50.02,
   appeal: "submitted",
+  appealReason: "That\'s not me"
+}
+export const testTicketRejected = {
+  id: "t3",
+  vehicle: "XYZ5678",
+  enforcer: "E456",
+  lot: "Lot B",
+  paid: false,
+  description: "Does not matter",
+  due: "2025-04-25T23:59:59Z",
+  issue: "2025-04-25T09:00:00Z",
+  violation: "Did not pay",
+  image: "/images/tickets/t2.jpg",
+  cost: 50.02,
+  appeal: "rejected",
+  appealReason: "That\'s not me"
+}
+export const testTicketApproved = {
+  id: "t3",
+  vehicle: "XYZ5678",
+  enforcer: "E456",
+  lot: "Lot B",
+  paid: false,
+  description: "Does not matter",
+  due: "2025-04-25T23:59:59Z",
+  issue: "2025-04-25T09:00:00Z",
+  violation: "Did not pay",
+  image: "/images/tickets/t2.jpg",
+  cost: 50.02,
+  appeal: "approved",
   appealReason: "That\'s not me"
 }
 
