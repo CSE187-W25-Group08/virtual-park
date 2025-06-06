@@ -26,6 +26,13 @@ test('Rejects requests without an API key', async () => {
     .expect(401)
 })
 
+test('Rejects request with bad header', async () => {
+  await supertest(server)
+    .get('/api/v0/police/test')
+    .set('Authorization', 'BearerNotTheAPIKey')
+    .expect(401)
+})
+
 test('Rejects requests with the wrong API key', async () => {
   await supertest(server)
     .get('/api/v0/police/test')
@@ -64,6 +71,15 @@ test('Returns true for a plate with a permit', async () => {
     .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
     .then((res) => {
       expect(res.body).toEqual(true)
+    })
+})
+
+test('Returns false for a plate with expired permit', async () => {
+  await supertest(server)
+    .get('/api/v0/police/permit?plate=7ZJN054')
+    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .then((res) => {
+      expect(res.body).toEqual(false)
     })
 })
 
