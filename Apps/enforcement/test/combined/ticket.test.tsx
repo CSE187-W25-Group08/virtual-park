@@ -388,9 +388,6 @@ it("not all the required fields get filled out in the ticket ", async () => {
   const violation = screen.getByPlaceholderText('No Permit, Wrong Lot, Expired Permit')
   await userEvent.type(violation, 'No Permit')
   
-  const fine = screen.getByLabelText(/fine/i)
-  await userEvent.type(fine, '12')
-  
   const issueButton = within(dialog).getByText('Issue Ticket')
   await userEvent.click(issueButton)
   await screen.findByText('Please fill in all required fields *')
