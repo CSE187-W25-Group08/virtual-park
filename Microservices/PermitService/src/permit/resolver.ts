@@ -60,6 +60,14 @@ export class PermitResolver {
   }
 
   @Authorized()
+  @Query(() => [Permit], { nullable: true })
+  async futurePermit(
+    @Ctx() Request: Request
+  ): Promise<Permit[] | null> {
+    return await new PermitService().getFuturePermit(Request.user?.id)
+  }
+
+  @Authorized()
   @Mutation(() => PermitIssue)
   async issuePermit(
     @Arg("permitTypeId") permitTypeId: string,

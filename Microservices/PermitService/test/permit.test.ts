@@ -66,7 +66,7 @@ test('retrieve all the permits belong to the specific user', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      expect(res.body.data.permitsByDriver.length).toEqual(5)
+      expect(res.body.data.permitsByDriver.length).toEqual(6)
     })
 })
 
@@ -96,7 +96,7 @@ test('Should get buyable permits', async () => {
     })
 })
 
-test('Should get valud Permits', async () => {
+test('Should get valid Permits', async () => {
   await supertest(server)
     .post('/graphql')
     .set('Authorization', 'Bearer ' + accessToken)
@@ -114,6 +114,27 @@ test('Should get valud Permits', async () => {
         console.error('GraphQL errors:', res.body.errors)
       }
       expect(res.body.data.validPermit).not.toBeNull()
+    })
+})
+
+test('Should get future Permits', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `{
+        futurePermit {
+          issueDate
+          expDate
+          type
+        }
+      }`
+    })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      expect(res.body.data.futurePermit).not.toBeNull()
     })
 })
 

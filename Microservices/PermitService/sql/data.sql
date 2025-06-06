@@ -221,6 +221,16 @@ INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
 );
 
 INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
+  '2c9ffbfa-6f9a-4689-b6c9-0a422f39650d',
+  'bea45ed8-aa83-4c49-a201-4625baa0e91a',
+  '1d4f1f9a-fd32-494f-8f44-3339422eeb5f',
+  jsonb_build_object(
+    'issuedate', '2025-09-01T07:00:00.000Z',
+    'expdate', '2026-07-01T07:00:00.000Z'
+  )
+);
+
+INSERT INTO driverPermit (id, driverID, permitType, data) VALUES (
   'ee86f267-9cc0-4767-96f9-f64af8e2fcf3',
   'd8ae74ff-f0c8-4837-8690-d3e9471fe283',
   '74e74aa3-0743-453f-b48f-6a7819b52326',

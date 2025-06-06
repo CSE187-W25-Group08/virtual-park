@@ -195,4 +195,20 @@ export class PermitService {
       row.permitclass
     ))
   }
+
+  public async getFuturePermit(driverID: string | undefined): Promise<Permit[] | null> {
+    const query = {
+      text: queries.getFuturePermit,
+      values: [driverID]
+    }
+    const result = await pool.query(query)
+    return result.rows.map(row => new Permit(
+      row.id,
+      row.issuedate,
+      row.expdate,
+      row.type,
+      row.price,
+      row.permitclass
+    ))
+  }
 }

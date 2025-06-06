@@ -131,3 +131,21 @@ AND
 AND
     (dp.data->>'issuedate')::timestamptz <= NOW()
 `;
+
+export const getFuturePermit = `
+SELECT 
+    dp.id AS id,
+    dp.data->>'issuedate' AS issuedate,
+    dp.data->>'expdate' AS expdate,
+    pt.data->>'type' AS type,
+    pt.data->>'price' AS price,
+    pt.data->>'class' AS permitclass
+FROM 
+    driverPermit dp
+JOIN 
+    permitType pt ON dp.permitType = pt.id
+WHERE 
+    dp.driverID = $1
+AND
+    (dp.data->>'issuedate')::timestamptz > NOW()
+`;
