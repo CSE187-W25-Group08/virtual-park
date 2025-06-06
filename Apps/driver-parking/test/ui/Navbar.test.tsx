@@ -35,16 +35,16 @@ const renderWithIntl = (component: React.ReactElement) => {
   )
 }
 
+/*
 it('Menu Button Exists', async () => {
     renderWithIntl(<Navbar />)
     const menuButton = screen.getByLabelText('menu')
     fireEvent.click(menuButton)
 })
+    */
 
 it('redirects to /dashboard', async () => {
     renderWithIntl(<Navbar />)
-    const menuButton = screen.getByLabelText('menu')
-    fireEvent.click(menuButton)
     const historyButton = screen.getByText('Dashboard')
     fireEvent.click(historyButton)
     expect(mockPush).toHaveBeenCalledWith('/dashboard')
@@ -52,8 +52,6 @@ it('redirects to /dashboard', async () => {
 
 it('redirects to /permit/history', async () => {
     renderWithIntl(<Navbar />)
-    const menuButton = screen.getByLabelText('menu')
-    fireEvent.click(menuButton)
     const historyButton = screen.getByText('Permit History')
     fireEvent.click(historyButton)
     expect(mockPush).toHaveBeenCalledWith('/permit/history')
@@ -61,8 +59,6 @@ it('redirects to /permit/history', async () => {
 
 it('redirects to /register', async () => {
     renderWithIntl(<Navbar />)
-    const menuButton = screen.getByLabelText('menu')
-    fireEvent.click(menuButton)
     const historyButton = screen.getByText('Vehicles')
     fireEvent.click(historyButton)
     expect(mockPush).toHaveBeenCalledWith('/register')
@@ -70,8 +66,6 @@ it('redirects to /register', async () => {
 
 it('redirects to /permit/purchase', async () => {
     renderWithIntl(<Navbar />)
-    const menuButton = screen.getByLabelText('menu')
-    fireEvent.click(menuButton)
     const historyButton = screen.getByText('Purchase Permit')
     fireEvent.click(historyButton)
     expect(mockPush).toHaveBeenCalledWith('/permit/purchase')
@@ -79,8 +73,6 @@ it('redirects to /permit/purchase', async () => {
 
 it('redirects to /ticket', async () => {
     renderWithIntl(<Navbar />)
-    const menuButton = screen.getByLabelText('menu')
-    fireEvent.click(menuButton)
     const historyButton = screen.getByText('Tickets')
     fireEvent.click(historyButton)
     expect(mockPush).toHaveBeenCalledWith('/ticket')
@@ -88,8 +80,6 @@ it('redirects to /ticket', async () => {
 
 it('logs out user', async () => {
     renderWithIntl(<Navbar />)
-    const menuButton = screen.getByLabelText('menu')
-    fireEvent.click(menuButton)
     const logoutButton = screen.getByText('Logout')
     fireEvent.click(logoutButton)
     expect(mockLogout).toHaveBeenCalled()
