@@ -11,11 +11,7 @@ import {
   TextField
 } from '@mui/material'
 import { login } from './action'
-
-/*
-    'email','nick@books.com',
-    password:nickenforcement
- */
+import logo from '../../public/no-circle-logo.svg'
 
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
@@ -49,18 +45,25 @@ export default function LoginView() {
         alignItems: 'center',
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          mt: 4,
-        }}
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        mt: 4,
+      }}
       >
-        <Typography variant="h5">
-          {'Virtual-Park Enforcement Login'}
-        </Typography>
-        
+      <Box sx={{display:'flex', flexDirection:'row', mt:5, alignItems: 'center',  gap: 2, width:'300px', mb:0}}>
+        <picture  style={{margin: 0, padding: 0, width: '50px', height: '50px'}}>
+        <img
+          src={logo.src}
+          alt="Virtual Park Logo"
+          style={{ width: '50px', height: '50px', cursor: 'pointer' }}
+          onClick={() => router.push('/')}
+        />
+        </picture>
+        <Typography variant="h4" color = "#008343" sx={{fontSize:'24px'}}><strong>Virtual-Park Enforcement Login</strong></Typography>
+      </Box>
         <Box
           sx={{
             display: 'flex',
@@ -76,6 +79,7 @@ export default function LoginView() {
             onChange={handleInputChange}
             fullWidth
             required
+            sx={{width:'300px', color: '#008343'}}
           />
         </Box>
         
@@ -94,6 +98,7 @@ export default function LoginView() {
             onChange={handleInputChange}
             fullWidth
             required
+            sx={{width:'300px', color: '#008343'}}
           />
         </Box>
         
@@ -108,6 +113,7 @@ export default function LoginView() {
           <Button
             variant="contained"
             onClick={handleClick}
+            sx={{width:'300px', backgroundColor: '#008343'}}
           >
             Sign in
           </Button>

@@ -14,8 +14,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt'
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
 import VerifiedIcon from '@mui/icons-material/Verified'
 import { useTranslations } from "next-intl"
-import { useMediaQuery } from "@mui/material"
-import Link from "next/link"
+//import { useMediaQuery } from "@mui/material"
 
 import TicketCard from "../ticket/card"
 import PermitListCard from "../permit/history/PermitListCard"
@@ -36,7 +35,7 @@ export default function Dashboard() {
   const [registerModalOpen, setRegisterModalOpen] = useState(false)
   const router = useRouter()
   const t = useTranslations("dashboard")
-  const isMobile = useMediaQuery('(max-width:600px)')
+  //const isMobile = useMediaQuery('(max-width:600px)')
   const theme = useTheme()
   
 
@@ -47,7 +46,7 @@ export default function Dashboard() {
       const futurePermits = await getUserFuturePermit()
       if (result) {
         setUnpaidTickets(result)
-      }
+        }
       if (activePermits) {
         setActivePermits(activePermits)
       }
@@ -96,8 +95,8 @@ export default function Dashboard() {
 
   return (
                               <Fade in={true} timeout={500}>
-    <Box sx={{mb: 10}}>
-      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2 }}>
+    <Box sx={{mb: 10, widht:"100%"}}>
+      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2, widht:"100%"}}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <ReceiptIcon fontSize='large' />
           <Typography variant="h5">
@@ -144,7 +143,8 @@ export default function Dashboard() {
           </Card>
         )}
         {unpaidTickets.length > 0 && (
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: 'center', marginTop: 2 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: 'center', marginTop: 2,  width: {xs:'100%', sm:'100%', md: '80%'},
+              }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1}}>
               <ErrorOutlineIcon color='error'/>
               <Typography variant="body1" color="error">
@@ -158,8 +158,16 @@ export default function Dashboard() {
         )}
         <Divider color={theme.palette.secondary.main} sx={{ width: "95%", mt:2, mb:2, maxWidth:'800px'}}/>
       </Box>
-      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2, m:1}}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1}}>
+      <Box sx={{
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: { xs: '100%', sm: '100%', md: '80%' },
+  maxWidth: '800px',
+  margin: 'auto',
+}}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width:"100%", justifyContent:"center"}}>
           <VerifiedIcon fontSize='large' />
           <Typography variant="h5">
             {t('permit')}
@@ -233,11 +241,20 @@ export default function Dashboard() {
       </Box>
       
       {futurePermits.length > 0 && (
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2, m:1}}>
+        <Box sx={{
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: { xs: '100%', sm: '100%', md: '80%' },
+  maxWidth: '800px',
+  margin: 'auto',
+}}>
+
           <Divider color={theme.palette.secondary.main} sx={{ width: "95%", mt:2, mb:2 }}/>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1}}>
             <VerifiedIcon fontSize='large' />
-            <Typography variant="h4">
+            <Typography variant="h5">
               {t('futurePermit')}
             </Typography>
           </Box>

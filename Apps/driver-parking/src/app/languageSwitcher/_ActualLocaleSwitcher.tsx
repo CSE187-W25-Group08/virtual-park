@@ -31,13 +31,14 @@ export default function LocaleSwitcher({ bottom = false }: LocaleSwitcherProps) 
     handleClose();
   };
 
-  const anchorOrigin = bottom
-    ? { vertical: 'top' as 'top', horizontal: 'right' as 'right' }
-    : { vertical: 'bottom' as 'bottom', horizontal: 'right' as 'right' };
 
-  const transformOrigin = bottom
-    ? { vertical: 'bottom' as 'bottom', horizontal: 'right' as 'right' }
-    : { vertical: 'top' as 'top', horizontal: 'right' as 'right' };
+    const anchorOrigin = bottom
+  ? ({ vertical: 'top', horizontal: 'right' } as const)
+  : ({ vertical: 'bottom', horizontal: 'right' } as const);
+
+const transformOrigin = bottom
+  ? ({ vertical: 'bottom', horizontal: 'right' } as const)
+  : ({ vertical: 'top', horizontal: 'right' } as const);
 
   return (
     <>
