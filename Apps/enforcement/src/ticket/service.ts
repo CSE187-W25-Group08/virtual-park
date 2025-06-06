@@ -27,7 +27,7 @@ export async function issueTicketForVehicle(
             $paid: Boolean!,
             $description: String!,
             $violation: String!,
-            $image: String!,
+            $image: String,
             $cost: Float!
           ) {
             ticketIssue(

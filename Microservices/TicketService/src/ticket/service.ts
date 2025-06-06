@@ -170,8 +170,8 @@ export class TicketService {
     paid: boolean,
     description: string,
     violation: string,
-    image: string,
-    cost: number
+    cost: number,
+    image?: string
   ): Promise<Ticket> {
     const query = {
       text: queries.issueTicket,
@@ -183,8 +183,8 @@ export class TicketService {
         paid,
         description,
         violation,
-        image,
-        cost
+        cost,
+        image || null
       ],
     }
 

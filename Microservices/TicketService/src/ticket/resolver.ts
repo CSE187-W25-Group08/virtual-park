@@ -120,14 +120,12 @@ export class TicketResolver {
     @Arg("paid") paid: boolean,
     @Arg("description") description: string,
     @Arg("violation") violation: string,
-    @Arg("image") image: string,
     @Arg("cost") cost: number,
-    @Ctx() request: Request
+    @Ctx() request: Request,
+    @Arg("image", { nullable: true }) image?: string,
   ): Promise<Ticket> {
     return await new TicketService().issueTickets(
-      driverID, vehicleID, request.user?.id,
-      lot, paid, description, violation,
-      image, cost
+      driverID, vehicleID, request.user?.id, lot, paid, description, violation, cost, image
     );
   }
 
