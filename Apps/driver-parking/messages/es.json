@@ -109,9 +109,9 @@
     "datePaid": "Fecha de pago",
     "status": "Estado",
     "noTickets": "No hay infracciones actuales en el archivo.",
-    "unpaid": "🔴 Violaciones no pagadas",
-    "paid": "🟢 Violaciones pagadas",
-    "appeal": "🟡 Violaciones apeladas"
+    "unpaid": "Violaciones no pagadas",
+    "paid": "Violaciones pagadas",
+    "appeal": "Violaciones apeladas"
   },
   "ticket_details": {
     "violation": "Infracción:",
@@ -139,7 +139,7 @@
   "dashboard": {
     "permitBought": "Has comprado un permiso.",
     "ticketsPaid": "Todas las multas pagadas. \nTotal: $",
-    "permit": "Permiso activo",
+    "permit": "Permisos Activos",
     "noPermit": "No tienes un permiso activo.",
     "buyPermit": "Comprar permiso",
     "tickets": "Multas",

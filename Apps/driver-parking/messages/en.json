@@ -137,7 +137,7 @@
   "dashboard": {
     "permitBought": "You have bought a permit.",
     "ticketsPaid": "All tickets paid. \nTotal: $",
-    "permit": "Active Permit",
+    "permit": "Active Permits",
     "noPermit": "You have no active permit.",
     "buyPermit": "Buy Permit",
     "tickets": "Tickets",
