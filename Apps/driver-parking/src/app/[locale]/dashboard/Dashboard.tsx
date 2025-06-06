@@ -106,7 +106,10 @@ export default function Dashboard() {
               boxShadow: 2,
               p: 2,
               border: '1px solid #ccc',
-              width: '100%'
+              width: {xs:'100%', sm:'100%', md: '80%'},
+              maxWidth:'800px',
+              mt:1,
+              mb:1
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: 'center' }}>
@@ -115,14 +118,14 @@ export default function Dashboard() {
                   <CheckCircleOutlineIcon color='success' />
                     {t('noTickets')} 
                 </Box>
-                {!isMobile &&(
+                {/* {!isMobile &&(
                   <Link href="/ticket" onClick={() => router.push("/ticket")} style={{color: '#1976d2'}} aria-label="Manage Tickets">
                     <AssignmentLateIcon sx={{ mr: 1 }}/>
                     {t('manageTickets')}.
                   </Link>
-                )}
+                )} */}
               </Typography>
-              {isMobile && (
+              {/* {isMobile && ( */}
                 <Button
                   variant="contained"
                   sx={{ marginTop: 2, marginLeft: 1 }}
@@ -131,7 +134,7 @@ export default function Dashboard() {
                   <AssignmentLateIcon sx={{ mr: 1 }}/>
                   {t('manageTickets')}
                 </Button>
-              )}
+              {/* )} */}
             </Box>
           </Card>
         )}
@@ -148,7 +151,7 @@ export default function Dashboard() {
             ))}
           </Box>
         )}
-        <Divider color={theme.palette.secondary.main} sx={{ width: "95%", mt:2, mb:2 }}/>
+        <Divider color={theme.palette.secondary.main} sx={{ width: "95%", mt:2, mb:2, maxWidth:'800px'}}/>
       </Box>
       <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2, m:1}}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1}}>
@@ -178,7 +181,9 @@ export default function Dashboard() {
               boxShadow: 2,
               p: 2,
               border: '1px solid #ccc',
-              width: '100%'
+              mt:1,
+              width: {xs:'100%', sm:'100%', md: '80%'},
+              maxWidth:'800px',
             }}
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -187,7 +192,7 @@ export default function Dashboard() {
                   <ErrorOutlineIcon color="error" />
                   {t('noPermit')}
                 </Box>
-                {!isMobile && (
+                {/* {!isMobile && (
                   <Link href="#" style={{color: '#1976d2'}} onClick={handleBuyPermit} aria-label='Buy Daily Permit'>
                   <ShoppingCartCheckoutIcon sx={{ mr: 1 }}/>
                   {vehicle?.vehicleType ?
@@ -198,9 +203,9 @@ export default function Dashboard() {
                     t('buyPermit')
                   }
                   </Link>
-                )}
+                )} */}
               </Typography>
-              {isMobile && (
+              {/* {isMobile && ( */}
                 <Button
                   variant="contained"
                   sx={{ marginTop: 2, marginLeft: 1 }}
@@ -216,7 +221,7 @@ export default function Dashboard() {
                     t('buyPermit')
                   }
                 </Button>
-              )}
+              {/* )} */}
             </Box>
           </Card>
         )}
