@@ -23,6 +23,18 @@ export const fetchMocks = [
     if (email == 'dog@books.com') {
       return HttpResponse.json('this-guy-has-tickets')
     }
+
+    if (email == 'fake@books.com') {
+      return new HttpResponse(null, { status: 401 }) 
+    }
+
+    if (email == 'empty@books.com') {
+      return new HttpResponse('')
+    }
+
+    if (email == 'problem@books.com') {
+      return HttpResponse.json('problem-guy')
+    }
   }),
 
   http.post('http://localhost:4010/graphql', async ({ request }) => {
@@ -43,6 +55,10 @@ export const fetchMocks = [
             unpaidTicketPayrollCount: 5
           }
         })
+      }
+
+      if (driverId === 'problem-guy') {
+        return HttpResponse.json(null, { status: 401 })
       }
     })
 ]

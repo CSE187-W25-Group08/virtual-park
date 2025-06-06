@@ -50,6 +50,48 @@ test('User has at least 1 unpaid ticket', async () => {
     })
 })
 
+test('Return false if the user does not exist', async () => {
+  const email ='fake@books.com';
+  await supertest(server)
+    .get('/api/v0/payroll?email=' + email)
+    .set('Authorization', 'Bearer ' + apiKey)
+    .send(email)
+    .then((res) => {
+      expect(res.body).toEqual(false)
+    })
+})
+
+test('Problem with fetch', async () => {
+  const email ='problem@books.com';
+  await supertest(server)
+    .get('/api/v0/payroll?email=' + email)
+    .set('Authorization', 'Bearer ' + apiKey)
+    .send(email)
+    .then((res) => {
+      expect(res.body).toEqual(false)
+    })
+})
+
+test('Empty response body', async () => {
+  const email ='empty@books.com';
+  await supertest(server)
+    .get('/api/v0/payroll?email=' + email)
+    .set('Authorization', 'Bearer ' + apiKey)
+    .send(email)
+    .then((res) => {
+      expect(res.body).toEqual(false)
+    })
+})
+
+test('Bad header', async () => {
+  const email ='dog@books.com';
+  await supertest(server)
+    .get('/api/v0/payroll?email=' + email)
+    .set('Authorization', 'BearerBad')
+    .send(email)
+    .expect(401)
+})
+
 test('bad auth key', async () => {
   const email ='dog@books.com';
   await supertest(server)
