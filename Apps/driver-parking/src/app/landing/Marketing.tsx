@@ -25,7 +25,7 @@ import whitelogo from "../public/img/logo-white.svg";
 import hoody from "../public/img/Front.png";
 import marketcard from "../public/img/300.png";
 import cat from "../public/img/bg-desktop.png";
-import catgif from "../public/img/loading-registrar.gif";
+// import catgif from "../public/img/loading-registrar.gif";
 import { logout } from "../[locale]/login/action";
 import MarketingList from "./MarketingList";
 
@@ -220,7 +220,7 @@ export default function Marketing() {
               backgroundRepeat: "no-repeat",
             }}
           />
-          <Box
+          {/* <Box
             sx={{
               width: "12%",
               height: "40%",
@@ -229,7 +229,7 @@ export default function Marketing() {
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
             }}
-          />
+          /> */}
           <Box
             sx={{
               width: "30%",
@@ -257,7 +257,7 @@ export default function Marketing() {
             sx={{ color: "white" }}
           ></AgricultureIcon>
           <Typography variant="h4" color="white">
-            <strong>Made by the Squad</strong>
+            <strong>Created By:</strong>
           </Typography>
           <AgricultureIcon
             fontSize="large"

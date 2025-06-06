@@ -20,7 +20,7 @@ function MarketingCard({ title, description, image }: { title: string; descripti
         </Divider>
       </Box>
       <Typography align="center">{description}</Typography>
-      <CardMedia component="img" alt={title} image={image} sx={{ width: "100%", height: "100%" }} />
+      <CardMedia component="img" alt={title} image={image} sx={{ width:"100%", height: "auto", aspectRatio: "382/852" }} />
     </Box>
   );
 }

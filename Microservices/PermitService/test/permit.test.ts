@@ -162,7 +162,7 @@ test('retrieve the permit info based on the vehicle car plate', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      expect(res.body.data.getPermitBycarPlate.length).toEqual(5)
+      expect(res.body.data.getPermitBycarPlate.length).toEqual(6)
     })
 })
 

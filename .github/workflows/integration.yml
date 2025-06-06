@@ -10,9 +10,71 @@ env:
   POSTGRES_PASSWORD: postgres
 
 jobs:
+  lint:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+      # Have the runner execute in a branch
+      - uses: actions/checkout@v4
+      # Setup node env w/ lts version
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+      - run: npm install
+      - run: npm run installs
+      - run: npm run lint
+
+  build:
+    name: Check Build
+    runs-on: ubuntu-latest
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+      - run: npm install
+      - run: npm run installs
+      - run: npm run build
+
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    needs: [lint, build]
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/testdb
+      MASTER_SECRET: not-a-very-secret-secret
+      STRIPE_PUBLISHABLE_KEY : ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      POSTGRES_DB: testdb
+      JSON_LIMIT: 15mb
+      GOOGLE_CREDENTIALS_PATH: ${{ secrets.GOOGLE_CREDENTIALS_PATH }}
+      MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+      - name: Recreate ocr-service-account.json
+        run: | 
+          mkdir -p Micorservices/VehicleService/credentials
+          echo "${{ secrets.OCR_SERVICE_ACCOUNT_BASE64 }}" | base64 -d > Micorservices/VehicleService/credentials/ocr-service-account.json
+      - run: npm install
+      - run: npm run installs
+      - name: Start DB via Docker Compose
+        run: docker compose -f Dev/docker-compose.yaml up -d
+      - name: Wait for DB
+        run: sleep 10
+      - run: npm run test
+      - name: Stop and clean up Docker Compose
+        if: always()
+        run: docker compose -f Dev/docker-compose.yaml down
+
   deploy-docker:
     name: Build and Push Docker Image to GHCR
     runs-on: ubuntu-latest
+    needs: [lint, build]
     permissions:
       contents: read
       packages: write
@@ -52,6 +114,7 @@ jobs:
   deploy:
     name: Deploy and Spin Up on EC2 Instance
     runs-on: ubuntu-latest
+    needs: [lint, build, test, deploy-docker]
     steps:
       - uses: actions/checkout@v4
       - name: SSH into EC2 and Deploy
