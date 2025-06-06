@@ -30,12 +30,14 @@ export default function PermitList() {
     <Box sx={{mb: 10}}>
       <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', gap: 1, flexDirection:'row', mt: 3}}>
         <ReceiptLongIcon fontSize='large'/>
-        <Typography variant="h4" color="text.primary" align="center">
+        <Typography variant="h5" color="text.primary" align="center">
         {t('title')}
         </Typography>
       </Box>
       {(permits && permits.length > 0) && permits.map((permit, index) => (
-        <PermitListCard key={index} permit={permit} />
+        <Box sx={{my: 2}}>
+          <PermitListCard key={index} permit={permit} />
+        </Box>
       ))}
       {permits.length == 0 && (
         <Box sx={{display:'flex', justifyContent:'center', maxWdith:'800px', mt:2, width:'100%'}}>

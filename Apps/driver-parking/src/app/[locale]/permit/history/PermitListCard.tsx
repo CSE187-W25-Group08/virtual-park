@@ -22,7 +22,6 @@ const PermitListCard = ({ permit }: { permit: Permit }) => {
         boxShadow: 2,
         border: "1px solid #ccc",
         mx: "auto",
-        my: 2,
       }}
     >
       <CardContent>

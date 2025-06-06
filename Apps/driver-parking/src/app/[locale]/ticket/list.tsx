@@ -51,10 +51,10 @@ export default function TicketList() {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: { md: 2 }, mb: { xs: 1, md: 2 }}}>
-        {type === 'unpaid' && <ErrorOutlineIcon fontSize='large' color="error" />}
-        {type === 'appeal' && <GavelIcon fontSize='large' color="warning" />}
-        {type === 'paid' && <CheckCircleOutlineIcon fontSize='large' color="success" />}
-        <Typography variant="h4">{title}</Typography>
+        {type === 'unpaid' && <ErrorOutlineIcon fontSize='medium' color="error" />}
+        {type === 'appeal' && <GavelIcon fontSize='medium' color="warning" />}
+        {type === 'paid' && <CheckCircleOutlineIcon fontSize='medium' color="success" />}
+        <Typography variant="h5">{title}</Typography>
       </Box>
     </Box>
   )
@@ -102,7 +102,7 @@ export default function TicketList() {
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <CheckCircleOutlineIcon color='success' />
-                  <Typography variant='h6'>{t('noTickets')}</Typography>
+                  <Typography variant='h5'>{t('noTickets')}</Typography>
                 </Box>
               </Box>
             </Card>

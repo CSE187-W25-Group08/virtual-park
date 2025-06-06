@@ -206,7 +206,7 @@ export default function PermitView() {
   
   return (
     <Container maxWidth="md" sx={{py: 4}}>
-      <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
+      <Typography variant="h5" component="h1" gutterBottom sx={{ mb: 3 }}>
         Vehicle Permit
       </Typography>
 

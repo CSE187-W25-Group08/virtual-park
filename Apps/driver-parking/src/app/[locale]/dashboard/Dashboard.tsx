@@ -100,7 +100,7 @@ export default function Dashboard() {
       <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <ReceiptIcon fontSize='large' />
-          <Typography variant="h4">
+          <Typography variant="h5">
             {t('tickets')}
           </Typography>
         </Box>
@@ -161,7 +161,7 @@ export default function Dashboard() {
       <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2, m:1}}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1}}>
           <VerifiedIcon fontSize='large' />
-          <Typography variant="h4">
+          <Typography variant="h5">
             {t('permit')}
           </Typography>
         </Box>
