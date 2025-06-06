@@ -74,6 +74,7 @@ it('should handle OCR file upload and set plate number', async () => {
     mockFileReader.onload({} as any)
   }
   const plateInput = screen.getByPlaceholderText('Enter car plate number')
-  expect(plateInput).toHaveValue('ABC123')
-  
+    await waitFor(() => {
+    expect(plateInput).toHaveValue('ABC123')
+  })
 })
