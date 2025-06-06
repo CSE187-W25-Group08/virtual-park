@@ -98,7 +98,7 @@ export default function TicketCard({ ticket }: { ticket: Ticket }) {
             <Typography sx={{}}><strong>Issued:</strong> {handleHourDate(ticket.issue)}</Typography>
             <Typography sx={{}}><strong>Due:</strong> {handleHourDate(ticket.due)}</Typography>
           </Box>
-          <Typography variant = {"h4"} sx={{mt: 1, color:"primary"}}>${ticket.cost}</Typography>
+          <Typography variant = {"h5"} sx={{mt: 1, color:"primary"}}>${ticket.cost}</Typography>
         </Box>
       </Box>
     </Card>

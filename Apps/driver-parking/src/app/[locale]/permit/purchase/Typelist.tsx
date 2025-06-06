@@ -76,7 +76,7 @@ const classes = permitTypeList.reduce((array, permit) => {
 
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 2}}>
           <CreditCardIcon fontSize='large' />
-          <Typography variant="h4">
+          <Typography variant="h5">
             {t('permits')}
           </Typography>
         </Box>
