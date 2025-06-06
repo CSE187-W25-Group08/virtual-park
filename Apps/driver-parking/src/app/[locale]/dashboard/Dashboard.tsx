@@ -110,17 +110,18 @@ export default function Dashboard() {
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: 'center' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <CheckCircleOutlineIcon color='success' />
-                <Typography variant="h6">
-                  {t('noTickets')} {!isMobile &&(
-                    <Link href="/ticket" onClick={() => router.push("/ticket")} style={{color: '#1976d2'}} aria-label="Manage Tickets">
-                      <AssignmentLateIcon sx={{ mr: 1 }}/>
-                      {t('manageTickets')}.
-                    </Link>
-                  )}
-                </Typography>
-              </Box>
+              <Typography variant="h6">
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <CheckCircleOutlineIcon color='success' />
+                    {t('noTickets')} 
+                </Box>
+                {!isMobile &&(
+                  <Link href="/ticket" onClick={() => router.push("/ticket")} style={{color: '#1976d2'}} aria-label="Manage Tickets">
+                    <AssignmentLateIcon sx={{ mr: 1 }}/>
+                    {t('manageTickets')}.
+                  </Link>
+                )}
+              </Typography>
               {isMobile && (
                 <Button
                   variant="contained"
