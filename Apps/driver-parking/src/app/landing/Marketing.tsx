@@ -5,10 +5,8 @@ import { useRouter } from "next/navigation";
 import {
   AppBar,
   Box,
-  IconButton,
   Toolbar,
   Typography,
-  Menu,
   MenuItem,
   ListItemIcon,
   ListItemText,
@@ -27,13 +25,11 @@ import whitelogo from "../public/img/logo-white.svg";
 import hoody from "../public/img/Front.png";
 import marketcard from "../public/img/300.png";
 import cat from "../public/img/bg-desktop.png";
-import LotList from "./LotList";
 import { logout } from "../[locale]/login/action";
 import MarketingList from "./MarketingList";
 
 export default function Marketing() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const router = useRouter();
   const t = useTranslations("landing");
   const theme = useTheme<Theme>();
@@ -43,13 +39,7 @@ export default function Marketing() {
     setIsAuthenticated(!!session);
   }, []);
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
 
   const handleLogout = async () => {
     await logout();
@@ -65,7 +55,6 @@ export default function Marketing() {
             key="login"
             onClick={() => {
               router.push("/login");
-              handleMenuClose();
             }}
           >
             <ListItemIcon>
@@ -77,7 +66,6 @@ export default function Marketing() {
             key="signup"
             onClick={() => {
               router.push("/signup");
-              handleMenuClose();
             }}
           >
             <ListItemIcon>
@@ -90,7 +78,6 @@ export default function Marketing() {
           <MenuItem
             onClick={() => {
               handleLogout();
-              handleMenuClose();
             }}
           >
             <ListItemIcon>

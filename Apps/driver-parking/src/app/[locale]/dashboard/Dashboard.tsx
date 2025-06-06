@@ -14,8 +14,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt'
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
 import VerifiedIcon from '@mui/icons-material/Verified'
 import { useTranslations } from "next-intl"
-import { useMediaQuery } from "@mui/material"
-import Link from "next/link"
+//import { useMediaQuery } from "@mui/material"
 
 import TicketCard from "../ticket/card"
 import PermitListCard from "../permit/history/PermitListCard"
@@ -36,7 +35,7 @@ export default function Dashboard() {
   const [registerModalOpen, setRegisterModalOpen] = useState(false)
   const router = useRouter()
   const t = useTranslations("dashboard")
-  const isMobile = useMediaQuery('(max-width:600px)')
+  //const isMobile = useMediaQuery('(max-width:600px)')
   const theme = useTheme()
   
 
