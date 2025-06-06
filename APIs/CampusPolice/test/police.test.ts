@@ -20,6 +20,26 @@ afterAll(() => {
   server.close()
 })
 
+test('Rejects requests without an API key', async () => {
+  await supertest(server)
+    .get('/api/v0/police/test')
+    .expect(401)
+})
+
+test('Rejects requests with the wrong API key', async () => {
+  await supertest(server)
+    .get('/api/v0/police/test')
+    .set('Authorization', 'Bearer NotTheAPIKey')
+    .expect(401)
+})
+
+test('404 response for a non-existent route', async () => {
+  await supertest(server)
+    .get('/api/v0/police/fakeRoute')
+    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .expect(404)
+})
+
 test('"this works" command returns correctly', async () => {
   await supertest(server)
     .get('/api/v0/police/test')
