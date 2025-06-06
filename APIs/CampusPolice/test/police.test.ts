@@ -3,6 +3,8 @@ dotenv.config()
 import { test, beforeAll, afterAll, expect } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
+import { fetchMocks } from './fetchMocks'
+import { setupServer } from 'msw/node'
 
 import app from '../src/app'
 
@@ -11,13 +13,20 @@ let server: http.Server<
   typeof http.ServerResponse
 >
 
+const mswServer = setupServer(...fetchMocks)
+
 beforeAll(async () => {
   server = http.createServer(app)
   server.listen()
+
+  mswServer.listen({
+    onUnhandledRequest: 'bypass'
+  })
 })
 
 afterAll(() => {
   server.close()
+  mswServer.close()
 })
 
 test('Rejects requests without an API key', async () => {
