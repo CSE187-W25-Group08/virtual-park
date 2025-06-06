@@ -19,7 +19,7 @@ export default function BottomNavbar() {
   const router = useRouter()
   const pathname = usePathname()
   const t = useTranslations('bottom_navbar')
-  const isMobile = useMediaQuery('(max-width:600px)')
+  const isMobile = useMediaQuery('(max-width:900px)')
   const theme = useTheme()
 
   const isActive = (path: string) => {

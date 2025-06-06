@@ -35,8 +35,8 @@ export default function PermitList() {
         </Typography>
       </Box>
       {(permits && permits.length > 0) && permits.map((permit, index) => (
-        <Box sx={{my: 2}}>
-          <PermitListCard key={index} permit={permit} />
+        <Box sx={{my: 2}} key={permit.id}>
+          <PermitListCard permit={permit} />
         </Box>
       ))}
       {permits.length == 0 && (

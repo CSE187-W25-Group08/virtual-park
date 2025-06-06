@@ -39,28 +39,54 @@ export default async function LocaleLayout({
 
   const session = (await cookies()).get("session")?.value;
   const isLoggedIn = Boolean(session); // or use your own session validation
-  
+  const SIDEBAR_WIDTH = 250
   return (
     <html lang={locale}>
-      <body style={{margin:0, padding: 0}}>
-      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
-        <NextIntlClientProvider locale={locale}>
-          <ThemeWrapper>
-            {isLoggedIn && (
-              <>
-                <Navbar />
-                <Toolbar />
-                <BottomNavbar />
-              </>
-            )}
-            <Box sx={isLoggedIn ? {p:1} : {}}>
-              <main>{children}</main>
-            </Box>
-          </ThemeWrapper>
-        </NextIntlClientProvider>
-      </GoogleOAuthProvider>
+      <body style={{ margin: 0, padding: 0, height: '100%'}}>
+        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+          <NextIntlClientProvider locale={locale}>
+            <ThemeWrapper>
+              {isLoggedIn ? (
+                <>
+                  <Navbar />
+                 <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    minHeight: '100vh',
+                    ml: { sm: 0, md: `${SIDEBAR_WIDTH}px` },
+                  }}
+                >
+                  <Toolbar />
+                  <Box
+                    component="main"
+                    sx={{
+                      flexGrow: 1,
+                      p: 2,
+                      overflowY: 'auto',
+                    }}
+                  >
+                    {children}
+                  </Box>
+                  <Box
+                    sx={{
+                      position: 'fixed',
+                      bottom: 0,
+                      width: '100%',
+                      zIndex: 1300,
+                    }}
+                  >
+                    <BottomNavbar />
+                  </Box>
+                </Box>
+                </>
+              ) : (
+                <main>{children}</main>
+              )}
+            </ThemeWrapper>
+          </NextIntlClientProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );
 }
-
