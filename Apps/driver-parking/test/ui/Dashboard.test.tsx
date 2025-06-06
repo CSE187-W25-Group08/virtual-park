@@ -247,3 +247,46 @@ it('Mobile: Can Buy Daily Remote Permit', async () => {
   const buyButton = await screen.findByText(/Buy Daily: Remote/)
   fireEvent.click(buyButton)
 })
+
+
+it('renders active permit', async () => {
+
+  vi.mocked(getUserFuturePermit).mockResolvedValue(
+    [
+      {
+        id: '1',
+        type: 'Daily',
+        issueDate: '2025-01-01',
+        expDate: '2025-01-01',
+        price: 5,
+        permitClass: 'Visitor'
+      }
+    ]);
+
+  vi.mocked(fetch).mockImplementation((url, options) => {
+    if (url?.toString().includes('/graphql')) {
+      return Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            getUserFuturePermit: [
+              {
+                id: '1',
+                type: 'Daily',
+                issueDate: '2025-01-01',
+                expDate: '2025-01-01',
+                price: 5,
+                permitClass: 'Visitor',
+              }
+            ],
+          },
+        }),
+      } as Response)
+    }
+    return Promise.reject('Unknown fetch')
+  })
+
+  renderWithIntl(<Dashboard />)
+
+  await screen.findByText('Daily')
+})

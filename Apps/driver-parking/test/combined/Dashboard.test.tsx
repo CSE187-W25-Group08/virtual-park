@@ -7,11 +7,12 @@ import Page from '../../src/app/[locale]/dashboard/page'
 import { dashboard as dashboardMessages } from '../../messages/en.json'
 import { ticket as ticketMessages } from '../../messages/en.json'
 import { listUnpaid } from '@/app/[locale]/ticket/actions'
-import { getActivePermit, getDailyPermitType } from '@/app/[locale]/dashboard/actions'
+import { getActivePermit, getDailyPermitType, getUserFuturePermit } from '@/app/[locale]/dashboard/actions'
 import { getPrimaryVehicle } from '@/app/[locale]/register/actions'
 import { createCheckout } from '@/stripe/helper'
 
 import { testMotorcycle, testVehicle2 } from '../testData'
+import { getFuturePermit } from '../../src/permit/service'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -32,6 +33,7 @@ vi.mock('../../src/app/[locale]/ticket/actions', () => ({
 vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
   getActivePermit: vi.fn(),
   getDailyPermitType: vi.fn(),
+  getUserFuturePermit: vi.fn(),
 }))
 
 vi.mock('../../src/app/[locale]/register/actions', () => ({
@@ -182,7 +184,7 @@ it('Starts a stripe checkout session when Buy Permit is clicked', async () => {
   renderWithIntl(<Page />)
 
   await screen.findByText('dab')
-  fireEvent.click(screen.getByText(/Buy Daily Permit: Remote/))
+  fireEvent.click(screen.getByText(/Buy Daily: Remote/))
   waitFor(() => {
     expect(mockCreateCheckout).toHaveBeenCalled()
   })
@@ -206,7 +208,7 @@ it('Creates the checkout session with the correct permit values', async () => {
   renderWithIntl(<Page />)
 
   await screen.findByText('dab')
-  fireEvent.click(screen.getByText(/Buy Daily Permit: Motorcycle/))
+  fireEvent.click(screen.getByText(/Buy Daily: Motorcycle/))
   const expectedMetadata = {
     permitTypeId: 'p2',
     type: "permit",
