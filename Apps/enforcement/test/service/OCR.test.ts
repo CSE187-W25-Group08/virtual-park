@@ -56,3 +56,4 @@ it('test recognizePlateFromImage successful case', async () => {
   const result = await recognizePlateFromImage('validCookie', 'base64ImageString')
   expect(result).toBe('123BC4A')
 })
+
