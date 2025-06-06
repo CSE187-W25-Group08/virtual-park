@@ -25,8 +25,10 @@ import whitelogo from "../public/img/logo-white.svg";
 import hoody from "../public/img/Front.png";
 import marketcard from "../public/img/300.png";
 import cat from "../public/img/bg-desktop.png";
+import catgif from "../public/img/loading-registrar.gif";
 import { logout } from "../[locale]/login/action";
 import MarketingList from "./MarketingList";
+
 
 export default function Marketing() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -58,9 +60,9 @@ export default function Marketing() {
             }}
           >
             <ListItemIcon>
-              <LoginIcon fontSize="small" sx ={{color: "white"}}/>
+              <LoginIcon fontSize="medium" sx ={{color: "white"}}/>
             </ListItemIcon>
-            <ListItemText sx ={{color: "white"}}>{t("login")}</ListItemText>
+            <ListItemText sx ={{color: "white"}}><strong>{t("login")}</strong></ListItemText>
           </MenuItem>,
           <MenuItem
             key="signup"
@@ -69,9 +71,9 @@ export default function Marketing() {
             }}
           >
             <ListItemIcon>
-              <PersonAddIcon fontSize="small" sx ={{color: "white"}}/>
+              <PersonAddIcon fontSize="medium" sx ={{color: "white"}}/>
             </ListItemIcon>
-            <ListItemText sx ={{color: "white"}}>{t("signup")}</ListItemText>
+            <ListItemText sx ={{color: "white"}}><strong>{t("signup")}</strong></ListItemText>
           </MenuItem>,
         ]}
         {isAuthenticated && (
@@ -214,6 +216,16 @@ export default function Marketing() {
               height: "30%",
               minHeight: "42vh",
               backgroundImage: `url(${hoody.src})`,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+            }}
+          />
+          <Box
+            sx={{
+              width: "12%",
+              height: "40%",
+              minHeight: "41vh",
+              backgroundImage: `url(${catgif.src})`,
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
             }}
