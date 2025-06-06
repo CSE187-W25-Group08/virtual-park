@@ -74,13 +74,15 @@
     "Academic Year": "Año académico",
     "purchase": "Comprar",
     "purchased": "Comprado:",
-    "buy": "comprar permiso",
-    "no_vehicle_warning": "Must register a vehicle before aquiring a permit",
+    "buy": "Comprar permiso",
+    "permits": "Permisos",
+    "no_vehicle_warning": "Debe registrar un vehículo antes de adquirir un permiso",
     "Student": "Estudiante",
     "Staff": "Personal",
     "Visitor": "Visitante",
     "Motorcycle": "Motocicleta",
-    "Remote": "Remoto"
+    "Remote": "Remoto",
+    "hours": "Horas"
   },
   "vehicle": {
     "title": "Vehículos",

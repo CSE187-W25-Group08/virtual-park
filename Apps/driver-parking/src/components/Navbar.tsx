@@ -41,8 +41,6 @@ export default function Navbar() {
       <AppBar >
         <Toolbar>
           <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
-            
-            {/* Left Side: Logo and Title */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               {!isMobile && (
                 <IconButton
@@ -60,8 +58,6 @@ export default function Navbar() {
                 {t('title')}
               </Typography>
             </Box>
-
-            {/* Right Side: Locale Switcher */}
             <LocaleSwitcher />
           </Box>
         </Toolbar>

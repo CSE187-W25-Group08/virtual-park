@@ -2,6 +2,7 @@
 
 import {Box, Link, Typography} from '@mui/material'
 import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
+import LocaleSwitcher from '../languageSwitcher/LocaleSwitcher'
 import LotList from "./LotList"
 import TopNav from './TopNav'
 import ParkNow from './ParkNow'
@@ -64,18 +65,22 @@ export default function Landing() {
         color: 'white',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
-        gap: 1,
+        justifyContent: 'space-between',
+        flexDirection:'row',
         flexShrink: 0,
+        p:3
       }}> 
-        <InfoOutlineIcon />
-        <Link 
-          href="https://github.com/CSE187-W25-Group08/virtual-park" 
-          color='inherit'
-          underline="none"
-        >
-          <Typography>{t("about")}</Typography>
-        </Link>
+       <Box sx={{ display: 'flex', justifyContent:'center', alignItems:'center', gap:1}}>
+          <InfoOutlineIcon />
+          <Link 
+            href="https://github.com/CSE187-W25-Group08/virtual-park" 
+            color='inherit'
+            underline="none"
+          >
+            <Typography>{t("about")}</Typography>
+          </Link>
+        </Box>
+         <LocaleSwitcher />
       </Box>
     </Box>
   )
