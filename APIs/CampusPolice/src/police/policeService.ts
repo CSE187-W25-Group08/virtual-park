@@ -15,12 +15,11 @@ export class PoliceService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.POLICE_API_KEY}`,
         },
         body: JSON.stringify({
           query: `
-            query GetPermitByCar($input: String!) {
-              getPermitBycarPlate(input: $input) {
+            query GetPermitByPlate($input: String!) {
+              getPermitByPlateAPI(input: $input) {
                 isValid
               }
             }
@@ -37,7 +36,7 @@ export class PoliceService {
         return response.json()
       })
       .then(json => {
-        resolve(json.data.getPermitBycarPlate)
+        resolve(json.data.getPermitByPlateAPI)
       })
       .catch((error) => reject(error))
     })

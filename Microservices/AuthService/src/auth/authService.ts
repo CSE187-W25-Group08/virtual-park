@@ -122,14 +122,6 @@ export class AuthService {
       else {
         const token = authHeader.split(' ')[1]
 
-        if (token == process.env.POLICE_API_KEY) {
-          resolve({ 
-            id: 'service-account', 
-            roles: '["service"]'
-          });
-          return;
-        }
-
         jwt.verify(token, `${process.env.MASTER_SECRET}`,
           (err: jwt.VerifyErrors | null, decoded?: object | string) => {
             const uid = decoded as SessionUser

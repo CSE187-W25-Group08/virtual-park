@@ -31,7 +31,6 @@ export class PoliceController extends Controller {
   ): Promise<boolean> {
     return new PoliceService().checkPermitFromPlate(licensePlate)
       .then(async (permits: Permit[]): Promise<boolean> => {
-
         if (permits.length > 0) {
           const validPermit = permits.filter(permit => permit.isValid)
           if (validPermit.length > 0) {
