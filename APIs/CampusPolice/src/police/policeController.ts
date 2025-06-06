@@ -4,25 +4,19 @@ import {
   Route,
   SuccessResponse,
   Get,
-  Query,
   Security
 } from 'tsoa'
-import { hasActivePermitForPlate } from './policeService';
+import { hasValidAPIKey } from './policeService';
 
 
 @Route('police')
 @Security('api_key') 
 export class PoliceController extends Controller {
 
-  @Get('')
+  @Get('/test')
   @Response('401', 'Unauthorized')
-  @Response('409', 'Error')
-  @SuccessResponse('200', 'Gets ticket bool succesfully')
-  public async checkPermit(
-      @Query() plate: string
-  ): Promise<string> {
-
-    return await hasActivePermitForPlate(plate)
+  @SuccessResponse('200', 'API Key Success')
+  public async testKey(): Promise<string> {
+    return await hasValidAPIKey()
   }
-
 }

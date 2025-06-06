@@ -1,6 +1,5 @@
 // need to write endpoint that returns permit from plate
-
-export async function checkPermitFromPlate(plate: string): Promise<boolean> {
+export async function checkPermitFromPlate(): Promise<boolean> {
   return new Promise((resolve, reject) => {
     fetch('http://localhost:4000/graphql', {
       method: 'POST',
