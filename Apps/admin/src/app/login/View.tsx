@@ -10,7 +10,7 @@ import {
   Alert
 } from '@mui/material'
 import { login } from './action'
-
+import logo from '../../app/public/no-circle-logo.svg'
 export default function LoginView() {
   const [credentials, setCredentials] = useState({email: '', password: ''})
   const [failedLogin, setFailedLogin] = useState(false)
@@ -58,16 +58,24 @@ export default function LoginView() {
           mt: 4,
         }}
       >
-        <Typography variant="h3">
-          {'Virtual-Park Admin Login'}
-        </Typography>
-        
+        <Box sx={{display:'flex', flexDirection:'row', mt:5, alignItems: 'center',  gap: 2, width:'500px', mb:0}}>
+          <picture  style={{margin: 0, padding: 0, width: '50px', height: '50px'}}>
+          <img
+            src={logo.src}
+            alt="Virtual Park Logo"
+            style={{ width: '50px', height: '50px', cursor: 'pointer' }}
+            onClick={() => router.push('/')}
+          />
+          </picture>
+          <Typography variant="h4" color = "#008343" sx={{fontSize:'35px'}}><strong>Virtual-Park Admin Login</strong></Typography>
+        </Box>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            mt: 5,
+            mt: 3,
+            width:'500px'
           }}
         >
           <TextField
@@ -77,6 +85,7 @@ export default function LoginView() {
             onChange={handleInputChange}
             fullWidth
             required
+            sx={{color:'#008343'}}
           />
         </Box>
         
@@ -85,7 +94,8 @@ export default function LoginView() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            mt: 5,
+            mt: 3,
+            width:'500px'
           }}
         >
           <TextField
@@ -95,6 +105,7 @@ export default function LoginView() {
             onChange={handleInputChange}
             fullWidth
             required
+            sx={{color:'#008343'}}
           />
         </Box>
         
@@ -103,12 +114,14 @@ export default function LoginView() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            mt: 5,
+            mt: 3,
+            width:'500px'
           }}
         >
           <Button
             variant="contained"
             onClick={handleClick}
+            sx={{width:'500px', backgroundColor:'#008343'}}
           >
             Sign in
           </Button>

@@ -139,7 +139,7 @@
   "dashboard": {
     "permitBought": "Has comprado un permiso.",
     "ticketsPaid": "Todas las multas pagadas. \nTotal: $",
-    "permit": "Permisos Activos",
+    "permit": "Permiso activo",
     "noPermit": "No tienes un permiso activo.",
     "buyPermit": "Comprar permiso",
     "tickets": "Multas",
@@ -148,8 +148,7 @@
     "unpaidTickets": "Tienes {count} multas pendientes.",
     "payTickets": "Pagar multas",
     "buyDailyRemote": "Comprar diario: Remoto",
-    "buyDailyMotorcycle": "Comprar diario: Motocicleta",
-    "futurePermit": "Permisos Futuros"
+    "buyDailyMotorcycle": "Comprar diario: Motocicleta"
   },
   "labels": {
     "cancel": "Cancelar",
