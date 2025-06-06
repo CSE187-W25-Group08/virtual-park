@@ -7,6 +7,7 @@ export async  function emailContainsTickets(email: string): Promise<boolean> {
       if (!driverId) {
         return false;
       }
+  
       const unpaidTicketCount = await unpaidTicketPayrollCount(driverId);
       if (unpaidTicketCount > 0) {
         return true;

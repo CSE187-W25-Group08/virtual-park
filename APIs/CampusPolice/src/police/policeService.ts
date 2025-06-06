@@ -2,11 +2,7 @@ import { Permit } from '.';
 
 export class PoliceService {
   public async hasValidAPIKey(): Promise<string> {
-      try {
-        return 'this works'
-      } catch {
-        return 'catch err';
-      }
+    return 'this works'
   }
 
   public async checkPermitFromPlate(licensePlate: string): Promise<Permit[]> {
@@ -30,9 +26,6 @@ export class PoliceService {
         }),
       })
       .then(response => {
-        if (response.status !== 200) {
-          reject('Unauthorized')
-        }
         return response.json()
       })
       .then(json => {
