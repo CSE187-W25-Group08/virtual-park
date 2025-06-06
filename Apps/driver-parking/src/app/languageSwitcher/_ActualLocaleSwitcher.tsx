@@ -6,7 +6,11 @@ import { usePathname, useRouter } from '@/i18n/navigation';
 import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
 
-export default function LocaleSwitcher() {
+type LocaleSwitcherProps = {
+  bottom?: boolean;
+};
+
+export default function LocaleSwitcher({ bottom = false }: LocaleSwitcherProps) {
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations('common');
@@ -26,6 +30,14 @@ export default function LocaleSwitcher() {
     router.replace({ pathname }, { locale });
     handleClose();
   };
+
+  const anchorOrigin = bottom
+    ? { vertical: 'top' as 'top', horizontal: 'right' as 'right' }
+    : { vertical: 'bottom' as 'bottom', horizontal: 'right' as 'right' };
+
+  const transformOrigin = bottom
+    ? { vertical: 'bottom' as 'bottom', horizontal: 'right' as 'right' }
+    : { vertical: 'top' as 'top', horizontal: 'right' as 'right' };
 
   return (
     <>
@@ -47,6 +59,8 @@ export default function LocaleSwitcher() {
         open={open}
         onClose={handleClose}
         MenuListProps={{ 'aria-labelledby': 'language-button' }}
+        anchorOrigin={anchorOrigin}
+        transformOrigin={transformOrigin}
       >
         <MenuItem onClick={() => switchLocale('en')}>{t('english')}</MenuItem>
         <MenuItem onClick={() => switchLocale('es')}>{t('spanish')}</MenuItem>

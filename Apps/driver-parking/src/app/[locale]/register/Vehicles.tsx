@@ -129,28 +129,28 @@ export default function Vehicles() {
   }
 
   return (
-                    <Fade in={true} timeout={500}>
-    <Box
-      sx={{
-        display: 'flex',
-        width: '100%',
-        justifyContent: 'center',
-        flexDirection: 'column'
-      }}
-    >
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 2, mt:1}}>
-                <DirectionsCarIcon fontSize='large'></DirectionsCarIcon>
+    <Fade in={true} timeout={500}>
+      <Box
+        sx={{
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'center',
+          alignItems:'center',
+          flexDirection: 'column'
+        }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 2, mt:1}}>
+          <DirectionsCarIcon fontSize='large'></DirectionsCarIcon>
           <Typography variant="h4">
             {t('title')}
           </Typography>
         </Box>
-      <Card
-        sx={{
-          p: 2,
-          border: '1px solid #ccc',
-          width: { xs: '100%', sm: '400px' },
-        }}
-      >
+        <Card
+          sx={{
+            p: 2,
+            border: '1px solid #ccc',
+            width: { xs: '100%', sm: '400px', md:'600px', lg:'800px' },
+          }}
+        >
         {!showEditForm && !showForm ? (
           <>
             {!dataFetched ? (
@@ -178,13 +178,13 @@ export default function Vehicles() {
                           <br />({vehicle.licensePlate})
                         </Typography>
                         <Box
-                          sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                          sx={{ display: 'flex', alignItems: 'center', gap: 1}}
                         >
                           {vehicle.active && (
                             <Typography
                               variant="caption"
                               sx={{
-                                backgroundColor: theme.palette.secondary.main,
+                                backgroundColor: "#FFD700",
                                 borderRadius: '8px',
                                 px: 1,
                                 fontWeight: 500,
@@ -452,7 +452,7 @@ export default function Vehicles() {
           </>
         )}
       </Card>
-    </Box>
-                    </Fade>
+      </Box>
+    </Fade>
   )
 }
