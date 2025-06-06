@@ -23,6 +23,7 @@ import { useTranslations } from "next-intl";
 import { useTheme, Theme } from "@mui/material/styles";
 
 import logo from "../public/img/sprite-logo.svg";
+import whitelogo from "../public/img/logo-white.svg";
 import hoody from "../public/img/Front.png";
 import marketcard from "../public/img/300.png";
 import cat from "../public/img/bg-desktop.png";
@@ -68,9 +69,9 @@ export default function Marketing() {
             }}
           >
             <ListItemIcon>
-              <LoginIcon fontSize="small" />
+              <LoginIcon fontSize="small" sx ={{color: "white"}}/>
             </ListItemIcon>
-            <ListItemText>{t("login")}</ListItemText>
+            <ListItemText sx ={{color: "white"}}>{t("login")}</ListItemText>
           </MenuItem>,
           <MenuItem
             key="signup"
@@ -80,9 +81,9 @@ export default function Marketing() {
             }}
           >
             <ListItemIcon>
-              <PersonAddIcon fontSize="small" />
+              <PersonAddIcon fontSize="small" sx ={{color: "white"}}/>
             </ListItemIcon>
-            <ListItemText>{t("signup")}</ListItemText>
+            <ListItemText sx ={{color: "white"}}>{t("signup")}</ListItemText>
           </MenuItem>,
         ]}
         {isAuthenticated && (
@@ -107,17 +108,17 @@ export default function Marketing() {
       <AppBar
         position="fixed"
         color="transparent"
-        sx={{ backgroundColor: "#ffffff" }}
+        sx={{ backgroundColor: "primary.main"}}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           {/* Logo + Text */}
           <Box display="flex" alignItems="center" gap={1}>
-            <Image src={logo} alt="Virtual Park Logo" width={40} height={40} />
+            <Image src={whitelogo} alt="Virtual Park Logo" width={30} height={30} />
             <Typography
               variant="h6"
               component="div"
               color="primary"
-              sx={{ color: "primary" }}
+              sx={{ color: "white" }}
             >
               <strong>Virtual Park</strong>
             </Typography>
