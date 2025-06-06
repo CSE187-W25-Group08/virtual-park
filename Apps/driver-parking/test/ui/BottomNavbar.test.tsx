@@ -1,13 +1,14 @@
 import { it, afterEach, vi, expect, beforeAll, beforeEach } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 
 import BottomNavbar from '../../src/components/BottomNavbar'
 import { bottom_navbar as navbarMessages } from '../../messages/en.json'
 
 vi.mock('next/navigation', () => ({
-  useRouter: vi.fn()
+  useRouter: vi.fn(),
+  usePathname: vi.fn()
 }))
 
 beforeAll(() => {
@@ -52,6 +53,7 @@ const renderWithIntl = (component: React.ReactElement) => {
 it('redirects to /dashboard', async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(usePathname).mockReturnValue('/dashboard')
 
   renderWithIntl(<BottomNavbar />)
   const home = screen.getByLabelText('Home Button');
@@ -62,6 +64,7 @@ it('redirects to /dashboard', async () => {
 it('redirects to /register', async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(usePathname).mockReturnValue('/register')
 
   renderWithIntl(<BottomNavbar />)
   const vehicles = screen.getByLabelText('Vehicles Button');
@@ -72,6 +75,7 @@ it('redirects to /register', async () => {
 it('redirects to permit/purchase', async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(usePathname).mockReturnValue('/permit/purchase')
 
   renderWithIntl(<BottomNavbar />)
   const purchase = screen.getByLabelText('Purchase Button');
@@ -82,6 +86,7 @@ it('redirects to permit/purchase', async () => {
 it('redirects to /ticket', async () => {
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(usePathname).mockReturnValue('/ticket')
 
   renderWithIntl(<BottomNavbar />)
   const renew = screen.getByLabelText('Ticket Button');
