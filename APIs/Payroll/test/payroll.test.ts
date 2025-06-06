@@ -39,6 +39,17 @@ test('User has 0 unpaid tickets', async () => {
     })
 })
 
+test('User has at least 1 unpaid ticket', async () => {
+  const email ='dog@books.com';
+  await supertest(server)
+    .get('/api/v0/payroll?email=' + email)
+    .set('Authorization', 'Bearer ' + apiKey)
+    .send(email)
+    .then((res) => {
+      expect(res.body).toEqual(true)
+    })
+})
+
 test('bad auth key', async () => {
   const email ='dog@books.com';
   await supertest(server)

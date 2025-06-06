@@ -14,7 +14,6 @@ export async function getUserIdFromEmail(email: string): Promise<string> {
     }
 
     const text = await response.text();
-    console.log("Response text:", text);
 
     if (!text) {
       throw new Error("Empty response body");
