@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty'
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
-
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
 import PermitListCard from './PermitListCard'
 import { getUserPermits } from '../actions'
 import { Permit } from '../../../../permit'
@@ -28,39 +28,35 @@ export default function PermitList() {
 
   return (
     <Box sx={{mb: 10}}>
-      <Typography variant="h4" color="text.primary" align="center" sx={{marginTop: '20px'}}>
+      <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', gap: 1, flexDirection:'row', mt: 3}}>
+        <ReceiptLongIcon fontSize='large'/>
+        <Typography variant="h4" color="text.primary" align="center">
         {t('title')}
-      </Typography>
-      <Box sx={{
-        alignItems: 'start',
-        justifyContent: 'center',
-        display: 'grid',
-        gridTemplateColumns: {xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)'},
-        gap: 2,
-        mt: 2}}>
-        {permits && permits.map((permit, index) => (
-          <PermitListCard key={index} permit={permit} />
-        ))}
-        {permits.length == 0 && (
-        <Box>
+        </Typography>
+      </Box>
+      {(permits && permits.length > 0) && permits.map((permit, index) => (
+        <PermitListCard key={index} permit={permit} />
+      ))}
+      {permits.length == 0 && (
+        <Box sx={{display:'flex', justifyContent:'center', maxWdith:'800px', mt:2, width:'100%'}}>
           <Card 
             sx={{ 
               borderRadius: 3,
               boxShadow: 2,
               p: 2,
               border: '1px solid #ccc',
-              width: '100%'
+              width: {xs: '100%', sm:'90%', md:'75%'},
+              maxWidth:'800px'
             }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <HourglassEmptyIcon sx={{ color: theme.palette.secondary.main }} />
-                  <Typography variant='h6'>{t('noHistory')}</Typography>
-                </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <HourglassEmptyIcon sx={{ color: theme.palette.secondary.main }} />
+                <Typography variant='h6'>{t('noHistory')}</Typography>
               </Box>
-            </Card>
-          </Box>
-        )}
-      </Box>
+            </Box>
+          </Card>
+        </Box>
+      )}
     </Box>
   );
 }

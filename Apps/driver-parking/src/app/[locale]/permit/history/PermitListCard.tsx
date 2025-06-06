@@ -13,15 +13,16 @@ const PermitListCard = ({ permit }: { permit: Permit }) => {
   const t = useTranslations("permit_history");
 
   return (
-                          <Fade in={true} timeout={500}>
+  <Fade in={true} timeout={500}>
     <Box
       sx={{
         bgcolor: 'background.paper',
-        width: { xs: "100%", sm: "400px" },
+        width: { xs: "95%", sm: "400px" },
         borderRadius: 3,
         boxShadow: 2,
         border: "1px solid #ccc",
         mx: "auto",
+        my: 2,
       }}
     >
       <CardContent>

@@ -96,7 +96,8 @@ export default function TicketList() {
               boxShadow: 2,
               p: 2,
               border: '1px solid #ccc',
-              width: '100%'
+              width: '100%',
+              maxWidth:'800px'
             }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

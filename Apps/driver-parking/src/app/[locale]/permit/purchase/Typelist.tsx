@@ -52,10 +52,8 @@ const classes = permitTypeList.reduce((array, permit) => {
 }, {} as Record<string, PermitType[]>)
 
   return (
-                              <Fade in={true} timeout={500}>
-
-
-    <Box sx={{ p: 1 }}>
+  <Fade in={true} timeout={500}>
+    <Box sx={{ p: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection:'column', width:'100%'}}>
       {!dataFetched && (
         <Box
           sx={{
@@ -74,26 +72,28 @@ const classes = permitTypeList.reduce((array, permit) => {
         </Box>
       )}
 
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 2}}>
-          <CreditCardIcon fontSize='large' />
-          <Typography variant="h4">
-            {t('permits')}
-          </Typography>
-        </Box>
-      {Object.entries(classes).map(([permitClass, permits]) => (
-        <Accordion key={permitClass}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h6" component="div">
-              {t(permitClass)}
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            {permits.map((permit) => (
-                <PermitCard key={`${permit.type} - ${permit.permitClass}`} permit={permit} vehicle={vehicle}/>
-            ))}
-          </AccordionDetails>
-        </Accordion>
-      ))}
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 2}}>
+        <CreditCardIcon fontSize='large' />
+        <Typography variant="h4">
+          {t('permits')}
+        </Typography>
+      </Box>
+      <Box sx={{width:'100%', maxWidth:'800px'}}>
+        {Object.entries(classes).map(([permitClass, permits]) => (
+          <Accordion key={permitClass}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography variant="h6" component="div">
+                {t(permitClass)}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {permits.map((permit) => (
+                  <PermitCard key={`${permit.type} - ${permit.permitClass}`} permit={permit} vehicle={vehicle}/>
+              ))}
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </Box>
     </Box>
 </Fade>
   )
