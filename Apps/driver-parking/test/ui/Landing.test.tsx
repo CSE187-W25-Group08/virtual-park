@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { testLots } from '../testData'
 import Landing from '../../src/app/landing/Landing'
-import { logout } from '../../src/app/[locale]/login/action'
 import { landing as landingMessages } from '../../messages/en.json'
 
 beforeEach(() => {
@@ -23,8 +22,6 @@ vi.mock('next/navigation', () => ({
 vi.mock('../../src/app/[locale]/login/action', () => ({
   logout: vi.fn()
 }))
-
-const mockLogout = logout as ReturnType<typeof vi.fn>
 
 const renderWithIntl = (component: React.ReactElement) => {
   return render(
@@ -84,14 +81,11 @@ it('mocks clicking signup button', async () => {
   expect(mockPush).toHaveBeenCalledWith('/signup')
 })
 
-// it('mocks clicking logout button', () => {
-//   Object.defineProperty(window, 'location', {
-//     configurable: true,
-//     value: { reload: vi.fn() }
-//   })
-//   window.sessionStorage.setItem('name', 'Test User')
-//   renderWithIntl(<Landing />)
-//   const logoutButton = screen.getByText('Logout')
-//   fireEvent.click(logoutButton)
-//   expect(mockLogout).toHaveBeenCalled()
-// })
+it('clicking logo redirects to /', async () => {
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  renderWithIntl(<Landing />)
+  const logo = await screen.getByAltText('Virtual Park Logo')
+  fireEvent.click(logo)
+  expect(mockPush).toHaveBeenCalledWith('/')
+})
