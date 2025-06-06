@@ -144,6 +144,30 @@ export async function getValidPermit(cookie: string | undefined): Promise<Permit
   })
 }
 
+export async function getFuturePermit(cookie: string | undefined): Promise<Permit[] | null> {
+  return new Promise((resolve, reject) => {
+    fetch('http://localhost:4000/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookie}`,
+      },
+      body: JSON.stringify({ query: `{futurePermit {issueDate, expDate, type, price, permitClass}}` }),
+    })
+      .then(response => {
+        if (response.status != 200) {
+          reject('Unauthorized')
+        }
+        return response.json()
+      }
+      )
+      .then(json => {
+        resolve(json.data.futurePermit)
+      })
+      .catch((error) => reject(error))
+  })
+}
+
 
 export async function issuePermit(permitTypeId: string, vehicleId: string, cookie: string | undefined): Promise<PermitIssue | null> {
   return new Promise((resolve, reject) => {
