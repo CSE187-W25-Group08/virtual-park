@@ -146,7 +146,8 @@
     "unpaidTickets": "You have {count} unpaid tickets.",
     "payTickets": "Pay Tickets",
     "buyDailyRemote": "Buy Daily: Remote",
-    "buyDailyMotorcycle": "Buy Daily: Motorcycle"
+    "buyDailyMotorcycle": "Buy Daily: Motorcycle",
+    "futurePermit": "Future Permits"
   },
   "labels": {
     "cancel": "Cancel",

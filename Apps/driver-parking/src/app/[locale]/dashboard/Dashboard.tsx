@@ -22,7 +22,7 @@ import PermitListCard from "../permit/history/PermitListCard"
 import { Ticket } from "@/ticket"
 import { listUnpaid } from "../ticket/actions"
 import { Permit, PermitType } from "@/permit"
-import { getActivePermit, getDailyPermitType } from "../dashboard/actions"
+import { getActivePermit, getUserFuturePermit, getDailyPermitType } from "../dashboard/actions"
 import { Vehicle } from '@/register'
 import { getPrimaryVehicle } from '../register/actions'
 import { createCheckout } from '@/stripe/helper'
@@ -30,6 +30,7 @@ import { createCheckout } from '@/stripe/helper'
 export default function Dashboard() {
   const [unpaidTickets, setUnpaidTickets] = useState<Ticket[]>([])
   const [activePermits, setActivePermits] = useState<Permit[]>([])
+  const [futurePermits, setFuturePermits] = useState<Permit[]>([])
   const [vehicle, setVehicle] = useState<Vehicle | null>(null)
   const [dailyPermitType, setDailyPermitType] = useState<PermitType | null>(null)
   const [registerModalOpen, setRegisterModalOpen] = useState(false)
@@ -43,11 +44,15 @@ export default function Dashboard() {
     const fetchData = async () => {
       const result = await listUnpaid()
       const activePermits = await getActivePermit()
+      const futurePermits = await getUserFuturePermit()
       if (result) {
         setUnpaidTickets(result)
       }
       if (activePermits) {
         setActivePermits(activePermits)
+      }
+      if (futurePermits) {
+        setFuturePermits(futurePermits)
       }
       const vehicle = await getPrimaryVehicle()
       if (vehicle) {
@@ -168,7 +173,7 @@ export default function Dashboard() {
             // display: 'grid',
             // gridTemplateColumns: {xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)'},
             gap: 2,
-            mt: 2, width: '100%'}}>
+            mt: 2, mb: 1, width: '100%'}}>
             {activePermits.map((permit, index) => (
               <PermitListCard key={index} permit={permit} />
             ))}
@@ -226,6 +231,30 @@ export default function Dashboard() {
           </Card>
         )}
       </Box>
+      
+      {futurePermits.length > 0 && (
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 2, m:1}}>
+          <Divider color={theme.palette.secondary.main} sx={{ width: "95%", mt:2, mb:2 }}/>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1}}>
+            <VerifiedIcon fontSize='large' />
+            <Typography variant="h4">
+              {t('futurePermit')}
+            </Typography>
+          </Box>
+          <Box sx={{
+            display:'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // display: 'grid',
+            // gridTemplateColumns: {xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)'},
+            gap: 2,
+            mt: 2, width: '100%'}}>
+            {futurePermits.map((permit, index) => (
+              <PermitListCard key={index} permit={permit} />
+            ))}
+          </Box>
+        </Box>
+      )}
 
       <Modal open={registerModalOpen} onClose={handleRegisterModalClose}>
         <Paper
