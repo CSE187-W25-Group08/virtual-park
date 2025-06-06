@@ -48,3 +48,28 @@ test('"this works" command returns correctly', async () => {
       expect(res.body).toEqual('this works')
     })
 })
+
+test('Returns false for a plate without permit', async () => {
+  await supertest(server)
+    .get('/api/v0/police/permit?plate=ZZZ123Z')
+    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .then((res) => {
+      expect(res.body).toEqual(false)
+    })
+})
+
+test('Returns true for a plate with a permit', async () => {
+  await supertest(server)
+    .get('/api/v0/police/permit?plate=123BC4A')
+    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .then((res) => {
+      expect(res.body).toEqual(true)
+    })
+})
+
+test('Rejects permit check when no plate is given', async () => {
+  await supertest(server)
+    .get('/api/v0/police/permit')
+    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .expect(400)
+})
