@@ -32,7 +32,7 @@ vehicleID: string | '';
 success: (ticketId: string) => void;
 error: (errorMessage: string) => void;
 LotName: string;
-LotID: string | '';
+LotID:string | '';
 ticketPrice: number;
-plate: string;
+plate: string
 }

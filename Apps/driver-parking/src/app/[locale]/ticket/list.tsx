@@ -50,16 +50,11 @@ export default function TicketList() {
         justifyContent: 'space-between',
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: { md: 2 }, mb: { xs: 1, md: 2 }}}>
         {type === 'unpaid' && <ErrorOutlineIcon fontSize='large' color="error" />}
         {type === 'appeal' && <GavelIcon fontSize='large' color="warning" />}
         {type === 'paid' && <CheckCircleOutlineIcon fontSize='large' color="success" />}
         <Typography variant="h4">{title}</Typography>
-
-
-
-
-
       </Box>
     </Box>
   )

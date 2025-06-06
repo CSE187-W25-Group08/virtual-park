@@ -80,7 +80,7 @@ export default function Landing() {
             <Typography>{t("about")}</Typography>
           </Link>
         </Box>
-         <LocaleSwitcher />
+         <LocaleSwitcher bottom />
       </Box>
     </Box>
   )

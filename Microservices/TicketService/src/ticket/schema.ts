@@ -13,10 +13,10 @@ export class Ticket {
     due: string,
     issue: string,
     violation: string,
-    image: string,
     cost: number,
     appeal: string,
     appealReason: string,
+    image?: string,
   ) {
     this.id = id;
     this.vehicle = vehicle;
@@ -27,7 +27,7 @@ export class Ticket {
     this.due = due;
     this.issue = issue;
     this.violation = violation;
-    this.image = image;
+    this.image = image || '';
     this.cost = cost;
     this.appeal = appeal;
     this.appealReason = appealReason;
@@ -63,8 +63,8 @@ export class Ticket {
   @Field()
   violation!: string;
 
-  @Field()
-  image!: string;
+  @Field({nullable: true})
+  image?: string;
 
   @Field()
   @IsNumber()

@@ -115,8 +115,8 @@ VALUES (
     'due', (NOW() + INTERVAL '3 weeks')::text,
     'issue', NOW()::text,
     'violation', $7::text,
-    'image', $8::text,
-    'cost', $9::numeric,
+    'cost', $8::numeric,
+    'image', $9::text,
     'appeal', 'null'
   )
 )
