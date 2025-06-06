@@ -6,13 +6,21 @@ import { NextIntlClientProvider } from 'next-intl';
 import Dashboard from '../../src/app/[locale]/dashboard/Dashboard';
 import { dashboard as dashboardMessages } from '../../messages/en.json';
 import { permit_history as permitHistoryMessages } from '../../messages/en.json';
-import { getActivePermit, getDailyPermitType } from '../../src/app/[locale]/dashboard/actions';
+import { getActivePermit, getDailyPermitType, getUserFuturePermit } from '../../src/app/[locale]/dashboard/actions';
 import { getPrimaryVehicle } from '@/app/[locale]/register/actions';
 import { testMotorcycle, testVehicle2 } from '../testData';
+import { getFuturePermit } from '../../src/permit/service';
+import * as stripeActions from '../../src/app/[locale]/stripe/action'
+import { redirect } from 'next/navigation'
 
-vi.mock('next/navigation', () => ({
-  useRouter: vi.fn(),
-}));
+vi.mock('next/navigation', async () => {
+  const actual = await vi.importActual<typeof import('next/navigation')>('next/navigation')
+  return {
+    ...actual,
+    useRouter: vi.fn(),
+    redirect: vi.fn(), // <-- the redirect mock goes here
+  }
+})
 
 vi.mock('../../src/app/[locale]/ticket/actions', () => ({
   listUnpaid: vi.fn(),
@@ -144,10 +152,12 @@ it('Mobile: Renders the Buy Daily Motorcycle Permit button', async () => {
   }));
   vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
     getActivePermit: vi.fn(),
-    getDailyPermitType: vi.fn()
+    getDailyPermitType: vi.fn(),
+    getUserFuturePermit: vi.fn()
   }));
 
   vi.mocked(getActivePermit).mockResolvedValue([])
+  vi.mocked(getUserFuturePermit).mockResolvedValue([])
   vi.mocked(getPrimaryVehicle).mockResolvedValue(testMotorcycle)
   vi.mocked(getDailyPermitType).mockResolvedValue(
     {
@@ -160,7 +170,7 @@ it('Mobile: Renders the Buy Daily Motorcycle Permit button', async () => {
 
   renderWithIntl(<Dashboard />)
 
-  await screen.findByText(/Buy Daily Permit: Motorcycle/)
+  await screen.findByText(/Buy Daily: Motorcycle/)
 })
 
 it('Mobile: Renders the Buy Daily Remote Permit button', async () => {
@@ -177,10 +187,12 @@ it('Mobile: Renders the Buy Daily Remote Permit button', async () => {
   }));
   vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
     getActivePermit: vi.fn(),
-    getDailyPermitType: vi.fn()
+    getDailyPermitType: vi.fn(),
+    getUserFuturePermit: vi.fn()
   }));
 
   vi.mocked(getActivePermit).mockResolvedValue([])
+  vi.mocked(getUserFuturePermit).mockResolvedValue([])
   vi.mocked(getPrimaryVehicle).mockResolvedValue(testVehicle2)
   vi.mocked(getDailyPermitType).mockResolvedValue(
     {
@@ -193,5 +205,45 @@ it('Mobile: Renders the Buy Daily Remote Permit button', async () => {
 
   renderWithIntl(<Dashboard />)
 
-  await screen.findByText(/Buy Daily Permit: Remote/)
+  await screen.findByText(/Buy Daily: Remote/)
+})
+
+
+it('Mobile: Can Buy Daily Remote Permit', async () => {
+  vi.mock('@mui/material', async () => {
+    const actual = await vi.importActual('@mui/material')
+    return {
+      ...actual,
+      useMediaQuery: () => true
+    }
+  })
+
+  vi.mock('../../src/app/[locale]/register/actions', () => ({
+    getPrimaryVehicle: vi.fn()
+  }));
+  vi.mock('../../src/app/[locale]/dashboard/actions', () => ({
+    getActivePermit: vi.fn(),
+    getDailyPermitType: vi.fn(),
+    getUserFuturePermit: vi.fn()
+  }));
+
+  vi.mocked(getActivePermit).mockResolvedValue([])
+  vi.mocked(getUserFuturePermit).mockResolvedValue([])
+  vi.mocked(getPrimaryVehicle).mockResolvedValue(testVehicle2)
+  vi.mocked(getDailyPermitType).mockResolvedValue(
+    {
+      id: 'p1',
+      type: 'Daily',
+      price: 6.00,
+      permitClass: 'Remote'
+    }
+  )
+  const mockUrl = 'https://stripe.com/checkout-session'
+  vi.spyOn(stripeActions, 'getCheckoutSessionUrlAction').mockResolvedValue(mockUrl)
+
+  renderWithIntl(<Dashboard />)
+
+  
+  const buyButton = await screen.findByText(/Buy Daily: Remote/)
+  fireEvent.click(buyButton)
 })
