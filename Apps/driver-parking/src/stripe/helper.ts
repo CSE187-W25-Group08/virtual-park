@@ -34,8 +34,8 @@ const createCheckout = async (name: string, amount: number, metadata: Record<str
   const successUrl = dynamicUrls.successUrl;
   const cancelUrl = dynamicUrls.cancelUrl;
   const url = await getCheckoutSessionUrlAction(amountInCents, name, metadata, successUrl, cancelUrl)
-  console.log(url)
   if (url) {
+    console.log("calls redirect")
     redirect(url)
   }
 };
