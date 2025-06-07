@@ -42,8 +42,8 @@ it('should set driverID and vehicleID when no permits found but driver exists', 
   ])
 
   render(<PermitPage />)
-
-  const lotDropdown = screen.getByRole('combobox', { name: /lot/i })
+  /* reference: https://dev.to/marktnoonan/why-i-rarely-use-getbyrole-testing-library-and-the-first-rule-of-aria-4581 */
+  const lotDropdown = screen.getByRole('combobox', {name: 'Current Parking Lot'})
   await userEvent.click(lotDropdown)
   
   await waitFor(() => {
@@ -53,7 +53,6 @@ it('should set driverID and vehicleID when no permits found but driver exists', 
   
   const plateInput = screen.getByPlaceholderText('Enter car plate number')
   await userEvent.type(plateInput, '1BC3')
-
   
   const searchButton = screen.getByText('Search')
   await userEvent.click(searchButton)
