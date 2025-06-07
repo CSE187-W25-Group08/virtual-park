@@ -2,8 +2,9 @@ import { it, afterEach, vi, expect, beforeEach } from 'vitest'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
-import Marketing from '../../src/app/landing/Marketing'
+import Marketing from '../../src/app/[locale]/landing/Marketing'
 import { landing as landingMessages } from '../../messages/en.json'
+import {marketing as marketingMessages } from '../../messages/en.json'
 
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn())
@@ -24,7 +25,7 @@ vi.mock('../../src/app/[locale]/login/action', () => ({
 
 const renderWithIntl = (component: React.ReactElement) => {
   return render(
-    <NextIntlClientProvider locale="en" messages={{ landing: landingMessages }}>
+    <NextIntlClientProvider locale="en" messages={{ landing: landingMessages, marketing: marketingMessages}}>
       {component}
     </NextIntlClientProvider>
   )

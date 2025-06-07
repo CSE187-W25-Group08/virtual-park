@@ -3,7 +3,7 @@ import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { testLots } from '../testData'
-import Landing from '../../src/app/landing/Landing'
+import Landing from '../../src/app/[locale]/landing/Landing'
 import { landing as landingMessages } from '../../messages/en.json'
 
 beforeEach(() => {
