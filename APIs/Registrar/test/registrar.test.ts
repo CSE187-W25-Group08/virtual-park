@@ -26,7 +26,7 @@ beforeAll(async () => {
 afterAll(() => {
   server.close()
 })
-const apiKey = process.env.REGISTRAR_API_KEY;
+const apiKey = "nVSui82nregistar8FHnFh38";
 
 test('User has 0 unpaid tickets', async () => {
   const email ='matt@books.com';

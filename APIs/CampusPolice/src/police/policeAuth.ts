@@ -14,7 +14,7 @@ export function expressAuthentication(request: Request): Promise<boolean> {
       ? authHeader.split(" ")[1]
       : authHeader;
 
-    if (apiKey === process.env.POLICE_API_KEY) {
+    if (apiKey === "cn798J2policeCmn27HarrisnvwAS") {
       return resolve(true);
     } else {
       const error = new Error("Invalid API key");

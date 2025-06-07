@@ -52,14 +52,14 @@ test('Rejects requests with the wrong API key', async () => {
 test('404 response for a non-existent route', async () => {
   await supertest(server)
     .get('/api/v0/police/fakeRoute')
-    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .set('Authorization', 'Bearer ' + "cn798J2policeCmn27HarrisnvwAS")
     .expect(404)
 })
 
 test('"this works" command returns correctly', async () => {
   await supertest(server)
     .get('/api/v0/police/test')
-    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .set('Authorization', 'Bearer ' + "cn798J2policeCmn27HarrisnvwAS")
     .then((res) => {
       expect(res.body).toEqual('this works')
     })
@@ -68,7 +68,7 @@ test('"this works" command returns correctly', async () => {
 test('Returns false for a plate without permit', async () => {
   await supertest(server)
     .get('/api/v0/police/permit?plate=ZZZ123Z')
-    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .set('Authorization', 'Bearer ' + "cn798J2policeCmn27HarrisnvwAS")
     .then((res) => {
       expect(res.body).toEqual(false)
     })
@@ -77,7 +77,7 @@ test('Returns false for a plate without permit', async () => {
 test('Returns true for a plate with a permit', async () => {
   await supertest(server)
     .get('/api/v0/police/permit?plate=123BC4A')
-    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .set('Authorization', 'Bearer ' + "cn798J2policeCmn27HarrisnvwAS")
     .then((res) => {
       expect(res.body).toEqual(true)
     })
@@ -86,7 +86,7 @@ test('Returns true for a plate with a permit', async () => {
 test('Returns false for a plate with expired permit', async () => {
   await supertest(server)
     .get('/api/v0/police/permit?plate=7ZJN054')
-    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .set('Authorization', 'Bearer ' + "cn798J2policeCmn27HarrisnvwAS")
     .then((res) => {
       expect(res.body).toEqual(false)
     })
@@ -95,6 +95,6 @@ test('Returns false for a plate with expired permit', async () => {
 test('Rejects permit check when no plate is given', async () => {
   await supertest(server)
     .get('/api/v0/police/permit')
-    .set('Authorization', 'Bearer ' + process.env.POLICE_API_KEY)
+    .set('Authorization', 'Bearer ' + "cn798J2policeCmn27HarrisnvwAS")
     .expect(400)
 })
