@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import RegisterVehiclesPage from '../../src/app/[locale]/register/page'
 import { RegisterService } from '../../src/register/service'
 import { vehicle as vehicleMessages } from '../../messages/en.json'
+import { ac } from 'vitest/dist/chunks/reporters.d.79o4mouw'
 
 // Mock router
 vi.mock('next/navigation', () => ({
@@ -43,7 +44,9 @@ const inputVehicle = {
     licensePlate: 'v123',
     make: 'toyota',
     model: 'corolla',
-    color: 'red'
+    color: 'red',
+    vehicleType: 'Car',
+    active: true,
 }
 
 

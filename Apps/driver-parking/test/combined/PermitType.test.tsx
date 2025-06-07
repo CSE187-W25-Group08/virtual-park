@@ -7,12 +7,6 @@ import { NextIntlClientProvider } from 'next-intl'
 
 import { purchase_permit as purchasePermitMessages } from '../../messages/en.json'
 import { getPermitType } from '../../src/permit/service'
-import * as stripeHelper from '../../src/stripe/helper';
-
-vi.mock('../../src/stripe/helper', () => ({
-  createCheckout: vi.fn(),
-}));
-
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -161,21 +155,6 @@ it('mocks purchasing an hourly permit', async () => {
               { id: '1', type: 'Daily', price: 5, permitClass: 'Remote', purchased: false },
               { id: '2', type: 'Month', price: 20, permitClass: 'Remote', purchased: false },
               { id: '3', type: 'Hourly', price: 2, permitClass: 'Visitor', purchased: false }
-            ],
-          },
-        }),
-      } as Response)
-    }
-
-    // Match permitsByDriver query
-    if (body.query.includes('permitsByDriver')) {
-      return Promise.resolve({
-        ok: true,
-        status: 200,
-        json: () => Promise.resolve({
-          data: {
-            permitsByDriver: [
-              { id: '101', type: 'Daily', price: 5, issueDate: '2024-01-01', expDate: '2099-01-01', permitClass: 'Remote' },
             ],
           },
         }),

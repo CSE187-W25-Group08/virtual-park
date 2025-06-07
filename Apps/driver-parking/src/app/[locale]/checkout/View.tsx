@@ -15,7 +15,7 @@ import { useTranslations } from "next-intl";
 import {} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-export default function View({
+export default function Checkout({
   type,
   amount,
   status,
