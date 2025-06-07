@@ -27,11 +27,10 @@ export class PoliceController extends Controller {
   @Response('401', 'Unauthorized')
   @SuccessResponse('200', 'Permit Response')
   public async checkPermit(
-    @Query() licensePlate: string
+    @Query() plate: string
   ): Promise<boolean> {
-    return new PoliceService().checkPermitFromPlate(licensePlate)
+    return new PoliceService().checkPermitFromPlate(plate)
       .then(async (permits: Permit[]): Promise<boolean> => {
-
         if (permits.length > 0) {
           const validPermit = permits.filter(permit => permit.isValid)
           if (validPermit.length > 0) {

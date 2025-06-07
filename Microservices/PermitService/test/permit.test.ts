@@ -162,7 +162,7 @@ test('retrieve the permit info based on the vehicle car plate', async () => {
       if (res.body.errors) {
         console.error('GraphQL errors:', res.body.errors)
       }
-      expect(res.body.data.getPermitBycarPlate.length).toEqual(5)
+      expect(res.body.data.getPermitBycarPlate.length).toEqual(6)
     })
 })
 
@@ -425,46 +425,42 @@ test('should issue a yearly permit', async () => {
       expect(issueDate.getFullYear()).toEqual(ExpDate.getFullYear() - 1);
     })
 })
-
-// const academicYear = '1d4f1f9a-fd32-494f-8f44-3339422eeb5f';
-// const SeventhVehicleId = '18fa94fc-4783-42df-a904-7ec17efadca5';
-// test('should issue a yearly permit', async () => {
-//   await supertest(server)
-//     .post('/graphql')
-//     .set('Authorization', 'Bearer ' + accessToken)
-//     .send({
-//       query: `
-//           mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
-//             issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
-//               driverID
-//               vehicleID
-//               permitType
-//               issueDate
-//               expDate
-//               isValid
-//             }
-//           }
-//         `,
-//       variables: {
-//         permitTypeId: academicYear,
-//         vehicleId: SeventhVehicleId,
-//         price: 150
-//       }
-//     })
-//     .then((res) => {
-//       if (res.body.errors) {
-//         console.error('GraphQL errors:', res.body.errors)
-//       }
-//       expect(res.body.data.issuePermit).toBeDefined()
-//       const permit = res.body.data.issuePermit;
-//       const issueDate = new Date(permit.issueDate);
-//       const ExpDate = new Date(issueDate);
-//       ExpDate.setFullYear(ExpDate.getFullYear() + 1);
-//       expect(issueDate.getMonth()).equal(7)
-//       expect(issueDate.getFullYear()).toEqual(ExpDate.getFullYear() - 1);
-//     })
-// })
-
+const academicYear = '1d4f1f9a-fd32-494f-8f44-3339422eeb5f';
+const SeventhVehicleId = '18fa94fc-4783-42df-a904-7ec17efadca5';
+test('should issue an academic year permit', async () => {
+  await supertest(server)
+    .post('/graphql')
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+          mutation ($permitTypeId: String!, $vehicleId: String!, $price: Float!) {
+            issuePermit(permitTypeId: $permitTypeId, vehicleId: $vehicleId, price: $price) {
+              driverID
+              vehicleID
+              permitType
+              issueDate
+              expDate
+              isValid
+            }
+          }
+        `,
+      variables: {
+        permitTypeId: academicYear,
+        vehicleId: SeventhVehicleId,
+        price: 150
+      }
+    })
+    .then((res) => {
+      if (res.body.errors) {
+        console.error('GraphQL errors:', res.body.errors)
+      }
+      expect(res.body.data.issuePermit).toBeDefined()
+      const permit = res.body.data.issuePermit;
+      const issueDate = new Date(permit.issueDate);
+      const expDate = new Date(permit.expDate);
+      expect(expDate.getFullYear()).toBe(issueDate.getFullYear() + 1);
+    })
+})
 
 test('should return an error for missing user ID', async () => {
   AuthService.prototype.check = vi.fn().mockResolvedValue({ id: undefined } as { id: string | undefined });

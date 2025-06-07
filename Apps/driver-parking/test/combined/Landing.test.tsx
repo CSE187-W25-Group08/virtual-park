@@ -1,8 +1,6 @@
 import { it, afterEach, vi, expect, beforeEach } from 'vitest' 
 import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { useRouter } from 'next/navigation'
-import { cookies } from 'next/headers'
 import { testLots } from '../testData'
 import { NextIntlClientProvider } from 'next-intl'
 import HomePage from '../../src/app/[locale]/page'
@@ -142,24 +140,3 @@ it('shows "No lots available" when search has no match', async () => {
   await userEvent.type(input, 'Nonexistent Lot');
   await screen.findByText('No lots found')
 });
-
-// it('Lots fetch fails case', async () => {
-//   vi.mocked(fetch).mockImplementation((url, options) => {
-//     const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}
-//     const query = body.query || ''
-//     if (query.includes('getAll')) {
-//       return Promise.resolve({
-//         ok: true,
-//         status: 500,
-//         json: async () => ({
-//           data: { error : undefined }
-//         }),
-//       } as Response)
-//     }
-//     return Promise.reject(new Error('Unhandled GraphQL query'))
-//   }) as any
-//   renderWithIntl(<HomePage />);
-//   const input = await screen.findByLabelText('Search by lot name');
-//   await userEvent.click(input);
-//   await screen.findByText('No lots found')
-// });

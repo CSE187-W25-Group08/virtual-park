@@ -117,6 +117,7 @@ export default function PermitCard({ permit, vehicle }: PermitCardProps) {
             <Button
               onClick={handleClick}
               disabled={permit.purchased}
+              aria-label={`Buy ${permit.permitClass} ${permit.type} Permit`}
               variant="contained"
               color="primary"
               sx={{ borderRadius: 2 }}

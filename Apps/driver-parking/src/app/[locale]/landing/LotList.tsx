@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Box, TextField, Autocomplete, ListItemIcon, ListItem, ListItemText} from '@mui/material';
 import { useTranslations } from "next-intl";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { getLots } from '../[locale]/lot/action';
+import { getLots } from '../lot/action';
 import { Lot } from '@/lot';
 import LotDetails from './LotDetails';
 export default function LotList() {

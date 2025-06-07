@@ -19,15 +19,15 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useTheme, Theme } from "@mui/material/styles";
-
-import logo from "../public/img/sprite-logo.svg";
-import whitelogo from "../public/img/logo-white.svg";
-import hoody from "../public/img/Front.png";
-import marketcard from "../public/img/300.png";
-import cat from "../public/img/bg-desktop.png";
-// import catgif from "../public/img/loading-registrar.gif";
-import { logout } from "../[locale]/login/action";
-import MarketingList from "../[locale]/landing/MarketingList";
+import LocaleSwitcher from '../../languageSwitcher/LocaleSwitcher'
+import logo from "../../public/img/sprite-logo.svg";
+import whitelogo from "../../public/img/logo-white.svg";
+import hoody from "../../public/img/Front.png";
+import marketcard from "../../public/img/300.png";
+import cat from "../../public/img/bg-desktop.png";
+// import catgif from "../../public/img/loading-registrar.gif";
+import { logout } from "../login/action";
+import MarketingList from "./MarketingList";
 
 
 export default function Marketing() {
@@ -52,6 +52,9 @@ export default function Marketing() {
   const NavBarButtons = () => {
     return (
       <Box sx={{ display: "flex" }}>
+        <MenuItem sx={{color:'white'}}>
+          <LocaleSwitcher />
+        </MenuItem>
         {!isAuthenticated && [
           <MenuItem
             key="login"
@@ -197,7 +200,7 @@ export default function Marketing() {
             }}
           >
             <Typography variant="h5" sx={{ mt: 5, mb: 5 }}>
-              <strong>Our merch</strong>
+              <strong>{t("ourMerch")}</strong>
             </Typography>
           </Divider>
         </Box>
@@ -257,7 +260,7 @@ export default function Marketing() {
             sx={{ color: "white" }}
           ></AgricultureIcon>
           <Typography variant="h4" color="white">
-            <strong>Created By:</strong>
+            <strong>{t('createdBy')}</strong>
           </Typography>
           <AgricultureIcon
             fontSize="large"

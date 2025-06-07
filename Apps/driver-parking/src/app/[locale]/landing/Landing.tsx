@@ -2,7 +2,7 @@
 
 import {Box, Link, Typography} from '@mui/material'
 import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
-import LocaleSwitcher from '../languageSwitcher/LocaleSwitcher'
+import LocaleSwitcher from '../../languageSwitcher/LocaleSwitcher'
 import LotList from "./LotList"
 import TopNav from './TopNav'
 import ParkNow from './ParkNow'

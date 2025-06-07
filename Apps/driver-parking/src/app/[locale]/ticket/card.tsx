@@ -66,13 +66,12 @@ export default function TicketCard({ ticket }: { ticket: Ticket }) {
                                 <Fade in={true} timeout={500}>
     <ListItemButton 
       onClick={() => {handleClick(ticket.id)}}
-      sx={{ width: '100%', p: 0, mb: 2, maxWidth: '1000px' }}
+      sx={{ width: '100%', p: 0, mb: 2, maxWidth: '800px' }}
     >
     <Card 
       sx={{ 
         borderRadius: 3,
         boxShadow: 2,
-
         p: 2,
         border: '1px solid #ccc',
         width: '100%'

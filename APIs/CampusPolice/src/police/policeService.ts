@@ -2,11 +2,7 @@ import { Permit } from '.';
 
 export class PoliceService {
   public async hasValidAPIKey(): Promise<string> {
-      try {
-        return 'this works'
-      } catch {
-        return 'catch err';
-      }
+    return 'this works'
   }
 
   public async checkPermitFromPlate(licensePlate: string): Promise<Permit[]> {
@@ -15,12 +11,11 @@ export class PoliceService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.POLICE_API_KEY}`,
         },
         body: JSON.stringify({
           query: `
-            query GetPermitByCar($input: String!) {
-              getPermitBycarPlate(input: $input) {
+            query GetPermitByPlate($input: String!) {
+              getPermitByPlateAPI(input: $input) {
                 isValid
               }
             }
@@ -31,13 +26,10 @@ export class PoliceService {
         }),
       })
       .then(response => {
-        if (response.status !== 200) {
-          reject('Unauthorized')
-        }
         return response.json()
       })
       .then(json => {
-        resolve(json.data.getPermitBycarPlate)
+        resolve(json.data.getPermitByPlateAPI)
       })
       .catch((error) => reject(error))
     })

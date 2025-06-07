@@ -143,9 +143,9 @@ export default function Dashboard() {
           </Card>
         )}
         {unpaidTickets.length > 0 && (
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: 'center', marginTop: 2,  width: {xs:'100%', sm:'100%', md: '80%'},
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: 'center', justifyContent:'center', mt: 2,  width: {xs:'100%', sm:'100%', md: '80%'},
               }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1}}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:'center', gap: 1, mb: 1}}>
               <ErrorOutlineIcon color='error'/>
               <Typography variant="body1" color="error">
                 {t('unpaidTickets', { count: unpaidTickets.length })}
@@ -178,6 +178,7 @@ export default function Dashboard() {
             display:'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            flexDirection: 'column',
             // display: 'grid',
             // gridTemplateColumns: {xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)'},
             gap: 2,

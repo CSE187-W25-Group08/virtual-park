@@ -33,17 +33,16 @@ export default function PermitList() {
       </Box>
         {permits.length > 0 && (
           isMobile ? (
-            // ✅ Mobile view: single column
             permits.map((permit) => (
               <Box sx={{ my: 2 }} key={permit.id}>
                 <PermitListCard permit={permit} />
               </Box>
             ))
           ) : (
-            // ✅ Desktop view: grid layout
+            // MUI throws a fit for using old grid, but gridv2 layout looks wors
             <Grid container spacing={2} sx={{ mt: 2, justifyContent: 'center' }}>
               {permits.map((permit) => (
-                <Grid xs={12} sm={6} md={4} lg={3} key={permit.id}>
+                <Grid key={permit.id}>
                   <PermitListCard permit={permit} />
                 </Grid>
               ))}

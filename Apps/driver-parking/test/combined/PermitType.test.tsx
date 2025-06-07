@@ -7,6 +7,12 @@ import { NextIntlClientProvider } from 'next-intl'
 
 import { purchase_permit as purchasePermitMessages } from '../../messages/en.json'
 import { getPermitType } from '../../src/permit/service'
+import * as stripeHelper from '../../src/stripe/helper';
+
+vi.mock('../../src/stripe/helper', () => ({
+  createCheckout: vi.fn(),
+}));
+
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -120,4 +126,80 @@ it('getPermitType rejects and return authorized error', async () => {
   } as Response))
 
   await expect(getPermitType('invalidCookie')).rejects.toBe('Unauthorized')
+})
+
+it('mocks purchasing an hourly permit', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+  const mockPush = vi.fn()
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+
+  vi.mocked(fetch).mockImplementation((url, options) => {
+    const body = JSON.parse(options?.body as string)
+    if (body.query.includes('PermitType')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            PermitType: [
+              { id: '1', type: 'Daily', price: 5, permitClass: 'Remote' },
+              { id: '2', type: 'Month', price: 20, permitClass: 'Remote' },
+              { id: '3', type: 'Hourly', price: 2, permitClass: 'Visitor' }
+            ],
+          },
+        }),
+      } as Response)
+    }
+
+    if (body.query.includes('buyablePermits')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            buyablePermits: [
+              { id: '1', type: 'Daily', price: 5, permitClass: 'Remote', purchased: false },
+              { id: '2', type: 'Month', price: 20, permitClass: 'Remote', purchased: false },
+              { id: '3', type: 'Hourly', price: 2, permitClass: 'Visitor', purchased: false }
+            ],
+          },
+        }),
+      } as Response)
+    }
+
+    // Match permitsByDriver query
+    if (body.query.includes('permitsByDriver')) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({
+          data: {
+            permitsByDriver: [
+              { id: '101', type: 'Daily', price: 5, issueDate: '2024-01-01', expDate: '2099-01-01', permitClass: 'Remote' },
+            ],
+          },
+        }),
+      } as Response)
+    }
+
+    if (body.query.includes('primaryVehicle')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: () => Promise.resolve({
+        data: {
+          primaryVehicle: null, // or a mock object if needed
+        },
+      }),
+    } as Response)
+  }
+    return Promise.reject(new Error('Unknown GraphQL query'))
+  }) as typeof fetch
+
+  renderWithIntl(<TypePage />)
+  const visitorAccordion = await screen.findByText('Visitor')
+  await userEvent.click(visitorAccordion)
+  const hourlyPermitButton = await screen.findByLabelText('Buy Visitor Hourly Permit')
+  await userEvent.click(hourlyPermitButton)
+  // expect(stripeHelper.createCheckout).toHaveBeenCalled();
 })

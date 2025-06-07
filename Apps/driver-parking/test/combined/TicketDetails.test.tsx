@@ -2,10 +2,11 @@ import { it, vi, beforeEach, afterEach, expect} from 'vitest'
 import { render, screen, cleanup, fireEvent, waitFor} from '@testing-library/react'
 import { graphql, HttpResponse } from 'msw'
 import { NextIntlClientProvider } from 'next-intl'
+import { createCheckout } from '@/stripe/helper'
 
 import View from '../../src/app/[locale]/ticket/[ticketId]/View'
 import TicketList from '../../src/app/[locale]/ticket/list'
-import {ticketList, testTicket, testTicketAppealed, testVehicle} from '../testData'
+import {ticketList, testTicket, testTicketAppealed, testVehicle, testTicketRejected, testTicketUnknownAppeal, testTicketApproved} from '../testData'
 import {
   labels as labelMessages,
   ticket_details as ticketDetailsMessages,
@@ -13,6 +14,9 @@ import {
 } from '../../messages/en.json'
 import userEvent from '@testing-library/user-event'
 
+vi.mock('../../src/stripe/helper', () => ({
+  createCheckout: vi.fn(),
+}))
 const mockedPush = vi.fn()
 //const mockedRedirect = vi.fn();
 vi.mock('next/navigation', () => ({
@@ -299,9 +303,10 @@ it('Renders ticket pay button', async () => {
   await screen.findByText(/Pay Ticket/)
 })
 
-/*
 it('Can click ticket pay button', async () => {
-  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+    mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+      const mockCreateCheckout = vi.mocked(createCheckout)
+    mockCreateCheckout.mockResolvedValue(undefined)
 
   vi.stubGlobal('fetch', vi.fn((url, options) => {
     const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
@@ -323,22 +328,208 @@ it('Can click ticket pay button', async () => {
       });
     }
 
-    if (query.includes('createCheckoutSession')) {
-      return Promise.resolve({
-        ok: true,
-        status: 200,
-        json: async () => ({ data: { createCheckoutSession: 'url' } }),
-      });
-    }
-
     return Promise.reject(new Error('Unhandled GraphQL query'));
   }));
 
   renderWithIntl(<View ticketId={'t3'}/>)
-  const button = await screen.findByText(/Pay Ticket/)
-  fireEvent.click(button)
-  expect(mockedRedirect).toHaveBeenCalled()
+  const payButton = await screen.findByText(/Pay Ticket/)
+  fireEvent.click(payButton)
+
+
+
+    waitFor(() => {
+        expect(mockCreateCheckout).toHaveBeenCalled()
+})
 
 
 })
-*/
+
+
+
+it('Renders appealed submitted', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+
+  vi.stubGlobal('fetch', vi.fn((url, options) => {
+  const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
+  const query = body.query || '';
+
+  if (query.includes('getVehicleById')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { getVehicleById: testVehicle } }),
+    });
+  }
+
+  if (query.includes('ticketId')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { ticketId: testTicketAppealed } }),
+    });
+  }
+
+  if (query.includes('getUserInfo')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        data: {
+          getUserInfo: {
+            id: 'user-abc',
+            email: 'test@example.com',
+            name: 'Test User',
+          },
+        },
+      }),
+    } as Response);
+  }
+
+  return Promise.reject(new Error('Unhandled GraphQL query'));
+  }));
+
+
+  renderWithIntl(<View ticketId={'t3'}/>)
+  await screen.findByText(/submitted/)
+})
+
+it('Renders appealed rejected', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+
+  vi.stubGlobal('fetch', vi.fn((url, options) => {
+  const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
+  const query = body.query || '';
+
+  if (query.includes('getVehicleById')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { getVehicleById: testVehicle } }),
+    });
+  }
+
+  if (query.includes('ticketId')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { ticketId: testTicketRejected } }),
+    });
+  }
+
+  if (query.includes('getUserInfo')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        data: {
+          getUserInfo: {
+            id: 'user-abc',
+            email: 'test@example.com',
+            name: 'Test User',
+          },
+        },
+      }),
+    } as Response);
+  }
+
+  return Promise.reject(new Error('Unhandled GraphQL query'));
+  }));
+
+
+  renderWithIntl(<View ticketId={'t3'}/>)
+  await screen.findByText(/rejected/)
+})
+
+it('Renders appealed unknown', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+
+  vi.stubGlobal('fetch', vi.fn((url, options) => {
+  const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
+  const query = body.query || '';
+
+  if (query.includes('getVehicleById')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { getVehicleById: testVehicle } }),
+    });
+  }
+
+  if (query.includes('ticketId')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { ticketId: testTicketUnknownAppeal } }),
+    });
+  }
+
+  if (query.includes('getUserInfo')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        data: {
+          getUserInfo: {
+            id: 'user-abc',
+            email: 'test@example.com',
+            name: 'Test User',
+          },
+        },
+      }),
+    } as Response);
+  }
+
+  return Promise.reject(new Error('Unhandled GraphQL query'));
+  }));
+
+
+  renderWithIntl(<View ticketId={'t3'}/>)
+  await screen.findByText(/Appeal Status:/)
+})
+
+it('Renders appealed approved', async () => {
+  mockedGetCookies.mockReturnValue({ value: 'mock-session-token' })
+
+  vi.stubGlobal('fetch', vi.fn((url, options) => {
+  const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {};
+  const query = body.query || '';
+
+  if (query.includes('getVehicleById')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { getVehicleById: testVehicle } }),
+    });
+  }
+
+  if (query.includes('ticketId')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { ticketId: testTicketApproved } }),
+    });
+  }
+
+  if (query.includes('getUserInfo')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        data: {
+          getUserInfo: {
+            id: 'user-abc',
+            email: 'test@example.com',
+            name: 'Test User',
+          },
+        },
+      }),
+    } as Response);
+  }
+
+  return Promise.reject(new Error('Unhandled GraphQL query'));
+  }));
+
+
+  renderWithIntl(<View ticketId={'t3'}/>)
+  await screen.findByText(/Appeal Status:/)
+})
