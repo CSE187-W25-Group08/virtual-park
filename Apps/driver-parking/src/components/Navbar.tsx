@@ -46,7 +46,7 @@ export default function Navbar() {
         <Toolbar>
           <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <picture><img width={30} height={30} src={logo.src} alt="virtual park logo" /></picture>
+              <picture style={{margin: '0', padding: '0', height: 30, width: 30}}><img width={30} height={30} src={logo.src} alt="virtual park logo" /></picture>
               <Typography variant="h6" component="div">
                 {t('title')}
               </Typography>

@@ -82,6 +82,7 @@ it('mocks clicking signup button', async () => {
 })
 
 it('clicking logo redirects to /', async () => {
+  mockLotsFetch()
   const mockPush = vi.fn()
   vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
   renderWithIntl(<Landing />)
