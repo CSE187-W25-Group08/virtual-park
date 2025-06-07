@@ -15,6 +15,7 @@ vi.spyOn(actions, 'registerVehicle').mockResolvedValue({
   color: 'Silver',
   driver: 'some-driver-id',
   active: true,
+  vehicleType: 'Car',
 })
 
 afterEach(() => {
