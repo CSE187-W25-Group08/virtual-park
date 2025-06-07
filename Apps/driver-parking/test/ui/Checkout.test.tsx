@@ -9,6 +9,8 @@ vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
 }));
 
+window.scrollTo = vi.fn();
+
 afterEach(() => {
   cleanup()
   vi.restoreAllMocks()
