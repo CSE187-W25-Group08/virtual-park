@@ -3,7 +3,7 @@ import supertest from 'supertest'
 import * as http from 'http'
 import * as db from './db'
 import { app, bootstrap } from '../src/app'
-
+// https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
 // mock auth service
 const authserviceMock = vi.fn()
 vi.mock('../src/auth/service', () => {

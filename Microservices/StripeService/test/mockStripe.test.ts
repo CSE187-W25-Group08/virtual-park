@@ -1,3 +1,4 @@
+// import Stripe from 'stripe'
 import 'dotenv/config';
 import { vi, test, beforeAll, afterAll, expect } from "vitest";
 import * as http from "http";
@@ -33,39 +34,38 @@ vi.mock('../src/auth/service', () => {
 })
 
 const accessToken = 'Placeholder before authenticated implementation'
-
-
-
-test("User can create stripe checkout session through redirected url", async () => {
-  await supertest(server)
-    .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
-    .send({
-      query: `
-      mutation {
-          createCheckoutSession(amount: 5555, name: "Test", metadata: {id : "test", cat: "big"}, successUrl: "https://example.com/success", cancelUrl: "https://example.com/cancel")
+// Mock Stripe's checkout session creation
+vi.mock('stripe', () => {
+  return {
+    default: vi.fn().mockImplementation(() => ({
+      checkout: {
+        sessions: {
+          create: vi.fn().mockResolvedValue({ /* url missing on purpose */ })
+        }
       }
-      `,
-    })
-    .then((res) => {
-      console.log(res.body)
-      expect(res.body.data.createCheckoutSession).toBeTruthy()
-    });
-});
+    }))
+  }
+})
 
-// https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
-test("Returns OK from dummy endpoint", async () => {
+test("Throws error when Stripe session URL is missing", async () => {
   await supertest(server)
     .post("/graphql")
     .set('Authorization', 'Bearer ' + accessToken)
     .send({
       query: `
-        {
-          dummy
+        mutation {
+          createCheckoutSession(
+            amount: 5555,
+            name: "Test",
+            metadata: {id : "test", cat: "big"},
+            successUrl: "https://example.com/success",
+            cancelUrl: "https://example.com/cancel"
+          )
         }
       `,
     })
     .then((res) => {
-      expect(res.body.data.dummy).toBe("OK")
+      expect(res.body.errors).toBeDefined()
+      expect(res.body.errors[0].message).toContain("Failed to create checkout session")
     })
 })

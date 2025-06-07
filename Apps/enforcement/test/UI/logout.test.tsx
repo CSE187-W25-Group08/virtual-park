@@ -38,7 +38,25 @@ afterEach(() => {
   cleanup()
 })
 
+const mockLotsFetch = () => {
+  vi.mocked(fetch).mockImplementation((url, options) => {
+  const body = typeof options?.body === 'string' ? JSON.parse(options.body) : {}
+  const query = body.query || ''
+  if (query.includes('getAll')) {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        data: { getAll: []}
+      }),
+    } as Response)
+  }
+  return Promise.reject(new Error('Unhandled GraphQL query'))
+  }) as any
+}
+
 it('should handle logout button click and redirect', async () => {
+  mockLotsFetch();
   const loginActions = await import('../../src/app/login/action')
   const mockLogout = vi.fn().mockResolvedValue(undefined)
   loginActions.logout = mockLogout
