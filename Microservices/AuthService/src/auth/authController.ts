@@ -175,9 +175,9 @@ export class AuthController extends Controller {
     const requester = request.user as SessionUser;
     if (requester.roles?.includes('driver')) {
       const user = await new AuthService().getUserById(requester.id);
-      if (!user) {
-        this.setStatus(404);
-      }
+      // if (!user) {
+      //   this.setStatus(404);
+      // }
       return user;
     } else {
       this.setStatus(401);
@@ -190,11 +190,11 @@ export class AuthController extends Controller {
   @Response('404', 'User not found')
   @SuccessResponse('200', 'User id found')
   public async getIdFromEmail(
-      @Query() email: string
+    @Query() email: string
   ): Promise<string | undefined> {
-      const user = await new AuthService().getUserIdByEmail(email);
-      return user;
-    
+    const user = await new AuthService().getUserIdByEmail(email);
+    return user;
+
   }
 
 

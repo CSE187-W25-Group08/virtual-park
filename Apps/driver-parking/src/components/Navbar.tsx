@@ -22,7 +22,6 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import LocaleSwitcher from '../../src/app/languageSwitcher/LocaleSwitcher';
 import logo from '../../src/app/public/img/logo-white.svg';
 import { logout } from '@/app/[locale]/login/action';
