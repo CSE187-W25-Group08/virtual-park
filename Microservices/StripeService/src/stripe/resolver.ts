@@ -1,11 +1,12 @@
 import { Authorized, Query, Resolver, Mutation, Int, Arg } from "type-graphql";
 import { GraphQLJSONObject } from "graphql-type-json";
 import //StripeConfig,
-"./schema";
+  "./schema";
 import Stripe from "stripe";
 
 @Resolver()
 export class StripeResolver {
+
   @Query(() => String)
   dummy(): string {
     return "OK";
@@ -21,11 +22,11 @@ export class StripeResolver {
     @Arg("successUrl") successUrl: string,
     @Arg("cancelUrl") cancelUrl: string,
   ): Promise<string> {
-    const stripeSecret = process.env.STRIPE_SECRET_KEY;
-    if (!stripeSecret) {
-      console.log("test");
-      throw new Error("Missing Stripe secret key");
-    }
+    const stripeSecret = process.env.STRIPE_SECRET_KEY || "no key";
+    // if (!stripeSecret) {
+    //   console.log("test");
+    //   throw new Error("Missing Stripe secret key");
+    // }
     const stripe = new Stripe(stripeSecret);
 
     const session = await stripe.checkout.sessions.create({

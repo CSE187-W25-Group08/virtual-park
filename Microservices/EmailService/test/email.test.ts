@@ -273,3 +273,20 @@ test('sendTicketAppealAccepted logs error when Mailgun fails', async () => {
   expect(logSpy).toHaveBeenCalled();
   logSpy.mockRestore();
 });
+
+// https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
+test("Returns OK from dummy endpoint", async () => {
+  await supertest(server)
+    .post("/graphql")
+    .set('Authorization', 'Bearer ' + accessToken)
+    .send({
+      query: `
+        {
+          dummy
+        }
+      `,
+    })
+    .then((res) => {
+      expect(res.body.data.dummy).toBe("OK")
+    })
+})

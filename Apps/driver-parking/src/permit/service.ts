@@ -1,4 +1,8 @@
-import { Permit, PermitType, PermitIssue } from '.'
+import {
+  Permit,
+  PermitType,
+  // PermitIssue 
+} from '.'
 
 export async function getPermitByDriver(cookie: string | undefined): Promise<Permit[]> {
   return new Promise((resolve, reject) => {

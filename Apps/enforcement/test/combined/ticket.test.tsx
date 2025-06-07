@@ -258,7 +258,7 @@ it("issue ticket successfully", async () => {
   await userEvent.click(await screen.findByText('Issue Ticket'))
   
   const dialog = await screen.findByRole('dialog')
-  console.log(prettyDOM(dialog)) 
+  // console.log(prettyDOM(dialog)) 
   
   const violation = screen.getByPlaceholderText('No Permit, Wrong Lot, Expired Permit')
   await userEvent.type(violation, 'Expired Permit')
@@ -383,7 +383,7 @@ it("not all the required fields get filled out in the ticket ", async () => {
   await userEvent.click(screen.getByText('Issue Ticket'))
   /* https://testing-library.com/docs/dom-testing-library/api-within/ */
   const dialog = screen.getByRole('dialog')
-  console.log(prettyDOM(dialog)) 
+  // console.log(prettyDOM(dialog)) 
   
   const violation = screen.getByPlaceholderText('No Permit, Wrong Lot, Expired Permit')
   await userEvent.type(violation, 'No Permit')

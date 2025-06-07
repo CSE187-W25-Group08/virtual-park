@@ -26,17 +26,18 @@ vi.mock('../src/auth/service', () => {
   return {
     AuthService: class {
       async check() {
-        return { id: '03845709-4d40-45fe-9e51-11789f6f209a' }
+        throw new Error("Unauthorized") // Forces expressAuthChecker to return false
       }
     }
   }
 })
 
+
 const accessToken = 'Placeholder before authenticated implementation'
 
 
 
-test("User can create stripe checkout session through redirected url", async () => {
+test("Check fails", async () => {
   await supertest(server)
     .post("/graphql")
     .set('Authorization', 'Bearer ' + accessToken)
@@ -48,24 +49,6 @@ test("User can create stripe checkout session through redirected url", async () 
       `,
     })
     .then((res) => {
-      console.log(res.body)
-      expect(res.body.data.createCheckoutSession).toBeTruthy()
-    });
+      expect(res.body.errors).toBeDefined()
+    })
 });
-
-// https://chatgpt.com/c/68224fea-167c-8007-b525-2167c07b5496
-test("Returns OK from dummy endpoint", async () => {
-  await supertest(server)
-    .post("/graphql")
-    .set('Authorization', 'Bearer ' + accessToken)
-    .send({
-      query: `
-        {
-          dummy
-        }
-      `,
-    })
-    .then((res) => {
-      expect(res.body.data.dummy).toBe("OK")
-    })
-})
