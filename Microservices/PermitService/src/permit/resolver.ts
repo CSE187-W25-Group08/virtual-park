@@ -117,7 +117,7 @@ export class PermitResolver {
     return newPermit;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   @Query(() => [PermitValid])
   async getPermitByPlateAPI(
     @Arg("input") licensePlate: string

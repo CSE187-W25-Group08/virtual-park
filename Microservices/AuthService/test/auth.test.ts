@@ -1,4 +1,4 @@
-import { test, beforeAll, afterAll, beforeEach, expect } from 'vitest'
+import { test, beforeAll, afterAll, beforeEach, expect, vi } from 'vitest'
 import supertest from 'supertest'
 import * as http from 'http'
 import jwt from 'jsonwebtoken'
@@ -6,6 +6,14 @@ import jwt from 'jsonwebtoken'
 import * as db from './db'
 import app from '../src/app'
 import { generateToken } from '../src/auth/authService'
+
+vi.mock('google-auth-library', () => ({
+  OAuth2Client: vi.fn().mockImplementation(() => ({
+    verifyIdToken: vi.fn()
+  }))
+}))
+
+import { OAuth2Client } from 'google-auth-library'
 
 let server: http.Server<
   typeof http.IncomingMessage,
@@ -56,6 +64,85 @@ const edna = {
 export const badJWT = "7m#pK9@L!2xQ$5vR%8sT^1wU&3yV*6zW(4aX)9bY_0cZ+dA=eB-fC/gD|hEiF]jG[kH{lI}mJ~nK`oL'pM,qN.rO/sP0tQ1uR2vS3wT4xU5yV6zW7aX8bY9cZ0dA1eB2fC3gD4hE5iF6jG7kH8lI9mJ0nK1oL2pM3qN4rO5sP6tQ7uR8vS9wT"
 export const badIdJWT = generateToken('483a70c3-7d24-4b45-bcc2-1589e624a483')
 
+// https://claude.ai/chat/392a7b28-68b3-4771-8385-130dffae74f5
+const mockOAuth2Client = () => {
+  const mockVerifyIdToken = vi.fn()
+  const MockedOAuth2Client = OAuth2Client as unknown as vi.MockedClass<typeof OAuth2Client>
+  MockedOAuth2Client.mockImplementation(() => ({
+    verifyIdToken: mockVerifyIdToken
+  }))
+  return mockVerifyIdToken
+}
+
+// ... your existing tests ...
+
+test('google-login with valid token for existing user', async () => {
+  const mockVerifyIdToken = mockOAuth2Client()
+
+  // Mock successful token verification
+  mockVerifyIdToken.mockResolvedValue({
+    getPayload: () => ({
+      email: anna.email,
+      name: anna.name,
+      sub: 'google-user-id-123'
+    })
+  })
+
+  const res = await supertest(server)
+    .post('/api/v0/auth/google-login')
+    .send({ token: 'valid-google-token' })
+    .expect(200)
+
+  expect(res.body).toHaveProperty('accessToken')
+  expect(res.body.email).toBe(anna.email)
+  expect(res.body.name).toBe(anna.name)
+})
+
+test('google-login with valid token for new user', async () => {
+  const mockVerifyIdToken = mockOAuth2Client()
+
+  const newUser = {
+    email: 'newuser@gmail.com',
+    name: 'New Google User'
+  }
+
+  // Mock successful token verification
+  mockVerifyIdToken.mockResolvedValue({
+    getPayload: () => ({
+      email: newUser.email,
+      name: newUser.name,
+      sub: 'google-user-id-456'
+    })
+  })
+
+  const res = await supertest(server)
+    .post('/api/v0/auth/google-login')
+    .send({ token: 'valid-google-token-new-user' })
+    .expect(200)
+
+  expect(res.body).toHaveProperty('accessToken')
+  expect(res.body.email).toBe(newUser.email)
+  expect(res.body.name).toBe(newUser.name)
+
+  // Verify the access token is valid
+  const decoded = jwt.verify(res.body.accessToken, `${process.env.MASTER_SECRET}`) as { id: string }
+  expect(decoded.id).toBeTruthy()
+})
+
+test('google-login returns 401 for invalid token', async () => {
+  const mockVerifyIdToken = mockOAuth2Client()
+
+  // Mock token verification failure
+  mockVerifyIdToken.mockRejectedValue(new Error('Invalid token'))
+
+  const res = await supertest(server)
+    .post('/api/v0/auth/google-login')
+    .send({ token: 'invalid-google-token' })
+    .expect(401)
+
+  expect(res.body).toEqual({})
+})
+
 test('Serves API Docs', async () => {
   await supertest(server)
     .get('/api/v0/docs/')
@@ -74,6 +161,13 @@ test('Sign Up as tommy', async () => {
     .post('/api/v0/auth/signup')
     .send(tommy)
     .expect(201)
+})
+
+test('Sign Up with now password expect rejection', async () => {
+  await supertest(server)
+    .post('/api/v0/auth/signup')
+    .send({ email: "nopw@books.com", name: "Tommy Timekeeper" })
+    .expect(409)
 })
 
 test('Sign Up twice as tommy throws 409', async () => {
@@ -139,6 +233,62 @@ test('Login then check access token', async () => {
     .get('/api/v0/auth/check')
     .set('Authorization', 'Bearer ' + accessToken)
     .expect(200)
+})
+
+test('google-login returns 401 for token without email', async () => {
+  const mockVerifyIdToken = mockOAuth2Client()
+
+  // Mock token verification with missing email
+  mockVerifyIdToken.mockResolvedValue({
+    getPayload: () => ({
+      name: 'User Without Email',
+      sub: 'google-user-id-789'
+      // email is missing
+    })
+  })
+
+  const res = await supertest(server)
+    .post('/api/v0/auth/google-login')
+    .send({ token: 'token-without-email' })
+    .expect(401)
+
+  expect(res.body).toEqual({})
+})
+
+test('google-login returns 401 for token without name', async () => {
+  const mockVerifyIdToken = mockOAuth2Client()
+
+  // Mock token verification with missing name
+  mockVerifyIdToken.mockResolvedValue({
+    getPayload: () => ({
+      email: 'user@gmail.com',
+      sub: 'google-user-id-101'
+      // name is missing
+    })
+  })
+
+  const res = await supertest(server)
+    .post('/api/v0/auth/google-login')
+    .send({ token: 'token-without-name' })
+    .expect(401)
+
+  expect(res.body).toEqual({})
+})
+
+test('google-login returns 401 for token with no payload', async () => {
+  const mockVerifyIdToken = mockOAuth2Client()
+
+  // Mock token verification with null payload
+  mockVerifyIdToken.mockResolvedValue({
+    getPayload: () => null
+  })
+
+  const res = await supertest(server)
+    .post('/api/v0/auth/google-login')
+    .send({ token: 'token-with-no-payload' })
+    .expect(401)
+
+  expect(res.body).toEqual({})
 })
 
 
@@ -494,11 +644,3 @@ test('driverinfo returns 401 if requester is not a driver', async () => {
   expect(res.body).toEqual({});
 });
 
-test('google-login returns 401 for invalid token', async () => {
-  const res = await supertest(server)
-    .post('/api/v0/auth/google-login')
-    .send({ token: 'invalid-google-token' })
-    .expect(401);
-
-  expect(res.body).toEqual({});
-});
