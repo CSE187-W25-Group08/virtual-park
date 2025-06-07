@@ -73,3 +73,34 @@ fireEvent.click(option)
   const saveButton = await screen.findByText(/Save/i)
   expect(saveButton.hasAttribute('disabled')).toBe(false)
 })
+
+it('Edit button is rendered', async () => {
+  vi.spyOn(actions, 'getUserVehicles').mockResolvedValue([{  id: '1',
+  licensePlate: 'TEST123',
+  make: 'Toyota',
+  model: 'Corolla',
+  color: 'Silver',
+  driver: 'some-driver-id',
+  active: true,
+type: 'Car' }])
+  renderWithIntl(<Vehicles/>)
+
+  
+  await screen.findByText(/Edit/i)
+})
+it('Edit button is clicked', async () => {
+  vi.spyOn(actions, 'getUserVehicles').mockResolvedValue([{  id: '1',
+  licensePlate: 'TEST123',
+  make: 'Toyota',
+  model: 'Corolla',
+  color: 'Silver',
+  driver: 'some-driver-id',
+  active: true,
+type: 'Car' }])
+  renderWithIntl(<Vehicles/>)
+
+  
+  const editButton = await screen.findByText(/Edit/i)
+  fireEvent.click(editButton)
+  await screen.findByText(/Make\s*\*/i)
+})
