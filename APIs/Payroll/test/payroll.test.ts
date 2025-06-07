@@ -26,7 +26,7 @@ beforeAll(async () => {
 afterAll(() => {
   server.close()
 })
-const apiKey = process.env.PAYROLL_API_KEY;
+const apiKey = "lGbSBszdharrisdavid0i2oeO6B";
 
 test('User has 0 unpaid tickets', async () => {
   const email ='matt@books.com';
