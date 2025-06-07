@@ -66,8 +66,6 @@ export default function TicketView({
       console.log('driver: ', driverID)
       console.log('plate: ', plate)
       console.log('vehicle ret: ', vehicle)
-      // insert row to vehicle db with vehicle id and plate
-      // if car doesn't exist in db
       if (!vehicle) {
         const unregisterVeh = await UnregisteredVehicle(plate);
         updatedVehicleID = unregisterVeh.id
@@ -75,9 +73,9 @@ export default function TicketView({
         updatedVehicleID = vehicle
       }
 
-      if (!updatedVehicleID) {
-        updatedVehicleID = ticketInfo.vehicleID
-      }
+      // if (!updatedVehicleID) {
+      //   updatedVehicleID = ticketInfo.vehicleID
+      // }
       
       // console.log('Submitting ticket with lot:', ticketInfo.lot)
       const imageUrl = (ticketInfo.image !== null) ? ticketInfo.image : ''

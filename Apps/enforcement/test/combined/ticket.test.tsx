@@ -502,3 +502,5 @@ it("failed to issue ticket", async () => {
   await userEvent.click(issueButton)
   await screen.findByText('Failed to issue ticket')
 }, { timeout: 10000 })
+
+

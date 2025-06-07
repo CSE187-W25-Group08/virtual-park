@@ -4,6 +4,7 @@ import { render, screen, cleanup, waitFor } from '@testing-library/react'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import PermitPage from '../../src/app/permit/page'
+import {googleVision} from'../../src/app/permit/action'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn()
@@ -20,7 +21,7 @@ vi.mock('next/headers', () => ({
 vi.mock('../../src/app/permit/action', () => ({
   getallLots: vi.fn(),
   getpermitByPlateNum: vi.fn(),
-  googleVision: vi.fn(),
+  // googleVision: vi.fn(),
   getDriverFromVehiclePlate: vi.fn(),
   getDriverDetails: vi.fn()
 }))
