@@ -426,7 +426,7 @@ test("Get all unpaid tickets for payroll", async () => {
     .send({
       query: `
         query ($id: String!) {
-          unpaidTicketPayrollCount(driverId: $id)
+          unpaidTicketCount(driverId: $id)
         }
       `,
       variables: {
@@ -435,6 +435,6 @@ test("Get all unpaid tickets for payroll", async () => {
     })
     .then((res) => {
       console.log(res.body)
-      expect(res.body.data.unpaidTicketPayrollCount).toEqual(3);
+      expect(res.body.data.unpaidTicketCount).toEqual(3);
     });
 });

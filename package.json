@@ -43,7 +43,7 @@
     "ci-police-api": "cd APIs/CampusPolice && npm ci",
     "ci-payroll-api": "cd APIs/Payroll && npm ci",
     "ci-registrar-api": "cd APIs/Registrar && npm ci",
-    "lint": "npm run lint-auth && npm run lint-ticket && npm run lint-vehicle && npm run lint-lot && npm run lint-permit  && npm run lint-stripe && npm run lint-webhook && npm run lint-email && npm run lint-driver-app && npm run lint-admin-app && npm run lint-enforcement-app && npm run lint-payroll-api",
+    "lint": "npm run lint-auth && npm run lint-ticket && npm run lint-vehicle && npm run lint-lot && npm run lint-permit  && npm run lint-stripe && npm run lint-webhook && npm run lint-email && npm run lint-driver-app && npm run lint-admin-app && npm run lint-enforcement-app && npm run lint-payroll-api && npm run lint-registrar-api && npm run lint-police-api",
     "lint-auth": "cd Microservices/AuthService && npm run lint",
     "lint-permit": "cd Microservices/PermitService && npm run lint",
     "lint-ticket": "cd Microservices/TicketService && npm run lint",
@@ -90,7 +90,11 @@
     "start-registrar-api": "cd APIs/Registrar && npm start",
     "test-app": "cd Apps && npm run test",
     "test-services": "cd Microservices && npm run test",
-    "test": "npm run test-services && npm run test-app"
+    "test-payroll-api": "cd APIs/Payroll && npm run test",
+    "test-registrar-api": "cd APIs/Registrar && npm run test",
+    "test-police-api": "cd APIs/CampusPolice && npm run test",
+    "test-apis": "npm run test-payroll-api && npm run test-registrar-api && npm run test-police-api",
+    "test": "npm run test-services && npm run test-app && npm run test-apis"
   },
   "dependencies": {
     "@stripe/stripe-js": "^7.3.0",
