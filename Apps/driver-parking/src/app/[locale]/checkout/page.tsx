@@ -1,6 +1,6 @@
 'use client';
 // import { TicketId } from "@/ticket";
-import View from "./View";
+import Checkout from "./View";
 import { useSearchParams } from 'next/navigation'
 
 // For npm build 
@@ -13,5 +13,5 @@ export default function Page(){
   const amount = parseFloat(searchParams.get('amount') || '0')
   const status = searchParams.get('status') || ''
 
-  return <View type={type} amount = {amount} status={status}/>;
+  return <Checkout type={type} amount = {amount} status={status}/>;
 }
