@@ -1,15 +1,12 @@
 import express, { 
   Express, 
   Router,
-  Response as ExResponse, 
-  Request as ExRequest, 
   ErrorRequestHandler,
   Request,
   Response,
   NextFunction
 } from 'express'
 import cors from 'cors'
-import swaggerUi from 'swagger-ui-express'
 
 import {RegisterRoutes} from '../build/routes'
 
@@ -25,12 +22,6 @@ app.use(express.urlencoded({extended: false}))
 //     docs: '/v0/registrar/docs'
 //   })
 // })
-
-app.use('/v0/registrar/docs', swaggerUi.serve, async (_req: ExRequest, res: ExResponse) => {
-  res.send(
-    swaggerUi.generateHTML(await import('../build/swagger.json'))
-  )
-})
 
 const router = Router()
 RegisterRoutes(router)

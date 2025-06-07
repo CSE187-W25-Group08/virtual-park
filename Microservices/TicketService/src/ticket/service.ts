@@ -193,9 +193,9 @@ export class TicketService {
     return tickets[0]
   }
 
-  public async getUnpaidPayroll(userId: string | undefined): Promise<number> {
+  public async getUnpaidExternal(userId: string | undefined): Promise<number> {
     const query = {
-      text: queries.unpaidTicketsPayroll,
+      text: queries.unpaidTicketsExternal,
       values: [userId],
     }
 

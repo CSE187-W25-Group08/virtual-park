@@ -12,10 +12,6 @@ export const fetchMocks = [
     const url = new URL(request.url)
     const email = url.searchParams.get('email')
 
-    if (!email) {
-      return new HttpResponse(null, { status: 400 })
-    }
-
     if (email == 'matt@books.com') {
       return HttpResponse.json('this-is-an-id') 
     }

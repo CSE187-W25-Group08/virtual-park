@@ -132,10 +132,10 @@ export class TicketResolver {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Query(returns => Int)
-  async unpaidTicketPayrollCount(
+  async unpaidTicketCount(
     @Arg("driverId") driverId: string,
   ): Promise<number> {
-    return await new TicketService().getUnpaidPayroll(driverId)
+    return await new TicketService().getUnpaidExternal(driverId)
   }
 
 }
