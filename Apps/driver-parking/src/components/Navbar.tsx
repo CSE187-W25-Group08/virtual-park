@@ -27,7 +27,6 @@ import LocaleSwitcher from '../../src/app/languageSwitcher/LocaleSwitcher';
 import logo from '../../src/app/public/img/logo-white.svg';
 import { logout } from '@/app/[locale]/login/action';
 import { useTheme } from '@mui/material';
-
 export default function Navbar() {
   const router = useRouter();
   const t = useTranslations('top_navbar');
@@ -47,7 +46,7 @@ export default function Navbar() {
         <Toolbar>
           <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Image width={30} height={30} src={logo.src} alt="virtual park logo" />
+              <picture><img width={30} height={30} src={logo.src} alt="virtual park logo" /></picture>
               <Typography variant="h6" component="div">
                 {t('title')}
               </Typography>

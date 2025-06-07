@@ -23,7 +23,9 @@
     "signup": "Sign Up",
     "login": "Log In",
     "welcome": "Welcome to Virtual-Park!",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "createdBy": "Created By: ",
+    "ourMerch": "Our Merch: "
   },
   "signup": {
     "createAccount": "Create an Account",
@@ -118,6 +120,7 @@
     "violation": "Violation:",
     "description": "Description:",
     "licensePlate": "License Plate:",
+    "appealDescription": "Appeal Description",
     "issued": "Issued:",
     "due": "Due:",
     "cost": "Cost:",
@@ -181,5 +184,20 @@
     "dashboard": "Go to Dashboard",
     "success": "Successful",
     "cancel": "Cancelled"
+  },
+  "marketing": {
+    "welcome": "Welcome to the Virtual Park",
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Track your tickets with our easy to use ticket interface. Check which tickets you have available to pay and which you can apply for an appeal."
+    },
+    "vehicles": {
+      "title": "Vehicles",
+      "description": "Manage your vehicles efficiently with our comprehensive tools and resources."
+    },
+    "tickets": {
+      "title": "Tickets",
+      "description": "Track your tickets with our easy to use ticket interface. Check which tickets you have available to pay and which you can apply for an appeal."
+    }
   }
 }

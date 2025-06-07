@@ -27,6 +27,7 @@ export default function LocaleSwitcher({ bottom = false }: LocaleSwitcherProps) 
   };
 
   const switchLocale = (locale: string) => {
+    console.log({ pathname }, { locale })
     router.replace({ pathname }, { locale });
     handleClose();
   };

@@ -11,10 +11,10 @@ import {
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { logout } from '../[locale]/login/action'
+import { logout } from '../login/action'
 import { useTranslations } from "next-intl";
 
-import logo from '../public/img/no-circle-logo.svg'
+import logo from '../../public/img/no-circle-logo.svg'
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';

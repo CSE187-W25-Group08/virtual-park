@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from "next-intl";
-import bg from "../public/img/aerial-bg-photo.png"
+import bg from "../../public/img/aerial-bg-photo.png"
 
 export default function ParkNow() {
   const router = useRouter()

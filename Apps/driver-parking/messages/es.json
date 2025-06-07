@@ -3,25 +3,29 @@
     "title": "Parque Virtual"
   },
   "common": {
-    "english": "Anglais",
+    "english": "Inglés",
     "spanish": "Español",
     "language": "Idioma"
   },
   "landing": {
-    "notSure": "¿No estás seguro de dónde aparcar?",
-    "seeAll": "Ver todos los lotes disponibles",
+    "notSure": "¿No estás seguro de dónde estacionar?",
+    "seeAll": "Ver todos los estacionamientos disponibles",
     "about": "Acerca de Virtual Park",
-    "noLots": "No se encontraron lotes",
-    "searchLot": "Buscar por nombre del lote",
-    "moto": "Aparca Fácil, Aparca Virtual",
-    "parkNow": "Aparcar ahora",
+    "noLots": "No se encontraron estacionamientos",
+    "searchLot": "Buscar por nombre del estacionamiento",
+    "moto": "Estaciona fácil, Estaciona virtual",
+    "moto-split-1": "Estaciona Fácil, ",
+    "moto-split-2": "Estaciona Virtual",
+    "parkNow": "Estacionar ahora",
     "buyPermit": "Comprar permiso",
-    "validPermits": "Permisos válidos: ",
-    "zone": "Zona: ",
+    "validPermits": "Permisos válidos:",
+    "zone": "Zona:",
     "signup": "Regístrate",
     "login": "Iniciar sesión",
     "welcome": "¡Bienvenido a Virtual-Park!",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "createdBy": "Creado Por:",
+    "ourMerch": "Nuestra Mercancía: "
   },
   "signup": {
     "createAccount": "Crear una cuenta",
@@ -61,8 +65,8 @@
     "Motorcycle": "Motocicleta",
     "Remote": "Remoto",
     "hours": "Horas",
-    "Cost": "Costa",
-    "Type": "Typa"
+    "Cost": "Costo",
+    "Type": "Tipo"
   },
   "purchase_permit": {
     "Hourly": "Por hora",
@@ -148,7 +152,8 @@
     "unpaidTickets": "Tienes {count} multas pendientes.",
     "payTickets": "Pagar multas",
     "buyDailyRemote": "Comprar diario: Remoto",
-    "buyDailyMotorcycle": "Comprar diario: Motocicleta"
+    "buyDailyMotorcycle": "Comprar diario: Motocicleta",
+    "futurePermit": "Permisos futuros"
   },
   "labels": {
     "cancel": "Cancelar",
@@ -180,5 +185,20 @@
     "dashboard": "Ir al tablero",
     "success": "Exitosa",
     "cancel": "Cancelada"
+  },
+  "marketing": {
+    "welcome": "Bienvenido a Virtual Park",
+    "dashboard": {
+      "title": "Tablero",
+      "description": "Sigue tus multas con nuestra interfaz fácil de usar. Revisa qué multas están disponibles para pagar y cuáles puedes apelar."
+    },
+    "vehicles": {
+      "title": "Vehículos",
+      "description": "Administra tus vehículos de manera eficiente con nuestras herramientas y recursos integrales."
+    },
+    "tickets": {
+      "title": "Multas",
+      "description": "Sigue tus multas con nuestra interfaz fácil de usar. Revisa qué multas están disponibles para pagar y cuáles puedes apelar."
+    }
   }
 }

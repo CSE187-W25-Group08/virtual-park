@@ -178,6 +178,7 @@ export default function Dashboard() {
             display:'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            flexDirection: 'column',
             // display: 'grid',
             // gridTemplateColumns: {xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)'},
             gap: 2,
