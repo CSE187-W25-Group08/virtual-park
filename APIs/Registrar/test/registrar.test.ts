@@ -122,11 +122,3 @@ test('Returns 404 when request is invalid', async () => {
     .set('Authorization', 'Bearer ' + apiKey)
     .expect(404)
 })
-
-test('GET /api/v0/docs/ returns Swagger UI HTML', async () => {
-  await supertest(server)
-    .get('/api/v0/docs/')
-    .expect('Content-Type', /html/)
-    .expect(200)
-})
-

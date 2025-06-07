@@ -149,7 +149,7 @@ export const respondAppealApproved =
   SELECT id, driver, data FROM UPDATED
   `
 
-  export const unpaidTicketsPayroll =
+  export const unpaidTicketsExternal =
   `
     SELECT COUNT(*) AS count
 

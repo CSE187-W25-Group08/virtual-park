@@ -44,7 +44,7 @@ export const fetchMocks = [
       if (driverId === 'this-is-an-id') {
         return HttpResponse.json({
           data: {
-            unpaidTicketPayrollCount: 0
+            unpaidTicketCount: 0
           }
         })
       }
@@ -52,7 +52,7 @@ export const fetchMocks = [
       if (driverId === 'this-guy-has-tickets') {
         return HttpResponse.json({
           data: {
-            unpaidTicketPayrollCount: 5
+            unpaidTicketCount: 5
           }
         })
       }

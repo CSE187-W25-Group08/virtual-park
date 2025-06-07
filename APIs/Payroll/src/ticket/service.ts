@@ -8,7 +8,7 @@ export async function unpaidTicketPayrollCount(driverId: string): Promise<number
       body: JSON.stringify({
         query: `
           query ($driverId: String!) {
-            unpaidTicketPayrollCount(driverId: $driverId)
+            unpaidTicketCount(driverId: $driverId)
           }
         `,
         variables: {
@@ -23,7 +23,7 @@ export async function unpaidTicketPayrollCount(driverId: string): Promise<number
       return response.json();
     })
     .then(json => {
-      resolve(json.data.unpaidTicketPayrollCount);
+      resolve(json.data.unpaidTicketCount);
     })
     .catch((error) => reject(error));
   });

@@ -1,15 +1,12 @@
 import express, { 
   Express, 
   Router,
-  Response as ExResponse, 
-  Request as ExRequest, 
   ErrorRequestHandler,
   Request,
   Response,
   NextFunction
 } from 'express'
 import cors from 'cors'
-import swaggerUi from 'swagger-ui-express'
 
 import { RegisterRoutes } from "../build/routes"
 
@@ -18,11 +15,6 @@ app.use(cors())
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-
-// Swagger docs
-app.use('/api/v0/docs', swaggerUi.serve, async (_req: ExRequest, res: ExResponse) => {
-  res.send(swaggerUi.generateHTML(await import('../build/swagger.json')))
-})
 
 // Register TSOA routes
 const router = Router()
