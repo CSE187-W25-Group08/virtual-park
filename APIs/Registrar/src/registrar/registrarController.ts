@@ -20,8 +20,7 @@ export class RegistrarController extends Controller {
   @SuccessResponse('200', 'Gets ticket bool succesfully')
   public async checkStudentTickets(
       @Query() email: string
-  ): Promise<string> {
-
+  ): Promise<boolean> {
     return await emailContainsTickets(email)
   }
 

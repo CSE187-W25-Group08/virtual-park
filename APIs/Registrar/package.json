@@ -34,6 +34,7 @@
     "express": "*",
     "joi": "^17.13.3",
     "jsonwebtoken": "*",
+    "msw": "^2.10.0",
     "pg": "*",
     "swagger-ui-express": "*",
     "tsoa": "*"
