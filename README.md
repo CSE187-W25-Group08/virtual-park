@@ -1,6 +1,6 @@
 # Virtual-Park
 **Virtual Park** is a full-stack platform designed to streamline parking operations through three integrated apps: a digital vehicle registration system for drivers, an OCR-based enforcement tool for attendants, and a comprehensive administration dashboard for parking managers.
-### [Live Site](https://virtual-park.net/)
+### [Live Site](https://virtual-park.net/) (currently offline)
 ### [WIKI](https://github.com/CSE187-W25-Group08/virtual-park/wiki)
 ---
 ## Tech Stack
