@@ -6,17 +6,16 @@
 ## Tech Stack
 
 #### Frontend
-- **Next.js (React)** – For fast, server-rendered UI and routing.
-- **Material UI (MUI)** –  The component building blocks of the UI.
+- **Next.js (React)** – Responsive UI created with a mix of SSR and CSR.
+- **Material UI (MUI)** – For a modern and accessible design.
 
-#### Backend
-- **Node.js with Express** – REST + GraphQL API microservices server architecture.
-- **TSOA** – For Type-safe Restful APIs.
-- **TypeGraphQL** – For Declarative GraphQL APIs.
+#### Backend 
+- **Node.js with Express** – Microservices server architecture.
+- **TSOA** & **TypeGraphQL** – For declarative type-safe Restful & GraphQL APIs.
 
 #### Authentication
 - **Custom JWT Auth** – Secure in-house email/password system.
-- **OAuth 2.0 Integration**– Support for Google login and identity linking to member UUIDs.
+- **OAuth 2.0 Integration** – Support for Google login and identity linking to member UUIDs.
 - **Middleware-Based Role Checking** – Role-based access controlled via Express middleware and custom Auth Service.
 
 #### Infrastructure & Database
@@ -33,8 +32,8 @@
 - **Vitest + React Testing Library** - Combined Frontend + Service Layer Testing within the Next.js framework.
   
 #### Deployment
-- **Continuous Integration (GitHub Actions)** – Pipeline for automated testing and containerized builds on tagged commits.
-- **AWS EC2** – Flexible and scalable deployment on AWS EC2 instances.
+- **GitHub Actions** – CI/CD Pipeline for automated testing and containerized builds on tagged commits.
+- **AWS EC2** – Flexible and scalable deployment.
 
 ---
 
